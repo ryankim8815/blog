@@ -1,0 +1,62 @@
+version: "3.0"
+services:
+  ddclient:
+    image: lscr.io/linuxserver/ddclient:latest
+    container_name: ddclient
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Seoul
+    volumes:
+      - ./ddclient/conf:/config
+    restart: unless-stopped
+
+  nginx:
+    restart: always
+    build:
+      dockerfile: nginx.Dockerfile
+      context: ./nginx
+    volumes:
+      - ./nginx/logs:/var/log/nginx
+    ports:
+      - "80:80"
+
+  react-front:
+    build:
+      dockerfile: front.Dockerfile
+      context: front
+    env_file:
+      - .env
+    volumes:
+      - /usr/app/node_modules
+      - ./front:/usr/app
+    command: ["npm", "start"]
+    # network:
+    #   - compose-networks
+
+  node-back:
+    build:
+      context: ./back
+      dockerfile: back.Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - /usr/app/node_modules
+      - ./back:/usr/app
+    command: ["npm", "start"]
+    # network:
+    #   - compose-networks
+
+  # postgres:
+  #   build:
+  #     context: ./PostgresDb
+  #     dockerfile: dev.Dockerfile
+  #   restart: always
+  #   env_file:
+  #     - .env
+  #   volumes:
+  #     - ./PostgresDb/dev/data:/var/lib/postgresql/data
+  #   network:
+  #     - compose-networks
+# networks:
+#   compose-networks:
