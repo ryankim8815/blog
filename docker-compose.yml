@@ -1,15 +1,15 @@
 version: "3.0"
 services:
-  ddclient:
-    image: lscr.io/linuxserver/ddclient:latest
-    container_name: ddclient
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Asia/Seoul
-    volumes:
-      - ./ddclient/conf:/config
-    restart: unless-stopped
+  # ddclient:
+  #   image: lscr.io/linuxserver/ddclient:latest
+  #   container_name: ddclient
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     - TZ=Asia/Seoul
+  #   volumes:
+  #     - ./ddclient/conf:/config
+  #   restart: unless-stopped
 
   nginx:
     restart: always

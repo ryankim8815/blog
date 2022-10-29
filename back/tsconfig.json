@@ -1,0 +1,29 @@
+// {
+//   "compilerOptions": {
+//     "baseUrl": "src", //base directory
+//     "moduleResolution": "node", //Node.js’ CommonJS implementation
+//     "module": "commonjs", //Sets the module system for the program. "CommonJS" is suitable for node projects.
+//     "target": "esnext", //JS syntax ver.
+//     "sourceMap": true, //Enables the generation of sourcemap files.
+//     "outDir": "./build", //If specified, .js (as well as .d.ts, .js.map, etc.) files will be emitted into this directory.
+//     "experimentalDecorators": true, //Enables experimental support for decorators, which is in stage 2 of the TC39 standardization process.
+//     //Decorators are a language feature which hasn’t yet been fully ratified into the JavaScript specification. This means that the implementation version in TypeScript may differ from the implementation in JavaScript when it is decided by TC39.
+//     "esModuleInterop": true, //default(false) has mis-match issue for 'import'
+//     "importHelpers": true // tslib
+//   },
+//   "include": ["src/**/*", "@types/**/*"], // Specifies an array of filenames or patterns to include in the program.
+//   "exclude": ["node_modules"], //Specifies an array of filenames or patterns that should be skipped when resolving include.
+//   "ts-node": {
+//     "transpileOnly": true,
+//     "swc": true
+//   }
+// }
+//https://www.typescriptlang.org/ko/tsconfig
+
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "esModuleInterop": true //default(false) has mis-match issue for 'import'
+  }
+}
