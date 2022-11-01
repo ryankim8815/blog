@@ -1,7 +1,11 @@
 node_modules
+build
 *.env
 *.sh
+*.plist
+*.sql
 .DS_Store
+
 
 # # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
