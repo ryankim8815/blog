@@ -38,20 +38,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-Object.defineProperty(exports, "__esModule", { value: true });
+// import express from "express";
 var express_1 = __importDefault(require("express"));
 var database_1 = __importDefault(require("../db/database"));
-// import bcrypt from "bcrypt";
-// import jwt from "jsonwebtoken";
-var asyncHandler_1 = __importDefault(require("../utils/asyncHandler"));
 // import login_required from "../middlewares/login_required";
 // import moment from "moment-timezone";
 // moment.tz.setDefault("Asia/Seoul");
 // import upload from "../middlewares/image_upload";
+// import { Response } from "express";
 var userRouter = express_1.default.Router();
 // GET: 유저리스트 확인 기능
 var userList = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, rows, fields, err_1;
+    var _a, rows, fields, rowsString, rowsObject, i, err_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -59,8 +57,12 @@ var userList = function (req, res, next) { return __awaiter(void 0, void 0, void
                 return [4 /*yield*/, database_1.default.query("SELECT * FROM users")];
             case 1:
                 _a = _b.sent(), rows = _a[0], fields = _a[1];
-                console.log("rows: ", rows);
-                console.log("typeof rows: ", typeof rows);
+                rowsString = JSON.stringify(rows);
+                rowsObject = JSON.parse(rowsString);
+                for (i = 0; i < rowsObject.length; i++) {
+                    delete rows[i].password;
+                }
+                res.status(200).json(rows);
                 return [3 /*break*/, 3];
             case 2:
                 err_1 = _b.sent();
@@ -70,6 +72,64 @@ var userList = function (req, res, next) { return __awaiter(void 0, void 0, void
         }
     });
 }); };
+// POST: 회원가입 기능
+var userRegister = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var email_1, password_1, nickname_1, duplicatedEmail, err_2;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                email_1 = req.body.email;
+                password_1 = req.body.password;
+                nickname_1 = req.body.nickname;
+                return [4 /*yield*/, database_1.default
+                        .query({
+                        sql: "SELECT * FROM users WHERE `email` = ? ",
+                        values: [email_1],
+                    })
+                        .then(function (_a) {
+                        var rows = _a[0], fields = _a[1];
+                        if (JSON.stringify(rows) !== "[]") {
+                            var result_errMail = {
+                                result: false,
+                                cause: "email",
+                                message: "입력하신 email로 가입된 내역이 있습니다. 다시 한 번 확인해 주세요.",
+                            };
+                            console.log(result_errMail);
+                            res.status(200).json(result_errMail);
+                            return false;
+                        }
+                        else {
+                            var addUser = database_1.default
+                                .query({
+                                sql: "INSERT INTO users (email, password, nickname) VALUES (?, ?, ?)",
+                                values: [email_1, password_1, nickname_1],
+                            })
+                                .then(function (_a) {
+                                var rows = _a[0], fields = _a[1];
+                                var result_success = {
+                                    result: true,
+                                    cause: "success",
+                                    message: "회원가입이 성공적으로 이뤄졌습니다.",
+                                };
+                                console.log(result_success);
+                                res.status(200).json(result_success);
+                            });
+                        }
+                    })];
+            case 1:
+                duplicatedEmail = _a.sent();
+                return [3 /*break*/, 3];
+            case 2:
+                err_2 = _a.sent();
+                next(err_2);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
 // api index
-userRouter.get("/userlist", (0, asyncHandler_1.default)(userList));
+userRouter.get("/userlist", userList);
+// userRouter.post("/userRegister", asyncHandler(userRegister));
+userRouter.post("/userRegister", userRegister);
 module.exports = userRouter;
