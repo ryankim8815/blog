@@ -38,6 +38,13 @@ class User {
     });
     return rows;
   }
+  static async updateFilename({ email, new_filename }) {
+    const [rows, fields] = await promisePool.query({
+      sql: "UPDATE users SET `profile_image` = ? WHERE `email` = ?",
+      values: [new_filename, email],
+    });
+    return rows;
+  }
 
   static async delete({ email }) {
     const [rows, fields] = await promisePool.query({

@@ -63,6 +63,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 var express = __importStar(require("express"));
 var authMiddleware_1 = __importDefault(require("../middlewares/authMiddleware"));
+var uploadMiddleware_1 = __importDefault(require("../middlewares/uploadMiddleware"));
 var userService_1 = __importDefault(require("../services/userService"));
 var userRouter = express.Router();
 // GET: 유저리스트 확인 기능
@@ -219,10 +220,44 @@ var userDelete = function (req, res, next) { return __awaiter(void 0, void 0, vo
         }
     });
 }); };
+//// POST: 프로필 사진 업로드
+var userUploadImage = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var email, new_filename, uploadUserImage, err_6, result_err;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                email = req.email;
+                new_filename = req.file.filename;
+                console.log("new_filename: ", new_filename);
+                return [4 /*yield*/, userService_1.default.uploadUserImage({
+                        email: email,
+                        new_filename: new_filename,
+                    })];
+            case 1:
+                uploadUserImage = _a.sent();
+                console.log(uploadUserImage);
+                res.status(200).json(uploadUserImage);
+                return [3 /*break*/, 3];
+            case 2:
+                err_6 = _a.sent();
+                result_err = {
+                    result: false,
+                    cause: "api",
+                    message: "uploadUserImage api에서 오류가 발생했습니다.",
+                };
+                console.log(result_err);
+                res.status(200).json(result_err);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
 // api index
-userRouter.get("/user_list", userList);
-userRouter.post("/user_register", userRegister);
-userRouter.post("/user_login", userLogin);
-userRouter.put("/user_update", authMiddleware_1.default, userUpdate);
-userRouter.delete("/user_delete", authMiddleware_1.default, userDelete);
+userRouter.get("/user/list", userList);
+userRouter.post("/user/register", userRegister);
+userRouter.post("/user/login", userLogin);
+userRouter.put("/user/update", authMiddleware_1.default, userUpdate);
+userRouter.delete("/user/delete", authMiddleware_1.default, userDelete);
+userRouter.post("/user/upload_image", authMiddleware_1.default, uploadMiddleware_1.default.single("file"), userUploadImage);
 module.exports = userRouter;

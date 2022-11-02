@@ -41,6 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 var User_1 = __importDefault(require("../db/models/User"));
 var bcrypt_1 = __importDefault(require("bcrypt"));
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+var fs_1 = __importDefault(require("fs"));
 var moment_timezone_1 = __importDefault(require("moment-timezone"));
 moment_timezone_1.default.tz.setDefault("Asia/Seoul");
 var userService = /** @class */ (function () {
@@ -257,6 +258,59 @@ var userService = /** @class */ (function () {
                             return [2 /*return*/, result_success];
                         }
                         return [2 /*return*/];
+                }
+            });
+        });
+    };
+    //// 프로필 사진 업로드
+    userService.uploadUserImage = function (_a) {
+        var email = _a.email, new_filename = _a.new_filename;
+        return __awaiter(this, void 0, void 0, function () {
+            var checkEmail, checkEmailString, checkEmailObject, result_errEmail, updateFilename, old_filename, directory, result_success;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, User_1.default.findByEmail({ email: email })];
+                    case 1:
+                        checkEmail = _b.sent();
+                        checkEmailString = JSON.stringify(checkEmail);
+                        checkEmailObject = JSON.parse(checkEmailString);
+                        if (checkEmailObject.length === 0) {
+                            result_errEmail = {
+                                result: false,
+                                cause: "email",
+                                message: "입력하신 email로 가입된 사용자가 없습니다. 다시 한 번 확인해 주세요.",
+                            };
+                            return [2 /*return*/, result_errEmail];
+                        }
+                        updateFilename = User_1.default.updateFilename({ email: email, new_filename: new_filename });
+                        // 파일 삭제
+                        console.log("파일명 확인: ", checkEmailObject[0].profile_image);
+                        old_filename = checkEmailObject[0].profile_image;
+                        //Directory 존재 여부 체크
+                        if (checkEmailObject[0].profile_image == null) {
+                            // 추후 null을 ./default.jpg로 변경 필요
+                            console.log("기존 프로필 사진이 없습니다. 기존 사진 삭제 절차는 생략됩니다.");
+                        }
+                        else {
+                            directory = fs_1.default.existsSync("./uploads/".concat(old_filename));
+                            console.log("삭제할 파일 경로: ", directory);
+                            //Directory가 존재 한다면 true 없다면 false
+                            console.log("Boolan : ", directory);
+                            if (!directory) {
+                                console.log("[\uD655\uC778\uC694\uB9DD]: \uAE30\uC874 \uD504\uB85C\uD544 \uC0AC\uC9C4(\uD30C\uC77C\uBA85: ".concat(old_filename, ")\uC774 \uC874\uC7AC\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."));
+                            }
+                            fs_1.default.rm("./uploads/".concat(old_filename), { recursive: true }, function (err) {
+                                if (err != null) {
+                                    console.log("[\uD655\uC778\uC694\uB9DD]: \uAE30\uC874 \uD504\uB85C\uD544 \uC0AC\uC9C4(\uD30C\uC77C\uBA85: ".concat(old_filename, ")\uC744 \uC0AD\uC81C\uD558\uB358 \uC911 \uC624\uB958\uAC00 \uBC1C\uC0DD\uD588\uC2B5\uB2C8\uB2E4. (\uC5D0\uB7EC \uBA54\uC2DC\uC9C0: ").concat(err, ")"));
+                                }
+                            });
+                        }
+                        result_success = {
+                            result: true,
+                            cause: "success",
+                            message: "".concat(checkEmailObject[0].nickname, "\uB2D8\uC758 \uD504\uB85C\uD544 \uC0AC\uC9C4 \uC5C5\uB370\uC774\uD2B8\uAC00 \uC131\uACF5\uC801\uC73C\uB85C \uC774\uB904\uC84C\uC2B5\uB2C8\uB2E4."),
+                        };
+                        return [2 /*return*/, result_success];
                 }
             });
         });

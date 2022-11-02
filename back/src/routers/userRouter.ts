@@ -1,7 +1,9 @@
 import * as express from "express";
 import authMiddleware from "../middlewares/authMiddleware";
+import upload from "../middlewares/uploadMiddleware";
 import userService from "../services/userService";
-
+// import asyncHandler from "../utils/asyncHandler";
+import type { MulterFile } from "../customType/multer.d";
 const userRouter = express.Router();
 
 // GET: 유저리스트 확인 기능
@@ -124,12 +126,45 @@ const userDelete = async (
     res.status(200).json(result_err);
   }
 };
+//// POST: 프로필 사진 업로드
+const userUploadImage = async (
+  req: express.Request & { files: MulterFile[] },
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  try {
+    const email = req.email;
+    // const old_filename = req.filename;
+    const new_filename = req.file.filename;
+    console.log("new_filename: ", new_filename);
+    const uploadUserImage = await userService.uploadUserImage({
+      email,
+      new_filename,
+    });
+    console.log(uploadUserImage);
+    res.status(200).json(uploadUserImage);
+  } catch (err) {
+    const result_err = {
+      result: false,
+      cause: "api",
+      message: "uploadUserImage api에서 오류가 발생했습니다.",
+    };
+    console.log(result_err);
+    res.status(200).json(result_err);
+  }
+};
 
 // api index
-userRouter.get("/user_list", userList);
-userRouter.post("/user_register", userRegister);
-userRouter.post("/user_login", userLogin);
-userRouter.put("/user_update", authMiddleware, userUpdate);
-userRouter.delete("/user_delete", authMiddleware, userDelete);
+userRouter.get("/user/list", userList);
+userRouter.post("/user/register", userRegister);
+userRouter.post("/user/login", userLogin);
+userRouter.put("/user/update", authMiddleware, userUpdate);
+userRouter.delete("/user/delete", authMiddleware, userDelete);
+userRouter.post(
+  "/user/upload_image",
+  authMiddleware,
+  upload.single("file"),
+  userUploadImage
+);
 
 export = userRouter;
