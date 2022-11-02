@@ -7,7 +7,7 @@ class User {
     return rows;
   }
 
-  static async findById({ email }) {
+  static async findByEmail({ email }) {
     const [rows, fields] = await promisePool.query({
       sql: "SELECT * FROM users WHERE `email` = ?",
       values: [email],

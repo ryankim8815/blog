@@ -8,6 +8,7 @@ import asyncHandler from "../utils/asyncHandler";
 // moment.tz.setDefault("Asia/Seoul");
 // import upload from "../middlewares/image_upload";
 // import User from "../db/models/User";
+import authMiddleware from "../middlewares/authMiddleware";
 import userService from "../services/userService";
 
 const userRouter = express.Router();
@@ -20,6 +21,7 @@ const userList = async (
 ) => {
   try {
     const allUsers = await userService.getAllUsers();
+    console.log(allUsers);
     res.status(200).json(allUsers);
   } catch (err) {
     const result_err = {
@@ -43,6 +45,7 @@ const userRegister = async (
     const password = req.body.password;
     const nickname = req.body.nickname;
     const newUser = await userService.addUser({ email, password, nickname });
+    console.log(newUser);
     res.status(200).json(newUser);
   } catch (err) {
     const result_err = {
@@ -54,9 +57,30 @@ const userRegister = async (
     res.status(200).json(result_err);
   }
 };
-// 이메일 중복 확인
-// // POST: 회원가입 기능
-// const userRegister = async (
+// POST: 로그인
+const userLogin = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  try {
+    const email = req.body.email;
+    const password = req.body.password;
+    const logedinUser = await userService.getUser({ email, password });
+    console.log(logedinUser);
+    res.status(200).json(logedinUser);
+  } catch (err) {
+    const result_err = {
+      result: false,
+      cause: "api",
+      message: "userRegister api에서 오류가 발생했습니다.",
+    };
+    console.log(result_err);
+    res.status(200).json(result_err);
+  }
+};
+// // PUT: 회원정보 수정
+// const userUpdate = async (
 //   req: express.Request,
 //   res: express.Response,
 //   next: express.NextFunction
@@ -65,40 +89,8 @@ const userRegister = async (
 //     const email = req.body.email;
 //     const password = req.body.password;
 //     const nickname = req.body.nickname;
-//     // 이메일 중복 확인
-//     const duplicatedEmail = await promisePool
-//       .query({
-//         sql: "SELECT * FROM users WHERE `email` = ? ",
-//         values: [email],
-//       })
-//       .then(([rows, fields]) => {
-//         if (JSON.stringify(rows) !== "[]") {
-//           const result_errMail = {
-//             result: false,
-//             cause: "email",
-//             message:
-//               "입력하신 email로 가입된 내역이 있습니다. 다시 한 번 확인해 주세요.",
-//           };
-//           console.log(result_errMail);
-//           res.status(200).json(result_errMail);
-//           return false;
-//         } else {
-//           const addUser = promisePool
-//             .query({
-//               sql: "INSERT INTO users (email, password, nickname) VALUES (?, ?, ?)",
-//               values: [email, password, nickname],
-//             })
-//             .then(([rows, fields]) => {
-//               const result_success = {
-//                 result: true,
-//                 cause: "success",
-//                 message: "회원가입이 성공적으로 이뤄졌습니다.",
-//               };
-//               console.log(result_success);
-//               res.status(200).json(result_success);
-//             });
-//         }
-//       });
+//     const newUser = await userService.addUser({ email, password, nickname });
+//     res.status(200).json(newUser);
 //   } catch (err) {
 //     const result_err = {
 //       result: false,
@@ -111,8 +103,10 @@ const userRegister = async (
 // };
 
 // api index
-userRouter.get("/userlist", userList);
+userRouter.get("/user_list", userList);
+userRouter.post("/user_login", userLogin);
 // userRouter.post("/userRegister", asyncHandler(userRegister));
-userRouter.post("/userRegister", userRegister);
+userRouter.post("/user_register", userRegister);
+// userRouter.post("/user_update", authMiddleware, userUpdate);
 
 export = userRouter;

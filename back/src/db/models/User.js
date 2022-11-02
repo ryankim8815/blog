@@ -57,7 +57,7 @@ var User = /** @class */ (function () {
             });
         });
     };
-    User.findById = function (_a) {
+    User.findByEmail = function (_a) {
         var email = _a.email;
         return __awaiter(this, void 0, void 0, function () {
             var _b, rows, fields;

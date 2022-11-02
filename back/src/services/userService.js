@@ -40,6 +40,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 var User_1 = __importDefault(require("../db/models/User"));
 var bcrypt_1 = __importDefault(require("bcrypt"));
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var moment_timezone_1 = __importDefault(require("moment-timezone"));
 moment_timezone_1.default.tz.setDefault("Asia/Seoul");
 var userService = /** @class */ (function () {
@@ -58,8 +59,56 @@ var userService = /** @class */ (function () {
                         allUsersObject = JSON.parse(allUsersString);
                         for (i = 0; i < allUsersObject.length; i++) {
                             delete allUsersObject[i].password;
+                            delete allUsersObject[i].user_id;
                         }
                         return [2 /*return*/, allUsersObject];
+                }
+            });
+        });
+    };
+    //// 로그인용 사용자 조회
+    userService.getUser = function (_a) {
+        var email = _a.email, password = _a.password;
+        return __awaiter(this, void 0, void 0, function () {
+            var user, userString, userObject, result_errEmail, thisUser, hashedCorrectPassword, isPasswordCorrect, result_errPassword, secretKey, token, result_success;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, User_1.default.findByEmail({ email: email })];
+                    case 1:
+                        user = _b.sent();
+                        userString = JSON.stringify(user);
+                        userObject = JSON.parse(userString);
+                        if (userObject.length === 0) {
+                            result_errEmail = {
+                                result: false,
+                                cause: "email",
+                                message: "입력하신 email로 가입된 사용자가 없습니다. 다시 한 번 확인해 주세요.",
+                            };
+                            return [2 /*return*/, result_errEmail];
+                        }
+                        thisUser = userObject[0];
+                        hashedCorrectPassword = thisUser.password;
+                        return [4 /*yield*/, bcrypt_1.default.compare(password, hashedCorrectPassword)];
+                    case 2:
+                        isPasswordCorrect = _b.sent();
+                        if (!isPasswordCorrect) {
+                            result_errPassword = {
+                                result: false,
+                                cause: "password",
+                                message: "입력하신 password가 일치하지 않습니다. 다시 한 번 확인해 주세요.",
+                            };
+                            return [2 /*return*/, result_errPassword];
+                        }
+                        secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
+                        token = jsonwebtoken_1.default.sign({ email: email }, secretKey);
+                        delete thisUser.password;
+                        delete thisUser.user_id;
+                        result_success = Object.assign({
+                            result: true,
+                            cause: "success",
+                            message: "".concat(thisUser.nickname, "\uB2D8\uC758 \uB85C\uADF8\uC778\uC774 \uC131\uACF5\uC801\uC73C\uB85C \uC774\uB904\uC84C\uC2B5\uB2C8\uB2E4."),
+                        }, { token: token }, thisUser);
+                        return [2 /*return*/, result_success];
                 }
             });
         });
@@ -68,21 +117,21 @@ var userService = /** @class */ (function () {
     userService.addUser = function (_a) {
         var email = _a.email, password = _a.password, nickname = _a.nickname;
         return __awaiter(this, void 0, void 0, function () {
-            var checkEmail, checkEmailString, checkEmailObject, result_errMail, checkNickname, checkNicknameString, checkNicknameObject, result_errNickname, created_at, newUser, newUserString, newUserObject, checkNewUser, checkNewUserString, checkNewUserObject, result_success;
+            var checkEmail, checkEmailString, checkEmailObject, result_errEmail, checkNickname, checkNicknameString, checkNicknameObject, result_errNickname, created_at, newUser, newUserString, newUserObject, checkNewUser, checkNewUserString, checkNewUserObject, result_success;
             return __generator(this, function (_b) {
                 switch (_b.label) {
-                    case 0: return [4 /*yield*/, User_1.default.findById({ email: email })];
+                    case 0: return [4 /*yield*/, User_1.default.findByEmail({ email: email })];
                     case 1:
                         checkEmail = _b.sent();
                         checkEmailString = JSON.stringify(checkEmail);
                         checkEmailObject = JSON.parse(checkEmailString);
                         if (checkEmailObject.length !== 0) {
-                            result_errMail = {
+                            result_errEmail = {
                                 result: false,
                                 cause: "email",
                                 message: "입력하신 email로 가입된 내역이 있습니다. 다시 한 번 확인해 주세요.",
                             };
-                            return [2 /*return*/, result_errMail];
+                            return [2 /*return*/, result_errEmail];
                         }
                         return [4 /*yield*/, User_1.default.findByNickname({ nickname: nickname })];
                     case 2:
@@ -112,7 +161,7 @@ var userService = /** @class */ (function () {
                         newUser = _b.sent();
                         newUserString = JSON.stringify(newUser);
                         newUserObject = JSON.parse(newUserString);
-                        return [4 /*yield*/, User_1.default.findById({ email: email })];
+                        return [4 /*yield*/, User_1.default.findByEmail({ email: email })];
                     case 5:
                         checkNewUser = _b.sent();
                         checkNewUserString = JSON.stringify(checkNewUser);
