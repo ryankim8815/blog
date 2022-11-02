@@ -1,5 +1,7 @@
 import jwt from "jsonwebtoken";
 import * as express from "express";
+// import "dotenv/config";
+// require("dotenv").config();
 
 const authMiddleware = async function (
   req: express.Request,
@@ -27,9 +29,10 @@ const authMiddleware = async function (
   // 해당 token 이 정상적인 token인지 확인 -> 토큰에 담긴 user_id 정보 추출
   try {
     const secretKey = process.env.JWT_SECRET_KEY || "secret-key";
+    // console.log("secretKey: ", secretKey);
     const jwtDecoded: any = jwt.verify(userToken, secretKey);
-    const user_id = jwtDecoded.user_id;
-    req.user_id = user_id; // src/customType/express.d.ts에서 추가해주었다.
+    const email = jwtDecoded.email;
+    req.email = email; // src/customType/express.d.ts에서 추가해주었다.
     next();
   } catch (error) {
     const result_errInvalidToken = {

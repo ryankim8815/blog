@@ -62,6 +62,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 var express = __importStar(require("express"));
+// import login_required from "../middlewares/login_required";
+// import moment from "moment-timezone";
+// moment.tz.setDefault("Asia/Seoul");
+// import upload from "../middlewares/image_upload";
+// import User from "../db/models/User";
+var authMiddleware_1 = __importDefault(require("../middlewares/authMiddleware"));
 var userService_1 = __importDefault(require("../services/userService"));
 var userRouter = express.Router();
 // GET: 유저리스트 확인 기능
@@ -82,7 +88,7 @@ var userList = function (req, res, next) { return __awaiter(void 0, void 0, void
                 result_err = {
                     result: false,
                     cause: "api",
-                    message: "userRouter api에서 오류가 발생했습니다.",
+                    message: "userList api에서 오류가 발생했습니다.",
                 };
                 console.log(result_err);
                 res.status(200).json(result_err);
@@ -141,7 +147,7 @@ var userLogin = function (req, res, next) { return __awaiter(void 0, void 0, voi
                 result_err = {
                     result: false,
                     cause: "api",
-                    message: "userRegister api에서 오류가 발생했습니다.",
+                    message: "userLogin api에서 오류가 발생했습니다.",
                 };
                 console.log(result_err);
                 res.status(200).json(result_err);
@@ -150,31 +156,46 @@ var userLogin = function (req, res, next) { return __awaiter(void 0, void 0, voi
         }
     });
 }); };
-// // PUT: 회원정보 수정
-// const userUpdate = async (
-//   req: express.Request,
-//   res: express.Response,
-//   next: express.NextFunction
-// ) => {
-//   try {
-//     const email = req.body.email;
-//     const password = req.body.password;
-//     const nickname = req.body.nickname;
-//     const newUser = await userService.addUser({ email, password, nickname });
-//     res.status(200).json(newUser);
-//   } catch (err) {
-//     const result_err = {
-//       result: false,
-//       cause: "api",
-//       message: "userRegister api에서 오류가 발생했습니다.",
-//     };
-//     console.log(result_err);
-//     res.status(200).json(result_err);
-//   }
-// };
+// POST: 회원정보 수정
+var userUpdate = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var email, currentPassword, password, nickname, updateUser, err_4, result_err;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                email = req.email;
+                currentPassword = req.body.currentPassword;
+                password = req.body.password;
+                nickname = req.body.nickname;
+                return [4 /*yield*/, userService_1.default.updateUser({
+                        email: email,
+                        currentPassword: currentPassword,
+                        password: password,
+                        nickname: nickname,
+                    })];
+            case 1:
+                updateUser = _a.sent();
+                console.log(updateUser);
+                res.status(200).json(updateUser);
+                return [3 /*break*/, 3];
+            case 2:
+                err_4 = _a.sent();
+                result_err = {
+                    result: false,
+                    cause: "api",
+                    message: "userUpdate api에서 오류가 발생했습니다.",
+                };
+                console.log(result_err);
+                res.status(200).json(result_err);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
 // api index
 userRouter.get("/user_list", userList);
 userRouter.post("/user_login", userLogin);
 // userRouter.post("/userRegister", asyncHandler(userRegister));
 userRouter.post("/user_register", userRegister);
+userRouter.post("/user_update", authMiddleware_1.default, userUpdate);
 module.exports = userRouter;

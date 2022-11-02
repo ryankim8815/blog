@@ -39,6 +39,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+// import "dotenv/config";
+// require("dotenv").config();
 var authMiddleware = function (req, res, next
 //   req: Request<{}>,
 //   res: Response,
@@ -46,7 +48,7 @@ var authMiddleware = function (req, res, next
 ) {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function () {
-        var userToken, result_errNoToken, secretKey, jwtDecoded, user_id, result_errInvalidToken;
+        var userToken, result_errNoToken, secretKey, jwtDecoded, email, result_errInvalidToken;
         return __generator(this, function (_c) {
             userToken = (_b = (_a = req.headers["authorization"]) === null || _a === void 0 ? void 0 : _a.split(" ")[1]) !== null && _b !== void 0 ? _b : "null";
             // 이 토큰은 jwt 토큰 문자열이거나, 혹은 "null" 문자열임.
@@ -65,8 +67,8 @@ var authMiddleware = function (req, res, next
             try {
                 secretKey = process.env.JWT_SECRET_KEY || "secret-key";
                 jwtDecoded = jsonwebtoken_1.default.verify(userToken, secretKey);
-                user_id = jwtDecoded.user_id;
-                req.user_id = user_id; // src/customType/express.d.ts에서 추가해주었다.
+                email = jwtDecoded.email;
+                req.email = email; // src/customType/express.d.ts에서 추가해주었다.
                 next();
             }
             catch (error) {

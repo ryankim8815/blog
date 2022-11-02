@@ -72,7 +72,7 @@ class userService {
         result: false,
         cause: "email",
         message:
-          "입력하신 email로 가입된 내역이 있습니다. 다시 한 번 확인해 주세요.",
+          "입력하신 email로 이미 가입된 내역이 있습니다. 다시 한 번 확인해 주세요.",
       };
       return result_errEmail;
     }
@@ -84,7 +84,7 @@ class userService {
         result: false,
         cause: "nickname",
         message:
-          "입력하신 nickname로 가입된 내역이 있습니다. 다시 한 번 확인해 주세요.",
+          "입력하신 nickname로 이미 가입된 내역이 있습니다. 다시 한 번 확인해 주세요.",
       };
       return result_errNickname;
     }
@@ -111,6 +111,88 @@ class userService {
         result: true,
         cause: "success",
         message: `${nickname}님의 회원가입이 성공적으로 이뤄졌습니다.`,
+      };
+      return result_success;
+    }
+  }
+
+  //// 회원 정보 수정
+  static async updateUser({ email, currentPassword, password, nickname }) {
+    // email 확인
+    const checkEmail = await User.findByEmail({ email });
+    const checkEmailString = JSON.stringify(checkEmail);
+    const checkEmailObject = JSON.parse(checkEmailString);
+    if (checkEmailObject.length === 0) {
+      const result_errEmail = {
+        result: false,
+        cause: "email",
+        message:
+          "입력하신 email로 가입된 사용자가 없습니다. 다시 한 번 확인해 주세요.",
+      };
+      return result_errEmail;
+    }
+    // 기존 비밀번호 확인
+    const thisUser = checkEmailObject[0];
+    const hashedCorrectPassword = thisUser.password;
+
+    const isPasswordCorrect = await bcrypt.compare(
+      currentPassword,
+      hashedCorrectPassword
+    );
+    console.log("thisUser: ", thisUser);
+    console.log("hashedCorrectPassword: ", hashedCorrectPassword);
+    console.log("password: ", password);
+    console.log("isPasswordCorrect: ", isPasswordCorrect);
+    if (!isPasswordCorrect) {
+      const result_errPassword = {
+        result: false,
+        cause: "password",
+        message:
+          "입력하신 password가 일치하지 않습니다. 다시 한 번 확인해 주세요.",
+      };
+      return result_errPassword;
+    }
+    // nickname 중복 확인
+    const checkNickname = await User.findByNickname({ nickname });
+    const checkNicknameString = JSON.stringify(checkNickname);
+    const checkNicknameObject = JSON.parse(checkNicknameString);
+    if (
+      checkNicknameObject.length == 1 &&
+      checkNicknameObject[0].email == email
+    ) {
+      console.log(
+        "안내: 입력된 nickname은 기존 nickname과 동일하며, 회원정보 수정이 계속 진행됩니다."
+      );
+    } else if (checkNicknameObject.length !== 0) {
+      const result_errNickname = {
+        result: false,
+        cause: "nickname",
+        message:
+          "입력하신 nickname으로 이미 가입된 사용자가 있습니다. 다시 한 번 확인해 주세요.",
+      };
+      return result_errNickname;
+    }
+    // 비밀번호 해쉬화
+    password = await bcrypt.hash(password, 10);
+    // 사용자 수정
+    const updatedUser = await User.update({
+      email,
+      password,
+      nickname,
+    });
+    const updatedUserString = JSON.stringify(updatedUser);
+    const updatedUserObject = JSON.parse(updatedUserString);
+    const checkUpdatedUser = await User.findByEmail({ email });
+    const checkUpdatedUserString = JSON.stringify(checkUpdatedUser);
+    const checkUpdatedUserObject = JSON.parse(checkUpdatedUserString);
+    if (
+      updatedUserObject.affectedRows == 1 &&
+      checkUpdatedUserObject.length == 1
+    ) {
+      const result_success = {
+        result: true,
+        cause: "success",
+        message: `${nickname}님의 회원정보 수정이 성공적으로 이뤄졌습니다.`,
       };
       return result_success;
     }

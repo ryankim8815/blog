@@ -30,5 +30,13 @@ class User {
     });
     return rows;
   }
+
+  static async update({ email, password, nickname }) {
+    const [rows, fields] = await promisePool.query({
+      sql: "UPDATE users SET `password` = ?, `nickname` = ? WHERE `email` = ?",
+      values: [password, nickname, email],
+    });
+    return rows;
+  }
 }
 export = User;
