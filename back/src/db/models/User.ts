@@ -38,5 +38,13 @@ class User {
     });
     return rows;
   }
+
+  static async delete({ email }) {
+    const [rows, fields] = await promisePool.query({
+      sql: "DELETE FROM users WHERE `email` = ?",
+      values: [email],
+    });
+    return rows;
+  }
 }
 export = User;

@@ -1,13 +1,4 @@
 import * as express from "express";
-import promisePool from "../db/database";
-// import bcrypt from "bcrypt";
-// import jwt from "jsonwebtoken";
-import asyncHandler from "../utils/asyncHandler";
-// import login_required from "../middlewares/login_required";
-// import moment from "moment-timezone";
-// moment.tz.setDefault("Asia/Seoul");
-// import upload from "../middlewares/image_upload";
-// import User from "../db/models/User";
 import authMiddleware from "../middlewares/authMiddleware";
 import userService from "../services/userService";
 
@@ -108,12 +99,37 @@ const userUpdate = async (
     res.status(200).json(result_err);
   }
 };
+// DELETE: 회원정보 삭제
+const userDelete = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  try {
+    const email = req.email;
+    const password = req.body.password;
+    const deleteUser = await userService.deleteUser({
+      email,
+      password,
+    });
+    console.log(deleteUser);
+    res.status(200).json(deleteUser);
+  } catch (err) {
+    const result_err = {
+      result: false,
+      cause: "api",
+      message: "userDelete api에서 오류가 발생했습니다.",
+    };
+    console.log(result_err);
+    res.status(200).json(result_err);
+  }
+};
 
 // api index
 userRouter.get("/user_list", userList);
-userRouter.post("/user_login", userLogin);
-// userRouter.post("/userRegister", asyncHandler(userRegister));
 userRouter.post("/user_register", userRegister);
-userRouter.post("/user_update", authMiddleware, userUpdate);
+userRouter.post("/user_login", userLogin);
+userRouter.put("/user_update", authMiddleware, userUpdate);
+userRouter.delete("/user_delete", authMiddleware, userDelete);
 
 export = userRouter;

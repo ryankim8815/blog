@@ -62,11 +62,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 var express = __importStar(require("express"));
-// import login_required from "../middlewares/login_required";
-// import moment from "moment-timezone";
-// moment.tz.setDefault("Asia/Seoul");
-// import upload from "../middlewares/image_upload";
-// import User from "../db/models/User";
 var authMiddleware_1 = __importDefault(require("../middlewares/authMiddleware"));
 var userService_1 = __importDefault(require("../services/userService"));
 var userRouter = express.Router();
@@ -192,10 +187,42 @@ var userUpdate = function (req, res, next) { return __awaiter(void 0, void 0, vo
         }
     });
 }); };
+// DELETE: 회원정보 삭제
+var userDelete = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var email, password, deleteUser, err_5, result_err;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                email = req.email;
+                password = req.body.password;
+                return [4 /*yield*/, userService_1.default.deleteUser({
+                        email: email,
+                        password: password,
+                    })];
+            case 1:
+                deleteUser = _a.sent();
+                console.log(deleteUser);
+                res.status(200).json(deleteUser);
+                return [3 /*break*/, 3];
+            case 2:
+                err_5 = _a.sent();
+                result_err = {
+                    result: false,
+                    cause: "api",
+                    message: "userDelete api에서 오류가 발생했습니다.",
+                };
+                console.log(result_err);
+                res.status(200).json(result_err);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
 // api index
 userRouter.get("/user_list", userList);
-userRouter.post("/user_login", userLogin);
-// userRouter.post("/userRegister", asyncHandler(userRegister));
 userRouter.post("/user_register", userRegister);
-userRouter.post("/user_update", authMiddleware_1.default, userUpdate);
+userRouter.post("/user_login", userLogin);
+userRouter.put("/user_update", authMiddleware_1.default, userUpdate);
+userRouter.delete("/user_delete", authMiddleware_1.default, userDelete);
 module.exports = userRouter;

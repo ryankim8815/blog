@@ -139,10 +139,6 @@ class userService {
       currentPassword,
       hashedCorrectPassword
     );
-    console.log("thisUser: ", thisUser);
-    console.log("hashedCorrectPassword: ", hashedCorrectPassword);
-    console.log("password: ", password);
-    console.log("isPasswordCorrect: ", isPasswordCorrect);
     if (!isPasswordCorrect) {
       const result_errPassword = {
         result: false,
@@ -193,6 +189,70 @@ class userService {
         result: true,
         cause: "success",
         message: `${nickname}님의 회원정보 수정이 성공적으로 이뤄졌습니다.`,
+      };
+      return result_success;
+    }
+  }
+
+  //// 회원정보 삭제
+  static async deleteUser({ email, password }) {
+    // email 확인
+    const checkEmail = await User.findByEmail({ email });
+    const checkEmailString = JSON.stringify(checkEmail);
+    const checkEmailObject = JSON.parse(checkEmailString);
+    if (checkEmailObject.length === 0) {
+      const result_errEmail = {
+        result: false,
+        cause: "email",
+        message:
+          "요청하신 email로 가입된 사용자가 없습니다. 다시 한 번 확인해 주세요.",
+      };
+      return result_errEmail;
+    }
+    // 기존 비밀번호 확인
+    const thisUser = checkEmailObject[0];
+    const hashedCorrectPassword = thisUser.password;
+
+    const isPasswordCorrect = await bcrypt.compare(
+      password,
+      hashedCorrectPassword
+    );
+    if (!isPasswordCorrect) {
+      const result_errPassword = {
+        result: false,
+        cause: "password",
+        message:
+          "입력하신 password가 일치하지 않습니다. 다시 한 번 확인해 주세요.",
+      };
+      return result_errPassword;
+    }
+    // 사용자 삭제
+    const updatedUser = await User.delete({
+      email,
+    });
+    const updatedUserString = JSON.stringify(updatedUser);
+    const updatedUserObject = JSON.parse(updatedUserString);
+    const checkUpdatedUser = await User.findByEmail({ email });
+    const checkUpdatedUserString = JSON.stringify(checkUpdatedUser);
+    const checkUpdatedUserObject = JSON.parse(checkUpdatedUserString);
+    if (
+      updatedUserObject.affectedRows !== 1 &&
+      checkUpdatedUserObject.length !== 0
+    ) {
+      const result_errDelete = {
+        result: true,
+        cause: "delete",
+        message: `${checkEmailObject[0].nickname}님의 회원정보 삭제를 실패했습니다.`,
+      };
+      return result_errDelete;
+    } else if (
+      updatedUserObject.affectedRows == 1 &&
+      checkUpdatedUserObject.length == 0
+    ) {
+      const result_success = {
+        result: true,
+        cause: "success",
+        message: `${checkEmailObject[0].nickname}님의 회원정보 삭제가 성공적으로 이뤄졌습니다.`,
       };
       return result_success;
     }
