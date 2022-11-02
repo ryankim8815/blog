@@ -48,7 +48,11 @@ var database_1 = __importDefault(require("../db/database"));
 // import { Response } from "express";
 var userRouter = express_1.default.Router();
 // GET: 유저리스트 확인 기능
-var userList = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+var userList = function (req, res, next
+//   req: Request<{}>,
+//   res: Response,
+//   next: NextFunction
+) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, rows, fields, rowsString, rowsObject, i, err_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
@@ -73,7 +77,11 @@ var userList = function (req, res, next) { return __awaiter(void 0, void 0, void
     });
 }); };
 // POST: 회원가입 기능
-var userRegister = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+var userRegister = function (req, res, next
+//   req: Request<{}>,
+//   res: Response,
+//   next: NextFunction
+) { return __awaiter(void 0, void 0, void 0, function () {
     var email_1, password_1, nickname_1, duplicatedEmail, err_2;
     return __generator(this, function (_a) {
         switch (_a.label) {

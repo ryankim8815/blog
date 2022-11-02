@@ -15,9 +15,12 @@ const userRouter = express.Router();
 
 // GET: 유저리스트 확인 기능
 const userList = async (
-  req: Request<{}>,
-  res: Response,
-  next: NextFunction
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+  //   req: Request<{}>,
+  //   res: Response,
+  //   next: NextFunction
 ) => {
   try {
     const [rows, fields] = await promisePool.query("SELECT * FROM users");
@@ -34,9 +37,12 @@ const userList = async (
 
 // POST: 회원가입 기능
 const userRegister = async (
-  req: Request<{}>,
-  res: Response,
-  next: NextFunction
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+  //   req: Request<{}>,
+  //   res: Response,
+  //   next: NextFunction
 ) => {
   try {
     const email = req.body.email;

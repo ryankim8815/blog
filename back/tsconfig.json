@@ -24,6 +24,7 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
-    "esModuleInterop": true //default(false) has mis-match issue for 'import'
+    "esModuleInterop": true, //default(false) has mis-match issue for 'import'
+    "typeRoots": ["./node_modules/@types", "./src/customType"] //added custom type
   }
 }
