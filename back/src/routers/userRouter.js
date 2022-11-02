@@ -1,4 +1,27 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -38,104 +61,124 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-// import express from "express";
-var express_1 = __importDefault(require("express"));
-var database_1 = __importDefault(require("../db/database"));
+var express = __importStar(require("express"));
 // import login_required from "../middlewares/login_required";
 // import moment from "moment-timezone";
 // moment.tz.setDefault("Asia/Seoul");
 // import upload from "../middlewares/image_upload";
-// import { Response } from "express";
-var userRouter = express_1.default.Router();
+// import User from "../db/models/User";
+var userService_1 = __importDefault(require("../services/userService"));
+var userRouter = express.Router();
 // GET: 유저리스트 확인 기능
-var userList = function (req, res, next
-//   req: Request<{}>,
-//   res: Response,
-//   next: NextFunction
-) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, rows, fields, rowsString, rowsObject, i, err_1;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
+var userList = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var allUsers, err_1, result_err;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
             case 0:
-                _b.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, database_1.default.query("SELECT * FROM users")];
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, userService_1.default.getAllUsers()];
             case 1:
-                _a = _b.sent(), rows = _a[0], fields = _a[1];
-                rowsString = JSON.stringify(rows);
-                rowsObject = JSON.parse(rowsString);
-                for (i = 0; i < rowsObject.length; i++) {
-                    delete rows[i].password;
-                }
-                res.status(200).json(rows);
+                allUsers = _a.sent();
+                res.status(200).json(allUsers);
                 return [3 /*break*/, 3];
             case 2:
-                err_1 = _b.sent();
-                next(err_1);
+                err_1 = _a.sent();
+                result_err = {
+                    result: false,
+                    cause: "api",
+                    message: "userRouter api에서 오류가 발생했습니다.",
+                };
+                console.log(result_err);
+                res.status(200).json(result_err);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
     });
 }); };
 // POST: 회원가입 기능
-var userRegister = function (req, res, next
-//   req: Request<{}>,
-//   res: Response,
-//   next: NextFunction
-) { return __awaiter(void 0, void 0, void 0, function () {
-    var email_1, password_1, nickname_1, duplicatedEmail, err_2;
+var userRegister = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var email, password, nickname, newUser, err_2, result_err;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                email_1 = req.body.email;
-                password_1 = req.body.password;
-                nickname_1 = req.body.nickname;
-                return [4 /*yield*/, database_1.default
-                        .query({
-                        sql: "SELECT * FROM users WHERE `email` = ? ",
-                        values: [email_1],
-                    })
-                        .then(function (_a) {
-                        var rows = _a[0], fields = _a[1];
-                        if (JSON.stringify(rows) !== "[]") {
-                            var result_errMail = {
-                                result: false,
-                                cause: "email",
-                                message: "입력하신 email로 가입된 내역이 있습니다. 다시 한 번 확인해 주세요.",
-                            };
-                            console.log(result_errMail);
-                            res.status(200).json(result_errMail);
-                            return false;
-                        }
-                        else {
-                            var addUser = database_1.default
-                                .query({
-                                sql: "INSERT INTO users (email, password, nickname) VALUES (?, ?, ?)",
-                                values: [email_1, password_1, nickname_1],
-                            })
-                                .then(function (_a) {
-                                var rows = _a[0], fields = _a[1];
-                                var result_success = {
-                                    result: true,
-                                    cause: "success",
-                                    message: "회원가입이 성공적으로 이뤄졌습니다.",
-                                };
-                                console.log(result_success);
-                                res.status(200).json(result_success);
-                            });
-                        }
-                    })];
+                email = req.body.email;
+                password = req.body.password;
+                nickname = req.body.nickname;
+                return [4 /*yield*/, userService_1.default.addUser({ email: email, password: password, nickname: nickname })];
             case 1:
-                duplicatedEmail = _a.sent();
+                newUser = _a.sent();
+                res.status(200).json(newUser);
                 return [3 /*break*/, 3];
             case 2:
                 err_2 = _a.sent();
-                next(err_2);
+                result_err = {
+                    result: false,
+                    cause: "api",
+                    message: "userRegister api에서 오류가 발생했습니다.",
+                };
+                console.log(result_err);
+                res.status(200).json(result_err);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
     });
 }); };
+// 이메일 중복 확인
+// // POST: 회원가입 기능
+// const userRegister = async (
+//   req: express.Request,
+//   res: express.Response,
+//   next: express.NextFunction
+// ) => {
+//   try {
+//     const email = req.body.email;
+//     const password = req.body.password;
+//     const nickname = req.body.nickname;
+//     // 이메일 중복 확인
+//     const duplicatedEmail = await promisePool
+//       .query({
+//         sql: "SELECT * FROM users WHERE `email` = ? ",
+//         values: [email],
+//       })
+//       .then(([rows, fields]) => {
+//         if (JSON.stringify(rows) !== "[]") {
+//           const result_errMail = {
+//             result: false,
+//             cause: "email",
+//             message:
+//               "입력하신 email로 가입된 내역이 있습니다. 다시 한 번 확인해 주세요.",
+//           };
+//           console.log(result_errMail);
+//           res.status(200).json(result_errMail);
+//           return false;
+//         } else {
+//           const addUser = promisePool
+//             .query({
+//               sql: "INSERT INTO users (email, password, nickname) VALUES (?, ?, ?)",
+//               values: [email, password, nickname],
+//             })
+//             .then(([rows, fields]) => {
+//               const result_success = {
+//                 result: true,
+//                 cause: "success",
+//                 message: "회원가입이 성공적으로 이뤄졌습니다.",
+//               };
+//               console.log(result_success);
+//               res.status(200).json(result_success);
+//             });
+//         }
+//       });
+//   } catch (err) {
+//     const result_err = {
+//       result: false,
+//       cause: "api",
+//       message: "userRegister api에서 오류가 발생했습니다.",
+//     };
+//     console.log(result_err);
+//     res.status(200).json(result_err);
+//   }
+// };
 // api index
 userRouter.get("/userlist", userList);
 // userRouter.post("/userRegister", asyncHandler(userRegister));
