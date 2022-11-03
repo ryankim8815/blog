@@ -3,6 +3,7 @@ import swagger from "./utils/swagger";
 import cors from "cors";
 import userRouter from "./routers/userRouter";
 import socialLoginRouter from "./routers/socialLoginRouter";
+import postRouter from "./routers/postRouter";
 
 const app = express();
 app.use(cors());
@@ -15,6 +16,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(userRouter);
 app.use(socialLoginRouter);
+app.use(postRouter);
 app.use(swagger);
 
 // 기본 페이지
