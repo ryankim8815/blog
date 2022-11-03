@@ -38,6 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+var User_1 = __importDefault(require("../db/models/User"));
 var Post_1 = __importDefault(require("../db/models/Post"));
 var moment_timezone_1 = __importDefault(require("moment-timezone"));
 moment_timezone_1.default.tz.setDefault("Asia/Seoul");
@@ -47,14 +48,14 @@ var postService = /** @class */ (function () {
     //// 모든 게시글 조회
     postService.getAllPosts = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var allPosts, aallPostsString, allPostsObject, i, result_success;
+            var allPosts, allPostsString, allPostsObject, i, result_success;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, Post_1.default.findAll()];
                     case 1:
                         allPosts = _a.sent();
-                        aallPostsString = JSON.stringify(allPosts);
-                        allPostsObject = JSON.parse(aallPostsString);
+                        allPostsString = JSON.stringify(allPosts);
+                        allPostsObject = JSON.parse(allPostsString);
                         for (i = 0; i < allPostsObject.length; i++) {
                             delete allPostsObject[i].post_id;
                             delete allPostsObject[i].user_id;
@@ -65,6 +66,54 @@ var postService = /** @class */ (function () {
                             message: "\uBAA8\uB4E0 \uAC8C\uC2DC\uAE00 \uC870\uD68C\uAC00 \uC131\uACF5\uC801\uC73C\uB85C \uC774\uB904\uC84C\uC2B5\uB2C8\uB2E4.",
                         }, allPostsObject);
                         return [2 /*return*/, result_success];
+                }
+            });
+        });
+    };
+    //// 게시글 생성
+    postService.addPost = function (_a) {
+        var email = _a.email, title = _a.title, content = _a.content, tag = _a.tag;
+        return __awaiter(this, void 0, void 0, function () {
+            var created_at, updated_at, user, userString, userObject, user_id, post, postString, postObject, post_id, checkNewPost, checkNewPostString, checkNewPostObject, result_success;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        created_at = (0, moment_timezone_1.default)().format("YYYY-MM-DD HH:mm:ss");
+                        updated_at = created_at;
+                        return [4 /*yield*/, User_1.default.findByEmail(email)];
+                    case 1:
+                        user = _b.sent();
+                        userString = JSON.stringify(user);
+                        userObject = JSON.parse(userString);
+                        user_id = userObject.user_id;
+                        return [4 /*yield*/, Post_1.default.create({
+                                user_id: user_id,
+                                title: title,
+                                content: content,
+                                tag: tag,
+                                created_at: created_at,
+                                updated_at: updated_at,
+                            })];
+                    case 2:
+                        post = _b.sent();
+                        postString = JSON.stringify(post);
+                        postObject = JSON.parse(postString);
+                        post_id = postObject.insertId;
+                        console.log("post_id: ", post_id);
+                        return [4 /*yield*/, Post_1.default.findByPostId({ post_id: post_id })];
+                    case 3:
+                        checkNewPost = _b.sent();
+                        checkNewPostString = JSON.stringify(checkNewPost);
+                        checkNewPostObject = JSON.parse(checkNewPostString);
+                        if (postObject.affectedRows == 1 && checkNewPostObject.length == 1) {
+                            result_success = {
+                                result: true,
+                                cause: "success",
+                                message: "\uAC8C\uC2DC\uAE00 \uC0DD\uC131\uC774 \uC131\uACF5\uC801\uC73C\uB85C \uC774\uB904\uC84C\uC2B5\uB2C8\uB2E4.",
+                            };
+                            return [2 /*return*/, result_success];
+                        }
+                        return [2 /*return*/];
                 }
             });
         });

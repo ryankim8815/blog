@@ -62,9 +62,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 var express = __importStar(require("express"));
+var authMiddleware_1 = __importDefault(require("../middlewares/authMiddleware"));
 var postService_1 = __importDefault(require("../services/postService"));
 var postRouter = express.Router();
-// GET: 유저리스트 확인 기능
+// GET: 전체 게시글 리스트
 var postList = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var allPosts, err_1, result_err;
     return __generator(this, function (_a) {
@@ -91,6 +92,45 @@ var postList = function (req, res, next) { return __awaiter(void 0, void 0, void
         }
     });
 }); };
+// POST: 게시글 생성
+var postCreate = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var email, title, content, tag, createdPost, err_2, result_err;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                email = req.email;
+                title = req.body.title;
+                content = req.body.content;
+                tag = req.body.tag;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, postService_1.default.addPost({
+                        email: email,
+                        title: title,
+                        content: content,
+                        tag: tag,
+                    })];
+            case 2:
+                createdPost = _a.sent();
+                console.log(createdPost);
+                res.status(200).json(createdPost);
+                return [3 /*break*/, 4];
+            case 3:
+                err_2 = _a.sent();
+                result_err = {
+                    result: false,
+                    cause: "api",
+                    message: "postCreate api에서 오류가 발생했습니다.",
+                };
+                console.log(result_err);
+                res.status(200).json(result_err);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
 // api index
 postRouter.get("/post/list", postList); // 전체 유저 검섹
+postRouter.post("/post/create", authMiddleware_1.default, postCreate); // 자체 회원가입
 module.exports = postRouter;

@@ -55,19 +55,18 @@ class Post {
     });
     return rows;
   }
-  // 게시글 등록
+  // 게시글 등록 - 용량 우려로 이미지 업로드 기능 제외
   static async create({
     user_id,
     title,
     content,
-    image,
     tag,
     created_at,
     updated_at,
   }) {
     const [rows, fields] = await promisePool.query({
-      sql: "INSERT INTO posts (user_id, title, content, image, tag, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
-      values: [user_id, title, content, image, tag, created_at, updated_at],
+      sql: "INSERT INTO posts (user_id, title, content, tag, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)",
+      values: [user_id, title, content, tag, created_at, updated_at],
     });
     return rows;
   }
