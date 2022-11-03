@@ -178,6 +178,61 @@ var postService = /** @class */ (function () {
             });
         });
     };
+    //// 게시글 삭제
+    postService.deletePost = function (_a) {
+        var email = _a.email, post_id = _a.post_id;
+        return __awaiter(this, void 0, void 0, function () {
+            var user, userString, userObject, user_id, targetPost, targetPostString, targetPostObject, result_errPost, post, postString, postObject, affectedRows, result_errUpdate, result_success;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, User_1.default.findByEmail({ email: email })];
+                    case 1:
+                        user = _b.sent();
+                        userString = JSON.stringify(user);
+                        userObject = JSON.parse(userString);
+                        user_id = userObject[0].user_id;
+                        return [4 /*yield*/, Post_1.default.findByPostIdUerId({ post_id: post_id, user_id: user_id })];
+                    case 2:
+                        targetPost = _b.sent();
+                        targetPostString = JSON.stringify(targetPost);
+                        targetPostObject = JSON.parse(targetPostString);
+                        if (!(targetPostObject.length !== 1)) return [3 /*break*/, 3];
+                        result_errPost = {
+                            result: false,
+                            cause: "post",
+                            message: "삭제하려는 게시글을 찾지 못했습니다. 요청자가 작성자가 아닐 수 있습니다.",
+                        };
+                        return [2 /*return*/, result_errPost];
+                    case 3: return [4 /*yield*/, Post_1.default.delete({
+                            post_id: post_id,
+                        })];
+                    case 4:
+                        post = _b.sent();
+                        postString = JSON.stringify(post);
+                        postObject = JSON.parse(postString);
+                        affectedRows = postObject.affectedRows;
+                        if (affectedRows !== 1) {
+                            result_errUpdate = {
+                                result: false,
+                                cause: "update",
+                                message: "\uAC8C\uC2DC\uAE00 \uC0AD\uC81C \uC911\uC5D0 \uBB38\uC81C\uAC00 \uBC1C\uC0DD\uD588\uC2B5\uB2C8\uB2E4.",
+                            };
+                            return [2 /*return*/, result_errUpdate];
+                        }
+                        else {
+                            result_success = {
+                                result: true,
+                                cause: "success",
+                                message: "\uAC8C\uC2DC\uAE00 \uC0AD\uC81C\uAC00 \uC131\uACF5\uC801\uC73C\uB85C \uC774\uB904\uC84C\uC2B5\uB2C8\uB2E4.",
+                            };
+                            return [2 /*return*/, result_success];
+                        }
+                        _b.label = 5;
+                    case 5: return [2 /*return*/];
+                }
+            });
+        });
+    };
     return postService;
 }());
 module.exports = postService;

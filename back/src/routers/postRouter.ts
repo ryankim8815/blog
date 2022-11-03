@@ -68,7 +68,6 @@ const postUpdate = async (
   const title = req.body.title;
   const content = req.body.content;
   const tag = req.body.tag;
-  //   const created_at = req.body.created_at;
   try {
     const updatedPost = await postService.updatePost({
       email,
@@ -76,7 +75,6 @@ const postUpdate = async (
       title,
       content,
       tag,
-      //   created_at
     });
     console.log(updatedPost);
     res.status(200).json(updatedPost);
@@ -91,16 +89,36 @@ const postUpdate = async (
   }
 };
 
+// DELETE: 게시글 삭제
+const postDelete = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  const email = req.email;
+  const post_id = req.body.post_id;
+  try {
+    const deletedPost = await postService.deletePost({
+      email,
+      post_id,
+    });
+    console.log(deletedPost);
+    res.status(200).json(deletedPost);
+  } catch (err) {
+    const result_err = {
+      result: false,
+      cause: "api",
+      message: "deletedPost api에서 오류가 발생했습니다.",
+    };
+    console.log(result_err);
+    res.status(200).json(result_err);
+  }
+};
+
 // api index
 postRouter.get("/post/list", postList); // 전체 게시글 검섹
 postRouter.post("/post/create", authMiddleware, postCreate); // 게시글 생성
 postRouter.put("/post/update", authMiddleware, postUpdate); //  게시글 수정
-// userRouter.delete("/user/delete", authMiddleware, userDelete); // 유저 삭제
-// userRouter.post(
-//   "/user/upload_image",
-//   authMiddleware,
-//   upload.single("file"),
-//   userUploadImage
-// ); // 프로필 사진 업로드(기존 사진 자동 삭제)
+postRouter.delete("/post/delete", authMiddleware, postDelete); // 게시글 삭제
 
 export = postRouter;

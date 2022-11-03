@@ -150,7 +150,6 @@ var postUpdate = function (req, res, next) { return __awaiter(void 0, void 0, vo
                         title: title,
                         content: content,
                         tag: tag,
-                        //   created_at
                     })];
             case 2:
                 updatedPost = _a.sent();
@@ -171,8 +170,43 @@ var postUpdate = function (req, res, next) { return __awaiter(void 0, void 0, vo
         }
     });
 }); };
+// DELETE: 게시글 삭제
+var postDelete = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var email, post_id, deletedPost, err_4, result_err;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                email = req.email;
+                post_id = req.body.post_id;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, postService_1.default.deletePost({
+                        email: email,
+                        post_id: post_id,
+                    })];
+            case 2:
+                deletedPost = _a.sent();
+                console.log(deletedPost);
+                res.status(200).json(deletedPost);
+                return [3 /*break*/, 4];
+            case 3:
+                err_4 = _a.sent();
+                result_err = {
+                    result: false,
+                    cause: "api",
+                    message: "deletedPost api에서 오류가 발생했습니다.",
+                };
+                console.log(result_err);
+                res.status(200).json(result_err);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
 // api index
 postRouter.get("/post/list", postList); // 전체 게시글 검섹
 postRouter.post("/post/create", authMiddleware_1.default, postCreate); // 게시글 생성
 postRouter.put("/post/update", authMiddleware_1.default, postUpdate); //  게시글 수정
+postRouter.delete("/post/delete", authMiddleware_1.default, postDelete); // 게시글 삭제
 module.exports = postRouter;
