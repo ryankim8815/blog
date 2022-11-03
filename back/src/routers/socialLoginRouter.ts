@@ -70,7 +70,7 @@ const kakaoOauth = async (
         console.log(err);
       });
 
-    // 이메일 중복 확인
+    // 로그인 & 회원가입
     const email = kakaoUser.email;
     const logedinUser = await socialLoginService.kakao({ email, access_token });
     console.log(logedinUser);
@@ -86,6 +86,69 @@ const kakaoOauth = async (
   }
 };
 
+////////////////////////////////////////
+/////////////  네  이  버  ///////////////
+////////////////////////////////////////
+const naverOauth = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  const code = req.body.code;
+  const state = process.env.NAVER_STATE;
+  const client_id = process.env.NAVER_CLIENT_ID;
+  const client_secret = process.env.NAVER_CLIENT_SECRET;
+  const redirectURI = process.env.NAVER_REDIRECT_URL;
+  const encoded = encodeURIComponent(redirectURI);
+  const url = `https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=${client_id}&client_secret=${client_secret}&redirect_uri=${encoded}&code=${code}&state=${state}`;
+  //   const FE_url = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${client_id}&redirect_uri=${encoded}&state=${state}`;
+  //   console.log("FE_url: ", FE_url);
+  try {
+    let naverToken: any = "";
+    await axios({
+      method: "GET",
+      url: url,
+    })
+      .then((res) => {
+        naverToken = res;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    ///////정보 받아오기///////
+    let naverUser: any = "";
+    const access_token = naverToken.access_token;
+    await axios({
+      method: "GET",
+      headers: {
+        Authorization: `bearer ${access_token}`,
+      },
+      url: "https://openapi.naver.com/v1/nid/me",
+    })
+      .then((res) => {
+        naverUser = res;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // 로그인 & 회원가입
+    const naverUserRes = naverUser.response;
+    const email = naverUserRes.email;
+    const logedinUser = await socialLoginService.naver({ email, access_token });
+    console.log(logedinUser);
+    res.status(200).json(logedinUser);
+  } catch (err) {
+    const result_err = {
+      result: false,
+      cause: "api",
+      message: "naverOauth api에서 오류가 발생했습니다.",
+    };
+    console.log(result_err);
+    res.status(200).json(result_err);
+  }
+};
+
 socialLoginRouter.post("/kakaoOauth", kakaoOauth);
+socialLoginRouter.post("/naverOauth", naverOauth);
 
 export = socialLoginRouter;

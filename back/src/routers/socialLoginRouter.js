@@ -153,5 +153,76 @@ var kakaoOauth = function (req, res, next) { return __awaiter(void 0, void 0, vo
         }
     });
 }); };
+////////////////////////////////////////
+/////////////  네  이  버  ///////////////
+////////////////////////////////////////
+var naverOauth = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var code, state, client_id, client_secret, redirectURI, encoded, url, naverToken_1, naverUser_1, access_token, naverUserRes, email, logedinUser, err_2, result_err;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                code = req.body.code;
+                state = process.env.NAVER_STATE;
+                client_id = process.env.NAVER_CLIENT_ID;
+                client_secret = process.env.NAVER_CLIENT_SECRET;
+                redirectURI = process.env.NAVER_REDIRECT_URL;
+                encoded = encodeURIComponent(redirectURI);
+                url = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=".concat(client_id, "&client_secret=").concat(client_secret, "&redirect_uri=").concat(encoded, "&code=").concat(code, "&state=").concat(state);
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 5, , 6]);
+                naverToken_1 = "";
+                return [4 /*yield*/, (0, axios_1.default)({
+                        method: "GET",
+                        url: url,
+                    })
+                        .then(function (res) {
+                        naverToken_1 = res;
+                    })
+                        .catch(function (err) {
+                        console.log(err);
+                    })];
+            case 2:
+                _a.sent();
+                naverUser_1 = "";
+                access_token = naverToken_1.access_token;
+                return [4 /*yield*/, (0, axios_1.default)({
+                        method: "GET",
+                        headers: {
+                            Authorization: "bearer ".concat(access_token),
+                        },
+                        url: "https://openapi.naver.com/v1/nid/me",
+                    })
+                        .then(function (res) {
+                        naverUser_1 = res;
+                    })
+                        .catch(function (err) {
+                        console.log(err);
+                    })];
+            case 3:
+                _a.sent();
+                naverUserRes = naverUser_1.response;
+                email = naverUserRes.email;
+                return [4 /*yield*/, socialLoginService_1.default.naver({ email: email, access_token: access_token })];
+            case 4:
+                logedinUser = _a.sent();
+                console.log(logedinUser);
+                res.status(200).json(logedinUser);
+                return [3 /*break*/, 6];
+            case 5:
+                err_2 = _a.sent();
+                result_err = {
+                    result: false,
+                    cause: "api",
+                    message: "naverOauth api에서 오류가 발생했습니다.",
+                };
+                console.log(result_err);
+                res.status(200).json(result_err);
+                return [3 /*break*/, 6];
+            case 6: return [2 /*return*/];
+        }
+    });
+}); };
 socialLoginRouter.post("/kakaoOauth", kakaoOauth);
+socialLoginRouter.post("/naverOauth", naverOauth);
 module.exports = socialLoginRouter;
