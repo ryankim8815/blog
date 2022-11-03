@@ -92,14 +92,14 @@ var User = /** @class */ (function () {
         });
     };
     User.create = function (_a) {
-        var email = _a.email, password = _a.password, nickname = _a.nickname, created_at = _a.created_at;
+        var email = _a.email, password = _a.password, nickname = _a.nickname, provider = _a.provider, created_at = _a.created_at;
         return __awaiter(this, void 0, void 0, function () {
             var _b, rows, fields;
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0: return [4 /*yield*/, database_1.default.query({
-                            sql: "INSERT INTO users (email, password, nickname, created_at) VALUES (?, ?, ?, ?)",
-                            values: [email, password, nickname, created_at],
+                            sql: "INSERT INTO users (email, password, nickname, provider, created_at) VALUES (?, ?, ?, ?, ?)",
+                            values: [email, password, nickname, provider, created_at],
                         })];
                     case 1:
                         _b = _c.sent(), rows = _b[0], fields = _b[1];

@@ -254,10 +254,10 @@ var userUploadImage = function (req, res, next) { return __awaiter(void 0, void 
     });
 }); };
 // api index
-userRouter.get("/user/list", userList);
-userRouter.post("/user/register", userRegister);
-userRouter.post("/user/login", userLogin);
-userRouter.put("/user/update", authMiddleware_1.default, userUpdate);
-userRouter.delete("/user/delete", authMiddleware_1.default, userDelete);
-userRouter.post("/user/upload_image", authMiddleware_1.default, uploadMiddleware_1.default.single("file"), userUploadImage);
+userRouter.get("/user/list", userList); // 전체 유저 검섹
+userRouter.post("/user/register", userRegister); // 자체 회원가입
+userRouter.post("/user/login", userLogin); // 로그인
+userRouter.put("/user/update", authMiddleware_1.default, userUpdate); // 유저 정보 업데이트(pw & nickname)
+userRouter.delete("/user/delete", authMiddleware_1.default, userDelete); // 유저 삭제
+userRouter.post("/user/upload_image", authMiddleware_1.default, uploadMiddleware_1.default.single("file"), userUploadImage); // 프로필 사진 업로드(기존 사진 자동 삭제)
 module.exports = userRouter;

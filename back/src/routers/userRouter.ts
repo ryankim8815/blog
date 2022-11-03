@@ -155,16 +155,16 @@ const userUploadImage = async (
 };
 
 // api index
-userRouter.get("/user/list", userList);
-userRouter.post("/user/register", userRegister);
-userRouter.post("/user/login", userLogin);
-userRouter.put("/user/update", authMiddleware, userUpdate);
-userRouter.delete("/user/delete", authMiddleware, userDelete);
+userRouter.get("/user/list", userList); // 전체 유저 검섹
+userRouter.post("/user/register", userRegister); // 자체 회원가입
+userRouter.post("/user/login", userLogin); // 로그인
+userRouter.put("/user/update", authMiddleware, userUpdate); // 유저 정보 업데이트(pw & nickname)
+userRouter.delete("/user/delete", authMiddleware, userDelete); // 유저 삭제
 userRouter.post(
   "/user/upload_image",
   authMiddleware,
   upload.single("file"),
   userUploadImage
-);
+); // 프로필 사진 업로드(기존 사진 자동 삭제)
 
 export = userRouter;

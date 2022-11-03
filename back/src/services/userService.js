@@ -118,7 +118,7 @@ var userService = /** @class */ (function () {
     userService.addUser = function (_a) {
         var email = _a.email, password = _a.password, nickname = _a.nickname;
         return __awaiter(this, void 0, void 0, function () {
-            var checkEmail, checkEmailString, checkEmailObject, result_errEmail, checkNickname, checkNicknameString, checkNicknameObject, result_errNickname, created_at, newUser, newUserString, newUserObject, checkNewUser, checkNewUserString, checkNewUserObject, result_success;
+            var checkEmail, checkEmailString, checkEmailObject, result_errEmail, checkNickname, checkNicknameString, checkNicknameObject, result_errNickname, provider, created_at, newUser, newUserString, newUserObject, checkNewUser, checkNewUserString, checkNewUserObject, result_success;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0: return [4 /*yield*/, User_1.default.findByEmail({ email: email })];
@@ -151,11 +151,13 @@ var userService = /** @class */ (function () {
                     case 3:
                         // 비밀번호 해쉬화
                         password = _b.sent();
+                        provider = "dogfoot";
                         created_at = (0, moment_timezone_1.default)().format("YYYY-MM-DD HH:mm:ss");
                         return [4 /*yield*/, User_1.default.create({
                                 email: email,
                                 password: password,
                                 nickname: nickname,
+                                provider: provider,
                                 created_at: created_at,
                             })];
                     case 4:
