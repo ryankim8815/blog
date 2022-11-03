@@ -15,7 +15,15 @@ class userService {
       delete allUsersObject[i].password;
       delete allUsersObject[i].user_id;
     }
-    return allUsersObject;
+    const result_success = Object.assign(
+      {
+        result: true,
+        cause: "success",
+        message: `모든 사용자 조회가 성공적으로 이뤄졌습니다.`,
+      },
+      allUsersObject
+    );
+    return result_success;
   }
   //// 로그인용 사용자 조회
   static async getUser({ email, password }) {

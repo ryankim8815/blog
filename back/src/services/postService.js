@@ -38,16 +38,36 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+var Post_1 = __importDefault(require("../db/models/Post"));
 var moment_timezone_1 = __importDefault(require("moment-timezone"));
 moment_timezone_1.default.tz.setDefault("Asia/Seoul");
 var postService = /** @class */ (function () {
     function postService() {
     }
-    //// 모든 사용자 조회
-    postService.getAllUsers = function () {
-        return __awaiter(this, void 0, void 0, function () { return __generator(this, function (_a) {
-            return [2 /*return*/];
-        }); });
+    //// 모든 게시글 조회
+    postService.getAllPosts = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var allPosts, aallPostsString, allPostsObject, i, result_success;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, Post_1.default.findAll()];
+                    case 1:
+                        allPosts = _a.sent();
+                        aallPostsString = JSON.stringify(allPosts);
+                        allPostsObject = JSON.parse(aallPostsString);
+                        for (i = 0; i < allPostsObject.length; i++) {
+                            delete allPostsObject[i].post_id;
+                            delete allPostsObject[i].user_id;
+                        }
+                        result_success = Object.assign({
+                            result: true,
+                            cause: "success",
+                            message: "\uBAA8\uB4E0 \uAC8C\uC2DC\uAE00 \uC870\uD68C\uAC00 \uC131\uACF5\uC801\uC73C\uB85C \uC774\uB904\uC84C\uC2B5\uB2C8\uB2E4.",
+                        }, allPostsObject);
+                        return [2 /*return*/, result_success];
+                }
+            });
+        });
     };
     return postService;
 }());
