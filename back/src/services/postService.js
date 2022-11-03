@@ -57,7 +57,7 @@ var postService = /** @class */ (function () {
                         allPostsString = JSON.stringify(allPosts);
                         allPostsObject = JSON.parse(allPostsString);
                         for (i = 0; i < allPostsObject.length; i++) {
-                            delete allPostsObject[i].post_id;
+                            //   delete allPostsObject[i].post_id;
                             delete allPostsObject[i].user_id;
                         }
                         result_success = Object.assign({
@@ -80,12 +80,12 @@ var postService = /** @class */ (function () {
                     case 0:
                         created_at = (0, moment_timezone_1.default)().format("YYYY-MM-DD HH:mm:ss");
                         updated_at = created_at;
-                        return [4 /*yield*/, User_1.default.findByEmail(email)];
+                        return [4 /*yield*/, User_1.default.findByEmail({ email: email })];
                     case 1:
                         user = _b.sent();
                         userString = JSON.stringify(user);
                         userObject = JSON.parse(userString);
-                        user_id = userObject.user_id;
+                        user_id = userObject[0].user_id;
                         return [4 /*yield*/, Post_1.default.create({
                                 user_id: user_id,
                                 title: title,
@@ -99,7 +99,6 @@ var postService = /** @class */ (function () {
                         postString = JSON.stringify(post);
                         postObject = JSON.parse(postString);
                         post_id = postObject.insertId;
-                        console.log("post_id: ", post_id);
                         return [4 /*yield*/, Post_1.default.findByPostId({ post_id: post_id })];
                     case 3:
                         checkNewPost = _b.sent();
@@ -114,6 +113,67 @@ var postService = /** @class */ (function () {
                             return [2 /*return*/, result_success];
                         }
                         return [2 /*return*/];
+                }
+            });
+        });
+    };
+    //// 게시글 수정
+    postService.updatePost = function (_a) {
+        var email = _a.email, post_id = _a.post_id, title = _a.title, content = _a.content, tag = _a.tag;
+        return __awaiter(this, void 0, void 0, function () {
+            var updated_at, user, userString, userObject, user_id, oldPost, oldPostString, oldPostObject, result_errPost, post, postString, postObject, affectedRows, result_errUpdate, result_success;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        updated_at = (0, moment_timezone_1.default)().format("YYYY-MM-DD HH:mm:ss");
+                        return [4 /*yield*/, User_1.default.findByEmail({ email: email })];
+                    case 1:
+                        user = _b.sent();
+                        userString = JSON.stringify(user);
+                        userObject = JSON.parse(userString);
+                        user_id = userObject[0].user_id;
+                        return [4 /*yield*/, Post_1.default.findByPostIdUerId({ post_id: post_id, user_id: user_id })];
+                    case 2:
+                        oldPost = _b.sent();
+                        oldPostString = JSON.stringify(oldPost);
+                        oldPostObject = JSON.parse(oldPostString);
+                        if (!(oldPostObject.length !== 1)) return [3 /*break*/, 3];
+                        result_errPost = {
+                            result: false,
+                            cause: "post",
+                            message: "수정하려는 게시글을 찾지 못했습니다. 수정자가 작성자가 아닐 수 있습니다.",
+                        };
+                        return [2 /*return*/, result_errPost];
+                    case 3: return [4 /*yield*/, Post_1.default.update({
+                            post_id: post_id,
+                            title: title,
+                            content: content,
+                            tag: tag,
+                            updated_at: updated_at,
+                        })];
+                    case 4:
+                        post = _b.sent();
+                        postString = JSON.stringify(post);
+                        postObject = JSON.parse(postString);
+                        affectedRows = postObject.affectedRows;
+                        if (affectedRows !== 1) {
+                            result_errUpdate = {
+                                result: false,
+                                cause: "update",
+                                message: "\uAC8C\uC2DC\uAE00 \uC5C5\uB370\uC774\uD2B8 \uC911\uC5D0 \uBB38\uC81C\uAC00 \uBC1C\uC0DD\uD588\uC2B5\uB2C8\uB2E4.",
+                            };
+                            return [2 /*return*/, result_errUpdate];
+                        }
+                        else {
+                            result_success = {
+                                result: true,
+                                cause: "success",
+                                message: "\uAC8C\uC2DC\uAE00 \uC0DD\uC131\uC774 \uC131\uACF5\uC801\uC73C\uB85C \uC774\uB904\uC84C\uC2B5\uB2C8\uB2E4.",
+                            };
+                            return [2 /*return*/, result_success];
+                        }
+                        _b.label = 5;
+                    case 5: return [2 /*return*/];
                 }
             });
         });

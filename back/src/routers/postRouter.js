@@ -130,7 +130,49 @@ var postCreate = function (req, res, next) { return __awaiter(void 0, void 0, vo
         }
     });
 }); };
+// PUT: 게시글 수정
+var postUpdate = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var email, post_id, title, content, tag, updatedPost, err_3, result_err;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                email = req.email;
+                post_id = req.body.post_id;
+                title = req.body.title;
+                content = req.body.content;
+                tag = req.body.tag;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, postService_1.default.updatePost({
+                        email: email,
+                        post_id: post_id,
+                        title: title,
+                        content: content,
+                        tag: tag,
+                        //   created_at
+                    })];
+            case 2:
+                updatedPost = _a.sent();
+                console.log(updatedPost);
+                res.status(200).json(updatedPost);
+                return [3 /*break*/, 4];
+            case 3:
+                err_3 = _a.sent();
+                result_err = {
+                    result: false,
+                    cause: "api",
+                    message: "postUpdate api에서 오류가 발생했습니다.",
+                };
+                console.log(result_err);
+                res.status(200).json(result_err);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
 // api index
-postRouter.get("/post/list", postList); // 전체 유저 검섹
-postRouter.post("/post/create", authMiddleware_1.default, postCreate); // 자체 회원가입
+postRouter.get("/post/list", postList); // 전체 게시글 검섹
+postRouter.post("/post/create", authMiddleware_1.default, postCreate); // 게시글 생성
+postRouter.put("/post/update", authMiddleware_1.default, postUpdate); //  게시글 수정
 module.exports = postRouter;

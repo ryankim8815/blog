@@ -94,6 +94,24 @@ var Post = /** @class */ (function () {
             });
         });
     };
+    // post_id와 user_id로 검색
+    Post.findByPostIdUerId = function (_a) {
+        var post_id = _a.post_id, user_id = _a.user_id;
+        return __awaiter(this, void 0, void 0, function () {
+            var _b, rows, fields;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0: return [4 /*yield*/, database_1.default.query({
+                            sql: "SELECT * FROM posts WHERE `post_id` = ? AND `user_id` = ?",
+                            values: [post_id, user_id],
+                        })];
+                    case 1:
+                        _b = _c.sent(), rows = _b[0], fields = _b[1];
+                        return [2 /*return*/, rows];
+                }
+            });
+        });
+    };
     // title로 검색
     Post.findByTitle = function (_a) {
         var title = _a.title;
@@ -184,16 +202,16 @@ var Post = /** @class */ (function () {
             });
         });
     };
-    // 게시글 수정
+    // 게시글 수정  - 용량 우려로 이미지 업로드 기능 제외
     Post.update = function (_a) {
-        var post_id = _a.post_id, title = _a.title, content = _a.content, image = _a.image, tag = _a.tag, updated_at = _a.updated_at;
+        var post_id = _a.post_id, title = _a.title, content = _a.content, tag = _a.tag, updated_at = _a.updated_at;
         return __awaiter(this, void 0, void 0, function () {
             var _b, rows, fields;
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0: return [4 /*yield*/, database_1.default.query({
-                            sql: "UPDATE posts SET `title` = ?, `content` = ?, `image` = ?, `tag` = ? WHERE `post_id` = ?",
-                            values: [title, content, image, tag, updated_at, post_id],
+                            sql: "UPDATE posts SET `title` = ?, `content` = ?, `tag` = ?, `updated_at` = ? WHERE `post_id` = ?",
+                            values: [title, content, tag, updated_at, post_id],
                         })];
                     case 1:
                         _b = _c.sent(), rows = _b[0], fields = _b[1];

@@ -23,6 +23,14 @@ class Post {
     });
     return rows;
   }
+  // post_id와 user_id로 검색
+  static async findByPostIdUerId({ post_id, user_id }) {
+    const [rows, fields] = await promisePool.query({
+      sql: "SELECT * FROM posts WHERE `post_id` = ? AND `user_id` = ?",
+      values: [post_id, user_id],
+    });
+    return rows;
+  }
   // title로 검색
   static async findByTitle({ title }) {
     const [rows, fields] = await promisePool.query({
@@ -70,11 +78,11 @@ class Post {
     });
     return rows;
   }
-  // 게시글 수정
-  static async update({ post_id, title, content, image, tag, updated_at }) {
+  // 게시글 수정  - 용량 우려로 이미지 업로드 기능 제외
+  static async update({ post_id, title, content, tag, updated_at }) {
     const [rows, fields] = await promisePool.query({
-      sql: "UPDATE posts SET `title` = ?, `content` = ?, `image` = ?, `tag` = ? WHERE `post_id` = ?",
-      values: [title, content, image, tag, updated_at, post_id],
+      sql: "UPDATE posts SET `title` = ?, `content` = ?, `tag` = ?, `updated_at` = ? WHERE `post_id` = ?",
+      values: [title, content, tag, updated_at, post_id],
     });
     return rows;
   }
