@@ -18,7 +18,7 @@
 - Server: Mac mini(M1)
 - Skill set:
   All: Docker, gitHub
-  Backend: Typescript, Node.js, express.js, PostgreSQL, NginX
+  Backend: Typescript, Node.js, Express.js, MySQL, NginX
   Frontend: Typescript, React.js
 
 - Notion: https://five-alarm-a3d.notion.site/A-cd37f5c4182948cd9b42cd148033f905
