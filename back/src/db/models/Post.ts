@@ -3,7 +3,8 @@ class Post {
   // 전체 게시글 검색
   static async findAll() {
     const [rows, fields] = await promisePool.query({
-      sql: "SELECT * FROM posts",
+      //   sql: "SELECT * FROM posts",
+      sql: "SELECT * FROM posts INNER JOIN users ON posts.user_id = users.user_id",
     });
     return rows;
   }
@@ -24,7 +25,7 @@ class Post {
     return rows;
   }
   // post_id와 user_id로 검색
-  static async findByPostIdUerId({ post_id, user_id }) {
+  static async findByPostIdUserId({ post_id, user_id }) {
     const [rows, fields] = await promisePool.query({
       sql: "SELECT * FROM posts WHERE `post_id` = ? AND `user_id` = ?",
       values: [post_id, user_id],

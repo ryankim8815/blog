@@ -34,7 +34,7 @@ class postService {
     const userString = JSON.stringify(user);
     const userObject = JSON.parse(userString);
     const user_id = userObject[0].user_id; // 예외처리 필요
-    const post = await Post.create({
+    const newPost = await Post.create({
       user_id,
       title,
       content,
@@ -42,13 +42,13 @@ class postService {
       created_at,
       updated_at,
     });
-    const postString = JSON.stringify(post);
-    const postObject = JSON.parse(postString);
-    const post_id = postObject.insertId;
+    const newpostString = JSON.stringify(newPost);
+    const newpostObject = JSON.parse(newpostString);
+    const post_id = newpostObject.insertId;
     const checkNewPost = await Post.findByPostId({ post_id });
     const checkNewPostString = JSON.stringify(checkNewPost);
     const checkNewPostObject = JSON.parse(checkNewPostString);
-    if (postObject.affectedRows == 1 && checkNewPostObject.length == 1) {
+    if (newpostObject.affectedRows == 1 && checkNewPostObject.length == 1) {
       const result_success = {
         result: true,
         cause: "success",
@@ -64,28 +64,29 @@ class postService {
     const userString = JSON.stringify(user);
     const userObject = JSON.parse(userString);
     const user_id = userObject[0].user_id; // 예외처리 필요
-    const oldPost = await Post.findByPostIdUerId({ post_id, user_id });
-    const oldPostString = JSON.stringify(oldPost);
-    const oldPostObject = JSON.parse(oldPostString);
-    if (oldPostObject.length !== 1) {
+    // 수정 권한 여부 확인
+    const checkPost = await Post.findByPostIdUserId({ post_id, user_id });
+    const checkPostString = JSON.stringify(checkPost);
+    const checkPostObject = JSON.parse(checkPostString);
+    if (checkPostObject.length !== 1) {
       const result_errPost = {
         result: false,
-        cause: "post",
+        cause: "authority",
         message:
-          "수정하려는 게시글을 찾지 못했습니다. 수정자가 작성자가 아닐 수 있습니다.",
+          "게시글 수정은 작성자만 할 수 있습니다. 수정 요청자가 작성자인지 확인해주세요.",
       };
       return result_errPost;
     } else {
-      const post = await Post.update({
+      const updatedPost = await Post.update({
         post_id,
         title,
         content,
         tag,
         updated_at,
       });
-      const postString = JSON.stringify(post);
-      const postObject = JSON.parse(postString);
-      const affectedRows = postObject.affectedRows;
+      const updatedPostString = JSON.stringify(updatedPost);
+      const updatedPostObject = JSON.parse(updatedPostString);
+      const affectedRows = updatedPostObject.affectedRows;
       if (affectedRows !== 1) {
         const result_errUpdate = {
           result: false,
@@ -109,28 +110,29 @@ class postService {
     const userString = JSON.stringify(user);
     const userObject = JSON.parse(userString);
     const user_id = userObject[0].user_id; // 예외처리 필요
-    const targetPost = await Post.findByPostIdUerId({ post_id, user_id });
-    const targetPostString = JSON.stringify(targetPost);
-    const targetPostObject = JSON.parse(targetPostString);
-    if (targetPostObject.length !== 1) {
+    // 수정 권한 여부 확인
+    const checkPost = await Post.findByPostIdUserId({ post_id, user_id });
+    const checkPostString = JSON.stringify(checkPost);
+    const checkPostObject = JSON.parse(checkPostString);
+    if (checkPostObject.length !== 1) {
       const result_errPost = {
         result: false,
-        cause: "post",
+        cause: "authority",
         message:
-          "삭제하려는 게시글을 찾지 못했습니다. 요청자가 작성자가 아닐 수 있습니다.",
+          "게시글 삭제는 작성자만 할 수 있습니다. 삭제 요청자가 작성자인지 확인해주세요.",
       };
       return result_errPost;
     } else {
-      const post = await Post.delete({
+      const deletedPost = await Post.delete({
         post_id,
       });
-      const postString = JSON.stringify(post);
-      const postObject = JSON.parse(postString);
-      const affectedRows = postObject.affectedRows;
+      const deletedPostString = JSON.stringify(deletedPost);
+      const deletedPostObject = JSON.parse(deletedPostString);
+      const affectedRows = deletedPostObject.affectedRows;
       if (affectedRows !== 1) {
         const result_errUpdate = {
           result: false,
-          cause: "update",
+          cause: "delete",
           message: `게시글 삭제 중에 문제가 발생했습니다.`,
         };
         return result_errUpdate;

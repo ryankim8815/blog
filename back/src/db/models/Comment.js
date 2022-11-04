@@ -39,18 +39,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 var database_1 = __importDefault(require("../database"));
-var Post = /** @class */ (function () {
-    function Post() {
+var Comment = /** @class */ (function () {
+    function Comment() {
     }
-    // 전체 게시글 검색
-    Post.findAll = function () {
+    // 전체 댓글 검색
+    Comment.findAll = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _a, rows, fields;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0: return [4 /*yield*/, database_1.default.query({
-                            //   sql: "SELECT * FROM posts",
-                            sql: "SELECT * FROM posts INNER JOIN users ON posts.user_id = users.user_id",
+                            //   sql: "SELECT * FROM comments",
+                            sql: "SELECT * FROM comments INNER JOIN users ON comments.user_id = users.user_id",
                         })];
                     case 1:
                         _a = _b.sent(), rows = _a[0], fields = _a[1];
@@ -59,16 +59,16 @@ var Post = /** @class */ (function () {
             });
         });
     };
-    // po색t_id로 검색
-    Post.findByPostId = function (_a) {
-        var post_id = _a.post_id;
+    // comment_id로 검색
+    Comment.findByCommentId = function (_a) {
+        var comment_id = _a.comment_id;
         return __awaiter(this, void 0, void 0, function () {
             var _b, rows, fields;
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0: return [4 /*yield*/, database_1.default.query({
-                            sql: "SELECT * FROM posts WHERE `post_id` = ?",
-                            values: [post_id],
+                            sql: "SELECT * FROM comments WHERE `comment_id` = ?",
+                            values: [comment_id],
                         })];
                     case 1:
                         _b = _c.sent(), rows = _b[0], fields = _b[1];
@@ -78,14 +78,14 @@ var Post = /** @class */ (function () {
         });
     };
     // user_id로 검색
-    Post.findByUserId = function (_a) {
+    Comment.findByUserId = function (_a) {
         var user_id = _a.user_id;
         return __awaiter(this, void 0, void 0, function () {
             var _b, rows, fields;
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0: return [4 /*yield*/, database_1.default.query({
-                            sql: "SELECT * FROM posts WHERE `user_id` = ?",
+                            sql: "SELECT * FROM comments WHERE `user_id` = ?",
                             values: [user_id],
                         })];
                     case 1:
@@ -95,16 +95,16 @@ var Post = /** @class */ (function () {
             });
         });
     };
-    // post_id와 user_id로 검색
-    Post.findByPostIdUserId = function (_a) {
-        var post_id = _a.post_id, user_id = _a.user_id;
+    // comment_id와 user_id로 검색
+    Comment.findByCommentIdUserId = function (_a) {
+        var comment_id = _a.comment_id, user_id = _a.user_id;
         return __awaiter(this, void 0, void 0, function () {
             var _b, rows, fields;
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0: return [4 /*yield*/, database_1.default.query({
-                            sql: "SELECT * FROM posts WHERE `post_id` = ? AND `user_id` = ?",
-                            values: [post_id, user_id],
+                            sql: "SELECT * FROM comments WHERE `comment_id` = ? AND `user_id` = ?",
+                            values: [comment_id, user_id],
                         })];
                     case 1:
                         _b = _c.sent(), rows = _b[0], fields = _b[1];
@@ -113,141 +113,15 @@ var Post = /** @class */ (function () {
             });
         });
     };
-    // title로 검색
-    Post.findByTitle = function (_a) {
-        var title = _a.title;
-        return __awaiter(this, void 0, void 0, function () {
-            var _b, rows, fields;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
-                    case 0: return [4 /*yield*/, database_1.default.query({
-                            sql: "SELECT * FROM posts WHERE `title` = ?",
-                            values: [title],
-                        })];
-                    case 1:
-                        _b = _c.sent(), rows = _b[0], fields = _b[1];
-                        return [2 /*return*/, rows];
-                }
-            });
-        });
-    };
-    // tag로 검색
-    Post.findByTag = function (_a) {
-        var tag = _a.tag;
-        return __awaiter(this, void 0, void 0, function () {
-            var _b, rows, fields;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
-                    case 0: return [4 /*yield*/, database_1.default.query({
-                            sql: "SELECT * FROM posts WHERE `tag` = ?",
-                            values: [tag],
-                        })];
-                    case 1:
-                        _b = _c.sent(), rows = _b[0], fields = _b[1];
-                        return [2 /*return*/, rows];
-                }
-            });
-        });
-    };
-    // 게시일로 검색
-    Post.findByCreatedAtDate = function (_a) {
-        var created_at_date = _a.created_at_date;
-        return __awaiter(this, void 0, void 0, function () {
-            var _b, rows, fields;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
-                    case 0: return [4 /*yield*/, database_1.default.query({
-                            sql: "SELECT * FROM posts WHERE DATE_FORMAT(`created_at`, `$Y-%m-%d`) = DATE_FORMAT(?, `%Y-$m-$d`)",
-                            values: [created_at_date],
-                        })];
-                    case 1:
-                        _b = _c.sent(), rows = _b[0], fields = _b[1];
-                        return [2 /*return*/, rows];
-                }
-            });
-        });
-    };
-    // 게시기간으로 검색
-    Post.findByCreatedAtDuration = function (_a) {
-        var created_at_from = _a.created_at_from, created_at_to = _a.created_at_to;
-        return __awaiter(this, void 0, void 0, function () {
-            var _b, rows, fields;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
-                    case 0: return [4 /*yield*/, database_1.default.query({
-                            sql: "SELECT * FROM posts WHERE `created_at` BETWEEN ? AND ?",
-                            values: [created_at_from, created_at_to],
-                        })];
-                    case 1:
-                        _b = _c.sent(), rows = _b[0], fields = _b[1];
-                        return [2 /*return*/, rows];
-                }
-            });
-        });
-    };
-    // 게시글 등록 - 용량 우려로 이미지 업로드 기능 제외
-    Post.create = function (_a) {
-        var user_id = _a.user_id, title = _a.title, content = _a.content, tag = _a.tag, created_at = _a.created_at, updated_at = _a.updated_at;
-        return __awaiter(this, void 0, void 0, function () {
-            var _b, rows, fields;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
-                    case 0: return [4 /*yield*/, database_1.default.query({
-                            sql: "INSERT INTO posts (user_id, title, content, tag, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)",
-                            values: [user_id, title, content, tag, created_at, updated_at],
-                        })];
-                    case 1:
-                        _b = _c.sent(), rows = _b[0], fields = _b[1];
-                        return [2 /*return*/, rows];
-                }
-            });
-        });
-    };
-    // 게시글 수정  - 용량 우려로 이미지 업로드 기능 제외
-    Post.update = function (_a) {
-        var post_id = _a.post_id, title = _a.title, content = _a.content, tag = _a.tag, updated_at = _a.updated_at;
-        return __awaiter(this, void 0, void 0, function () {
-            var _b, rows, fields;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
-                    case 0: return [4 /*yield*/, database_1.default.query({
-                            sql: "UPDATE posts SET `title` = ?, `content` = ?, `tag` = ?, `updated_at` = ? WHERE `post_id` = ?",
-                            values: [title, content, tag, updated_at, post_id],
-                        })];
-                    case 1:
-                        _b = _c.sent(), rows = _b[0], fields = _b[1];
-                        return [2 /*return*/, rows];
-                }
-            });
-        });
-    };
-    // 이미지 업로드 - 게시글 등록&수정과 통합 가능성 유
-    Post.updateFilename = function (_a) {
-        var post_id = _a.post_id, image = _a.image;
-        return __awaiter(this, void 0, void 0, function () {
-            var _b, rows, fields;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
-                    case 0: return [4 /*yield*/, database_1.default.query({
-                            sql: "UPDATE posts SET `image` = ? WHERE `post_id` = ?",
-                            values: [image, post_id],
-                        })];
-                    case 1:
-                        _b = _c.sent(), rows = _b[0], fields = _b[1];
-                        return [2 /*return*/, rows];
-                }
-            });
-        });
-    };
-    // 게시글 삭제
-    Post.delete = function (_a) {
+    // post_id로 검색
+    Comment.findByComment = function (_a) {
         var post_id = _a.post_id;
         return __awaiter(this, void 0, void 0, function () {
             var _b, rows, fields;
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0: return [4 /*yield*/, database_1.default.query({
-                            sql: "DELETE FROM posts WHERE `post_id` = ?",
+                            sql: "SELECT * FROM comments WHERE `post_id` = ?",
                             values: [post_id],
                         })];
                     case 1:
@@ -257,6 +131,96 @@ var Post = /** @class */ (function () {
             });
         });
     };
-    return Post;
+    // 댓글 작성일로 검색
+    Comment.findByCreatedAtDate = function (_a) {
+        var created_at_date = _a.created_at_date;
+        return __awaiter(this, void 0, void 0, function () {
+            var _b, rows, fields;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0: return [4 /*yield*/, database_1.default.query({
+                            sql: "SELECT * FROM comments WHERE DATE_FORMAT(`created_at`, `$Y-%m-%d`) = DATE_FORMAT(?, `%Y-$m-$d`)",
+                            values: [created_at_date],
+                        })];
+                    case 1:
+                        _b = _c.sent(), rows = _b[0], fields = _b[1];
+                        return [2 /*return*/, rows];
+                }
+            });
+        });
+    };
+    // 댓글 작성기간으로 검색
+    Comment.findByCreatedAtDuration = function (_a) {
+        var created_at_from = _a.created_at_from, created_at_to = _a.created_at_to;
+        return __awaiter(this, void 0, void 0, function () {
+            var _b, rows, fields;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0: return [4 /*yield*/, database_1.default.query({
+                            sql: "SELECT * FROM comments WHERE `created_at` BETWEEN ? AND ?",
+                            values: [created_at_from, created_at_to],
+                        })];
+                    case 1:
+                        _b = _c.sent(), rows = _b[0], fields = _b[1];
+                        return [2 /*return*/, rows];
+                }
+            });
+        });
+    };
+    // 댓글 등록
+    Comment.create = function (_a) {
+        var comment_id = _a.comment_id, user_id = _a.user_id, post_id = _a.post_id, content = _a.content, created_at = _a.created_at, updated_at = _a.updated_at;
+        return __awaiter(this, void 0, void 0, function () {
+            var _b, rows, fields;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0: return [4 /*yield*/, database_1.default.query({
+                            sql: "INSERT INTO comments (comment_id, user_id, post_id, content, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)",
+                            values: [comment_id, user_id, post_id, content, created_at, updated_at],
+                        })];
+                    case 1:
+                        _b = _c.sent(), rows = _b[0], fields = _b[1];
+                        return [2 /*return*/, rows];
+                }
+            });
+        });
+    };
+    // 댓글 수정
+    Comment.update = function (_a) {
+        var comment_id = _a.comment_id, content = _a.content, updated_at = _a.updated_at;
+        return __awaiter(this, void 0, void 0, function () {
+            var _b, rows, fields;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0: return [4 /*yield*/, database_1.default.query({
+                            sql: "UPDATE comments SET `content` = ?, `updated_at` = ? WHERE `comment_id` = ?",
+                            values: [content, updated_at, comment_id],
+                        })];
+                    case 1:
+                        _b = _c.sent(), rows = _b[0], fields = _b[1];
+                        return [2 /*return*/, rows];
+                }
+            });
+        });
+    };
+    // 게시글 삭제
+    Comment.delete = function (_a) {
+        var comment_id = _a.comment_id;
+        return __awaiter(this, void 0, void 0, function () {
+            var _b, rows, fields;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0: return [4 /*yield*/, database_1.default.query({
+                            sql: "DELETE FROM comments WHERE `comment_id` = ?",
+                            values: [comment_id],
+                        })];
+                    case 1:
+                        _b = _c.sent(), rows = _b[0], fields = _b[1];
+                        return [2 /*return*/, rows];
+                }
+            });
+        });
+    };
+    return Comment;
 }());
-module.exports = Post;
+module.exports = Comment;

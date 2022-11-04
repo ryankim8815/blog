@@ -65,12 +65,14 @@ var express = __importStar(require("express"));
 var axios_1 = __importDefault(require("axios"));
 var socialLoginService_1 = __importDefault(require("../services/socialLoginService"));
 var socialLoginRouter = express.Router();
+// axios에서 error 발생시 troubleshooting 용이성을 위해
 axios_1.default.interceptors.response.use(function (res) {
     return res.data;
 }, function (err) {
     console.log(err);
     throw new Error("(!) axios error");
 });
+// formdata 포멧으로 만들어 줌
 var makeFormData = function (params) {
     var searchParams = new URLSearchParams();
     Object.keys(params).forEach(function (key) {

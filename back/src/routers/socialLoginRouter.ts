@@ -3,6 +3,8 @@ import axios from "axios";
 import socialLoginService from "../services/socialLoginService";
 
 const socialLoginRouter = express.Router();
+
+// axios에서 error 발생시 troubleshooting 용이성을 위해
 axios.interceptors.response.use(
   (res) => {
     return res.data;
@@ -12,6 +14,7 @@ axios.interceptors.response.use(
     throw new Error("(!) axios error");
   }
 );
+// formdata 포멧으로 만들어 줌
 const makeFormData = (params: any) => {
   const searchParams = new URLSearchParams();
   Object.keys(params).forEach((key) => {
