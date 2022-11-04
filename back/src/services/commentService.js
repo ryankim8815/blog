@@ -50,7 +50,7 @@ var commentService = /** @class */ (function () {
     commentService.getPostComments = function (_a) {
         var post_id = _a.post_id;
         return __awaiter(this, void 0, void 0, function () {
-            var postComments, postCommentsString, postCommentsObject, i, countComments, countCommentsString, countCommentsObject, result_success;
+            var postComments, postCommentsString, postCommentsObject, i, countComments, result_success;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0: return [4 /*yield*/, Comment_1.default.findByComment({ post_id: post_id })];
@@ -58,21 +58,18 @@ var commentService = /** @class */ (function () {
                         postComments = _b.sent();
                         postCommentsString = JSON.stringify(postComments);
                         postCommentsObject = JSON.parse(postCommentsString);
+                        // db에 많이 쌓이면 쿼리문과 속도 비교해보기
                         for (i = 0; i < postCommentsObject.length; i++) {
                             delete postCommentsObject[i].user_id;
                         }
                         return [4 /*yield*/, Comment_1.default.countByComment({ post_id: post_id })];
                     case 2:
                         countComments = _b.sent();
-                        countCommentsString = JSON.stringify(countComments);
-                        countCommentsObject = JSON.parse(countCommentsString);
-                        result_success = {
+                        result_success = Object.assign({
                             result: true,
                             cause: "success",
                             message: "\uD574\uB2F9 \uAC8C\uC2DC\uBB3C\uC5D0 \uB300\uD55C \uBAA8\uB4E0 \uB313\uAE00 \uC870\uD68C\uAC00 \uC131\uACF5\uC801\uC73C\uB85C \uC774\uB904\uC84C\uC2B5\uB2C8\uB2E4.",
-                            count: countCommentsObject[0].cnt,
-                            list: postCommentsObject,
-                        };
+                        }, { count: countComments[0].cnt, list: postCommentsObject });
                         return [2 /*return*/, result_success];
                 }
             });

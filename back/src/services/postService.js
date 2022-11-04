@@ -49,7 +49,7 @@ var postService = /** @class */ (function () {
     //// 모든 게시글 조회
     postService.getAllPosts = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var allPosts, allPostsString, allPostsObject, i, result_success;
+            var allPosts, allPostsString, allPostsObject, i, countPosts, result_success;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, Post_1.default.findAll()];
@@ -61,11 +61,14 @@ var postService = /** @class */ (function () {
                             //   delete allPostsObject[i].post_id;
                             delete allPostsObject[i].user_id;
                         }
+                        return [4 /*yield*/, Post_1.default.countAll()];
+                    case 2:
+                        countPosts = _a.sent();
                         result_success = Object.assign({
                             result: true,
                             cause: "success",
                             message: "\uBAA8\uB4E0 \uAC8C\uC2DC\uAE00 \uC870\uD68C\uAC00 \uC131\uACF5\uC801\uC73C\uB85C \uC774\uB904\uC84C\uC2B5\uB2C8\uB2E4.",
-                        }, allPostsObject);
+                        }, { count: countPosts[0].cnt, list: allPostsObject });
                         return [2 /*return*/, result_success];
                 }
             });

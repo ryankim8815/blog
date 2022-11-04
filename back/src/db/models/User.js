@@ -48,7 +48,22 @@ var User = /** @class */ (function () {
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0: return [4 /*yield*/, database_1.default.query({
-                            sql: "SELECT * FROM users",
+                            sql: "SELECT email,nickname,provider,created_at  FROM users",
+                        })];
+                    case 1:
+                        _a = _b.sent(), rows = _a[0], fields = _a[1];
+                        return [2 /*return*/, rows];
+                }
+            });
+        });
+    };
+    User.countAll = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, rows, fields;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, database_1.default.query({
+                            sql: "SELECT count(user_id) AS cnt FROM users",
                         })];
                     case 1:
                         _a = _b.sent(), rows = _a[0], fields = _a[1];

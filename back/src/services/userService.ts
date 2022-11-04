@@ -12,17 +12,21 @@ class userService {
     const allUsers = await User.findAll();
     const allUsersString = JSON.stringify(allUsers);
     const allUsersObject = JSON.parse(allUsersString);
-    for (let i = 0; i < allUsersObject.length; i++) {
-      delete allUsersObject[i].password;
-      delete allUsersObject[i].user_id;
-    }
+    // 쿼리문의 SELECT로 대체
+    // for (let i = 0; i < allUsersObject.length; i++) {
+    //   delete allUsersObject[i].password;
+    //   delete allUsersObject[i].user_id;
+    // }
+    const countUsers = await User.countAll();
+    const countUsersString = JSON.stringify(countUsers);
+    const countUsersObject = JSON.parse(countUsersString);
     const result_success = Object.assign(
       {
         result: true,
         cause: "success",
         message: `모든 사용자 조회가 성공적으로 이뤄졌습니다.`,
       },
-      allUsersObject
+      { count: countUsersObject[0].cnt, list: allUsersObject }
     );
     return result_success;
   }
@@ -65,6 +69,7 @@ class userService {
         result: true,
         cause: "success",
         message: `${thisUser.nickname}님의 로그인이 성공적으로 이뤄졌습니다.`,
+        token: token,
       },
       { token: token },
       thisUser

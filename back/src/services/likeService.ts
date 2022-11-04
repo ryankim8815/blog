@@ -1,10 +1,5 @@
 import User from "../db/models/User";
-import Post from "../db/models/Post";
-import Comment from "../db/models/Comment";
 import Like from "../db/models/Like";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment-timezone";
 moment.tz.setDefault("Asia/Seoul");
@@ -24,13 +19,14 @@ class likeService {
     const countLikes = await Like.countByPostId({ post_id });
     const countLikesString = JSON.stringify(countLikes);
     const countLikesObject = JSON.parse(countLikesString);
-    const result_success = {
-      result: true,
-      cause: "success",
-      message: `해당 게시물에 대한 좋아요 정보 조회가 성공적으로 이뤄졌습니다.`,
-      count: countLikesObject[0].cnt,
-      list: postLikesObject,
-    };
+    const result_success = Object.assign(
+      {
+        result: true,
+        cause: "success",
+        message: `해당 게시물에 대한 좋아요 정보 조회가 성공적으로 이뤄졌습니다.`,
+      },
+      { count: countLikesObject[0].cnt, list: postLikesObject }
+    );
     return result_success;
   }
   //// 좋아요 생성/삭제

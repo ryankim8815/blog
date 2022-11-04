@@ -1,9 +1,5 @@
 import User from "../db/models/User";
-import Post from "../db/models/Post";
 import Comment from "../db/models/Comment";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment-timezone";
 moment.tz.setDefault("Asia/Seoul");
@@ -14,19 +10,19 @@ class commentService {
     const postComments = await Comment.findByComment({ post_id });
     const postCommentsString = JSON.stringify(postComments);
     const postCommentsObject = JSON.parse(postCommentsString);
+    // db에 많이 쌓이면 쿼리문과 속도 비교해보기
     for (let i = 0; i < postCommentsObject.length; i++) {
       delete postCommentsObject[i].user_id;
     }
     const countComments = await Comment.countByComment({ post_id });
-    const countCommentsString = JSON.stringify(countComments);
-    const countCommentsObject = JSON.parse(countCommentsString);
-    const result_success = {
-      result: true,
-      cause: "success",
-      message: `해당 게시물에 대한 모든 댓글 조회가 성공적으로 이뤄졌습니다.`,
-      count: countCommentsObject[0].cnt,
-      list: postCommentsObject,
-    };
+    const result_success = Object.assign(
+      {
+        result: true,
+        cause: "success",
+        message: `해당 게시물에 대한 모든 댓글 조회가 성공적으로 이뤄졌습니다.`,
+      },
+      { count: countComments[0].cnt, list: postCommentsObject }
+    );
     return result_success;
   }
   //// 댓글 생성

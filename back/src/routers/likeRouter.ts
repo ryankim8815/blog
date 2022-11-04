@@ -1,10 +1,6 @@
 import * as express from "express";
 import authMiddleware from "../middlewares/authMiddleware";
-import upload from "../middlewares/uploadMiddleware";
-import commentService from "../services/commentService";
 import likeService from "../services/likeService";
-// import asyncHandler from "../utils/asyncHandler";
-import type { MulterFile } from "../customType/multer.d";
 
 const likeRouter = express.Router();
 

@@ -63,13 +63,11 @@ var likeService = /** @class */ (function () {
                         countLikes = _b.sent();
                         countLikesString = JSON.stringify(countLikes);
                         countLikesObject = JSON.parse(countLikesString);
-                        result_success = {
+                        result_success = Object.assign({
                             result: true,
                             cause: "success",
                             message: "\uD574\uB2F9 \uAC8C\uC2DC\uBB3C\uC5D0 \uB300\uD55C \uC88B\uC544\uC694 \uC815\uBCF4 \uC870\uD68C\uAC00 \uC131\uACF5\uC801\uC73C\uB85C \uC774\uB904\uC84C\uC2B5\uB2C8\uB2E4.",
-                            count: countLikesObject[0].cnt,
-                            list: postLikesObject,
-                        };
+                        }, { count: countLikesObject[0].cnt, list: postLikesObject });
                         return [2 /*return*/, result_success];
                 }
             });

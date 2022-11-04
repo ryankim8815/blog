@@ -2,7 +2,13 @@ import promisePool from "../database";
 class User {
   static async findAll() {
     const [rows, fields] = await promisePool.query({
-      sql: "SELECT * FROM users",
+      sql: "SELECT email,nickname,provider,created_at  FROM users",
+    });
+    return rows;
+  }
+  static async countAll() {
+    const [rows, fields] = await promisePool.query({
+      sql: "SELECT count(user_id) AS cnt FROM users",
     });
     return rows;
   }

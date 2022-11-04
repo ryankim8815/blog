@@ -1,8 +1,5 @@
 import User from "../db/models/User";
 import Post from "../db/models/Post";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment-timezone";
 moment.tz.setDefault("Asia/Seoul");
@@ -17,13 +14,14 @@ class postService {
       //   delete allPostsObject[i].post_id;
       delete allPostsObject[i].user_id;
     }
+    const countPosts = await Post.countAll();
     const result_success = Object.assign(
       {
         result: true,
         cause: "success",
         message: `모든 게시글 조회가 성공적으로 이뤄졌습니다.`,
       },
-      allPostsObject
+      { count: countPosts[0].cnt, list: allPostsObject }
     );
     return result_success;
   }

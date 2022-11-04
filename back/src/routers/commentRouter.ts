@@ -1,9 +1,7 @@
 import * as express from "express";
 import authMiddleware from "../middlewares/authMiddleware";
-import upload from "../middlewares/uploadMiddleware";
 import commentService from "../services/commentService";
-// import asyncHandler from "../utils/asyncHandler";
-import type { MulterFile } from "../customType/multer.d";
+
 const commentRouter = express.Router();
 
 // GET: 특정 게시글의 댓글 리스트

@@ -8,6 +8,14 @@ class Post {
     });
     return rows;
   }
+  // 전체 게시글 개수 파악
+  static async countAll() {
+    const [rows, fields] = await promisePool.query({
+      //   sql: "SELECT * FROM posts",
+      sql: "SELECT count(post_id) AS cnt FROM posts",
+    });
+    return rows;
+  }
   // po색t_id로 검색
   static async findByPostId({ post_id }) {
     const [rows, fields] = await promisePool.query({

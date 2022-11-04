@@ -59,6 +59,23 @@ var Post = /** @class */ (function () {
             });
         });
     };
+    // 전체 게시글 개수 파악
+    Post.countAll = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, rows, fields;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, database_1.default.query({
+                            //   sql: "SELECT * FROM posts",
+                            sql: "SELECT count(post_id) AS cnt FROM posts",
+                        })];
+                    case 1:
+                        _a = _b.sent(), rows = _a[0], fields = _a[1];
+                        return [2 /*return*/, rows];
+                }
+            });
+        });
+    };
     // po색t_id로 검색
     Post.findByPostId = function (_a) {
         var post_id = _a.post_id;

@@ -51,7 +51,7 @@ var userService = /** @class */ (function () {
     //// 모든 사용자 조회
     userService.getAllUsers = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var allUsers, allUsersString, allUsersObject, i, result_success;
+            var allUsers, allUsersString, allUsersObject, countUsers, countUsersString, countUsersObject, result_success;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, User_1.default.findAll()];
@@ -59,15 +59,16 @@ var userService = /** @class */ (function () {
                         allUsers = _a.sent();
                         allUsersString = JSON.stringify(allUsers);
                         allUsersObject = JSON.parse(allUsersString);
-                        for (i = 0; i < allUsersObject.length; i++) {
-                            delete allUsersObject[i].password;
-                            delete allUsersObject[i].user_id;
-                        }
+                        return [4 /*yield*/, User_1.default.countAll()];
+                    case 2:
+                        countUsers = _a.sent();
+                        countUsersString = JSON.stringify(countUsers);
+                        countUsersObject = JSON.parse(countUsersString);
                         result_success = Object.assign({
                             result: true,
                             cause: "success",
                             message: "\uBAA8\uB4E0 \uC0AC\uC6A9\uC790 \uC870\uD68C\uAC00 \uC131\uACF5\uC801\uC73C\uB85C \uC774\uB904\uC84C\uC2B5\uB2C8\uB2E4.",
-                        }, allUsersObject);
+                        }, { count: countUsersObject[0].cnt, list: allUsersObject });
                         return [2 /*return*/, result_success];
                 }
             });
@@ -114,6 +115,7 @@ var userService = /** @class */ (function () {
                             result: true,
                             cause: "success",
                             message: "".concat(thisUser.nickname, "\uB2D8\uC758 \uB85C\uADF8\uC778\uC774 \uC131\uACF5\uC801\uC73C\uB85C \uC774\uB904\uC84C\uC2B5\uB2C8\uB2E4."),
+                            token: token,
                         }, { token: token }, thisUser);
                         return [2 /*return*/, result_success];
                 }
