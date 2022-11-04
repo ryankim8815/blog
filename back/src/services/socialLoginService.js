@@ -40,6 +40,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 var User_1 = __importDefault(require("../db/models/User"));
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+var uuid_1 = require("uuid");
 var moment_timezone_1 = __importDefault(require("moment-timezone"));
 moment_timezone_1.default.tz.setDefault("Asia/Seoul");
 var socialLoginService = /** @class */ (function () {
@@ -52,7 +53,7 @@ var socialLoginService = /** @class */ (function () {
     socialLoginService.kakao = function (_a) {
         var email = _a.email, access_token = _a.access_token;
         return __awaiter(this, void 0, void 0, function () {
-            var checkEmail, checkEmailString, checkEmailObject, result_errEmail, thisUser, secretKey, token, result_success, result_errDB, password, nickname, provider, created_at, newUser, newUserString, newUserObject, checkNewUser, checkNewUserString, checkNewUserObject, thisUser, secretKey, token, result_success, result_errDB;
+            var checkEmail, checkEmailString, checkEmailObject, result_errEmail, thisUser, secretKey, token, result_success, result_errDB, user_id, password, nickname, provider, created_at, newUser, newUserString, newUserObject, checkNewUser, checkNewUserString, checkNewUserObject, thisUser, secretKey, token, result_success, result_errDB;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0: return [4 /*yield*/, User_1.default.findByEmail({ email: email })];
@@ -91,11 +92,13 @@ var socialLoginService = /** @class */ (function () {
                             });
                             return [2 /*return*/, result_errDB];
                         }
+                        user_id = (0, uuid_1.v4)();
                         password = access_token;
                         nickname = "".concat(email, "_kakao");
                         provider = "kakao";
                         created_at = (0, moment_timezone_1.default)().format("YYYY-MM-DD HH:mm:ss");
                         return [4 /*yield*/, User_1.default.create({
+                                user_id: user_id,
                                 email: email,
                                 password: password,
                                 nickname: nickname,
@@ -144,7 +147,7 @@ var socialLoginService = /** @class */ (function () {
     socialLoginService.naver = function (_a) {
         var email = _a.email, access_token = _a.access_token;
         return __awaiter(this, void 0, void 0, function () {
-            var checkEmail, checkEmailString, checkEmailObject, result_errEmail, thisUser, secretKey, token, result_success, result_errDB, password, nickname, provider, created_at, newUser, newUserString, newUserObject, checkNewUser, checkNewUserString, checkNewUserObject, thisUser, secretKey, token, result_success, result_errDB;
+            var checkEmail, checkEmailString, checkEmailObject, result_errEmail, thisUser, secretKey, token, result_success, result_errDB, user_id, password, nickname, provider, created_at, newUser, newUserString, newUserObject, checkNewUser, checkNewUserString, checkNewUserObject, thisUser, secretKey, token, result_success, result_errDB;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0: return [4 /*yield*/, User_1.default.findByEmail({ email: email })];
@@ -183,11 +186,13 @@ var socialLoginService = /** @class */ (function () {
                             });
                             return [2 /*return*/, result_errDB];
                         }
+                        user_id = (0, uuid_1.v4)();
                         password = access_token;
                         nickname = "".concat(email, "_naver");
                         provider = "naver";
                         created_at = (0, moment_timezone_1.default)().format("YYYY-MM-DD HH:mm:ss");
                         return [4 /*yield*/, User_1.default.create({
+                                user_id: user_id,
                                 email: email,
                                 password: password,
                                 nickname: nickname,

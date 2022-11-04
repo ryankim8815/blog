@@ -6,16 +6,17 @@ import commentService from "../services/commentService";
 import type { MulterFile } from "../customType/multer.d";
 const commentRouter = express.Router();
 
-// GET: 전체 댓글 리스트
+// GET: 특정 게시글의 댓글 리스트
 const commentList = async (
   req: express.Request,
   res: express.Response,
   next: express.NextFunction
 ) => {
   try {
-    const allComments = await commentService.getAllComments();
-    console.log(allComments);
-    res.status(200).json(allComments);
+    const post_id = req.params.post_id;
+    const postComments = await commentService.getPostComments({ post_id });
+    console.log(postComments);
+    res.status(200).json(postComments);
   } catch (err) {
     const result_err = {
       result: false,
@@ -113,7 +114,7 @@ const commentDelete = async (
 };
 
 // api index
-commentRouter.get("/comment/list", commentList); // 전체 댓글 검섹
+commentRouter.get("/post/:post_id/comment", commentList); // 특정 게시글의 댓글 검섹
 commentRouter.post("/comment/create", authMiddleware, commentCreate); // 댓글 생성
 commentRouter.put("/comment/update", authMiddleware, commentUpdate); //  댓글 수정
 commentRouter.delete("/comment/delete", authMiddleware, commentDelete); // 댓글 삭제

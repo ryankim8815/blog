@@ -3,6 +3,7 @@ import Post from "../db/models/Post";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import fs from "fs";
+import { v4 as uuidv4 } from "uuid";
 import moment from "moment-timezone";
 moment.tz.setDefault("Asia/Seoul");
 
@@ -34,7 +35,9 @@ class postService {
     const userString = JSON.stringify(user);
     const userObject = JSON.parse(userString);
     const user_id = userObject[0].user_id; // 예외처리 필요
+    const post_id = uuidv4();
     const newPost = await Post.create({
+      post_id,
       user_id,
       title,
       content,
@@ -44,11 +47,11 @@ class postService {
     });
     const newpostString = JSON.stringify(newPost);
     const newpostObject = JSON.parse(newpostString);
-    const post_id = newpostObject.insertId;
+    const affectedRows = newpostObject.affectedRows;
     const checkNewPost = await Post.findByPostId({ post_id });
     const checkNewPostString = JSON.stringify(checkNewPost);
     const checkNewPostObject = JSON.parse(checkNewPostString);
-    if (newpostObject.affectedRows == 1 && checkNewPostObject.length == 1) {
+    if (affectedRows == 1 && checkNewPostObject.length == 1) {
       const result_success = {
         result: true,
         cause: "success",

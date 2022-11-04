@@ -35,7 +35,15 @@ class Comment {
   // post_id로 검색
   static async findByComment({ post_id }) {
     const [rows, fields] = await promisePool.query({
-      sql: "SELECT * FROM comments WHERE `post_id` = ?",
+      sql: "SELECT email, nickname, content, comments.created_at, comments.updated_at FROM comments INNER JOIN users ON comments.user_id = users.user_id WHERE `post_id` = ?",
+      values: [post_id],
+    });
+    return rows;
+  }
+  // post_id로 댓글 개수 파악
+  static async countByComment({ post_id }) {
+    const [rows, fields] = await promisePool.query({
+      sql: "SELECT count(user_id) AS cnt FROM comments WHERE `post_id` = ?",
       values: [post_id],
     });
     return rows;

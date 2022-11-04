@@ -42,6 +42,7 @@ var User_1 = __importDefault(require("../db/models/User"));
 var bcrypt_1 = __importDefault(require("bcrypt"));
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var fs_1 = __importDefault(require("fs"));
+var uuid_1 = require("uuid");
 var moment_timezone_1 = __importDefault(require("moment-timezone"));
 moment_timezone_1.default.tz.setDefault("Asia/Seoul");
 var userService = /** @class */ (function () {
@@ -123,7 +124,7 @@ var userService = /** @class */ (function () {
     userService.addUser = function (_a) {
         var email = _a.email, password = _a.password, nickname = _a.nickname;
         return __awaiter(this, void 0, void 0, function () {
-            var checkEmail, checkEmailString, checkEmailObject, result_errEmail, checkNickname, checkNicknameString, checkNicknameObject, result_errNickname, provider, created_at, newUser, newUserString, newUserObject, checkNewUser, checkNewUserString, checkNewUserObject, result_success;
+            var checkEmail, checkEmailString, checkEmailObject, result_errEmail, checkNickname, checkNicknameString, checkNicknameObject, result_errNickname, user_id, provider, created_at, newUser, newUserString, newUserObject, checkNewUser, checkNewUserString, checkNewUserObject, result_success;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0: return [4 /*yield*/, User_1.default.findByEmail({ email: email })];
@@ -152,6 +153,7 @@ var userService = /** @class */ (function () {
                             };
                             return [2 /*return*/, result_errNickname];
                         }
+                        user_id = (0, uuid_1.v4)();
                         return [4 /*yield*/, bcrypt_1.default.hash(password, 10)];
                     case 3:
                         // 비밀번호 해쉬화
@@ -159,6 +161,7 @@ var userService = /** @class */ (function () {
                         provider = "dogfoot";
                         created_at = (0, moment_timezone_1.default)().format("YYYY-MM-DD HH:mm:ss");
                         return [4 /*yield*/, User_1.default.create({
+                                user_id: user_id,
                                 email: email,
                                 password: password,
                                 nickname: nickname,

@@ -66,6 +66,7 @@ class Post {
   }
   // 게시글 등록 - 용량 우려로 이미지 업로드 기능 제외
   static async create({
+    post_id,
     user_id,
     title,
     content,
@@ -74,8 +75,8 @@ class Post {
     updated_at,
   }) {
     const [rows, fields] = await promisePool.query({
-      sql: "INSERT INTO posts (user_id, title, content, tag, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)",
-      values: [user_id, title, content, tag, created_at, updated_at],
+      sql: "INSERT INTO posts (post_id, user_id, title, content, tag, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
+      values: [post_id, user_id, title, content, tag, created_at, updated_at],
     });
     return rows;
   }

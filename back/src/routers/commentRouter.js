@@ -65,18 +65,19 @@ var express = __importStar(require("express"));
 var authMiddleware_1 = __importDefault(require("../middlewares/authMiddleware"));
 var commentService_1 = __importDefault(require("../services/commentService"));
 var commentRouter = express.Router();
-// GET: 전체 댓글 리스트
+// GET: 특정 게시글의 댓글 리스트
 var commentList = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var allComments, err_1, result_err;
+    var post_id, postComments, err_1, result_err;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, commentService_1.default.getAllComments()];
+                post_id = req.params.post_id;
+                return [4 /*yield*/, commentService_1.default.getPostComments({ post_id: post_id })];
             case 1:
-                allComments = _a.sent();
-                console.log(allComments);
-                res.status(200).json(allComments);
+                postComments = _a.sent();
+                console.log(postComments);
+                res.status(200).json(postComments);
                 return [3 /*break*/, 3];
             case 2:
                 err_1 = _a.sent();
@@ -202,7 +203,7 @@ var commentDelete = function (req, res, next) { return __awaiter(void 0, void 0,
     });
 }); };
 // api index
-commentRouter.get("/comment/list", commentList); // 전체 댓글 검섹
+commentRouter.get("/post/:post_id/comment", commentList); // 특정 게시글의 댓글 검섹
 commentRouter.post("/comment/create", authMiddleware_1.default, commentCreate); // 댓글 생성
 commentRouter.put("/comment/update", authMiddleware_1.default, commentUpdate); //  댓글 수정
 commentRouter.delete("/comment/delete", authMiddleware_1.default, commentDelete); // 댓글 삭제

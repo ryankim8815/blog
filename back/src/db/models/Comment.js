@@ -121,7 +121,25 @@ var Comment = /** @class */ (function () {
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0: return [4 /*yield*/, database_1.default.query({
-                            sql: "SELECT * FROM comments WHERE `post_id` = ?",
+                            sql: "SELECT email, nickname, content, comments.created_at, comments.updated_at FROM comments INNER JOIN users ON comments.user_id = users.user_id WHERE `post_id` = ?",
+                            values: [post_id],
+                        })];
+                    case 1:
+                        _b = _c.sent(), rows = _b[0], fields = _b[1];
+                        return [2 /*return*/, rows];
+                }
+            });
+        });
+    };
+    // post_id로 댓글 개수 파악
+    Comment.countByComment = function (_a) {
+        var post_id = _a.post_id;
+        return __awaiter(this, void 0, void 0, function () {
+            var _b, rows, fields;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0: return [4 /*yield*/, database_1.default.query({
+                            sql: "SELECT count(user_id) AS cnt FROM comments WHERE `post_id` = ?",
                             values: [post_id],
                         })];
                     case 1:

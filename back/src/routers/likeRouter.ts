@@ -57,7 +57,7 @@ const likeClick = async (
 };
 
 // api index
-likeRouter.get("/post/:post_id", likeList); // 전체 좋아요 검섹
-likeRouter.post("/post/:post_id", authMiddleware, likeClick); // 좋아요 생성/삭제
+likeRouter.get("/post/:post_id/like", likeList); // 전체 좋아요 검섹
+likeRouter.post("/post/:post_id/like", authMiddleware, likeClick); // 좋아요 생성/삭제
 
 export = likeRouter;

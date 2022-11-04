@@ -1,5 +1,6 @@
 import User from "../db/models/User";
 import jwt from "jsonwebtoken";
+import { v4 as uuidv4 } from "uuid";
 import moment from "moment-timezone";
 moment.tz.setDefault("Asia/Seoul");
 
@@ -53,6 +54,8 @@ class socialLoginService {
       return result_errDB;
     }
     // 신규 가입자 DB저장
+    // UUID 생성
+    const user_id = uuidv4();
     // password
     const password = access_token;
     // nickname
@@ -63,6 +66,7 @@ class socialLoginService {
     const created_at = moment().format("YYYY-MM-DD HH:mm:ss");
     // 사용자 추가
     const newUser = await User.create({
+      user_id,
       email,
       password,
       nickname,
@@ -150,6 +154,8 @@ class socialLoginService {
       return result_errDB;
     }
     // 신규 가입자 DB저장
+    // UUID 생성
+    const user_id = uuidv4();
     // password
     const password = access_token;
     // nickname
@@ -160,6 +166,7 @@ class socialLoginService {
     const created_at = moment().format("YYYY-MM-DD HH:mm:ss");
     // 사용자 추가
     const newUser = await User.create({
+      user_id,
       email,
       password,
       nickname,

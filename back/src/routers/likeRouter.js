@@ -130,6 +130,6 @@ var likeClick = function (req, res, next) { return __awaiter(void 0, void 0, voi
     });
 }); };
 // api index
-likeRouter.get("/post/:post_id", likeList); // 전체 좋아요 검섹
-likeRouter.post("/post/:post_id", authMiddleware_1.default, likeClick); // 좋아요 생성/삭제
+likeRouter.get("/post/:post_id/like", likeList); // 전체 좋아요 검섹
+likeRouter.post("/post/:post_id/like", authMiddleware_1.default, likeClick); // 좋아요 생성/삭제
 module.exports = likeRouter;

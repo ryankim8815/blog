@@ -23,10 +23,17 @@ class User {
     return rows;
   }
 
-  static async create({ email, password, nickname, provider, created_at }) {
+  static async create({
+    user_id,
+    email,
+    password,
+    nickname,
+    provider,
+    created_at,
+  }) {
     const [rows, fields] = await promisePool.query({
-      sql: "INSERT INTO users (email, password, nickname, provider, created_at) VALUES (?, ?, ?, ?, ?)",
-      values: [email, password, nickname, provider, created_at],
+      sql: "INSERT INTO users (user_id, email, password, nickname, provider, created_at) VALUES (?, ?, ?, ?, ?, ?)",
+      values: [user_id, email, password, nickname, provider, created_at],
     });
     return rows;
   }

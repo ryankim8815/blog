@@ -2,6 +2,7 @@ import User from "../db/models/User";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import fs from "fs";
+import { v4 as uuidv4 } from "uuid";
 import moment from "moment-timezone";
 moment.tz.setDefault("Asia/Seoul");
 
@@ -97,7 +98,8 @@ class userService {
       };
       return result_errNickname;
     }
-
+    // UUID 생성
+    const user_id = uuidv4();
     // 비밀번호 해쉬화
     password = await bcrypt.hash(password, 10);
     // provider
@@ -106,6 +108,7 @@ class userService {
     const created_at = moment().format("YYYY-MM-DD HH:mm:ss");
     // 사용자 추가
     const newUser = await User.create({
+      user_id,
       email,
       password,
       nickname,

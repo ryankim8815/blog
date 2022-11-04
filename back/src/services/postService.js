@@ -40,6 +40,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 var User_1 = __importDefault(require("../db/models/User"));
 var Post_1 = __importDefault(require("../db/models/Post"));
+var uuid_1 = require("uuid");
 var moment_timezone_1 = __importDefault(require("moment-timezone"));
 moment_timezone_1.default.tz.setDefault("Asia/Seoul");
 var postService = /** @class */ (function () {
@@ -74,7 +75,7 @@ var postService = /** @class */ (function () {
     postService.addPost = function (_a) {
         var email = _a.email, title = _a.title, content = _a.content, tag = _a.tag;
         return __awaiter(this, void 0, void 0, function () {
-            var created_at, updated_at, user, userString, userObject, user_id, newPost, newpostString, newpostObject, post_id, checkNewPost, checkNewPostString, checkNewPostObject, result_success;
+            var created_at, updated_at, user, userString, userObject, user_id, post_id, newPost, newpostString, newpostObject, affectedRows, checkNewPost, checkNewPostString, checkNewPostObject, result_success;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -86,7 +87,9 @@ var postService = /** @class */ (function () {
                         userString = JSON.stringify(user);
                         userObject = JSON.parse(userString);
                         user_id = userObject[0].user_id;
+                        post_id = (0, uuid_1.v4)();
                         return [4 /*yield*/, Post_1.default.create({
+                                post_id: post_id,
                                 user_id: user_id,
                                 title: title,
                                 content: content,
@@ -98,13 +101,13 @@ var postService = /** @class */ (function () {
                         newPost = _b.sent();
                         newpostString = JSON.stringify(newPost);
                         newpostObject = JSON.parse(newpostString);
-                        post_id = newpostObject.insertId;
+                        affectedRows = newpostObject.affectedRows;
                         return [4 /*yield*/, Post_1.default.findByPostId({ post_id: post_id })];
                     case 3:
                         checkNewPost = _b.sent();
                         checkNewPostString = JSON.stringify(checkNewPost);
                         checkNewPostObject = JSON.parse(checkNewPostString);
-                        if (newpostObject.affectedRows == 1 && checkNewPostObject.length == 1) {
+                        if (affectedRows == 1 && checkNewPostObject.length == 1) {
                             result_success = {
                                 result: true,
                                 cause: "success",
