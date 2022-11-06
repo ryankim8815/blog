@@ -1,7 +1,9 @@
 import express from "express";
 import swaggerUi from "swagger-ui-express";
 import swaggerJSDoc from "swagger-jsdoc";
-import userRouter from "../routers/userRouter";
+// import path from "path";
+// import yaml from "yamljs";
+// import userRouter from "../routers/userRouter";
 import cors from "cors";
 require("dotenv").config();
 
@@ -43,7 +45,7 @@ const swaggerDefinition = {
   },
   components: {
     schemas: {
-      user: {
+      User: {
         type: "object",
         properties: {
           user_id: {
@@ -105,62 +107,130 @@ const swaggerDefinition = {
       },
     },
   },
-  paths: {
-    "/userRegister": {
-      post: {
-        tag: "userRouter",
-        summary: "회원가입",
+  // paths: "./paths/_index.yaml",
+  ////////////////////////////////////
+  // paths: {
+  //   // 자체 회원가입
+  //   "/user/register": {
+  //     post: {
+  //       tag: "userRouter",
+  //       summary: "회원가입",
 
-        requestBody: {
-          content: {
-            "application/json": {
-              schema: {
-                $ref: "#/components/schemas/userRouter",
-              },
-            },
-          },
-          description: "회원가입 시 필수</br>email과 nickname은 중복 허용X",
-          required: true,
-        },
-        responses: {
-          "200": {
-            description: "successful operation",
-            content: {
-              "application/json": {
-                schema: {
-                  $ref: "#/components/schemas/ApiResponse",
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-  },
+  //       requestBody: {
+  //         content: {
+  //           "application/json": {
+  //             schema: {
+  //               $ref: "#/components/schemas/User",
+  //             },
+  //           },
+  //         },
+  //         description:
+  //           '{</br>&nbsp;&nbsp; "email": 중복 혀용 불가, 이메일 형태만 가능</br>&nbsp;&nbsp; "password": 정책에 따라 글자수 00개 이상 </br>&nbsp;&nbsp; "nickname": 중복 허용 불가</br>}',
+  //         required: true,
+  //       },
+  //       responses: {
+  //         "200": {
+  //           description: "successful operation",
+  //           content: {
+  //             "application/json": {
+  //               schema: {
+  //                 $ref: "#/components/schemas/ApiResponse",
+  //               },
+  //             },
+  //           },
+  //         },
+  //       },
+  //     },
+  //   },
+
+  //   // 로그인
+  //   "/user/login": {
+  //     post: {
+  //       tag: "userRouter",
+  //       summary: "로그인",
+
+  //       requestBody: {
+  //         content: {
+  //           "application/json": {
+  //             schema: {
+  //               $ref: "#/components/schemas/User",
+  //             },
+  //           },
+  //         },
+  //         description:
+  //           // '{</br>&nbsp;&nbsp; "스키마": 설명</br>}',
+  //           '{</br>&nbsp;&nbsp; "email": 필수입력</br>&nbsp;&nbsp; "password": 필수입력</br>}',
+  //         required: true,
+  //       },
+  //       responses: {
+  //         "200": {
+  //           description: "successful operation",
+  //           content: {
+  //             "application/json": {
+  //               schema: {
+  //                 // 커스텀을 하려면 모든 케이스에 대한 스키마를 작성해야함
+  //                 $ref: "#/components/schemas/ApiResponse",
+  //               },
+  //             },
+  //           },
+  //         },
+  //       },
+  //     },
+  //   },
+
+  //   // 유저 정보 업데이트
+  //   "/user/update": {
+  //     post: {
+  //       tag: "userRouter",
+  //       summary: "사용자 정보 업데이트",
+  //       parameters: {
+  //         name: "api_key",
+  //         in: "header",
+  //         required: true,
+  //         // schema: { type: "string" },
+  //       },
+  //       requestBody: {
+  //         content: {
+  //           "application/json": {
+  //             schema: {
+  //               $ref: "#/components/schemas/User",
+  //               // type: "string",
+  //             },
+  //           },
+  //         },
+  //         description:
+  //           // '{</br>&nbsp;&nbsp; "스키마": 설명</br>}',
+  //           '{</br>&nbsp;&nbsp; "currentPassword": 필수입력</br>&nbsp;&nbsp; "password": 필수입력</br>&nbsp;&nbsp; "nickname": 필수입력</br>}',
+  //         required: true,
+  //       },
+  //       responses: {
+  //         "200": {
+  //           description: "successful operation",
+  //           content: {
+  //             "application/json": {
+  //               schema: {
+  //                 // 커스텀을 하려면 모든 케이스에 대한 스키마를 작성해야함
+  //                 $ref: "#/components/schemas/ApiResponse",
+  //               },
+  //             },
+  //           },
+  //         },
+  //       },
+  //     },
+  //   },
+  //   // 유저 정보 삭제
+  //   // "/user/delete": { $ref: "./paths/userDelete.yaml" },
+  // },
+  ////////////////////////////////////
 };
-// const swaggerPaths = {
-//   schemas: {
-//     GeneralError: {
-//       type: "object",
-//       properties: {
-//         code: {
-//           type: "integer",
-//           format: "int32",
-//         },
-//         message: {
-//           type: "string",
-//         },
-//       },
-//     },
-//   },
-// };
 const option = {
   swaggerDefinition,
-  apis: ["../routers/*.js"],
+  apis: ["./src/routers/*.js"], // 디렉터리 선언이 상대경로인데 본 파일 기준이 아니라 back 기준으로 선언해야함. 이것 때문에 시간이 오래 걸림
   //   swaggerPaths,
 };
 
-const swaggerSpec = swaggerJSDoc(option);
+const swaggerSpec = swaggerJSDoc(option); // json
+// const swaggerSpec = yaml.load(path.join(__dirname, "./build.yarm")); // yaml
 
 // Docs in Json format
 swagger.get("/swagger.json", (req, res) => {

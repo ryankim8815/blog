@@ -6,7 +6,56 @@ import userService from "../services/userService";
 import type { MulterFile } from "../customType/multer.d";
 const userRouter = express.Router();
 
-// GET: 유저리스트 확인 기능
+/**
+ * @swagger
+ * /user/list:
+ *   get:
+ *     summary: 전체 사용자 리스트 조회
+ *     description: 요청 시 보내야 하는 값이 없습니다.
+ *     responses:
+ *       200:
+ *         description: successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 result:
+ *                   type: boolean
+ *                   example: true
+ *                 cause:
+ *                   type: string
+ *                   example: success
+ *                 message:
+ *                   type: boolean
+ *                   example: 모든 사용자 조회가 성공적으로 이뤄졌습니다.
+ *                 count:
+ *                   type: int
+ *                   example: 10000
+ *                 list:
+ *                   type: array
+ *                   items:
+ *                        type: object
+ *                        properties:
+ *                          email:
+ *                            type: string
+ *                          nickname:
+ *                            type: string
+ *                          provider:
+ *                            type: string
+ *                          created_at:
+ *                            type: string
+ *                        example:
+ *                          - email: dev1@dogfoot.info
+ *                            nickname: dogfoot_1
+ *                            provider: kakao
+ *                            created_at: 2022-11-03T04:52:32.000Z
+ *                          - email: dev2@dogfoot.info
+ *                            nickname: dogfoot_2
+ *                            provider: naver
+ *                            created_at: 2022-11-03T05:47:45.000Z
+ */
+// GET: 사용자 리스트 조회 기능
 const userList = async (
   req: express.Request,
   res: express.Response,
@@ -27,6 +76,55 @@ const userList = async (
   }
 };
 
+/**
+ * @swagger
+ * /user/register:
+ *   post:
+ *     summary: 전체 사용자 리스트를 반환 합니다.
+ *     description: 요청 시 보내야 하는 값들은 아래와 같습니다.
+ *     responses:
+ *       200:
+ *         description: successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 result:
+ *                   type: boolean
+ *                   example: true
+ *                 cause:
+ *                   type: string
+ *                   example: success
+ *                 message:
+ *                   type: boolean
+ *                   example: 모든 사용자 조회가 성공적으로 이뤄졌습니다.
+ *                 count:
+ *                   type: int
+ *                   example: 10000
+ *                 list:
+ *                   type: array
+ *                   items:
+ *                        type: object
+ *                        properties:
+ *                          email:
+ *                            type: string
+ *                          nickname:
+ *                            type: string
+ *                          provider:
+ *                            type: string
+ *                          created_at:
+ *                            type: string
+ *                        example:
+ *                          - email: dev1@dogfoot.info
+ *                            nickname: dogfoot_1
+ *                            provider: kakao
+ *                            created_at: 2022-11-03T04:52:32.000Z
+ *                          - email: dev2@dogfoot.info
+ *                            nickname: dogfoot_2
+ *                            provider: naver
+ *                            created_at: 2022-11-03T05:47:45.000Z
+ */
 // POST: 회원가입 기능
 const userRegister = async (
   req: express.Request,
@@ -101,6 +199,7 @@ const userUpdate = async (
     res.status(200).json(result_err);
   }
 };
+
 // DELETE: 회원정보 삭제
 const userDelete = async (
   req: express.Request,
