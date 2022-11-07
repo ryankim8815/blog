@@ -25,7 +25,7 @@ const makeFormData = (params: any) => {
 ////////////////////////////////////////
 /////////////  카  카  오  ///////////////
 ////////////////////////////////////////
-// POST: kakao api 회원가입
+// POST: kakao api 회원가입 & 로그인
 const kakaoOauth = async (
   req: express.Request,
   res: express.Response,
@@ -88,6 +88,61 @@ const kakaoOauth = async (
     res.status(200).json(result_err);
   }
 };
+/**
+ * @swagger
+ * /kakaoOauth:
+ *   post:
+ *     summary: kakao 간편 로그인
+ *     description: kakao api 간편 로그인 첫 이용 시, 회원가입 절차도 진행됩니다.
+ *     tags: ["socialLoginRouter"]
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               code:
+ *                 type: string
+ *                 example: wsh2rwe87iu2gwef9u3rwdft23wes87y13qref97yi
+ *     responses:
+ *       200:
+ *         description: successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 result:
+ *                   type: boolean
+ *                   example: true
+ *                 cause:
+ *                   type: string
+ *                   example: success
+ *                 message:
+ *                   type: string
+ *                   example: ${nickname}님의 회원가입이 성공적으로 이뤄졌습니다.
+ *                 token:
+ *                   type: string
+ *                   example: awj32ew86tgcvwstudggaiqa98yiqgdiqyas238ewyufdhjv29qiaedz87iyhvd
+ *                 email:
+ *                   type: string
+ *                   example: user@dogfoot.info
+ *                 nickname:
+ *                   type: string
+ *                   example: bowwow
+ *                 profile_image:
+ *                   type: string
+ *                   example: file-1234405177970-416354969.png
+ *                 admin:
+ *                   type: int
+ *                   example: 0
+ *                 provider:
+ *                   type: string
+ *                   example: kakao
+ *                 created_at:
+ *                   type: timestamp
+ *                   example: 2022-11-01T01:01:01.000Z
+ */
 
 ////////////////////////////////////////
 /////////////  네  이  버  ///////////////
@@ -150,6 +205,64 @@ const naverOauth = async (
     res.status(200).json(result_err);
   }
 };
+/**
+ * @swagger
+ * /naverOauth:
+ *   post:
+ *     summary: naver 간편 로그인
+ *     description: naver api 간편 로그인 첫 이용 시, 회원가입 절차도 진행됩니다.
+ *     tags: ["socialLoginRouter"]
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               code:
+ *                 type: string
+ *                 example: wsh2rwe87iu2gwef9u3rwdft23wes87y13qref97yi
+ *               state:
+ *                 type: string
+ *                 example: state
+ *     responses:
+ *       200:
+ *         description: successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 result:
+ *                   type: boolean
+ *                   example: true
+ *                 cause:
+ *                   type: string
+ *                   example: success
+ *                 message:
+ *                   type: string
+ *                   example: ${nickname}님의 회원가입이 성공적으로 이뤄졌습니다.
+ *                 token:
+ *                   type: string
+ *                   example: awj32ew86tgcvwstudggaiqa98yiqgdiqyas238ewyufdhjv29qiaedz87iyhvd
+ *                 email:
+ *                   type: string
+ *                   example: user@dogfoot.info
+ *                 nickname:
+ *                   type: string
+ *                   example: bowwow
+ *                 profile_image:
+ *                   type: string
+ *                   example: file-1234405177970-416354969.png
+ *                 admin:
+ *                   type: int
+ *                   example: 0
+ *                 provider:
+ *                   type: string
+ *                   example: naver
+ *                 created_at:
+ *                   type: timestamp
+ *                   example: 2022-11-01T01:01:01.000Z
+ */
 
 socialLoginRouter.post("/kakaoOauth", kakaoOauth);
 socialLoginRouter.post("/naverOauth", naverOauth);

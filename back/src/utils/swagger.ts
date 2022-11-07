@@ -34,6 +34,22 @@ const swaggerDefinition = {
       name: "userRouter",
       description: "userRouter.ts",
     },
+    {
+      name: "socialLoginRouter",
+      description: "socialLoginRouter.ts",
+    },
+    {
+      name: "postRouter",
+      description: "postRouter.ts",
+    },
+    {
+      name: "commentRouter",
+      description: "commentRouter.ts",
+    },
+    {
+      name: "likeRouter",
+      description: "likeRouter.ts",
+    },
   ],
   host: `${process.env.DB_HOST}:${process.env.SERVER_PORT}`,
   basePath: "/",
