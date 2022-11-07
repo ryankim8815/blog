@@ -29,10 +29,12 @@ const swaggerDefinition = {
       url: `http://${process.env.DB_HOST}:${process.env.SERVER_PORT}`,
     },
   ],
-  tag: {
-    name: "user",
-    description: "userRouter관련 api",
-  },
+  tags: [
+    {
+      name: "userRouter",
+      description: "userRouter.ts",
+    },
+  ],
   host: `${process.env.DB_HOST}:${process.env.SERVER_PORT}`,
   basePath: "/",
   // securityDefinition: {

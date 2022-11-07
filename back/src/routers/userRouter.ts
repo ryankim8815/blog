@@ -32,6 +32,7 @@ const userList = async (
  *   get:
  *     summary: 전체 사용자 조회
  *     description: 요청 시 보내야 하는 값이 없습니다.
+ *     tags: ["userRouter"]
  *     responses:
  *       200:
  *         description: successful operation
@@ -103,6 +104,7 @@ const userRegister = async (
  *   post:
  *     summary: 회원가입
  *     description: email과 nickname은 중복 검사가 필요합니다.
+ *     tags: ["userRouter"]
  *     requestBody:
  *       content:
  *         application/json:
@@ -165,6 +167,7 @@ const userLogin = async (
  *   post:
  *     summary: 로그인
  *     description: email과 password가 필요합니다.
+ *     tags: ["userRouter"]
  *     requestBody:
  *       content:
  *         application/json:
@@ -252,6 +255,7 @@ const userUpdate = async (
  *   put:
  *     summary: 회원정보 수정
  *     description: 회원정보 수정 시에도 nickname은 중복 검사가 필요합니다.
+ *     tags: ["userRouter"]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -319,6 +323,7 @@ const userDelete = async (
  *   delete:
  *     summary: 회원정보 삭제
  *     description: 한번 삭제한 사용자는 복구할 수 없습니다.
+ *     tags: ["userRouter"]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -382,6 +387,7 @@ const userUploadImage = async (
  *   post:
  *     summary: 프로필 사진 업로드
  *     description: 확장자, 사이즈, 용량 제한에 대한 사항은 아직 미정입니다.
+ *     tags: ["userRouter"]
  *     security:
  *       - bearerAuth: []
  *     requestBody:

@@ -30,10 +30,12 @@ var swaggerDefinition = {
             url: "http://".concat(process.env.DB_HOST, ":").concat(process.env.SERVER_PORT),
         },
     ],
-    tag: {
-        name: "user",
-        description: "userRouter관련 api",
-    },
+    tags: [
+        {
+            name: "userRouter",
+            description: "userRouter.ts",
+        },
+    ],
     host: "".concat(process.env.DB_HOST, ":").concat(process.env.SERVER_PORT),
     basePath: "/",
     // securityDefinition: {

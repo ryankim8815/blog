@@ -99,6 +99,7 @@ var userList = function (req, res, next) { return __awaiter(void 0, void 0, void
  *   get:
  *     summary: 전체 사용자 조회
  *     description: 요청 시 보내야 하는 값이 없습니다.
+ *     tags: ["userRouter"]
  *     responses:
  *       200:
  *         description: successful operation
@@ -176,6 +177,7 @@ var userRegister = function (req, res, next) { return __awaiter(void 0, void 0, 
  *   post:
  *     summary: 회원가입
  *     description: email과 nickname은 중복 검사가 필요합니다.
+ *     tags: ["userRouter"]
  *     requestBody:
  *       content:
  *         application/json:
@@ -244,6 +246,7 @@ var userLogin = function (req, res, next) { return __awaiter(void 0, void 0, voi
  *   post:
  *     summary: 로그인
  *     description: email과 password가 필요합니다.
+ *     tags: ["userRouter"]
  *     requestBody:
  *       content:
  *         application/json:
@@ -337,6 +340,7 @@ var userUpdate = function (req, res, next) { return __awaiter(void 0, void 0, vo
  *   put:
  *     summary: 회원정보 수정
  *     description: 회원정보 수정 시에도 nickname은 중복 검사가 필요합니다.
+ *     tags: ["userRouter"]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -410,6 +414,7 @@ var userDelete = function (req, res, next) { return __awaiter(void 0, void 0, vo
  *   delete:
  *     summary: 회원정보 삭제
  *     description: 한번 삭제한 사용자는 복구할 수 없습니다.
+ *     tags: ["userRouter"]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -478,6 +483,7 @@ var userUploadImage = function (req, res, next) { return __awaiter(void 0, void 
  *   post:
  *     summary: 프로필 사진 업로드
  *     description: 확장자, 사이즈, 용량 제한에 대한 사항은 아직 미정입니다.
+ *     tags: ["userRouter"]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
