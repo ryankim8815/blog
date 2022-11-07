@@ -55,8 +55,8 @@ var swaggerDefinition = {
                 type: "object",
                 properties: {
                     user_id: {
-                        type: "integer",
-                        description: "User email",
+                        type: "string",
+                        description: "PK, UUID",
                     },
                     password: {
                         type: "string",
@@ -71,7 +71,7 @@ var swaggerDefinition = {
                         type: "string",
                     },
                     admin: {
-                        type: "int",
+                        type: "integer",
                     },
                     provider: {
                         type: "string",
@@ -81,31 +81,75 @@ var swaggerDefinition = {
                     },
                 },
             },
-            ApiResponse: {
+            Post: {
                 type: "object",
                 properties: {
-                    result: {
-                        type: "boolean",
+                    post_id: {
+                        type: "string",
+                        description: "PK, UUID",
                     },
-                    cause: {
+                    user_id: {
                         type: "string",
                     },
-                    message: {
+                    title: {
                         type: "string",
+                    },
+                    content: {
+                        type: "string",
+                    },
+                    image: {
+                        type: "string",
+                    },
+                    tag: {
+                        type: "integer",
+                    },
+                    created_at: {
+                        type: "timstamp",
+                    },
+                    updated_at: {
+                        type: "timstamp",
                     },
                 },
             },
-            userRouter: {
+            Comment: {
                 type: "object",
                 properties: {
-                    email: {
+                    comment_id: {
+                        type: "string",
+                        description: "PK, UUID",
+                    },
+                    user_id: {
                         type: "string",
                     },
-                    Password: {
+                    post_id: {
                         type: "string",
                     },
-                    nickname: {
+                    content: {
                         type: "string",
+                    },
+                    created_at: {
+                        type: "timstamp",
+                    },
+                    updated_at: {
+                        type: "timstamp",
+                    },
+                },
+            },
+            Like: {
+                type: "object",
+                properties: {
+                    like_id: {
+                        type: "string",
+                        description: "PK, UUID",
+                    },
+                    post_id: {
+                        type: "string",
+                    },
+                    user_id: {
+                        type: "string",
+                    },
+                    created_at: {
+                        type: "timstamp",
                     },
                 },
             },
