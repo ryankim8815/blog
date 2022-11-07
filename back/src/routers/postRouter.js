@@ -97,7 +97,7 @@ var postList = function (req, res, next) { return __awaiter(void 0, void 0, void
 }); };
 /**
  * @swagger
- * /post:
+ * /p:
  *   get:
  *     summary: 전체 게시글 조회
  *     description: 요청 시 보내야 하는 값이 없습니다.
@@ -215,7 +215,7 @@ var postCreate = function (req, res, next) { return __awaiter(void 0, void 0, vo
 }); };
 /**
  * @swagger
- * /post:
+ * /p:
  *   post:
  *     summary: 게시글 작성
  *     description: 초기에는 관리자만 가능하도록 할 예정입니다.
@@ -297,7 +297,7 @@ var postUpdate = function (req, res, next) { return __awaiter(void 0, void 0, vo
 }); };
 /**
  * @swagger
- * /post/{post_id}:
+ * /p/{post_id}:
  *   put:
  *     summary: 게시글 수정
  *     description: 작성자만 게시글을 수정할 수 있습니다.
@@ -379,7 +379,7 @@ var postDelete = function (req, res, next) { return __awaiter(void 0, void 0, vo
 }); };
 /**
  * @swagger
- * /post/{post_id}:
+ * /p/{post_id}:
  *   delete:
  *     summary: 게시글 삭제
  *     description: 작성자만 게시글을 삭제할 수 있습니다.
@@ -411,8 +411,8 @@ var postDelete = function (req, res, next) { return __awaiter(void 0, void 0, vo
  *                   example: 게시글 삭제가 성공적으로 이뤄졌습니다.
  */
 // api index
-postRouter.get("/post", postList); // 전체 게시글 검섹
-postRouter.post("/post", authMiddleware_1.default, postCreate); // 게시글 생성
-postRouter.put("/post/:post_id", authMiddleware_1.default, postUpdate); //  게시글 수정
-postRouter.delete("/post/:post_id", authMiddleware_1.default, postDelete); // 게시글 삭제
+postRouter.get("/p", postList); // 전체 게시글 검섹
+postRouter.post("/p", authMiddleware_1.default, postCreate); // 게시글 생성
+postRouter.put("/p/:post_id", authMiddleware_1.default, postUpdate); //  게시글 수정
+postRouter.delete("/p/:post_id", authMiddleware_1.default, postDelete); // 게시글 삭제
 module.exports = postRouter;

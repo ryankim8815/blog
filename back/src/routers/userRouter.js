@@ -95,7 +95,7 @@ var userList = function (req, res, next) { return __awaiter(void 0, void 0, void
 }); };
 /**
  * @swagger
- * /user/list:
+ * /u/list:
  *   get:
  *     summary: 전체 사용자 조회
  *     description: 초기에는 관리자만 가능하도록 할 예정입니다.
@@ -173,7 +173,7 @@ var userRegister = function (req, res, next) { return __awaiter(void 0, void 0, 
 }); };
 /**
  * @swagger
- * /user/register:
+ * /u/register:
  *   post:
  *     summary: 회원가입
  *     description: email과 nickname은 중복 검사가 필요합니다.
@@ -242,7 +242,7 @@ var userLogin = function (req, res, next) { return __awaiter(void 0, void 0, voi
 }); };
 /**
  * @swagger
- * /user/login:
+ * /u/login:
  *   post:
  *     summary: 로그인
  *     description: email과 password가 필요합니다.
@@ -336,7 +336,7 @@ var userUpdate = function (req, res, next) { return __awaiter(void 0, void 0, vo
 }); };
 /**
  * @swagger
- * /user/update:
+ * /u/update:
  *   put:
  *     summary: 회원정보 수정
  *     description: 회원정보 수정 시에도 nickname은 중복 검사가 필요합니다.
@@ -410,7 +410,7 @@ var userDelete = function (req, res, next) { return __awaiter(void 0, void 0, vo
 }); };
 /**
  * @swagger
- * /user/delete:
+ * /u/delete:
  *   delete:
  *     summary: 회원정보 삭제
  *     description: 한번 삭제한 사용자는 복구할 수 없습니다.
@@ -479,7 +479,7 @@ var userUploadImage = function (req, res, next) { return __awaiter(void 0, void 
 }); };
 /**
  * @swagger
- * /user/upload_image:
+ * /u/upload_image:
  *   post:
  *     summary: 프로필 사진 업로드
  *     description: 확장자, 사이즈, 용량 제한에 대한 사항은 아직 미정입니다.
@@ -514,10 +514,10 @@ var userUploadImage = function (req, res, next) { return __awaiter(void 0, void 
  *                   example: ${nickname}님의 프로필 사진 업데이트가 성공적으로 이뤄졌습니다.
  */
 // api index
-userRouter.get("/user/list", userList); // 전체 유저 검섹
-userRouter.post("/user/register", userRegister); // 자체 회원가입
-userRouter.post("/user/login", userLogin); // 로그인
-userRouter.put("/user/update", authMiddleware_1.default, userUpdate); // 유저 정보 업데이트(pw & nickname)
-userRouter.delete("/user/delete", authMiddleware_1.default, userDelete); // 유저 삭제
-userRouter.post("/user/upload_image", authMiddleware_1.default, uploadMiddleware_1.default.single("file"), userUploadImage); // 프로필 사진 업로드(기존 사진 자동 삭제)
+userRouter.get("/u/list", userList); // 전체 유저 검섹
+userRouter.post("/u/register", userRegister); // 자체 회원가입
+userRouter.post("/u/login", userLogin); // 로그인
+userRouter.put("/u/update", authMiddleware_1.default, userUpdate); // 유저 정보 업데이트(pw & nickname)
+userRouter.delete("/u/delete", authMiddleware_1.default, userDelete); // 유저 삭제
+userRouter.post("/u/upload_image", authMiddleware_1.default, uploadMiddleware_1.default.single("file"), userUploadImage); // 프로필 사진 업로드(기존 사진 자동 삭제)
 module.exports = userRouter;
