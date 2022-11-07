@@ -66,55 +66,6 @@ var authMiddleware_1 = __importDefault(require("../middlewares/authMiddleware"))
 var uploadMiddleware_1 = __importDefault(require("../middlewares/uploadMiddleware"));
 var userService_1 = __importDefault(require("../services/userService"));
 var userRouter = express.Router();
-/**
- * @swagger
- * /user/list:
- *   get:
- *     summary: 전체 사용자 리스트 조회
- *     description: 요청 시 보내야 하는 값이 없습니다.
- *     responses:
- *       200:
- *         description: successful operation
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 result:
- *                   type: boolean
- *                   example: true
- *                 cause:
- *                   type: string
- *                   example: success
- *                 message:
- *                   type: boolean
- *                   example: 모든 사용자 조회가 성공적으로 이뤄졌습니다.
- *                 count:
- *                   type: int
- *                   example: 10000
- *                 list:
- *                   type: array
- *                   items:
- *                        type: object
- *                        properties:
- *                          email:
- *                            type: string
- *                          nickname:
- *                            type: string
- *                          provider:
- *                            type: string
- *                          created_at:
- *                            type: string
- *                        example:
- *                          - email: dev1@dogfoot.info
- *                            nickname: dogfoot_1
- *                            provider: kakao
- *                            created_at: 2022-11-03T04:52:32.000Z
- *                          - email: dev2@dogfoot.info
- *                            nickname: dogfoot_2
- *                            provider: naver
- *                            created_at: 2022-11-03T05:47:45.000Z
- */
 // GET: 사용자 리스트 조회 기능
 var userList = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var allUsers, err_1, result_err;
@@ -144,10 +95,10 @@ var userList = function (req, res, next) { return __awaiter(void 0, void 0, void
 }); };
 /**
  * @swagger
- * /user/register:
- *   post:
- *     summary: 전체 사용자 리스트를 반환 합니다.
- *     description: 요청 시 보내야 하는 값들은 아래와 같습니다.
+ * /user/list:
+ *   get:
+ *     summary: 전체 사용자 조회
+ *     description: 요청 시 보내야 하는 값이 없습니다.
  *     responses:
  *       200:
  *         description: successful operation
@@ -163,33 +114,31 @@ var userList = function (req, res, next) { return __awaiter(void 0, void 0, void
  *                   type: string
  *                   example: success
  *                 message:
- *                   type: boolean
+ *                   type: string
  *                   example: 모든 사용자 조회가 성공적으로 이뤄졌습니다.
  *                 count:
  *                   type: int
  *                   example: 10000
  *                 list:
- *                   type: array
- *                   items:
- *                        type: object
- *                        properties:
- *                          email:
- *                            type: string
- *                          nickname:
- *                            type: string
- *                          provider:
- *                            type: string
- *                          created_at:
- *                            type: string
- *                        example:
- *                          - email: dev1@dogfoot.info
- *                            nickname: dogfoot_1
- *                            provider: kakao
- *                            created_at: 2022-11-03T04:52:32.000Z
- *                          - email: dev2@dogfoot.info
- *                            nickname: dogfoot_2
- *                            provider: naver
- *                            created_at: 2022-11-03T05:47:45.000Z
+ *                   type: object
+ *                   properties:
+ *                     email:
+ *                       type: string
+ *                     nickname:
+ *                       type: string
+ *                     provider:
+ *                       type: string
+ *                     created_at:
+ *                       type: string
+ *                   example:
+ *                     - email: dev1@dogfoot.info
+ *                       nickname: dogfoot_1
+ *                       provider: kakao
+ *                       created_at: 2022-11-03T04:52:32.000Z
+ *                     - email: dev2@dogfoot.info
+ *                       nickname: dogfoot_2
+ *                       provider: naver
+ *                       created_at: 2022-11-01T01:01:01.000Z
  */
 // POST: 회원가입 기능
 var userRegister = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
@@ -221,6 +170,45 @@ var userRegister = function (req, res, next) { return __awaiter(void 0, void 0, 
         }
     });
 }); };
+/**
+ * @swagger
+ * /user/register:
+ *   post:
+ *     summary: 회원가입
+ *     description: email과 nickname은 중복 검사가 필요합니다.
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: user@dogfoot.info
+ *               password:
+ *                 type: string
+ *                 example: password1234
+ *               nickname:
+ *                 type: string
+ *                 example: userNickname
+ *     responses:
+ *       200:
+ *         description: successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 result:
+ *                   type: boolean
+ *                   example: true
+ *                 cause:
+ *                   type: string
+ *                   example: success
+ *                 message:
+ *                   type: string
+ *                   example: ${nickname}님의 회원가입이 성공적으로 이뤄졌습니다.
+ */
 // POST: 로그인
 var userLogin = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var email, password, logedinUser, err_3, result_err;
@@ -250,6 +238,63 @@ var userLogin = function (req, res, next) { return __awaiter(void 0, void 0, voi
         }
     });
 }); };
+/**
+ * @swagger
+ * /user/login:
+ *   post:
+ *     summary: 로그인
+ *     description: email과 password가 필요합니다.
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: user@dogfoot.info
+ *               password:
+ *                 type: string
+ *                 example: password1234
+ *     responses:
+ *       200:
+ *         description: successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 result:
+ *                   type: boolean
+ *                   example: true
+ *                 cause:
+ *                   type: string
+ *                   example: success
+ *                 message:
+ *                   type: string
+ *                   example: ${nickname}님의 회원가입이 성공적으로 이뤄졌습니다.
+ *                 token:
+ *                   type: string
+ *                   example: awj32ew86tgcvwstudggaiqa98yiqgdiqyas238ewyufdhjv29qiaedz87iyhvd
+ *                 email:
+ *                   type: string
+ *                   example: user@dogfoot.info
+ *                 nickname:
+ *                   type: string
+ *                   example: bowwow
+ *                 profile_image:
+ *                   type: string
+ *                   example: file-1234405177970-416354969.png
+ *                 admin:
+ *                   type: int
+ *                   example: 0
+ *                 provider:
+ *                   type: string
+ *                   example: dogfoot
+ *                 created_at:
+ *                   type: timestamp
+ *                   example: 2022-11-01T01:01:01.000Z
+ */
 // POST: 회원정보 수정
 var userUpdate = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var email, currentPassword, password, nickname, updateUser, err_4, result_err;
@@ -286,6 +331,47 @@ var userUpdate = function (req, res, next) { return __awaiter(void 0, void 0, vo
         }
     });
 }); };
+/**
+ * @swagger
+ * /user/update:
+ *   put:
+ *     summary: 회원정보 수정
+ *     description: 회원정보 수정 시에도 nickname은 중복 검사가 필요합니다.
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               password:
+ *                 type: string
+ *                 example: new_password
+ *               currentPassword:
+ *                 type: string
+ *                 example: current_password
+ *               nickname:
+ *                 type: string
+ *                 example: new_nickname
+ *     responses:
+ *       200:
+ *         description: successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 result:
+ *                   type: boolean
+ *                   example: true
+ *                 cause:
+ *                   type: string
+ *                   example: success
+ *                 message:
+ *                   type: string
+ *                   example: ${nickname}님의 회원정보 수정이 성공적으로 이뤄졌습니다.
+ */
 // DELETE: 회원정보 삭제
 var userDelete = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var email, password, deleteUser, err_5, result_err;
@@ -318,6 +404,41 @@ var userDelete = function (req, res, next) { return __awaiter(void 0, void 0, vo
         }
     });
 }); };
+/**
+ * @swagger
+ * /user/delete:
+ *   delete:
+ *     summary: 회원정보 삭제
+ *     description: 한번 삭제한 사용자는 복구할 수 없습니다.
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               password:
+ *                 type: string
+ *                 example: password1234
+ *     responses:
+ *       200:
+ *         description: successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 result:
+ *                   type: boolean
+ *                   example: true
+ *                 cause:
+ *                   type: string
+ *                   example: success
+ *                 message:
+ *                   type: string
+ *                   example: ${nickname}님의 회원정보 삭제가 성공적으로 이뤄졌습니다.
+ */
 //// POST: 프로필 사진 업로드
 var userUploadImage = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var email, new_filename, uploadUserImage, err_6, result_err;
@@ -351,6 +472,41 @@ var userUploadImage = function (req, res, next) { return __awaiter(void 0, void 
         }
     });
 }); };
+/**
+ * @swagger
+ * /user/upload_image:
+ *   post:
+ *     summary: 프로필 사진 업로드
+ *     description: 확장자, 사이즈, 용량 제한에 대한 사항은 아직 미정입니다.
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       content:
+ *        multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               file:
+ *                type: string
+ *                format: binary
+ *     responses:
+ *       200:
+ *         description: successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 result:
+ *                   type: boolean
+ *                   example: true
+ *                 cause:
+ *                   type: string
+ *                   example: success
+ *                 message:
+ *                   type: string
+ *                   example: ${nickname}님의 프로필 사진 업데이트가 성공적으로 이뤄졌습니다.
+ */
 // api index
 userRouter.get("/user/list", userList); // 전체 유저 검섹
 userRouter.post("/user/register", userRegister); // 자체 회원가입

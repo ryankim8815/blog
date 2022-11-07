@@ -35,15 +35,18 @@ const swaggerDefinition = {
   },
   host: `${process.env.DB_HOST}:${process.env.SERVER_PORT}`,
   basePath: "/",
-  securityDefinition: {
-    bearerAuth: {
-      type: "apikey",
-      name: "Authorization",
-      schema: "bearer",
-      in: "header",
-    },
-  },
+  // securityDefinition: {
+  //   bearerAuth: {
+  //     type: "apikey",
+  //     name: "Authorization",
+  //     schema: "bearer",
+  //     in: "header",
+  //   },
+  // },
   components: {
+    securitySchemes: {
+      bearerAuth: { type: "http", scheme: "bearer", bearerFormat: "JWT" },
+    },
     schemas: {
       User: {
         type: "object",
@@ -107,121 +110,6 @@ const swaggerDefinition = {
       },
     },
   },
-  // paths: "./paths/_index.yaml",
-  ////////////////////////////////////
-  // paths: {
-  //   // 자체 회원가입
-  //   "/user/register": {
-  //     post: {
-  //       tag: "userRouter",
-  //       summary: "회원가입",
-
-  //       requestBody: {
-  //         content: {
-  //           "application/json": {
-  //             schema: {
-  //               $ref: "#/components/schemas/User",
-  //             },
-  //           },
-  //         },
-  //         description:
-  //           '{</br>&nbsp;&nbsp; "email": 중복 혀용 불가, 이메일 형태만 가능</br>&nbsp;&nbsp; "password": 정책에 따라 글자수 00개 이상 </br>&nbsp;&nbsp; "nickname": 중복 허용 불가</br>}',
-  //         required: true,
-  //       },
-  //       responses: {
-  //         "200": {
-  //           description: "successful operation",
-  //           content: {
-  //             "application/json": {
-  //               schema: {
-  //                 $ref: "#/components/schemas/ApiResponse",
-  //               },
-  //             },
-  //           },
-  //         },
-  //       },
-  //     },
-  //   },
-
-  //   // 로그인
-  //   "/user/login": {
-  //     post: {
-  //       tag: "userRouter",
-  //       summary: "로그인",
-
-  //       requestBody: {
-  //         content: {
-  //           "application/json": {
-  //             schema: {
-  //               $ref: "#/components/schemas/User",
-  //             },
-  //           },
-  //         },
-  //         description:
-  //           // '{</br>&nbsp;&nbsp; "스키마": 설명</br>}',
-  //           '{</br>&nbsp;&nbsp; "email": 필수입력</br>&nbsp;&nbsp; "password": 필수입력</br>}',
-  //         required: true,
-  //       },
-  //       responses: {
-  //         "200": {
-  //           description: "successful operation",
-  //           content: {
-  //             "application/json": {
-  //               schema: {
-  //                 // 커스텀을 하려면 모든 케이스에 대한 스키마를 작성해야함
-  //                 $ref: "#/components/schemas/ApiResponse",
-  //               },
-  //             },
-  //           },
-  //         },
-  //       },
-  //     },
-  //   },
-
-  //   // 유저 정보 업데이트
-  //   "/user/update": {
-  //     post: {
-  //       tag: "userRouter",
-  //       summary: "사용자 정보 업데이트",
-  //       parameters: {
-  //         name: "api_key",
-  //         in: "header",
-  //         required: true,
-  //         // schema: { type: "string" },
-  //       },
-  //       requestBody: {
-  //         content: {
-  //           "application/json": {
-  //             schema: {
-  //               $ref: "#/components/schemas/User",
-  //               // type: "string",
-  //             },
-  //           },
-  //         },
-  //         description:
-  //           // '{</br>&nbsp;&nbsp; "스키마": 설명</br>}',
-  //           '{</br>&nbsp;&nbsp; "currentPassword": 필수입력</br>&nbsp;&nbsp; "password": 필수입력</br>&nbsp;&nbsp; "nickname": 필수입력</br>}',
-  //         required: true,
-  //       },
-  //       responses: {
-  //         "200": {
-  //           description: "successful operation",
-  //           content: {
-  //             "application/json": {
-  //               schema: {
-  //                 // 커스텀을 하려면 모든 케이스에 대한 스키마를 작성해야함
-  //                 $ref: "#/components/schemas/ApiResponse",
-  //               },
-  //             },
-  //           },
-  //         },
-  //       },
-  //     },
-  //   },
-  //   // 유저 정보 삭제
-  //   // "/user/delete": { $ref: "./paths/userDelete.yaml" },
-  // },
-  ////////////////////////////////////
 };
 const option = {
   swaggerDefinition,
