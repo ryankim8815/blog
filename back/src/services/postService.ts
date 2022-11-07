@@ -11,8 +11,8 @@ class postService {
     const allPostsString = JSON.stringify(allPosts);
     const allPostsObject = JSON.parse(allPostsString);
     for (let i = 0; i < allPostsObject.length; i++) {
-      //   delete allPostsObject[i].post_id;
       delete allPostsObject[i].user_id;
+      delete allPostsObject[i].password;
     }
     const countPosts = await Post.countAll();
     const result_success = Object.assign(
@@ -99,7 +99,7 @@ class postService {
         const result_success = {
           result: true,
           cause: "success",
-          message: `게시글 생성이 성공적으로 이뤄졌습니다.`,
+          message: `게시글 수정이 성공적으로 이뤄졌습니다.`,
         };
         return result_success;
       }

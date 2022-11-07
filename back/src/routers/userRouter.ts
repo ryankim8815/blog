@@ -31,7 +31,7 @@ const userList = async (
  * /user/list:
  *   get:
  *     summary: 전체 사용자 조회
- *     description: 요청 시 보내야 하는 값이 없습니다.
+ *     description: 초기에는 관리자만 가능하도록 할 예정입니다.
  *     tags: ["userRouter"]
  *     responses:
  *       200:
@@ -63,7 +63,7 @@ const userList = async (
  *                     provider:
  *                       type: string
  *                     created_at:
- *                       type: string
+ *                       type: timstamp
  *                   example:
  *                     - email: dev1@dogfoot.info
  *                       nickname: dogfoot_1

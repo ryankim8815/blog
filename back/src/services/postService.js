@@ -58,8 +58,8 @@ var postService = /** @class */ (function () {
                         allPostsString = JSON.stringify(allPosts);
                         allPostsObject = JSON.parse(allPostsString);
                         for (i = 0; i < allPostsObject.length; i++) {
-                            //   delete allPostsObject[i].post_id;
                             delete allPostsObject[i].user_id;
+                            delete allPostsObject[i].password;
                         }
                         return [4 /*yield*/, Post_1.default.countAll()];
                     case 2:
@@ -174,7 +174,7 @@ var postService = /** @class */ (function () {
                             result_success = {
                                 result: true,
                                 cause: "success",
-                                message: "\uAC8C\uC2DC\uAE00 \uC0DD\uC131\uC774 \uC131\uACF5\uC801\uC73C\uB85C \uC774\uB904\uC84C\uC2B5\uB2C8\uB2E4.",
+                                message: "\uAC8C\uC2DC\uAE00 \uC218\uC815\uC774 \uC131\uACF5\uC801\uC73C\uB85C \uC774\uB904\uC84C\uC2B5\uB2C8\uB2E4.",
                             };
                             return [2 /*return*/, result_success];
                         }
