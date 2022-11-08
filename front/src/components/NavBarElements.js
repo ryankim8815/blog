@@ -35,12 +35,12 @@ function NavBarElements() {
               <Offcanvas.Body>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
                   {/* <Nav.Link href="/">Home</Nav.Link> */}
-                  <Nav.Link href="/About">About</Nav.Link>
-                  <Nav.Link href="/Projects">Projects</Nav.Link>
-                  <Nav.Link href="/Posts">Posts</Nav.Link>
-                  <Nav.Link href="/Live">Live</Nav.Link>
-                  <Nav.Link href="/Register">Register</Nav.Link>
-                  <Nav.Link href="/Admin">Admin</Nav.Link>
+                  <Nav.Link href="/about">About</Nav.Link>
+                  <Nav.Link href="/projects">Projects</Nav.Link>
+                  <Nav.Link href="/posts">Posts</Nav.Link>
+                  <Nav.Link href="/live">Live</Nav.Link>
+                  <Nav.Link href="/register">Register</Nav.Link>
+                  <Nav.Link href="/admin">Admin</Nav.Link>
                   {/* <NavDropdown
                     title="Dropdown"
                     id={`offcanvasNavbarDropdown-expand-${expand}`}
