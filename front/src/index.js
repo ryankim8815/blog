@@ -1,10 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+// import "./index.css";
+import App from "./App";
+// import "./index.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
+import "./assets/main.css";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+// optional
+import reportWebVitals from "./reportWebVitals"; // 앱 퍼포먼스를 분석하여 object 형태로 보여주는 기능 - google analytics 연동 가능
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <App />
