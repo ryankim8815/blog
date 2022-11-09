@@ -1,5 +1,6 @@
 import React from "react";
 import { Carousel } from "react-bootstrap";
+import Category from "../components/post/Category";
 
 function Home() {
   const width = "300px";
@@ -59,29 +60,7 @@ function Home() {
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>
-      <div pedding="2"></div>
-      <div class="space-around">
-        <button
-          type="button"
-          class="btn-post-category"
-          justify-content="space-around"
-        >
-          CUSTOM
-        </button>
-        <button
-          type="button"
-          class="btn-post-category"
-          justify-content="space-around"
-        >
-          CUSTOM
-        </button>
-        <button type="button" class="btn-post-category" display="center">
-          CUSTOM
-        </button>
-        <button type="button" class="btn-post-category">
-          CUSTOM
-        </button>
-      </div>
+      <Category />
     </div>
   );
 }

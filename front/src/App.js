@@ -11,6 +11,7 @@ import React, {
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import * as Api from "./components/utils/Api";
 import { loginReducer } from "./components/utils/Reducer";
+// screens
 import Home from "./screens/Home";
 import About from "./screens/About";
 import Projects from "./screens/Projects";
@@ -18,7 +19,9 @@ import Live from "./screens/Live";
 import Register from "./screens/Register";
 import Admin from "./screens/Admin";
 import Posts from "./screens/Posts";
-import NavBarElements from "./components/Common/NavBarElements";
+// components
+import NavBarElements from "./components/common/NavBarElements";
+// import NavBarElements from "./components/Common/NavBarElements";
 import "./assets/main.css";
 
 export const UserStateContext = createContext(null);

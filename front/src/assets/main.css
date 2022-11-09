@@ -33,22 +33,31 @@ body {
 .space-around {
   justify-content: space-around; }
 
+.box-category {
+  width: 100%;
+  margin: 50px 0px;
+  padding-right: 15%;
+  padding-left: 15%;
+  text-align: center; }
+
 .btn-post-category {
   height: 24px;
   color: black;
   font-size: 12px;
   font-family: "Elice Digital Coding", "monospace";
-  text-align: center;
+  align-items: center;
+  justify-content: flex-end;
   border: 1px solid lightgray;
   background: white;
   border-radius: 12px;
+  margin: 10px 20px;
+  display: inline-flex;
   cursor: pointer; }
-
-.btn-post-category:hover {
-  background: lightgray;
-  color: black;
-  border: 1px solid gray;
-  box-shadow: 0 0 2px 0px lightgray; }
+  .btn-post-category:hover {
+    background: lightgray;
+    color: black;
+    border: 1px solid gray;
+    box-shadow: 0 0 2px 0px lightgray; }
 
 .carousel-item {
   width: 33%;

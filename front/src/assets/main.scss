@@ -49,25 +49,34 @@ $custom: black;
 .space-around {
   justify-content: space-around;
 }
+.box-category {
+  width: 100%;
+  // background-color: tomato;   // 영역확인용
+  margin: 50px 0px;
+  padding-right: 15%;
+  padding-left: 15%;
+  text-align: center; // display를 inline으로 했기 때문에 정렬 가능
+}
 .btn-post-category {
   // width: 200px;
   height: 24px;
   color: black;
   font-size: 12px;
   font-family: $font-elice-content;
-  text-align: center;
+  align-items: center;
+  justify-content: flex-end;
   border: 1px solid lightgray;
   background: white;
   border-radius: 12px;
-  // justify-content: space-around;
-  // display: center;
+  margin: 10px 20px;
+  display: inline-flex;
   cursor: pointer;
-}
-.btn-post-category:hover {
-  background: lightgray;
-  color: black;
-  border: 1px solid gray;
-  box-shadow: 0 0 2px 0px lightgray;
+  &:hover {
+    background: lightgray;
+    color: black;
+    border: 1px solid gray;
+    box-shadow: 0 0 2px 0px lightgray;
+  }
 }
 
 // .offcanvas-body {
