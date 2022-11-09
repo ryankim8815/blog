@@ -1,3 +1,6 @@
+$font-elice-title: "Elice Digital Baeum", sans-serif;
+$font-elice-content: "Elice Digital Coding", "monospace";
+
 $color1: red;
 
 h1 {
@@ -14,6 +17,57 @@ $color3: tomato;
 
 h3 {
   color: $color3;
+}
+html,
+body {
+  font-family: "Elice Digital Baeum", sans-serif;
+}
+
+.navbar-brand {
+  font-family: "Elice Digital Baeum", sans-serif;
+  font-weight: bold;
+  color: orange; // 적용안됨
+}
+
+$custom: black;
+.btn-outline-dark {
+  $primary: black;
+}
+
+.flex-start {
+  justify-content: flex-start;
+}
+.flex-end {
+  justify-content: flex-end;
+}
+.center {
+  justify-content: center;
+}
+.space-between {
+  justify-content: space-between;
+}
+.space-around {
+  justify-content: space-around;
+}
+.btn-post-category {
+  // width: 200px;
+  height: 24px;
+  color: black;
+  font-size: 12px;
+  font-family: $font-elice-content;
+  text-align: center;
+  border: 1px solid lightgray;
+  background: white;
+  border-radius: 12px;
+  // justify-content: space-around;
+  // display: center;
+  cursor: pointer;
+}
+.btn-post-category:hover {
+  background: lightgray;
+  color: black;
+  border: 1px solid gray;
+  box-shadow: 0 0 2px 0px lightgray;
 }
 
 // .offcanvas-body {
@@ -79,6 +133,8 @@ h3 {
 // @import "./navbar";
 // @import "./offcanvas";
 // @import "./close";
+@import url("https://font.elice.io/EliceDigitalBaeum.css");
+@import url("https://font.elice.io/EliceDigitalCoding.css");
 
 @import "./carousel";
 @import "../../node_modules/bootstrap/scss/bootstrap";
