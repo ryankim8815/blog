@@ -1,6 +1,7 @@
 import React from "react";
 import { Carousel } from "react-bootstrap";
 import Category from "../components/post/Category";
+import Post_list from "../components/post/Post_list";
 
 function Home() {
   const width = "300px";
@@ -61,6 +62,7 @@ function Home() {
         </Carousel.Item>
       </Carousel>
       <Category />
+      <Post_list />
     </div>
   );
 }

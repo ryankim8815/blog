@@ -1,7 +1,9 @@
 @import url("https://font.elice.io/EliceDigitalBaeum.css");
 @import url("https://font.elice.io/EliceDigitalCoding.css");
 h1, .h1 {
-  color: red; }
+  color: black;
+  font-family: "Elice Digital Baeum", sans-serif;
+  font-weight: 900; }
 
 h2, .h2 {
   color: blue; }
@@ -9,9 +11,16 @@ h2, .h2 {
 h3, .h3 {
   color: tomato; }
 
-html,
-body {
-  font-family: "Elice Digital Baeum", sans-serif; }
+h4, .h4 {
+  color: tomato; }
+
+h5, .h5 {
+  color: tomato; }
+
+h6, .h6 {
+  color: gray;
+  font-family: "Elice Digital Baeum", sans-serif;
+  font-weight: 900; }
 
 .navbar-brand {
   font-family: "Elice Digital Baeum", sans-serif;
@@ -58,6 +67,21 @@ body {
     color: black;
     border: 1px solid gray;
     box-shadow: 0 0 2px 0px lightgray; }
+
+.box-post-list {
+  width: 100%;
+  margin: 50px 0px;
+  padding-right: 15%;
+  padding-left: 15%;
+  text-align: left; }
+
+.title1 {
+  height: 24px;
+  color: black;
+  font-size: 12px;
+  font-family: "Elice Digital Coding", "monospace";
+  align-items: center;
+  justify-content: flex-end; }
 
 .carousel-item {
   width: 33%;

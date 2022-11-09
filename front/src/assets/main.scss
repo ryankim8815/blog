@@ -4,7 +4,9 @@ $font-elice-content: "Elice Digital Coding", "monospace";
 $color1: red;
 
 h1 {
-  color: $color1;
+  color: black;
+  font-family: $font-elice-title;
+  font-weight: 900;
 }
 
 $color2: blue;
@@ -18,9 +20,16 @@ $color3: tomato;
 h3 {
   color: $color3;
 }
-html,
-body {
-  font-family: "Elice Digital Baeum", sans-serif;
+h4 {
+  color: $color3;
+}
+h5 {
+  color: $color3;
+}
+h6 {
+  color: gray;
+  font-family: $font-elice-title;
+  font-weight: 900;
 }
 
 .navbar-brand {
@@ -79,6 +88,22 @@ $custom: black;
   }
 }
 
+.box-post-list {
+  width: 100%;
+  // background-color: tomato; // 영역확인용
+  margin: 50px 0px;
+  padding-right: 15%;
+  padding-left: 15%;
+  text-align: left; // display를 inline으로 했기 때문에 정렬 가능
+}
+.title1 {
+  height: 24px;
+  color: black;
+  font-size: 12px;
+  font-family: $font-elice-content;
+  align-items: center;
+  justify-content: flex-end;
+}
 // .offcanvas-body {
 //   flex-grow: 5;
 //   justify-content: space-between;
