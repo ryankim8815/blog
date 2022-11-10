@@ -32,36 +32,36 @@ function App() {
   //useReducer를 사용하면 state값과 dispatch 함수를 받아온다. 여기서 state는 현재 가리키고 있는 상태 / dispatch는 액션을 '발생시키는' 함수.
   //dispatch(action: 어떤 값도 가능)과 같은 형태로 함수 안에 파라미터로 액션 값을 넣어주면 리듀서 함수가 호출.
 
-  const [userState, dispatch] = useReducer(loginReducer, {
-    user: null,
-  });
-  const [isFetchCompleted, setIsFetchCompleted] = useState(false);
+  // const [userState, dispatch] = useReducer(loginReducer, {
+  //   user: null,
+  // });
+  // const [isFetchCompleted, setIsFetchCompleted] = useState(false);
 
-  const fetchCurrentUser = async () => {
-    try {
-      const res = await Api.get("user");
-      const currentUser = res.data;
-      console.log(currentUser);
+  // const fetchCurrentUser = async () => {
+  //   try {
+  //     const res = await Api.get("user");
+  //     const currentUser = res.data;
+  //     console.log(currentUser);
 
-      dispatch({
-        type: "LOGIN",
-        payload: currentUser,
-      });
-    } catch (err) {
-      console.log(err.message);
-    }
-    // fetch 과정이 끝났으므로
-    setIsFetchCompleted(true);
-  };
+  //     dispatch({
+  //       type: "LOGIN",
+  //       payload: currentUser,
+  //     });
+  //   } catch (err) {
+  //     console.log(err.message);
+  //   }
+  //   // fetch 과정이 끝났으므로
+  //   setIsFetchCompleted(true);
+  // };
 
-  // 이 다음에!!! useEffect 사용!!!
-  useEffect(() => {
-    fetchCurrentUser();
-  }, []);
+  // // 이 다음에!!! useEffect 사용!!!
+  // useEffect(() => {
+  //   fetchCurrentUser();
+  // }, []);
 
-  if (!isFetchCompleted) {
-    return "loading...";
-  }
+  // if (!isFetchCompleted) {
+  //   return "loading...";
+  // }
 
   return (
     <Router>

@@ -12,7 +12,12 @@ h1 {
 $color2: blue;
 
 h2 {
-  color: $color2;
+  color: black;
+  font-family: $font-elice-title;
+  // font-family: sans-serif;
+  font-weight: 900 !important;
+  // border: 10px;
+  // border-color: black;
 }
 
 $color3: tomato;
@@ -32,6 +37,7 @@ h6 {
   font-weight: 900;
 }
 
+// 네비게이션바
 .navbar-brand {
   font-family: "Elice Digital Baeum", sans-serif;
   font-weight: bold;
@@ -43,21 +49,23 @@ $custom: black;
   $primary: black;
 }
 
-.flex-start {
-  justify-content: flex-start;
-}
-.flex-end {
-  justify-content: flex-end;
-}
-.center {
-  justify-content: center;
-}
-.space-between {
-  justify-content: space-between;
-}
-.space-around {
-  justify-content: space-around;
-}
+// .flex-start {
+//   justify-content: flex-start;
+// }
+// .flex-end {
+//   justify-content: flex-end;
+// }
+// .center {
+//   justify-content: center;
+// }
+// .space-between {
+//   justify-content: space-between;
+// }
+// .space-around {
+//   justify-content: space-around;
+// }
+
+// 카테고리 박스
 .box-category {
   width: 100%;
   // background-color: tomato;   // 영역확인용
@@ -88,6 +96,7 @@ $custom: black;
   }
 }
 
+// 포스트 리스트 박스
 .box-post-list {
   width: 100%;
   // background-color: tomato; // 영역확인용
@@ -104,6 +113,12 @@ $custom: black;
   align-items: center;
   justify-content: flex-end;
 }
+.division-line {
+  border-top: 1px solid lightgray;
+  margin: 50px auto;
+  width: 100%;
+}
+
 // .offcanvas-body {
 //   flex-grow: 5;
 //   justify-content: space-between;

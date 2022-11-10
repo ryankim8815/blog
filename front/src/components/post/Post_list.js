@@ -1,15 +1,39 @@
-import React from "react";
-
+// import React from "react";
+import React, { useContext, useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import * as Api from "../utils/Api";
 // tag 리스트를 for문으로 돌려서 만들어 지도록 개선해야함
 function Post_list() {
+  const [posts, setPosts] = useState(null);
+  //   const [tag, setTag] = useState([]);
+  let tag = ""; // 임시, 추후 tag 상태를 가져와야함
+
+  const apiGet = async (tag) => {
+    Api.get("p", tag)
+      .then((res) => {
+        console.log("RESULT: ", res.data.list);
+        if (res.data.list) {
+          setPosts(res.data.list);
+        } else {
+          console.log("error");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    apiGet(tag);
+  }, [tag]);
+  //////////
   return (
-    <div class="box-post-list">
-      <h6>Oct.27.2022 개발자A</h6>
-      <h1>Dogfoot블로그 개발기</h1>
-      <h6>
-        국비지원 개발 교육을 50%쯤 완료했을 무렵, 나는 홈서버 구축부터 배포까지
-        전과적을 직접 제작하는 개인프로잭트를 기획하게 되었다.
-      </h6>
+    <div>
+      {posts.map((post, index) => (
+        <div key={index} class="box-post-list">
+          <h6>{post.nickname}</h6>
+          <h2>{post.title}</h2>
+          <h6>{post.content}</h6>
+          <div class="division-line"></div>
+        </div>
+      ))}
     </div>
   );
 }

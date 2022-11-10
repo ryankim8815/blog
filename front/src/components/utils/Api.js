@@ -3,9 +3,11 @@ import axios from "axios";
 axios.defaults.timeout = 3000;
 axios.defaults.headers["Content-Type"] = "application/json";
 // const backendPortNumber = import.meta.env.SERVER_PORT;
-const backendPortNumber = process.env.SERVER_PORT;
+// const backendPortNumber = process.env.SERVER_PORT;
+const backendPortNumber = 5002;
 console.log(backendPortNumber);
 const BASE_URL = `http://${window.location.hostname}:${backendPortNumber}/`;
+console.log("BASE_URL: ", BASE_URL);
 
 axios.interceptors.response.use(
   (res) => {
@@ -33,7 +35,8 @@ const post = async (endpoint, data) => {
 };
 
 const get = async (endpoint, params = "") => {
-  return customAxios.get(BASE_URL + endpoint + "/" + params);
+  console.log("endpoint: ", endpoint);
+  return await customAxios.get(BASE_URL + endpoint + "/" + params);
 };
 
 const put = async (endpoint, data) => {

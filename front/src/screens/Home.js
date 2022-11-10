@@ -4,6 +4,8 @@ import Category from "../components/post/Category";
 import Post_list from "../components/post/Post_list";
 
 function Home() {
+  console.log("홈에서: ", Post_list);
+  console.log("홈에서: ", JSON.stringify(Post_list));
   const width = "300px";
   const height = "500px";
   const time = 3000;
