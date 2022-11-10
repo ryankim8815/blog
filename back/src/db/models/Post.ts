@@ -4,7 +4,7 @@ class Post {
   static async findAll() {
     const [rows, fields] = await promisePool.query({
       //   sql: "SELECT * FROM posts",
-      sql: "SELECT * FROM posts INNER JOIN users ON posts.user_id = users.user_id",
+      sql: "SELECT * FROM posts INNER JOIN users ON posts.user_id = users.user_id ORDER BY posts.created_at DESC",
     });
     return rows;
   }
@@ -51,7 +51,7 @@ class Post {
   // tag로 검색
   static async findByTag({ tag }) {
     const [rows, fields] = await promisePool.query({
-      sql: "SELECT * FROM posts WHERE `tag` = ?",
+      sql: "SELECT * FROM posts INNER JOIN users ON posts.user_id = users.user_id WHERE `tag` = ? ORDER BY posts.created_at DESC",
       values: [tag],
     });
     return rows;

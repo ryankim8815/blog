@@ -12,24 +12,23 @@ function Post_list() {
   //   const [data, setData] = useState([]);
   //   let tag = ""; // 임시, 추후 tag 상태를 가져와야함
 
-  const apiGet = async (tag) => {
-    //     console.log("APIAPIAPIAPI");
-
-    // Api.get("p", tag)
-    Api.get("p", tag)
+  const apiGetAllPosts = async () => {
+    Api.get("p")
       .then((res) => {
-        // console.log("RESULT: ", res.data.list);
-        // if (res.data.list) {
         setPosts(res.data.list);
-        // setData(posts);
-        // } else {
-        //   console.log("error");
-        // }
+      })
+      .catch((err) => console.log(err));
+  };
+  const apiGetPostsByTag = async (tag) => {
+    console.log("검색한 테그: ", tag);
+    Api.get(`p/${tag}`)
+      .then((res) => {
+        setPosts(res.data.list);
       })
       .catch((err) => console.log(err));
   };
   useEffect(() => {
-    activeCat === "All" ? apiGet() : apiGet(activeCat);
+    activeCat === "All" ? apiGetAllPosts() : apiGetPostsByTag(activeCat);
     //   : setPosts(posts.filter((e) => e.tag === activeCat));
   }, [activeCat]);
   //   useEffect(() => {
@@ -42,6 +41,11 @@ function Post_list() {
         <Catbtn
           name="All"
           catActive={activeCat === "All" ? true : false}
+          handleSetCat={setActiveCat}
+        />
+        <Catbtn
+          name="tag"
+          catActive={activeCat === "tag" ? true : false}
           handleSetCat={setActiveCat}
         />
         <Catbtn
@@ -65,8 +69,8 @@ function Post_list() {
           handleSetCat={setActiveCat}
         />
         <Catbtn
-          name="QA/TESTING"
-          catActive={activeCat === "QA/TESTING" ? true : false}
+          name="QA"
+          catActive={activeCat === "QA" ? true : false}
           handleSetCat={setActiveCat}
         />
         <Catbtn
