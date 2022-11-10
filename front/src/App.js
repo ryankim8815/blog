@@ -20,6 +20,7 @@ import Live from "./screens/Live";
 import Register from "./screens/Register";
 import Admin from "./screens/Admin";
 import Posts from "./screens/Posts";
+import Editor from "./components/editor/Editor";
 // components
 import NavBarElements from "./components/common/NavBarElements";
 // import NavBarElements from "./components/Common/NavBarElements";
@@ -75,6 +76,7 @@ function App() {
         <Route path="/live" element={<Live />} />
         <Route path="/register" element={<Register />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/editor" element={<Editor />} />
       </Routes>
     </Router>
   );

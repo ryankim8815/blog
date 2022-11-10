@@ -4,7 +4,7 @@ import Catbtn from "./Catbtn";
 // import { useNavigate, useParams } from "react-router-dom";
 import * as Api from "../utils/Api";
 // tag 리스트를 for문으로 돌려서 만들어 지도록 개선해야함
-function Post_list() {
+function PostList() {
   const [posts, setPosts] = useState([]);
   //   const [tag, setTag] = useState([]);
   /////
@@ -20,7 +20,7 @@ function Post_list() {
       .catch((err) => console.log(err));
   };
   const apiGetPostsByTag = async (tag) => {
-    console.log("검색한 테그: ", tag);
+    // console.log("검색한 테그: ", tag);
     Api.get(`p/${tag}`)
       .then((res) => {
         setPosts(res.data.list);
@@ -104,4 +104,4 @@ function Post_list() {
   );
 }
 
-export default Post_list;
+export default PostList;
