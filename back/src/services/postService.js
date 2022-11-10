@@ -74,6 +74,35 @@ var postService = /** @class */ (function () {
             });
         });
     };
+    //// tag로 게시글 조회
+    postService.getPostsByTag = function (_a) {
+        var tag = _a.tag;
+        return __awaiter(this, void 0, void 0, function () {
+            var posts, postsString, postsObject, i, countPosts, result_success;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, Post_1.default.findByTag({ tag: tag })];
+                    case 1:
+                        posts = _b.sent();
+                        postsString = JSON.stringify(posts);
+                        postsObject = JSON.parse(postsString);
+                        for (i = 0; i < postsObject.length; i++) {
+                            delete postsObject[i].user_id;
+                            delete postsObject[i].password;
+                        }
+                        return [4 /*yield*/, Post_1.default.countByTag({ tag: tag })];
+                    case 2:
+                        countPosts = _b.sent();
+                        result_success = Object.assign({
+                            result: true,
+                            cause: "success",
+                            message: "tag\uB85C \uAC8C\uC2DC\uAE00 \uC870\uD68C\uAC00 \uC131\uACF5\uC801\uC73C\uB85C \uC774\uB904\uC84C\uC2B5\uB2C8\uB2E4.",
+                        }, { count: countPosts[0].cnt, list: postsObject });
+                        return [2 /*return*/, result_success];
+                }
+            });
+        });
+    };
     //// 게시글 생성
     postService.addPost = function (_a) {
         var email = _a.email, title = _a.title, content = _a.content, tag = _a.tag;

@@ -16,7 +16,7 @@ class Post {
     });
     return rows;
   }
-  // po색t_id로 검색
+  // post_id로 검색
   static async findByPostId({ post_id }) {
     const [rows, fields] = await promisePool.query({
       sql: "SELECT * FROM posts WHERE `post_id` = ?",
@@ -52,6 +52,14 @@ class Post {
   static async findByTag({ tag }) {
     const [rows, fields] = await promisePool.query({
       sql: "SELECT * FROM posts WHERE `tag` = ?",
+      values: [tag],
+    });
+    return rows;
+  }
+  // tag로 검색한 결과 개수 파악
+  static async countByTag({ tag }) {
+    const [rows, fields] = await promisePool.query({
+      sql: "SELECT count(post_id) AS cnt FROM posts WHERE `tag` = ?",
       values: [tag],
     });
     return rows;

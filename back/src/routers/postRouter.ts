@@ -107,6 +107,108 @@ const postList = async (
  *                       provider: dogfoot
  */
 
+// GET: 테그로 검색한 게시글 리스트
+const postListByTag = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  const tag = req.params.tag;
+  try {
+    const Posts = await postService.getPostsByTag({ tag });
+    console.log(Posts);
+    res.status(200).json(Posts);
+  } catch (err) {
+    const result_err = {
+      result: false,
+      cause: "api",
+      message: "postListByTag api에서 오류가 발생했습니다.",
+    };
+    console.log(result_err);
+    res.status(200).json(result_err);
+  }
+};
+/**
+ * @swagger
+ * /p/{tag}:
+ *   get:
+ *     summary: tag로 게시글 조회
+ *     description: 요청 시 보내야 하는 값이 없습니다.
+ *     tags: ["postRouter"]
+ *     responses:
+ *       200:
+ *         description: successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 result:
+ *                   type: boolean
+ *                   example: true
+ *                 cause:
+ *                   type: string
+ *                   example: success
+ *                 message:
+ *                   type: string
+ *                   example: tag로 게시글 조회가 성공적으로 이뤄졌습니다.
+ *                 count:
+ *                   type: int
+ *                   example: 10000
+ *                 list:
+ *                   type: object
+ *                   properties:
+ *                     post_id:
+ *                       type: string
+ *                     title:
+ *                       type: string
+ *                     content:
+ *                       type: string
+ *                     image:
+ *                       type: string
+ *                     tag:
+ *                       type: string
+ *                     created_at:
+ *                       type: timstamp
+ *                     updated_at:
+ *                       type: timstamp
+ *                     email:
+ *                       type: string
+ *                     nickname:
+ *                       type: string
+ *                     profile_image:
+ *                       type: string
+ *                     admin:
+ *                       type: int
+ *                     provider:
+ *                       type: string
+ *                   example:
+ *                     - post_id: sdbhf2w9eiubr24we9iurg2w
+ *                       title: 공지사항
+ *                       content: 회원가입을 축하합니다~!!
+ *                       image: file-12344051798734-416354969.png
+ *                       tag: announcement
+ *                       created_at: 2022-11-03T04:52:32.000Z
+ *                       updated_at: 2022-11-03T04:52:32.000Z
+ *                       email: admin@dogfoot.info
+ *                       nickname: admin
+ *                       profile_image: file-1234405177970-416354969.png
+ *                       admin: 1
+ *                       provider: dogfoot
+ *                     - post_id: sdbhf2w9eiubr24aeerhr5s4w3e
+ *                       title: 블로그 개발기 1화
+ *                       content: 내가 왜 TS를 한다고 해서 이 고생을..
+ *                       image: file-123443126434-123354969.png
+ *                       tag: announcement
+ *                       created_at: 2022-11-03T04:52:32.000Z
+ *                       updated_at: 2022-11-03T04:52:32.000Z
+ *                       email: admin@dogfoot.info
+ *                       nickname: admin
+ *                       profile_image: file-1234405177970-416354969.png
+ *                       admin: 1
+ *                       provider: dogfoot
+ */
+
 // POST: 게시글 생성
 const postCreate = async (
   req: express.Request,
@@ -320,6 +422,7 @@ const postDelete = async (
 
 // api index
 postRouter.get("/p", postList); // 전체 게시글 검섹
+postRouter.get("/p/:tag", postListByTag); // tag로 게시글 검섹
 postRouter.post("/p", authMiddleware, postCreate); // 게시글 생성
 postRouter.put("/p/:post_id", authMiddleware, postUpdate); //  게시글 수정
 postRouter.delete("/p/:post_id", authMiddleware, postDelete); // 게시글 삭제

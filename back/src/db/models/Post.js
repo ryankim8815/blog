@@ -76,7 +76,7 @@ var Post = /** @class */ (function () {
             });
         });
     };
-    // po색t_id로 검색
+    // post_id로 검색
     Post.findByPostId = function (_a) {
         var post_id = _a.post_id;
         return __awaiter(this, void 0, void 0, function () {
@@ -157,6 +157,24 @@ var Post = /** @class */ (function () {
                 switch (_c.label) {
                     case 0: return [4 /*yield*/, database_1.default.query({
                             sql: "SELECT * FROM posts WHERE `tag` = ?",
+                            values: [tag],
+                        })];
+                    case 1:
+                        _b = _c.sent(), rows = _b[0], fields = _b[1];
+                        return [2 /*return*/, rows];
+                }
+            });
+        });
+    };
+    // tag로 검색한 결과 개수 파악
+    Post.countByTag = function (_a) {
+        var tag = _a.tag;
+        return __awaiter(this, void 0, void 0, function () {
+            var _b, rows, fields;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0: return [4 /*yield*/, database_1.default.query({
+                            sql: "SELECT count(post_id) AS cnt FROM posts WHERE `tag` = ?",
                             values: [tag],
                         })];
                     case 1:

@@ -25,6 +25,26 @@ class postService {
     );
     return result_success;
   }
+  //// tag로 게시글 조회
+  static async getPostsByTag({ tag }) {
+    const posts = await Post.findByTag({ tag });
+    const postsString = JSON.stringify(posts);
+    const postsObject = JSON.parse(postsString);
+    for (let i = 0; i < postsObject.length; i++) {
+      delete postsObject[i].user_id;
+      delete postsObject[i].password;
+    }
+    const countPosts = await Post.countByTag({ tag });
+    const result_success = Object.assign(
+      {
+        result: true,
+        cause: "success",
+        message: `tag로 게시글 조회가 성공적으로 이뤄졌습니다.`,
+      },
+      { count: countPosts[0].cnt, list: postsObject }
+    );
+    return result_success;
+  }
   //// 게시글 생성
   static async addPost({ email, title, content, tag }) {
     const created_at = moment().format("YYYY-MM-DD HH:mm:ss");

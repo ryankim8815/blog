@@ -95,6 +95,12 @@ $custom: black;
     box-shadow: 0 0 2px 0px lightgray;
   }
 }
+.active_btn {
+  background: lightgray;
+  color: black;
+  border: 1px solid gray;
+  box-shadow: 0 0 2px 0px lightgray;
+}
 
 // 포스트 리스트 박스
 .box-post-list {

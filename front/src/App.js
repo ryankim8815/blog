@@ -1,16 +1,17 @@
 // import logo from "./logo.svg";
 // import "./App.css";
-import React, {
-  lazy,
-  Suspense,
-  useEffect,
-  useReducer,
-  useState,
-  createContext,
-} from "react";
+// import React, {
+//   lazy,
+//   Suspense,
+//   useEffect,
+//   useReducer,
+//   useState,
+//   createContext,
+// } from "react";
+import React, { createContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import * as Api from "./components/utils/Api";
-import { loginReducer } from "./components/utils/Reducer";
+// import * as Api from "./components/utils/Api";
+// import { loginReducer } from "./components/utils/Reducer";
 // screens
 import Home from "./screens/Home";
 import About from "./screens/About";
@@ -24,8 +25,8 @@ import NavBarElements from "./components/common/NavBarElements";
 // import NavBarElements from "./components/Common/NavBarElements";
 import "./assets/main.css";
 
-export const UserStateContext = createContext(null);
-export const DispatchContext = createContext(null);
+// export const UserStateContext = createContext(null);
+// export const DispatchContext = createContext(null);
 
 function App() {
   //useReducer(첫 번째 파라미터에는 리듀서 함수, 두 번째 파라미터에는 리듀서의 기본 값을 넣는다.)
