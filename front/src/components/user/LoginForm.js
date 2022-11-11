@@ -8,7 +8,7 @@ import { DispatchContext } from "../../App";
 function LoginForm() {
   const navigate = useNavigate();
   const dispatch = useContext(DispatchContext);
-  console.log(typeof dispatch); //function 왜???
+  //   console.log(typeof dispatch); //function 왜???
   // console.log(typeof dispatch()); //
 
   const [email, setEmail] = useState("");
@@ -25,7 +25,8 @@ function LoginForm() {
 
   const isEmailValid = validateEmail(email);
 
-  const isPasswordValid = password.length >= 4;
+  //   const isPasswordValid = password.length >= 4;
+  const isPasswordValid = password.length >= 3;
 
   const isFormValid = isEmailValid && isPasswordValid;
 
@@ -33,13 +34,14 @@ function LoginForm() {
     e.preventDefault();
 
     try {
-      const res = await Api.post("user/login", {
+      const res = await Api.post("u/login", {
         email,
         password,
       });
       const user = res.data;
-
+      //   console.log("user: ", user);
       const jwtToken = user.token;
+      //   console.log("jwtToken: ", jwtToken);
 
       sessionStorage.setItem("userToken", jwtToken);
 
@@ -47,7 +49,8 @@ function LoginForm() {
         type: "LOGIN_SUCCESS",
         payload: user,
       });
-      // console.log(typeof dispatch());
+      console.log("디스패치 잘 됐나?");
+      console.log(typeof dispatch());
 
       // 기본 페이지로 이동함.
       navigate("/", { replace: true });

@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Carousel } from "react-bootstrap";
 import PostList from "../components/post/PostList";
 import Editor from "../components/editor/Editor";
 
 function Home() {
+  const [welcome, setWelcome] = useState([]);
   const width = "300px";
   const height = "500px";
   const time = 3000;
+
+  useEffect(() => {
+    setWelcome("안녕하세요. Dogfoot.info 입니다!");
+  }, []);
+
   return (
     <div>
       <Carousel>
@@ -24,7 +30,7 @@ function Home() {
             alt="First slide"
           />
           <Carousel.Caption>
-            <h3>First slide label</h3>
+            <h3>First slide label: {welcome}</h3>
             <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
           </Carousel.Caption>
         </Carousel.Item>

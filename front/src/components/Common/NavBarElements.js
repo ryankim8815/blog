@@ -42,6 +42,7 @@ function NavBarElements() {
                   <Nav.Link href="/register">Register</Nav.Link>
                   <Nav.Link href="/admin">Admin</Nav.Link>
                   <Nav.Link href="/editor">Editor</Nav.Link>
+                  <Nav.Link href="/login">Login</Nav.Link>
                   {/* <NavDropdown
                     title="Dropdown"
                     id={`offcanvasNavbarDropdown-expand-${expand}`}
