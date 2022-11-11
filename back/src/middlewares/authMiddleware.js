@@ -68,6 +68,7 @@ var authMiddleware = function (req, res, next
                 secretKey = process.env.JWT_SECRET_KEY || "secret-key";
                 jwtDecoded = jsonwebtoken_1.default.verify(userToken, secretKey);
                 email = jwtDecoded.email;
+                // console.log("미들웨어에서 토큰 확인: ", email);
                 req.email = email; // src/customType/express.d.ts에서 추가해주었다.
                 next();
             }

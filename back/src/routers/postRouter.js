@@ -287,12 +287,13 @@ var postListByTag = function (req, res, next) { return __awaiter(void 0, void 0,
  */
 // POST: 게시글 생성
 var postCreate = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var email, title, content, tag, createdPost, err_3, result_err;
+    var email, title, sub_title, content, tag, createdPost, err_3, result_err;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 email = req.email;
                 title = req.body.title;
+                sub_title = req.body.sub_title;
                 content = req.body.content;
                 tag = req.body.tag;
                 _a.label = 1;
@@ -301,6 +302,7 @@ var postCreate = function (req, res, next) { return __awaiter(void 0, void 0, vo
                 return [4 /*yield*/, postService_1.default.addPost({
                         email: email,
                         title: title,
+                        sub_title: sub_title,
                         content: content,
                         tag: tag,
                     })];

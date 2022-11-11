@@ -105,7 +105,7 @@ var postService = /** @class */ (function () {
     };
     //// 게시글 생성
     postService.addPost = function (_a) {
-        var email = _a.email, title = _a.title, content = _a.content, tag = _a.tag;
+        var email = _a.email, title = _a.title, sub_title = _a.sub_title, content = _a.content, tag = _a.tag;
         return __awaiter(this, void 0, void 0, function () {
             var created_at, updated_at, user, userString, userObject, user_id, post_id, newPost, newpostString, newpostObject, affectedRows, checkNewPost, checkNewPostString, checkNewPostObject, result_success;
             return __generator(this, function (_b) {
@@ -124,6 +124,7 @@ var postService = /** @class */ (function () {
                                 post_id: post_id,
                                 user_id: user_id,
                                 title: title,
+                                sub_title: sub_title,
                                 content: content,
                                 tag: tag,
                                 created_at: created_at,

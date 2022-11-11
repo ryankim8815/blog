@@ -85,14 +85,24 @@ class Post {
     post_id,
     user_id,
     title,
+    sub_title,
     content,
     tag,
     created_at,
     updated_at,
   }) {
     const [rows, fields] = await promisePool.query({
-      sql: "INSERT INTO posts (post_id, user_id, title, content, tag, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
-      values: [post_id, user_id, title, content, tag, created_at, updated_at],
+      sql: "INSERT INTO posts (post_id, user_id, title, sub_title, content, tag, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+      values: [
+        post_id,
+        user_id,
+        title,
+        sub_title,
+        content,
+        tag,
+        created_at,
+        updated_at,
+      ],
     });
     return rows;
   }

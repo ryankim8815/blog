@@ -46,7 +46,7 @@ class postService {
     return result_success;
   }
   //// 게시글 생성
-  static async addPost({ email, title, content, tag }) {
+  static async addPost({ email, title, sub_title, content, tag }) {
     const created_at = moment().format("YYYY-MM-DD HH:mm:ss");
     const updated_at = created_at;
     const user = await User.findByEmail({ email });
@@ -58,6 +58,7 @@ class postService {
       post_id,
       user_id,
       title,
+      sub_title,
       content,
       tag,
       created_at,

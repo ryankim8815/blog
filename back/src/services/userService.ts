@@ -30,6 +30,47 @@ class userService {
     );
     return result_success;
   }
+  //// 현재 사용자 조회
+  static async getCurrentUser({ email }) {
+    const currentUser = await User.findByEmail({ email });
+    const currentUserString = JSON.stringify(currentUser);
+    const currentUserObject = JSON.parse(currentUserString);
+    // 쿼리문의 SELECT로 대체
+    for (let i = 0; i < currentUserObject.length; i++) {
+      delete currentUserObject[i].password;
+      delete currentUserObject[i].user_id;
+    }
+    // const countUsers = await User.countAll();
+    // const countUsersString = JSON.stringify(countUsers);
+    // const countUsersObject = JSON.parse(countUsersString);
+    if (currentUserObject.length === 0) {
+      const result_errEmail = {
+        result: false,
+        cause: "email",
+        message:
+          "입력하신 email로 가입된 사용자가 없습니다. 다시 한 번 확인해 주세요.",
+      };
+      return result_errEmail;
+    } else if (currentUserObject.length > 1) {
+      const result_errEmail = {
+        result: false,
+        cause: "email",
+        message:
+          "[확인요망]: 해당 email로 가입된 계정이 DB상 두개 이상입니다. 확인해 주세요.",
+      };
+      return result_errEmail;
+    }
+    const thisUser = currentUserObject[0];
+    const result_success = Object.assign(
+      {
+        result: true,
+        cause: "success",
+        message: `해당 사용자 조회가 성공적으로 이뤄졌습니다.`,
+      },
+      thisUser
+    );
+    return result_success;
+  }
   //// 로그인용 사용자 조회
   static async getUser({ email, password }) {
     const user = await User.findByEmail({ email });

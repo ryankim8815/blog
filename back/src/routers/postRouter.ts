@@ -217,12 +217,14 @@ const postCreate = async (
 ) => {
   const email = req.email;
   const title = req.body.title;
+  const sub_title = req.body.sub_title;
   const content = req.body.content;
   const tag = req.body.tag;
   try {
     const createdPost = await postService.addPost({
       email,
       title,
+      sub_title,
       content,
       tag,
     });

@@ -74,6 +74,53 @@ var userService = /** @class */ (function () {
             });
         });
     };
+    //// 현재 사용자 조회
+    userService.getCurrentUser = function (_a) {
+        var email = _a.email;
+        return __awaiter(this, void 0, void 0, function () {
+            var currentUser, currentUserString, currentUserObject, i, result_errEmail, result_errEmail, thisUser, result_success;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, User_1.default.findByEmail({ email: email })];
+                    case 1:
+                        currentUser = _b.sent();
+                        currentUserString = JSON.stringify(currentUser);
+                        currentUserObject = JSON.parse(currentUserString);
+                        // 쿼리문의 SELECT로 대체
+                        for (i = 0; i < currentUserObject.length; i++) {
+                            delete currentUserObject[i].password;
+                            delete currentUserObject[i].user_id;
+                        }
+                        // const countUsers = await User.countAll();
+                        // const countUsersString = JSON.stringify(countUsers);
+                        // const countUsersObject = JSON.parse(countUsersString);
+                        if (currentUserObject.length === 0) {
+                            result_errEmail = {
+                                result: false,
+                                cause: "email",
+                                message: "입력하신 email로 가입된 사용자가 없습니다. 다시 한 번 확인해 주세요.",
+                            };
+                            return [2 /*return*/, result_errEmail];
+                        }
+                        else if (currentUserObject.length > 1) {
+                            result_errEmail = {
+                                result: false,
+                                cause: "email",
+                                message: "[확인요망]: 해당 email로 가입된 계정이 DB상 두개 이상입니다. 확인해 주세요.",
+                            };
+                            return [2 /*return*/, result_errEmail];
+                        }
+                        thisUser = currentUserObject[0];
+                        result_success = Object.assign({
+                            result: true,
+                            cause: "success",
+                            message: "\uD574\uB2F9 \uC0AC\uC6A9\uC790 \uC870\uD68C\uAC00 \uC131\uACF5\uC801\uC73C\uB85C \uC774\uB904\uC84C\uC2B5\uB2C8\uB2E4.",
+                        }, thisUser);
+                        return [2 /*return*/, result_success];
+                }
+            });
+        });
+    };
     //// 로그인용 사용자 조회
     userService.getUser = function (_a) {
         var email = _a.email, password = _a.password;

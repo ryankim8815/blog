@@ -141,9 +141,75 @@ var userList = function (req, res, next) { return __awaiter(void 0, void 0, void
  *                       provider: naver
  *                       created_at: 2022-11-01T01:01:01.000Z
  */
+// GET: 현재 사용자 정보 조회 기능
+var userCurrent = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var email, currentUser, err_2, result_err;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                email = req.email;
+                return [4 /*yield*/, userService_1.default.getCurrentUser({ email: email })];
+            case 1:
+                currentUser = _a.sent();
+                console.log(currentUser);
+                res.status(200).json(currentUser);
+                return [3 /*break*/, 3];
+            case 2:
+                err_2 = _a.sent();
+                result_err = {
+                    result: false,
+                    cause: "api",
+                    message: "userCurrent api에서 오류가 발생했습니다.",
+                };
+                console.log(result_err);
+                res.status(200).json(result_err);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+/**
+ * @swagger
+ * /u/current:
+ *   get:
+ *     summary: 현재 사용자 조회
+ *     description: 현재 로그인된 사용자 정보를 조회합니다.
+ *     tags: ["userRouter"]
+ *     responses:
+ *       200:
+ *         description: successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 result:
+ *                   type: boolean
+ *                   example: true
+ *                 cause:
+ *                   type: string
+ *                   example: success
+ *                 message:
+ *                   type: string
+ *                   example: 현재 사용자 정보 조회가 성공적으로 이뤄졌습니다.
+ *                 email:
+ *                   type: string
+ *                 nickname:
+ *                   type: string
+ *                 provider:
+ *                   type: string
+ *                 created_at:
+ *                   type: timstamp
+ *                   example:
+ *                     email: dev1@dogfoot.info
+ *                     nickname: dogfoot_1
+ *                     provider: kakao
+ *                     created_at: 2022-11-03T04:52:32.000Z
+ */
 // POST: 회원가입 기능
 var userRegister = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var email, password, nickname, newUser, err_2, result_err;
+    var email, password, nickname, newUser, err_3, result_err;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -158,7 +224,7 @@ var userRegister = function (req, res, next) { return __awaiter(void 0, void 0, 
                 res.status(200).json(newUser);
                 return [3 /*break*/, 3];
             case 2:
-                err_2 = _a.sent();
+                err_3 = _a.sent();
                 result_err = {
                     result: false,
                     cause: "api",
@@ -213,7 +279,7 @@ var userRegister = function (req, res, next) { return __awaiter(void 0, void 0, 
  */
 // POST: 로그인
 var userLogin = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var email, password, logedinUser, err_3, result_err;
+    var email, password, logedinUser, err_4, result_err;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -227,7 +293,7 @@ var userLogin = function (req, res, next) { return __awaiter(void 0, void 0, voi
                 res.status(200).json(logedinUser);
                 return [3 /*break*/, 3];
             case 2:
-                err_3 = _a.sent();
+                err_4 = _a.sent();
                 result_err = {
                     result: false,
                     cause: "api",
@@ -300,7 +366,7 @@ var userLogin = function (req, res, next) { return __awaiter(void 0, void 0, voi
  */
 // POST: 회원정보 수정
 var userUpdate = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var email, currentPassword, password, nickname, updateUser, err_4, result_err;
+    var email, currentPassword, password, nickname, updateUser, err_5, result_err;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -321,7 +387,7 @@ var userUpdate = function (req, res, next) { return __awaiter(void 0, void 0, vo
                 res.status(200).json(updateUser);
                 return [3 /*break*/, 3];
             case 2:
-                err_4 = _a.sent();
+                err_5 = _a.sent();
                 result_err = {
                     result: false,
                     cause: "api",
@@ -378,7 +444,7 @@ var userUpdate = function (req, res, next) { return __awaiter(void 0, void 0, vo
  */
 // DELETE: 회원정보 삭제
 var userDelete = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var email, password, deleteUser, err_5, result_err;
+    var email, password, deleteUser, err_6, result_err;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -395,7 +461,7 @@ var userDelete = function (req, res, next) { return __awaiter(void 0, void 0, vo
                 res.status(200).json(deleteUser);
                 return [3 /*break*/, 3];
             case 2:
-                err_5 = _a.sent();
+                err_6 = _a.sent();
                 result_err = {
                     result: false,
                     cause: "api",
@@ -446,7 +512,7 @@ var userDelete = function (req, res, next) { return __awaiter(void 0, void 0, vo
  */
 //// POST: 프로필 사진 업로드
 var userUploadImage = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var email, new_filename, uploadUserImage, err_6, result_err;
+    var email, new_filename, uploadUserImage, err_7, result_err;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -464,7 +530,7 @@ var userUploadImage = function (req, res, next) { return __awaiter(void 0, void 
                 res.status(200).json(uploadUserImage);
                 return [3 /*break*/, 3];
             case 2:
-                err_6 = _a.sent();
+                err_7 = _a.sent();
                 result_err = {
                     result: false,
                     cause: "api",
@@ -514,7 +580,8 @@ var userUploadImage = function (req, res, next) { return __awaiter(void 0, void 
  *                   example: ${nickname}님의 프로필 사진 업데이트가 성공적으로 이뤄졌습니다.
  */
 // api index
-userRouter.get("/u/list", userList); // 전체 유저 검섹
+userRouter.get("/u/list", userList); // 전체 사용자 검섹
+userRouter.get("/u/current", authMiddleware_1.default, userCurrent); // 현재 사용자 정보 조회
 userRouter.post("/u/register", userRegister); // 자체 회원가입
 userRouter.post("/u/login", userLogin); // 로그인
 userRouter.put("/u/update", authMiddleware_1.default, userUpdate); // 유저 정보 업데이트(pw & nickname)

@@ -75,6 +75,67 @@ const userList = async (
  *                       created_at: 2022-11-01T01:01:01.000Z
  */
 
+// GET: 현재 사용자 정보 조회 기능
+const userCurrent = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  try {
+    const email = req.email;
+    // console.log("라우터에서 토큰 확인: ", email);
+    const currentUser = await userService.getCurrentUser({ email });
+    console.log(currentUser);
+    res.status(200).json(currentUser);
+  } catch (err) {
+    const result_err = {
+      result: false,
+      cause: "api",
+      message: "userCurrent api에서 오류가 발생했습니다.",
+    };
+    console.log(result_err);
+    res.status(200).json(result_err);
+  }
+};
+/**
+ * @swagger
+ * /u/current:
+ *   get:
+ *     summary: 현재 사용자 조회
+ *     description: 현재 로그인된 사용자 정보를 조회합니다.
+ *     tags: ["userRouter"]
+ *     responses:
+ *       200:
+ *         description: successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 result:
+ *                   type: boolean
+ *                   example: true
+ *                 cause:
+ *                   type: string
+ *                   example: success
+ *                 message:
+ *                   type: string
+ *                   example: 현재 사용자 정보 조회가 성공적으로 이뤄졌습니다.
+ *                 email:
+ *                   type: string
+ *                 nickname:
+ *                   type: string
+ *                 provider:
+ *                   type: string
+ *                 created_at:
+ *                   type: timstamp
+ *                   example:
+ *                     email: dev1@dogfoot.info
+ *                     nickname: dogfoot_1
+ *                     provider: kakao
+ *                     created_at: 2022-11-03T04:52:32.000Z
+ */
+
 // POST: 회원가입 기능
 const userRegister = async (
   req: express.Request,
@@ -419,7 +480,8 @@ const userUploadImage = async (
  */
 
 // api index
-userRouter.get("/u/list", userList); // 전체 유저 검섹
+userRouter.get("/u/list", userList); // 전체 사용자 검섹
+userRouter.get("/u/current", authMiddleware, userCurrent); // 현재 사용자 정보 조회
 userRouter.post("/u/register", userRegister); // 자체 회원가입
 userRouter.post("/u/login", userLogin); // 로그인
 userRouter.put("/u/update", authMiddleware, userUpdate); // 유저 정보 업데이트(pw & nickname)
