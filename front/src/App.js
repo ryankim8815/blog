@@ -21,6 +21,7 @@ import Register from "./screens/Register";
 import Admin from "./screens/Admin";
 import Posts from "./screens/Posts";
 import Editor from "./components/editor/Editor";
+import EditorA from "./components/editor/EditorA";
 // components
 import NavBarElements from "./components/common/NavBarElements";
 // import NavBarElements from "./components/Common/NavBarElements";
@@ -77,6 +78,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/editor" element={<Editor />} />
+        <Route path="/editorA" element={<EditorA />} />
       </Routes>
     </Router>
   );

@@ -125,56 +125,6 @@ $custom: black;
   width: 100%;
 }
 
-// Editor Title
-.editor-titlebox {
-  width: 600px;
-  margin: 0 auto;
-}
-.editor-title {
-  width: 600px;
-  height: 50px;
-  font-size: 25px;
-  color: black;
-  background-color: transparent;
-  border: 1px transparent;
-  border-bottom: 1px solid lightgray;
-  display: flex;
-}
-.editor-title:focus {
-  outline: none;
-  border-bottom: 1px solid gray;
-}
-
-.editor-desc {
-  width: 600px;
-  height: 50px;
-  font-size: 16px;
-  display: flex;
-  background-color: transparent;
-  border: 1px transparent;
-  border-bottom: 1px solid lightgray;
-  display: flex;
-}
-.editor-desc:focus {
-  outline: none;
-  border-bottom: 1px solid gray;
-}
-
-.editor-tag {
-  width: 600px;
-  height: 30px;
-  font-size: 14px;
-  display: flex;
-  background-color: transparent;
-  border: 1px transparent;
-  border-bottom: 1px solid lightgray;
-  display: flex;
-}
-.editor-tag:focus {
-  outline: none;
-  border-bottom: 1px solid gray;
-}
-
 // .offcanvas-body {
 //   flex-grow: 5;
 //   justify-content: space-between;
@@ -243,5 +193,5 @@ $custom: black;
 
 // @import "./editor"; // lexical text editor
 @import "../components/editor/editor.scss"; // lexical text editor
-@import "./carousel";
+// @import "./carousel";
 @import "../../node_modules/bootstrap/scss/bootstrap";
