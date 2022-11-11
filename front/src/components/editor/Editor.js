@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from "react";
+import * as Api from "../utils/Api";
 import showdown from "showdown";
 showdown.setOption("ghMentions", true);
 showdown.setOption("emoji", true);
 showdown.setOption("smoothLivePreview", true);
 
 function Editor() {
-  let title = "MARKDOWN EDITOR";
-  const [contents, setContents] = useState("");
+  const [title, setTitle] = useState("");
+  const [subTitle, setSubTitle] = useState("");
+  const [content, setContent] = useState("");
   const [preview, setPreview] = useState("");
 
-  const onChange = (e) => {
-    let contents = e.target.value;
-    console.log("원본: ", contents);
-    // contents = contents.replaceAll(/(\n|\r\n)/g, "<br>"); // 개행 미적용 해결
-    // contents = contents.replaceAll(/(\n)/g, "</br>"); // 개행 미적용 해결
-    console.log("수정본: ", contents);
-
-    setContents(contents);
+  // const onChangeTitle = (e) => {
+  //   let title = e.target.value;
+  //   setTitle(title);
+  // };
+  // const onChangeSubTitle = (e) => {
+  //   let subTitle = e.target.value;
+  //   setSubTitle(subTitle);
+  // };
+  const onChangeContent = (e) => {
+    let content = e.target.value;
+    setContent(content);
   };
   const converter = new showdown.Converter();
   // const html = converter.makeHtml(contents);
@@ -50,14 +55,42 @@ function Editor() {
   // // };
   // // //// 세션 중간 저장 끝
 
+  // useEffect(() => {
+  //   setPreview(converter.makeHtml(contents));
+  // }, [onChangeSubTitle]);
+  // useEffect(() => {
+  //   setPreview(subTitle);
+  // }, [onChangeSubTitle]);
+  const onClickSave = async () => {
+    // e.preventDefault();
+
+    try {
+      // "user/register" 엔드포인트로 post요청함.
+      const tag = "backend";
+      const sub_title = subTitle;
+      await Api.post("p", {
+        title,
+        sub_title,
+        content,
+        tag,
+      });
+
+      // // 로그인 페이지로 이동함.
+      // navigate("/posts");
+    } catch (err) {
+      console.log("게시글 저장에 실패하였습니다.", err);
+    }
+  };
   useEffect(() => {
-    setPreview(converter.makeHtml(contents));
-  }, [onChange]);
+    setPreview(converter.makeHtml(content));
+  }, [onChangeContent]);
 
   return (
     <div>
       <div className="save-box">
-        <button className="save-save">SAVE</button>
+        <button className="save-save" onClick={onClickSave}>
+          SAVE
+        </button>
         <button className="save-publish">PUBLISH</button>
       </div>
       <div className="title-box">
@@ -65,11 +98,13 @@ function Editor() {
           className="editor-title"
           type="text"
           placeholder="제목을 입력하세요"
+          onChange={(e) => setTitle(e.target.value)}
         />
         <input
           className="editor-desc"
           type="text"
           placeholder="소제목을 입력하세요"
+          onChange={(e) => setSubTitle(e.target.value)}
         />
         {/* <input className="editor-tag" type="text" placeholder="#태그입력" /> */}
       </div>
@@ -78,7 +113,7 @@ function Editor() {
           className="input-box"
           autoFocus={false}
           placeholder="Markdown 문법으로 작성하세요."
-          onChange={onChange}
+          onChange={onChangeContent}
           // onChange={(e) => this.handleEditorInput(e)}
         />
         <div
