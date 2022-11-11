@@ -176,6 +176,8 @@ var userCurrent = function (req, res, next) { return __awaiter(void 0, void 0, v
  *     summary: 현재 사용자 조회
  *     description: 현재 로그인된 사용자 정보를 조회합니다.
  *     tags: ["userRouter"]
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: successful operation
