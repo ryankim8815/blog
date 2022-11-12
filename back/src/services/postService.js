@@ -107,12 +107,13 @@ var postService = /** @class */ (function () {
     postService.addPost = function (_a) {
         var email = _a.email, title = _a.title, sub_title = _a.sub_title, content = _a.content, tag = _a.tag;
         return __awaiter(this, void 0, void 0, function () {
-            var created_at, updated_at, user, userString, userObject, user_id, post_id, newPost, newpostString, newpostObject, affectedRows, checkNewPost, checkNewPostString, checkNewPostObject, result_success;
+            var currentTime, created_at, updated_at, user, userString, userObject, user_id, post_id, newPost, newpostString, newpostObject, affectedRows, checkNewPost, checkNewPostString, checkNewPostObject, result_success;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        created_at = (0, moment_timezone_1.default)().format("YYYY-MM-DD HH:mm:ss");
-                        updated_at = created_at;
+                        currentTime = (0, moment_timezone_1.default)().format("YYYY-MM-DD HH:mm:ss");
+                        created_at = currentTime;
+                        updated_at = currentTime;
                         return [4 /*yield*/, User_1.default.findByEmail({ email: email })];
                     case 1:
                         user = _b.sent();

@@ -24,6 +24,8 @@ function PostList() {
     Api.get(`p/${tag}`)
       .then((res) => {
         setPosts(res.data.list);
+        console.log("created_at: ", res.data.list[0].created_at);
+        console.log("created_at   타입: ", typeof res.data.list[0].created_at);
       })
       .catch((err) => console.log(err));
   };
@@ -92,7 +94,7 @@ function PostList() {
       {posts.map((post, index) => (
         <div key={index} className="box-post-list">
           <h6>
-            {post.created_at.split("T")[0]}
+            {post.created_at.split("T", 1)}
             &nbsp;&nbsp;&nbsp;@{post.nickname}
           </h6>
           <h2>{post.title}</h2>

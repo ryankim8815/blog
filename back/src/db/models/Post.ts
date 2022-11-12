@@ -4,7 +4,7 @@ class Post {
   static async findAll() {
     const [rows, fields] = await promisePool.query({
       //   sql: "SELECT * FROM posts",
-      sql: "SELECT * FROM posts INNER JOIN users ON posts.user_id = users.user_id ORDER BY posts.created_at DESC",
+      sql: "SELECT * FROM posts INNER JOIN (SELECT user_id, email, nickname, profile_image, admin FROM users) AS users ON posts.user_id = users.user_id ORDER BY posts.created_at DESC",
     });
     return rows;
   }

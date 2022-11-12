@@ -50,7 +50,7 @@ var Post = /** @class */ (function () {
                 switch (_b.label) {
                     case 0: return [4 /*yield*/, database_1.default.query({
                             //   sql: "SELECT * FROM posts",
-                            sql: "SELECT * FROM posts INNER JOIN users ON posts.user_id = users.user_id ORDER BY posts.created_at DESC",
+                            sql: "SELECT * FROM posts INNER JOIN (SELECT user_id, email, nickname, profile_image, admin FROM users) AS users ON posts.user_id = users.user_id ORDER BY posts.created_at DESC",
                         })];
                     case 1:
                         _a = _b.sent(), rows = _a[0], fields = _a[1];

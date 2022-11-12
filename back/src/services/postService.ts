@@ -47,8 +47,10 @@ class postService {
   }
   //// 게시글 생성
   static async addPost({ email, title, sub_title, content, tag }) {
-    const created_at = moment().format("YYYY-MM-DD HH:mm:ss");
-    const updated_at = created_at;
+    const currentTime = moment().format("YYYY-MM-DD HH:mm:ss");
+    const created_at = currentTime;
+    // const updated_at = created_at;
+    const updated_at = currentTime;
     const user = await User.findByEmail({ email });
     const userString = JSON.stringify(user);
     const userObject = JSON.parse(userString);
