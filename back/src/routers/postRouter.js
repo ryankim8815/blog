@@ -207,7 +207,7 @@ var postListByTag = function (req, res, next) { return __awaiter(void 0, void 0,
 }); };
 /**
  * @swagger
- * /p/{tag}:
+ * /p/tag/{tag}:
  *   get:
  *     summary: tag로 게시글 조회
  *     description: 요청 시 보내야 하는 값이 없습니다.
@@ -285,9 +285,101 @@ var postListByTag = function (req, res, next) { return __awaiter(void 0, void 0,
  *                       admin: 1
  *                       provider: dogfoot
  */
+// GET: post_id로 검색한 게시글 리스트
+var postByPostId = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var post_id, Post, err_3, result_err;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                post_id = req.params.post_id;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, postService_1.default.getPostByPostId({ post_id: post_id })];
+            case 2:
+                Post = _a.sent();
+                console.log(Post);
+                res.status(200).json(Post);
+                return [3 /*break*/, 4];
+            case 3:
+                err_3 = _a.sent();
+                result_err = {
+                    result: false,
+                    cause: "api",
+                    message: "postByPostId api에서 오류가 발생했습니다.",
+                };
+                console.log(result_err);
+                res.status(200).json(result_err);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
+/**
+ * @swagger
+ * /p/id/{post_id}:
+ *   get:
+ *     summary: post_id로 게시글 조회
+ *     description: 요청 시 보내야 하는 값이 없습니다.
+ *     tags: ["postRouter"]
+ *     responses:
+ *       200:
+ *         description: successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 result:
+ *                   type: boolean
+ *                   example: true
+ *                 cause:
+ *                   type: string
+ *                   example: success
+ *                 message:
+ *                   type: string
+ *                   example: post_id로 게시글 조회가 성공적으로 이뤄졌습니다.
+ *                 post_id:
+ *                   type: string
+ *                 title:
+ *                   type: string
+ *                 content:
+ *                   type: string
+ *                 image:
+ *                   type: string
+ *                 tag:
+ *                   type: string
+ *                 created_at:
+ *                   type: timstamp
+ *                 updated_at:
+ *                   type: timstamp
+ *                 email:
+ *                   type: string
+ *                 nickname:
+ *                   type: string
+ *                 profile_image:
+ *                   type: string
+ *                 admin:
+ *                   type: int
+ *                 provider:
+ *                   type: string
+ *               example:
+ *                     - post_id: sdbhf2w9eiubr24we9iurg2w
+ *                       title: 공지사항
+ *                       content: 회원가입을 축하합니다~!!
+ *                       image: file-12344051798734-416354969.png
+ *                       tag: announcement
+ *                       created_at: 2022-11-03T04:52:32.000Z
+ *                       updated_at: 2022-11-03T04:52:32.000Z
+ *                       email: admin@dogfoot.info
+ *                       nickname: admin
+ *                       profile_image: file-1234405177970-416354969.png
+ *                       admin: 1
+ *                       provider: dogfoot
+ */
 // POST: 게시글 생성
 var postCreate = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var email, title, sub_title, content, tag, createdPost, err_3, result_err;
+    var email, title, sub_title, content, tag, createdPost, err_4, result_err;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -312,7 +404,7 @@ var postCreate = function (req, res, next) { return __awaiter(void 0, void 0, vo
                 res.status(200).json(createdPost);
                 return [3 /*break*/, 4];
             case 3:
-                err_3 = _a.sent();
+                err_4 = _a.sent();
                 result_err = {
                     result: false,
                     cause: "api",
@@ -369,7 +461,7 @@ var postCreate = function (req, res, next) { return __awaiter(void 0, void 0, vo
  */
 // PUT: 게시글 수정
 var postUpdate = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var email, post_id, title, content, tag, updatedPost, err_4, result_err;
+    var email, post_id, title, content, tag, updatedPost, err_5, result_err;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -394,7 +486,7 @@ var postUpdate = function (req, res, next) { return __awaiter(void 0, void 0, vo
                 res.status(200).json(updatedPost);
                 return [3 /*break*/, 4];
             case 3:
-                err_4 = _a.sent();
+                err_5 = _a.sent();
                 result_err = {
                     result: false,
                     cause: "api",
@@ -457,7 +549,7 @@ var postUpdate = function (req, res, next) { return __awaiter(void 0, void 0, vo
  */
 // DELETE: 게시글 삭제
 var postDelete = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var email, post_id, deletedPost, err_5, result_err;
+    var email, post_id, deletedPost, err_6, result_err;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -476,7 +568,7 @@ var postDelete = function (req, res, next) { return __awaiter(void 0, void 0, vo
                 res.status(200).json(deletedPost);
                 return [3 /*break*/, 4];
             case 3:
-                err_5 = _a.sent();
+                err_6 = _a.sent();
                 result_err = {
                     result: false,
                     cause: "api",
@@ -524,7 +616,8 @@ var postDelete = function (req, res, next) { return __awaiter(void 0, void 0, vo
  */
 // api index
 postRouter.get("/p", postList); // 전체 게시글 검섹
-postRouter.get("/p/:tag", postListByTag); // tag로 게시글 검섹
+postRouter.get("/p/tag/:tag", postListByTag); // tag로 게시글 검섹
+postRouter.get("/p/id/:post_id", postByPostId); // post_id로 게시글 검섹
 postRouter.post("/p", authMiddleware_1.default, postCreate); // 게시글 생성
 postRouter.put("/p/:post_id", authMiddleware_1.default, postUpdate); //  게시글 수정
 postRouter.delete("/p/:post_id", authMiddleware_1.default, postDelete); // 게시글 삭제

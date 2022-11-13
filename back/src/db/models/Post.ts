@@ -19,7 +19,7 @@ class Post {
   // post_id로 검색
   static async findByPostId({ post_id }) {
     const [rows, fields] = await promisePool.query({
-      sql: "SELECT * FROM posts WHERE `post_id` = ?",
+      sql: "SELECT * FROM posts INNER JOIN (SELECT user_id, email, nickname, profile_image, admin FROM users) AS users ON posts.user_id = users.user_id WHERE `post_id` = ?",
       values: [post_id],
     });
     return rows;

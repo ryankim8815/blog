@@ -21,7 +21,7 @@ function PostList() {
   };
   const apiGetPostsByTag = async (tag) => {
     // console.log("검색한 테그: ", tag);
-    Api.get(`p/${tag}`)
+    Api.get(`p/tag/${tag}`)
       .then((res) => {
         setPosts(res.data.list);
         console.log("created_at: ", res.data.list[0].created_at);
@@ -98,7 +98,7 @@ function PostList() {
             &nbsp;&nbsp;&nbsp;@{post.nickname}
           </h6>
           <h2>{post.title}</h2>
-          <h6>{post.content}</h6>
+          <h6>{post.sub_title}</h6>
           <div className="division-line"></div>
         </div>
       ))}
