@@ -44,10 +44,11 @@ function App() {
     try {
       const res = await Api.get("u/current");
       const currentUser = res.data;
-      // console.log(currentUser);
+      console.log("app에 있는 커런트 유저: ", currentUser);
 
       dispatch({
-        type: "LOGIN",
+        // type: "LOGIN",
+        type: "LOGIN_SUCCESS",
         payload: currentUser,
       });
     } catch (err) {

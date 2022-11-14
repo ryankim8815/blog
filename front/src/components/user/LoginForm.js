@@ -39,21 +39,24 @@ function LoginForm() {
         password,
       });
       const user = res.data;
-      //   console.log("user: ", user);
+      console.log("로그인폼의 user: ", user);
       const jwtToken = user.token;
       //   console.log("jwtToken: ", jwtToken);
 
       sessionStorage.setItem("userToken", jwtToken);
 
-      dispatch({
-        type: "LOGIN_SUCCESS",
-        payload: user,
-      });
-      console.log("디스패치 잘 됐나?");
-      console.log(typeof dispatch());
+      //////////////////////////오류발생, 꼭 필요한 코드인지 확인 중, app에서 처리 가능해보임
+      //   dispatch({
+      //     type: "LOGIN_SUCCESS",
+      //     payload: user,
+      //   });
+      //   console.log("디스패치 잘 됐나?");
+      //   console.log("디스페치 타입은?: ", typeof dispatch());
 
       // 기본 페이지로 이동함.
-      navigate("/", { replace: true });
+      //   navigate("/", { replace: true });
+      navigate("/");
+      console.log("네비게이트 잘 됐나?");
     } catch (err) {
       alert("로그인에 실패하였습니다.\n", err);
     }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import * as Api from "../utils/Api";
 import showdown from "showdown";
 showdown.setOption("ghMentions", true);
@@ -10,7 +11,7 @@ function Editor() {
   const [subTitle, setSubTitle] = useState("");
   const [content, setContent] = useState("");
   const [preview, setPreview] = useState("");
-
+  const navigate = useNavigate();
   // const onChangeTitle = (e) => {
   //   let title = e.target.value;
   //   setTitle(title);
@@ -76,7 +77,7 @@ function Editor() {
       });
 
       // // 로그인 페이지로 이동함.
-      // navigate("/posts");
+      navigate("/posts");
     } catch (err) {
       console.log("게시글 저장에 실패하였습니다.", err);
     }
