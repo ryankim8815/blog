@@ -101,9 +101,7 @@ function PostList() {
             <a href={"/post/" + post.post_id}>{post.title}</a>
             {/* <a href="/posts/">{post.title}</a> */}
           </h2>
-          <h6 onclick="location.href='http://www.naver.com'">
-            {post.sub_title}
-          </h6>
+          <h6>{post.sub_title}</h6>
           <div className="division-line"></div>
         </div>
       ))}

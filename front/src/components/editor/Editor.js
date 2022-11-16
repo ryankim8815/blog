@@ -77,7 +77,7 @@ function Editor() {
       });
 
       // // 로그인 페이지로 이동함.
-      navigate("/posts");
+      navigate("/");
     } catch (err) {
       console.log("게시글 저장에 실패하였습니다.", err);
     }
