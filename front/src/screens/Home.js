@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Carousel } from "react-bootstrap";
 import PostList from "../components/post/PostList";
-import Editor from "../components/editor/Editor";
+import CarouselA from "../components/post/Carousel";
+// import { Carousel } from "react-bootstrap/Carousel";
 
 function Home() {
   const [welcome, setWelcome] = useState([]);
@@ -67,6 +68,7 @@ function Home() {
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>
+      {/* <CarouselA /> */}
       <PostList />
     </div>
   );

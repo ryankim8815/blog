@@ -48,6 +48,10 @@ $custom: black;
 .btn-outline-dark {
   $primary: black;
 }
+a {
+  text-decoration-line: none !important;
+  color: black !important;
+}
 
 // .flex-start {
 //   justify-content: flex-start;
@@ -192,6 +196,8 @@ $custom: black;
 @import url("https://font.elice.io/EliceDigitalCoding.css");
 
 // @import "./editor"; // lexical text editor
+@import "../components/post/carousel.scss";
+@import "../components/post/PostList.scss";
 @import "../components/editor/editor.scss"; // lexical text editor
 // @import "./carousel";
 @import "../../node_modules/bootstrap/scss/bootstrap";

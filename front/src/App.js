@@ -76,7 +76,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/projects" element={<Projects />} />
-            <Route path="/posts" element={<Posts />} />
+            <Route path="/post/:post_id" element={<Posts />} />
             <Route path="/live" element={<Live />} />
             <Route path="/register" element={<Register />} />
             <Route path="/admin" element={<Admin />} />

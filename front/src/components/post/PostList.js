@@ -97,8 +97,13 @@ function PostList() {
             {post.created_at.split("T", 1)}
             &nbsp;&nbsp;&nbsp;@{post.nickname}
           </h6>
-          <h2>{post.title}</h2>
-          <h6>{post.sub_title}</h6>
+          <h2>
+            <a href={"/post/" + post.post_id}>{post.title}</a>
+            {/* <a href="/posts/">{post.title}</a> */}
+          </h2>
+          <h6 onclick="location.href='http://www.naver.com'">
+            {post.sub_title}
+          </h6>
           <div className="division-line"></div>
         </div>
       ))}

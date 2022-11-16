@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Form } from "react-bootstrap";
 
 import * as Api from "../utils/Api";
-import { DispatchContext } from "../../App";
+// import { DispatchContext } from "../../App";
 
 function LoginForm() {
   const navigate = useNavigate();
-  const dispatch = useContext(DispatchContext);
+  //   const dispatch = useContext(DispatchContext);
   //   console.log(typeof dispatch); //function 왜???
   // console.log(typeof dispatch()); //
 
