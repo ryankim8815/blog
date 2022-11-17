@@ -50,6 +50,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "./Button";
 import "./NavBarElements.css";
+import * as FA from "react-icons/fa";
+import * as FI from "react-icons/fi";
 
 function NavBarElements() {
   const [click, setClick] = useState(false);
@@ -78,6 +80,8 @@ function NavBarElements() {
     <>
       <nav className="navbar">
         <div className="navbar-container">
+          <FI.FiMenu size="2.5rem" />
+
           {/* 모바일버전에서 클릭하면 메뉴 보이도록 설정하는 것도 한다. (close Mobile Menu)는 다시 버튼 누르면 없어지고 생기고 하도록 한다.  */}
           <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
             DogFoot
@@ -88,29 +92,39 @@ function NavBarElements() {
           </div>
           <ul className={click ? "nav-menu active" : "nav-menu"}>
             <li className="nav-item">
-              <Link to="/" className="nav-links" onClick={closeMobileMenu}>
-                Home
+              <Link to="/about" className="nav-links" onClick={closeMobileMenu}>
+                About
               </Link>
             </li>
             <li className="nav-item">
               <Link
-                to="/services"
+                to="/projects"
                 className="nav-links"
                 onClick={closeMobileMenu}
               >
-                Services
+                Projects
               </Link>
             </li>
+            {/* <li className="nav-item">
+              <Link to="/admin" className="nav-links" onClick={closeMobileMenu}>
+                Admin
+              </Link>
+            </li> */}
             <li className="nav-item">
               <Link
-                to="/products"
+                to="/editor"
                 className="nav-links"
                 onClick={closeMobileMenu}
               >
-                Products
+                Editor
               </Link>
             </li>
             <li className="nav-item">
+              <Link to="/login" className="nav-links" onClick={closeMobileMenu}>
+                login
+              </Link>
+            </li>
+            {/* <li className="nav-item">
               <Link
                 to="/sign-up"
                 className="nav-links-mobile"
@@ -118,10 +132,10 @@ function NavBarElements() {
               >
                 Sign Up
               </Link>
-            </li>
+            </li> */}
           </ul>
-          {/* {button && <Button buttonStyle="btn--outline">SIGN UP</Button>} */}
-          <Button buttonStyle="btn--outline">SIGN UP</Button>
+          {button && <Button buttonStyle="btn--outline">SIGN UP</Button>}
+          {/* <Button buttonStyle="btn--outline">SIGN UP</Button> */}
         </div>
       </nav>
     </>
