@@ -7,6 +7,9 @@ import postRouter from "./routers/postRouter";
 import commentRouter from "./routers/commentRouter";
 import likeRouter from "./routers/likeRouter";
 
+// for test
+import logger from "morgan";
+
 const app = express();
 app.use(cors());
 //application/json의 Content-Type에 대해 파싱해주는 역할 - req.body에 접근 가능
@@ -22,6 +25,9 @@ app.use(postRouter);
 app.use(commentRouter);
 app.use(likeRouter);
 app.use(swagger);
+
+// for test
+app.use(logger("dev"));
 
 // 기본 페이지
 app.get("/", (req, res) => {
