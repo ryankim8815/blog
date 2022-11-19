@@ -28,7 +28,7 @@ const postList = async (
 };
 /**
  * @swagger
- * /p:
+ * /posts:
  *   get:
  *     summary: 전체 게시글 조회
  *     description: 요청 시 보내야 하는 값이 없습니다.
@@ -130,7 +130,7 @@ const postListByTag = async (
 };
 /**
  * @swagger
- * /p/tag/{tag}:
+ * /posts/tag/{tag}:
  *   get:
  *     summary: tag로 게시글 조회
  *     description: 요청 시 보내야 하는 값이 없습니다.
@@ -231,7 +231,7 @@ const postByPostId = async (
 };
 /**
  * @swagger
- * /p/id/{post_id}:
+ * /post/{post_id}:
  *   get:
  *     summary: post_id로 게시글 조회
  *     description: 요청 시 보내야 하는 값이 없습니다.
@@ -325,7 +325,7 @@ const postCreate = async (
 };
 /**
  * @swagger
- * /p:
+ * /post:
  *   post:
  *     summary: 게시글 작성
  *     description: 초기에는 관리자만 가능하도록 할 예정입니다.
@@ -399,7 +399,7 @@ const postUpdate = async (
 };
 /**
  * @swagger
- * /p/{post_id}:
+ * /post/{post_id}:
  *   put:
  *     summary: 게시글 수정
  *     description: 작성자만 게시글을 수정할 수 있습니다.
@@ -473,7 +473,7 @@ const postDelete = async (
 };
 /**
  * @swagger
- * /p/{post_id}:
+ * /post/{post_id}:
  *   delete:
  *     summary: 게시글 삭제
  *     description: 작성자만 게시글을 삭제할 수 있습니다.
@@ -506,11 +506,11 @@ const postDelete = async (
  */
 
 // api index
-postRouter.get("/p", postList); // 전체 게시글 검섹
-postRouter.get("/p/tag/:tag", postListByTag); // tag로 게시글 검섹
-postRouter.get("/p/id/:post_id", postByPostId); // post_id로 게시글 검섹
-postRouter.post("/p", authMiddleware, postCreate); // 게시글 생성
-postRouter.put("/p/:post_id", authMiddleware, postUpdate); //  게시글 수정
-postRouter.delete("/p/:post_id", authMiddleware, postDelete); // 게시글 삭제
+postRouter.get("/posts", postList); // 전체 게시글 검섹
+postRouter.get("/posts/tag/:tag", postListByTag); // tag로 게시글 검섹
+postRouter.get("/post/:post_id", postByPostId); // post_id로 게시글 검섹
+postRouter.post("/post", authMiddleware, postCreate); // 게시글 생성
+postRouter.put("/post/:post_id", authMiddleware, postUpdate); //  게시글 수정
+postRouter.delete("/post/:post_id", authMiddleware, postDelete); // 게시글 삭제
 
 export = postRouter;
