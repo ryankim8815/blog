@@ -27,7 +27,7 @@ const commentList = async (
 };
 /**
  * @swagger
- * /p/{post_id}/c:
+ * /post/{post_id}/comments:
  *   get:
  *     summary: 특정 게시글의 댓글 조회
  *     description: 비회원도 확인 가능합니다.(추후 비회원은 댓글을 못보게 하여 회원가입을 유도할 수도 있음)
@@ -90,12 +90,13 @@ const commentCreate = async (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const email = req.email;
+  // const email = req.email;
+  const user_id = req.user_id;
   const post_id = req.params.post_id;
   const content = req.body.content;
   try {
     const createdComment = await commentService.addComment({
-      email,
+      user_id,
       post_id,
       content,
     });
@@ -113,7 +114,7 @@ const commentCreate = async (
 };
 /**
  * @swagger
- * /p/{post_id}/c:
+ * /post/{post_id}/comment:
  *   post:
  *     summary: 댓글 생성
  *     description: 로그인한 사용자만 가능합니다.
@@ -160,12 +161,12 @@ const commentUpdate = async (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const email = req.email;
+  const user_id = req.user_id;
   const comment_id = req.params.comment_id;
   const content = req.body.content;
   try {
     const updatedComment = await commentService.updateComment({
-      email,
+      user_id,
       comment_id,
       content,
     });
@@ -183,7 +184,7 @@ const commentUpdate = async (
 };
 /**
  * @swagger
- * /p/{post_id}/c/{comment_id}:
+ * /post/{post_id}/comment/{comment_id}:
  *   put:
  *     summary: 댓글 수정
  *     description: 로그인한 사용자만 가능합니다.
@@ -230,11 +231,11 @@ const commentDelete = async (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const email = req.email;
+  const user_id = req.user_id;
   const comment_id = req.params.comment_id;
   try {
     const deletedComment = await commentService.deleteComment({
-      email,
+      user_id,
       comment_id,
     });
     console.log(deletedComment);
@@ -251,7 +252,7 @@ const commentDelete = async (
 };
 /**
  * @swagger
- * /p/{post_id}/c/{comment_id}:
+ * /post/{post_id}/comment/{comment_id}:
  *   delete:
  *     summary: 댓글 삭제
  *     description: 로그인한 사용자만 가능합니다.
@@ -284,11 +285,15 @@ const commentDelete = async (
  */
 
 // api index
-commentRouter.get("/p/:post_id/c", commentList); // 특정 게시글의 댓글 검섹
-commentRouter.post("/p/:post_id/c", authMiddleware, commentCreate); // 댓글 생성
-commentRouter.put("/p/:post_id/c/:comment_id", authMiddleware, commentUpdate); //  댓글 수정
+commentRouter.get("/post/:post_id/comments", commentList); // 특정 게시글의 댓글 검섹
+commentRouter.post("/post/:post_id/comment", authMiddleware, commentCreate); // 댓글 생성
+commentRouter.put(
+  "/post/:post_id/comment/:comment_id",
+  authMiddleware,
+  commentUpdate
+); //  댓글 수정
 commentRouter.delete(
-  "/p/:post_id/c/:comment_id",
+  "/post/:post_id/comment/:comment_id",
   authMiddleware,
   commentDelete
 ); // 댓글 삭제

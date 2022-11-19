@@ -27,7 +27,7 @@ const likeList = async (
 };
 /**
  * @swagger
- * /p/{post_id}/l:
+ * /post/{post_id}/likes:
  *   get:
  *     summary: 특정 게시물의 좋아요 리스트
  *     description: 비회원도 확인 가능합니다.(추후 비회원은 댓글을 못보게 하여 회원가입을 유도할 수도 있음)
@@ -78,11 +78,12 @@ const likeClick = async (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const email = req.email;
+  // const email = req.email;
+  const user_id = req.user_id;
   const post_id = req.params.post_id;
   try {
     const clickedlike = await likeService.clickLike({
-      email,
+      user_id,
       post_id,
     });
     console.log(clickedlike);
@@ -99,7 +100,7 @@ const likeClick = async (
 };
 /**
  * @swagger
- * /p/{post_id}/l:
+ * /post/{post_id}/like:
  *   post:
  *     summary: 좋아요 생성/삭제
  *     description: 로그인한 사용자만 가능합니다.
@@ -132,7 +133,7 @@ const likeClick = async (
  */
 
 // api index
-likeRouter.get("/p/:post_id/l", likeList); // 특정 게시물의 좋아요 리스트
-likeRouter.post("/p/:post_id/l", authMiddleware, likeClick); // 좋아요 생성/삭제
+likeRouter.get("/post/:post_id/likes", likeList); // 특정 게시물의 좋아요 리스트
+likeRouter.post("/post/:post_id/like", authMiddleware, likeClick); // 좋아요 생성/삭제
 
 export = likeRouter;

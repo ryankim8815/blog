@@ -95,7 +95,7 @@ var commentList = function (req, res, next) { return __awaiter(void 0, void 0, v
 }); };
 /**
  * @swagger
- * /p/{post_id}/c:
+ * /post/{post_id}/comments:
  *   get:
  *     summary: 특정 게시글의 댓글 조회
  *     description: 비회원도 확인 가능합니다.(추후 비회원은 댓글을 못보게 하여 회원가입을 유도할 수도 있음)
@@ -153,18 +153,18 @@ var commentList = function (req, res, next) { return __awaiter(void 0, void 0, v
  */
 // POST: 댓글 생성
 var commentCreate = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var email, post_id, content, createdComment, err_2, result_err;
+    var user_id, post_id, content, createdComment, err_2, result_err;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                email = req.email;
+                user_id = req.user_id;
                 post_id = req.params.post_id;
                 content = req.body.content;
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
                 return [4 /*yield*/, commentService_1.default.addComment({
-                        email: email,
+                        user_id: user_id,
                         post_id: post_id,
                         content: content,
                     })];
@@ -189,7 +189,7 @@ var commentCreate = function (req, res, next) { return __awaiter(void 0, void 0,
 }); };
 /**
  * @swagger
- * /p/{post_id}/c:
+ * /post/{post_id}/comment:
  *   post:
  *     summary: 댓글 생성
  *     description: 로그인한 사용자만 가능합니다.
@@ -231,18 +231,18 @@ var commentCreate = function (req, res, next) { return __awaiter(void 0, void 0,
  */
 // PUT: 댓글 수정
 var commentUpdate = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var email, comment_id, content, updatedComment, err_3, result_err;
+    var user_id, comment_id, content, updatedComment, err_3, result_err;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                email = req.email;
+                user_id = req.user_id;
                 comment_id = req.params.comment_id;
                 content = req.body.content;
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
                 return [4 /*yield*/, commentService_1.default.updateComment({
-                        email: email,
+                        user_id: user_id,
                         comment_id: comment_id,
                         content: content,
                     })];
@@ -267,7 +267,7 @@ var commentUpdate = function (req, res, next) { return __awaiter(void 0, void 0,
 }); };
 /**
  * @swagger
- * /p/{post_id}/c/{comment_id}:
+ * /post/{post_id}/comment/{comment_id}:
  *   put:
  *     summary: 댓글 수정
  *     description: 로그인한 사용자만 가능합니다.
@@ -309,17 +309,17 @@ var commentUpdate = function (req, res, next) { return __awaiter(void 0, void 0,
  */
 // DELETE: 댓글 삭제
 var commentDelete = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var email, comment_id, deletedComment, err_4, result_err;
+    var user_id, comment_id, deletedComment, err_4, result_err;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                email = req.email;
+                user_id = req.user_id;
                 comment_id = req.params.comment_id;
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
                 return [4 /*yield*/, commentService_1.default.deleteComment({
-                        email: email,
+                        user_id: user_id,
                         comment_id: comment_id,
                     })];
             case 2:
@@ -343,7 +343,7 @@ var commentDelete = function (req, res, next) { return __awaiter(void 0, void 0,
 }); };
 /**
  * @swagger
- * /p/{post_id}/c/{comment_id}:
+ * /post/{post_id}/comment/{comment_id}:
  *   delete:
  *     summary: 댓글 삭제
  *     description: 로그인한 사용자만 가능합니다.
@@ -375,8 +375,8 @@ var commentDelete = function (req, res, next) { return __awaiter(void 0, void 0,
  *                   example: 댓글 삭제가 성공적으로 이뤄졌습니다.
  */
 // api index
-commentRouter.get("/p/:post_id/c", commentList); // 특정 게시글의 댓글 검섹
-commentRouter.post("/p/:post_id/c", authMiddleware_1.default, commentCreate); // 댓글 생성
-commentRouter.put("/p/:post_id/c/:comment_id", authMiddleware_1.default, commentUpdate); //  댓글 수정
-commentRouter.delete("/p/:post_id/c/:comment_id", authMiddleware_1.default, commentDelete); // 댓글 삭제
+commentRouter.get("/post/:post_id/comments", commentList); // 특정 게시글의 댓글 검섹
+commentRouter.post("/post/:post_id/comment", authMiddleware_1.default, commentCreate); // 댓글 생성
+commentRouter.put("/post/:post_id/comment/:comment_id", authMiddleware_1.default, commentUpdate); //  댓글 수정
+commentRouter.delete("/post/:post_id/comment/:comment_id", authMiddleware_1.default, commentDelete); // 댓글 삭제
 module.exports = commentRouter;

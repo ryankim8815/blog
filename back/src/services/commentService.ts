@@ -26,13 +26,23 @@ class commentService {
     return result_success;
   }
   //// 댓글 생성
-  static async addComment({ email, post_id, content }) {
+  static async addComment({ user_id, post_id, content }) {
     const created_at = moment().format("YYYY-MM-DD HH:mm:ss");
     const updated_at = created_at;
-    const user = await User.findByEmail({ email });
+    // 생략 가능 여부 확인 필요
+    const user = await User.findByUserId({ user_id });
     const userString = JSON.stringify(user);
     const userObject = JSON.parse(userString);
-    const user_id = userObject[0].user_id; // 예외처리 필요
+    // const user_id = userObject[0].user_id; // 예외처리 필요
+    if (userObject.length === 0) {
+      const result_errUserId = {
+        result: false,
+        cause: "token",
+        message:
+          "제출하신 token 정보와 일치하는 사용자가 없습니다. 다시 한 번 확인해 주세요.",
+      };
+      return result_errUserId;
+    }
     const comment_id = uuidv4();
     const newComment = await Comment.create({
       comment_id,
@@ -65,12 +75,21 @@ class commentService {
     }
   }
   //// 댓글 수정
-  static async updateComment({ email, comment_id, content }) {
+  static async updateComment({ user_id, comment_id, content }) {
     const updated_at = moment().format("YYYY-MM-DD HH:mm:ss");
-    const user = await User.findByEmail({ email });
+    const user = await User.findByUserId({ user_id });
     const userString = JSON.stringify(user);
     const userObject = JSON.parse(userString);
-    const user_id = userObject[0].user_id; // 예외처리 필요
+    // const user_id = userObject[0].user_id; // 예외처리 필요
+    if (userObject.length === 0) {
+      const result_errUserId = {
+        result: false,
+        cause: "token",
+        message:
+          "제출하신 token 정보와 일치하는 사용자가 없습니다. 다시 한 번 확인해 주세요.",
+      };
+      return result_errUserId;
+    }
     // 수정권한이 있는 작성자인지 확인
     const checkComment = await Comment.findByCommentIdUserId({
       comment_id,
@@ -113,11 +132,20 @@ class commentService {
     }
   }
   //// 댓글 삭제
-  static async deleteComment({ email, comment_id }) {
-    const user = await User.findByEmail({ email });
+  static async deleteComment({ user_id, comment_id }) {
+    const user = await User.findByUserId({ user_id });
     const userString = JSON.stringify(user);
     const userObject = JSON.parse(userString);
-    const user_id = userObject[0].user_id; // 예외처리 필요
+    // const user_id = userObject[0].user_id; // 예외처리 필요
+    if (userObject.length === 0) {
+      const result_errUserId = {
+        result: false,
+        cause: "token",
+        message:
+          "제출하신 token 정보와 일치하는 사용자가 없습니다. 다시 한 번 확인해 주세요.",
+      };
+      return result_errUserId;
+    }
     const checkComment = await Comment.findByCommentIdUserId({
       comment_id,
       user_id,

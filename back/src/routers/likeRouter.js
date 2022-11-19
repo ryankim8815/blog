@@ -97,7 +97,7 @@ var likeList = function (req, res, next) { return __awaiter(void 0, void 0, void
 }); };
 /**
  * @swagger
- * /p/{post_id}/l:
+ * /post/{post_id}/likes:
  *   get:
  *     summary: 특정 게시물의 좋아요 리스트
  *     description: 비회원도 확인 가능합니다.(추후 비회원은 댓글을 못보게 하여 회원가입을 유도할 수도 있음)
@@ -143,17 +143,17 @@ var likeList = function (req, res, next) { return __awaiter(void 0, void 0, void
  */
 // POST: 좋아요 생성/삭제
 var likeClick = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var email, post_id, clickedlike, err_2, result_err;
+    var user_id, post_id, clickedlike, err_2, result_err;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                email = req.email;
+                user_id = req.user_id;
                 post_id = req.params.post_id;
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
                 return [4 /*yield*/, likeService_1.default.clickLike({
-                        email: email,
+                        user_id: user_id,
                         post_id: post_id,
                     })];
             case 2:
@@ -177,7 +177,7 @@ var likeClick = function (req, res, next) { return __awaiter(void 0, void 0, voi
 }); };
 /**
  * @swagger
- * /p/{post_id}/l:
+ * /post/{post_id}/like:
  *   post:
  *     summary: 좋아요 생성/삭제
  *     description: 로그인한 사용자만 가능합니다.
@@ -209,6 +209,6 @@ var likeClick = function (req, res, next) { return __awaiter(void 0, void 0, voi
  *                   example: 좋아요 생성이 성공적으로 이뤄졌습니다.
  */
 // api index
-likeRouter.get("/p/:post_id/l", likeList); // 특정 게시물의 좋아요 리스트
-likeRouter.post("/p/:post_id/l", authMiddleware_1.default, likeClick); // 좋아요 생성/삭제
+likeRouter.get("/post/:post_id/likes", likeList); // 특정 게시물의 좋아요 리스트
+likeRouter.post("/post/:post_id/like", authMiddleware_1.default, likeClick); // 좋아요 생성/삭제
 module.exports = likeRouter;

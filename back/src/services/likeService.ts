@@ -30,12 +30,21 @@ class likeService {
     return result_success;
   }
   //// 좋아요 생성/삭제
-  static async clickLike({ email, post_id }) {
+  static async clickLike({ user_id, post_id }) {
     const created_at = moment().format("YYYY-MM-DD HH:mm:ss");
-    const user = await User.findByEmail({ email });
+    const user = await User.findByUserId({ user_id });
     const userString = JSON.stringify(user);
     const userObject = JSON.parse(userString);
-    const user_id = userObject[0].user_id; // 예외처리 필요
+    // const user_id = userObject[0].user_id; // 예외처리 필요
+    if (userObject.length === 0) {
+      const result_errUserId = {
+        result: false,
+        cause: "token",
+        message:
+          "제출하신 token 정보와 일치하는 사용자가 없습니다. 다시 한 번 확인해 주세요.",
+      };
+      return result_errUserId;
+    }
     const checkLike = await Like.findByPostIdUserId({ post_id, user_id });
     const checkLikeString = JSON.stringify(checkLike);
     const checkLikeObject = JSON.parse(checkLikeString);

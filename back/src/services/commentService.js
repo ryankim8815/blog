@@ -77,20 +77,28 @@ var commentService = /** @class */ (function () {
     };
     //// 댓글 생성
     commentService.addComment = function (_a) {
-        var email = _a.email, post_id = _a.post_id, content = _a.content;
+        var user_id = _a.user_id, post_id = _a.post_id, content = _a.content;
         return __awaiter(this, void 0, void 0, function () {
-            var created_at, updated_at, user, userString, userObject, user_id, comment_id, newComment, newCommentString, newCommentObject, affectedRows, checkNewComment, checkNewCommentString, checkNewCommentObject, result_success, result_errCreate;
+            var created_at, updated_at, user, userString, userObject, result_errUserId, comment_id, newComment, newCommentString, newCommentObject, affectedRows, checkNewComment, checkNewCommentString, checkNewCommentObject, result_success, result_errCreate;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         created_at = (0, moment_timezone_1.default)().format("YYYY-MM-DD HH:mm:ss");
                         updated_at = created_at;
-                        return [4 /*yield*/, User_1.default.findByEmail({ email: email })];
+                        return [4 /*yield*/, User_1.default.findByUserId({ user_id: user_id })];
                     case 1:
                         user = _b.sent();
                         userString = JSON.stringify(user);
                         userObject = JSON.parse(userString);
-                        user_id = userObject[0].user_id;
+                        // const user_id = userObject[0].user_id; // 예외처리 필요
+                        if (userObject.length === 0) {
+                            result_errUserId = {
+                                result: false,
+                                cause: "token",
+                                message: "제출하신 token 정보와 일치하는 사용자가 없습니다. 다시 한 번 확인해 주세요.",
+                            };
+                            return [2 /*return*/, result_errUserId];
+                        }
                         comment_id = (0, uuid_1.v4)();
                         return [4 /*yield*/, Comment_1.default.create({
                                 comment_id: comment_id,
@@ -133,19 +141,27 @@ var commentService = /** @class */ (function () {
     };
     //// 댓글 수정
     commentService.updateComment = function (_a) {
-        var email = _a.email, comment_id = _a.comment_id, content = _a.content;
+        var user_id = _a.user_id, comment_id = _a.comment_id, content = _a.content;
         return __awaiter(this, void 0, void 0, function () {
-            var updated_at, user, userString, userObject, user_id, checkComment, checkCommentString, checkCommentObject, result_errPost, updatedComment, updatedCommentString, updatedCommentObject, affectedRows, result_errUpdate, result_success;
+            var updated_at, user, userString, userObject, result_errUserId, checkComment, checkCommentString, checkCommentObject, result_errPost, updatedComment, updatedCommentString, updatedCommentObject, affectedRows, result_errUpdate, result_success;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         updated_at = (0, moment_timezone_1.default)().format("YYYY-MM-DD HH:mm:ss");
-                        return [4 /*yield*/, User_1.default.findByEmail({ email: email })];
+                        return [4 /*yield*/, User_1.default.findByUserId({ user_id: user_id })];
                     case 1:
                         user = _b.sent();
                         userString = JSON.stringify(user);
                         userObject = JSON.parse(userString);
-                        user_id = userObject[0].user_id;
+                        // const user_id = userObject[0].user_id; // 예외처리 필요
+                        if (userObject.length === 0) {
+                            result_errUserId = {
+                                result: false,
+                                cause: "token",
+                                message: "제출하신 token 정보와 일치하는 사용자가 없습니다. 다시 한 번 확인해 주세요.",
+                            };
+                            return [2 /*return*/, result_errUserId];
+                        }
                         return [4 /*yield*/, Comment_1.default.findByCommentIdUserId({
                                 comment_id: comment_id,
                                 user_id: user_id,
@@ -195,17 +211,25 @@ var commentService = /** @class */ (function () {
     };
     //// 댓글 삭제
     commentService.deleteComment = function (_a) {
-        var email = _a.email, comment_id = _a.comment_id;
+        var user_id = _a.user_id, comment_id = _a.comment_id;
         return __awaiter(this, void 0, void 0, function () {
-            var user, userString, userObject, user_id, checkComment, checkPostString, checkPostObject, result_errPost, deletedComment, deletedCommentString, deletedCommentObject, affectedRows, result_errUpdate, result_success;
+            var user, userString, userObject, result_errUserId, checkComment, checkPostString, checkPostObject, result_errPost, deletedComment, deletedCommentString, deletedCommentObject, affectedRows, result_errUpdate, result_success;
             return __generator(this, function (_b) {
                 switch (_b.label) {
-                    case 0: return [4 /*yield*/, User_1.default.findByEmail({ email: email })];
+                    case 0: return [4 /*yield*/, User_1.default.findByUserId({ user_id: user_id })];
                     case 1:
                         user = _b.sent();
                         userString = JSON.stringify(user);
                         userObject = JSON.parse(userString);
-                        user_id = userObject[0].user_id;
+                        // const user_id = userObject[0].user_id; // 예외처리 필요
+                        if (userObject.length === 0) {
+                            result_errUserId = {
+                                result: false,
+                                cause: "token",
+                                message: "제출하신 token 정보와 일치하는 사용자가 없습니다. 다시 한 번 확인해 주세요.",
+                            };
+                            return [2 /*return*/, result_errUserId];
+                        }
                         return [4 /*yield*/, Comment_1.default.findByCommentIdUserId({
                                 comment_id: comment_id,
                                 user_id: user_id,
