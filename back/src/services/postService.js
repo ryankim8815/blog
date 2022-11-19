@@ -148,21 +148,28 @@ var postService = /** @class */ (function () {
     };
     //// 게시글 생성
     postService.addPost = function (_a) {
-        var email = _a.email, title = _a.title, sub_title = _a.sub_title, content = _a.content, tag = _a.tag;
+        var user_id = _a.user_id, title = _a.title, sub_title = _a.sub_title, content = _a.content, tag = _a.tag;
         return __awaiter(this, void 0, void 0, function () {
-            var currentTime, created_at, updated_at, user, userString, userObject, user_id, post_id, newPost, newpostString, newpostObject, affectedRows, checkNewPost, checkNewPostString, checkNewPostObject, result_success;
+            var currentTime, created_at, updated_at, user, userString, userObject, result_errUserId, post_id, newPost, newpostString, newpostObject, affectedRows, checkNewPost, checkNewPostString, checkNewPostObject, result_success;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         currentTime = (0, moment_timezone_1.default)().format("YYYY-MM-DD HH:mm:ss");
                         created_at = currentTime;
                         updated_at = currentTime;
-                        return [4 /*yield*/, User_1.default.findByEmail({ email: email })];
+                        return [4 /*yield*/, User_1.default.findByUserId({ user_id: user_id })];
                     case 1:
                         user = _b.sent();
                         userString = JSON.stringify(user);
                         userObject = JSON.parse(userString);
-                        user_id = userObject[0].user_id;
+                        if (userObject.length === 0) {
+                            result_errUserId = {
+                                result: false,
+                                cause: "token",
+                                message: "제출하신 token 정보와 일치하는 사용자가 없습니다. 다시 한 번 확인해 주세요.",
+                            };
+                            return [2 /*return*/, result_errUserId];
+                        }
                         post_id = (0, uuid_1.v4)();
                         return [4 /*yield*/, Post_1.default.create({
                                 post_id: post_id,
@@ -199,19 +206,26 @@ var postService = /** @class */ (function () {
     };
     //// 게시글 수정
     postService.updatePost = function (_a) {
-        var email = _a.email, post_id = _a.post_id, title = _a.title, content = _a.content, tag = _a.tag;
+        var user_id = _a.user_id, post_id = _a.post_id, title = _a.title, content = _a.content, tag = _a.tag;
         return __awaiter(this, void 0, void 0, function () {
-            var updated_at, user, userString, userObject, user_id, checkPost, checkPostString, checkPostObject, result_errPost, updatedPost, updatedPostString, updatedPostObject, affectedRows, result_errUpdate, result_success;
+            var updated_at, user, userString, userObject, result_errUserId, checkPost, checkPostString, checkPostObject, result_errPost, updatedPost, updatedPostString, updatedPostObject, affectedRows, result_errUpdate, result_success;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         updated_at = (0, moment_timezone_1.default)().format("YYYY-MM-DD HH:mm:ss");
-                        return [4 /*yield*/, User_1.default.findByEmail({ email: email })];
+                        return [4 /*yield*/, User_1.default.findByUserId({ user_id: user_id })];
                     case 1:
                         user = _b.sent();
                         userString = JSON.stringify(user);
                         userObject = JSON.parse(userString);
-                        user_id = userObject[0].user_id;
+                        if (userObject.length === 0) {
+                            result_errUserId = {
+                                result: false,
+                                cause: "token",
+                                message: "제출하신 token 정보와 일치하는 사용자가 없습니다. 다시 한 번 확인해 주세요.",
+                            };
+                            return [2 /*return*/, result_errUserId];
+                        }
                         return [4 /*yield*/, Post_1.default.findByPostIdUserId({ post_id: post_id, user_id: user_id })];
                     case 2:
                         checkPost = _b.sent();
@@ -260,17 +274,24 @@ var postService = /** @class */ (function () {
     };
     //// 게시글 삭제
     postService.deletePost = function (_a) {
-        var email = _a.email, post_id = _a.post_id;
+        var user_id = _a.user_id, post_id = _a.post_id;
         return __awaiter(this, void 0, void 0, function () {
-            var user, userString, userObject, user_id, checkPost, checkPostString, checkPostObject, result_errPost, deletedPost, deletedPostString, deletedPostObject, affectedRows, result_errUpdate, result_success;
+            var user, userString, userObject, result_errUserId, checkPost, checkPostString, checkPostObject, result_errPost, deletedPost, deletedPostString, deletedPostObject, affectedRows, result_errUpdate, result_success;
             return __generator(this, function (_b) {
                 switch (_b.label) {
-                    case 0: return [4 /*yield*/, User_1.default.findByEmail({ email: email })];
+                    case 0: return [4 /*yield*/, User_1.default.findByUserId({ user_id: user_id })];
                     case 1:
                         user = _b.sent();
                         userString = JSON.stringify(user);
                         userObject = JSON.parse(userString);
-                        user_id = userObject[0].user_id;
+                        if (userObject.length === 0) {
+                            result_errUserId = {
+                                result: false,
+                                cause: "token",
+                                message: "제출하신 token 정보와 일치하는 사용자가 없습니다. 다시 한 번 확인해 주세요.",
+                            };
+                            return [2 /*return*/, result_errUserId];
+                        }
                         return [4 /*yield*/, Post_1.default.findByPostIdUserId({ post_id: post_id, user_id: user_id })];
                     case 2:
                         checkPost = _b.sent();

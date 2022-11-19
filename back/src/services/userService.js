@@ -375,7 +375,7 @@ var userService = /** @class */ (function () {
     userService.deleteUser = function (_a) {
         var user_id = _a.user_id, password = _a.password;
         return __awaiter(this, void 0, void 0, function () {
-            var checkUserId, checkUserIdString, checkUserIdObject, result_errEmail, thisUser, hashedCorrectPassword, isPasswordCorrect, result_errPassword, updatedUser, updatedUserString, updatedUserObject, checkDeletedUser, checkDeletedUserString, checkDeletedUserObject, result_errDelete, result_success;
+            var checkUserId, checkUserIdString, checkUserIdObject, result_errUserId, thisUser, hashedCorrectPassword, isPasswordCorrect, result_errPassword, updatedUser, updatedUserString, updatedUserObject, checkDeletedUser, checkDeletedUserString, checkDeletedUserObject, result_errDelete, result_success;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0: return [4 /*yield*/, User_1.default.findByUserId({ user_id: user_id })];
@@ -384,12 +384,12 @@ var userService = /** @class */ (function () {
                         checkUserIdString = JSON.stringify(checkUserId);
                         checkUserIdObject = JSON.parse(checkUserIdString);
                         if (checkUserIdObject.length === 0) {
-                            result_errEmail = {
+                            result_errUserId = {
                                 result: false,
                                 cause: "token",
                                 message: "제출하신 token 정보와 일치하는 사용자가 없습니다. 다시 한 번 확인해 주세요.",
                             };
-                            return [2 /*return*/, result_errEmail];
+                            return [2 /*return*/, result_errUserId];
                         }
                         thisUser = checkUserIdObject[0];
                         hashedCorrectPassword = thisUser.password;

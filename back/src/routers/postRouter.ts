@@ -298,14 +298,15 @@ const postCreate = async (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const email = req.email;
+  // const email = req.email;
+  const user_id = req.user_id;
   const title = req.body.title;
   const sub_title = req.body.sub_title;
   const content = req.body.content;
   const tag = req.body.tag;
   try {
     const createdPost = await postService.addPost({
-      email,
+      user_id,
       title,
       sub_title,
       content,
@@ -372,14 +373,15 @@ const postUpdate = async (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const email = req.email;
+  // const email = req.email;
+  const user_id = req.user_id;
   const post_id = req.params.post_id;
   const title = req.body.title;
   const content = req.body.content;
   const tag = req.body.tag;
   try {
     const updatedPost = await postService.updatePost({
-      email,
+      user_id,
       post_id,
       title,
       content,
@@ -452,11 +454,12 @@ const postDelete = async (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const email = req.email;
+  // const email = req.email;
+  const user_id = req.user_id;
   const post_id = req.params.post_id;
   try {
     const deletedPost = await postService.deletePost({
-      email,
+      user_id,
       post_id,
     });
     console.log(deletedPost);

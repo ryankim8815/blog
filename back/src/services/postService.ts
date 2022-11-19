@@ -79,15 +79,24 @@ class postService {
     }
   }
   //// 게시글 생성
-  static async addPost({ email, title, sub_title, content, tag }) {
+  static async addPost({ user_id, title, sub_title, content, tag }) {
     const currentTime = moment().format("YYYY-MM-DD HH:mm:ss");
     const created_at = currentTime;
     // const updated_at = created_at;
     const updated_at = currentTime;
-    const user = await User.findByEmail({ email });
+    // db 쿼리를 날려서 user_id 확인이 필요할까?
+    const user = await User.findByUserId({ user_id });
     const userString = JSON.stringify(user);
     const userObject = JSON.parse(userString);
-    const user_id = userObject[0].user_id; // 예외처리 필요
+    if (userObject.length === 0) {
+      const result_errUserId = {
+        result: false,
+        cause: "token",
+        message:
+          "제출하신 token 정보와 일치하는 사용자가 없습니다. 다시 한 번 확인해 주세요.",
+      };
+      return result_errUserId;
+    }
     const post_id = uuidv4();
     const newPost = await Post.create({
       post_id,
@@ -115,12 +124,21 @@ class postService {
     }
   }
   //// 게시글 수정
-  static async updatePost({ email, post_id, title, content, tag }) {
+  static async updatePost({ user_id, post_id, title, content, tag }) {
     const updated_at = moment().format("YYYY-MM-DD HH:mm:ss");
-    const user = await User.findByEmail({ email });
+    // 필요할까?
+    const user = await User.findByUserId({ user_id });
     const userString = JSON.stringify(user);
     const userObject = JSON.parse(userString);
-    const user_id = userObject[0].user_id; // 예외처리 필요
+    if (userObject.length === 0) {
+      const result_errUserId = {
+        result: false,
+        cause: "token",
+        message:
+          "제출하신 token 정보와 일치하는 사용자가 없습니다. 다시 한 번 확인해 주세요.",
+      };
+      return result_errUserId;
+    }
     // 수정 권한 여부 확인
     const checkPost = await Post.findByPostIdUserId({ post_id, user_id });
     const checkPostString = JSON.stringify(checkPost);
@@ -162,11 +180,20 @@ class postService {
     }
   }
   //// 게시글 삭제
-  static async deletePost({ email, post_id }) {
-    const user = await User.findByEmail({ email });
+  static async deletePost({ user_id, post_id }) {
+    // db 쿼리를 날려서 user_id 확인이 필요할까?
+    const user = await User.findByUserId({ user_id });
     const userString = JSON.stringify(user);
     const userObject = JSON.parse(userString);
-    const user_id = userObject[0].user_id; // 예외처리 필요
+    if (userObject.length === 0) {
+      const result_errUserId = {
+        result: false,
+        cause: "token",
+        message:
+          "제출하신 token 정보와 일치하는 사용자가 없습니다. 다시 한 번 확인해 주세요.",
+      };
+      return result_errUserId;
+    }
     // 수정 권한 여부 확인
     const checkPost = await Post.findByPostIdUserId({ post_id, user_id });
     const checkPostString = JSON.stringify(checkPost);

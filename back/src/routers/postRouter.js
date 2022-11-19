@@ -379,11 +379,11 @@ var postByPostId = function (req, res, next) { return __awaiter(void 0, void 0, 
  */
 // POST: 게시글 생성
 var postCreate = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var email, title, sub_title, content, tag, createdPost, err_4, result_err;
+    var user_id, title, sub_title, content, tag, createdPost, err_4, result_err;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                email = req.email;
+                user_id = req.user_id;
                 title = req.body.title;
                 sub_title = req.body.sub_title;
                 content = req.body.content;
@@ -392,7 +392,7 @@ var postCreate = function (req, res, next) { return __awaiter(void 0, void 0, vo
             case 1:
                 _a.trys.push([1, 3, , 4]);
                 return [4 /*yield*/, postService_1.default.addPost({
-                        email: email,
+                        user_id: user_id,
                         title: title,
                         sub_title: sub_title,
                         content: content,
@@ -461,11 +461,11 @@ var postCreate = function (req, res, next) { return __awaiter(void 0, void 0, vo
  */
 // PUT: 게시글 수정
 var postUpdate = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var email, post_id, title, content, tag, updatedPost, err_5, result_err;
+    var user_id, post_id, title, content, tag, updatedPost, err_5, result_err;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                email = req.email;
+                user_id = req.user_id;
                 post_id = req.params.post_id;
                 title = req.body.title;
                 content = req.body.content;
@@ -474,7 +474,7 @@ var postUpdate = function (req, res, next) { return __awaiter(void 0, void 0, vo
             case 1:
                 _a.trys.push([1, 3, , 4]);
                 return [4 /*yield*/, postService_1.default.updatePost({
-                        email: email,
+                        user_id: user_id,
                         post_id: post_id,
                         title: title,
                         content: content,
@@ -549,17 +549,17 @@ var postUpdate = function (req, res, next) { return __awaiter(void 0, void 0, vo
  */
 // DELETE: 게시글 삭제
 var postDelete = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var email, post_id, deletedPost, err_6, result_err;
+    var user_id, post_id, deletedPost, err_6, result_err;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                email = req.email;
+                user_id = req.user_id;
                 post_id = req.params.post_id;
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
                 return [4 /*yield*/, postService_1.default.deletePost({
-                        email: email,
+                        user_id: user_id,
                         post_id: post_id,
                     })];
             case 2:

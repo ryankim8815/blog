@@ -316,13 +316,13 @@ class userService {
     const checkUserIdString = JSON.stringify(checkUserId);
     const checkUserIdObject = JSON.parse(checkUserIdString);
     if (checkUserIdObject.length === 0) {
-      const result_errEmail = {
+      const result_errUserId = {
         result: false,
         cause: "token",
         message:
           "제출하신 token 정보와 일치하는 사용자가 없습니다. 다시 한 번 확인해 주세요.",
       };
-      return result_errEmail;
+      return result_errUserId;
     }
     // 기존 비밀번호 확인
     const thisUser = checkUserIdObject[0];
