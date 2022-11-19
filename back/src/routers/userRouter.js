@@ -143,13 +143,13 @@ var userList = function (req, res, next) { return __awaiter(void 0, void 0, void
  */
 // GET: 현재 사용자 정보 조회 기능
 var userCurrent = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var email, currentUser, err_2, result_err;
+    var user_id, currentUser, err_2, result_err;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                email = req.email;
-                return [4 /*yield*/, userService_1.default.getCurrentUser({ email: email })];
+                user_id = req.user_id;
+                return [4 /*yield*/, userService_1.default.getCurrentUser({ user_id: user_id })];
             case 1:
                 currentUser = _a.sent();
                 console.log(currentUser);
@@ -368,17 +368,17 @@ var userLogin = function (req, res, next) { return __awaiter(void 0, void 0, voi
  */
 // POST: 회원정보 수정
 var userUpdate = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var email, currentPassword, password, nickname, updateUser, err_5, result_err;
+    var user_id, currentPassword, password, nickname, updateUser, err_5, result_err;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                email = req.email;
+                user_id = req.user_id;
                 currentPassword = req.body.currentPassword;
                 password = req.body.password;
                 nickname = req.body.nickname;
                 return [4 /*yield*/, userService_1.default.updateUser({
-                        email: email,
+                        user_id: user_id,
                         currentPassword: currentPassword,
                         password: password,
                         nickname: nickname,
@@ -446,15 +446,15 @@ var userUpdate = function (req, res, next) { return __awaiter(void 0, void 0, vo
  */
 // DELETE: 회원정보 삭제
 var userDelete = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var email, password, deleteUser, err_6, result_err;
+    var user_id, password, deleteUser, err_6, result_err;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                email = req.email;
+                user_id = req.user_id;
                 password = req.body.password;
                 return [4 /*yield*/, userService_1.default.deleteUser({
-                        email: email,
+                        user_id: user_id,
                         password: password,
                     })];
             case 1:
@@ -514,16 +514,15 @@ var userDelete = function (req, res, next) { return __awaiter(void 0, void 0, vo
  */
 //// POST: 프로필 사진 업로드
 var userUploadImage = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var email, new_filename, uploadUserImage, err_7, result_err;
+    var user_id, new_filename, uploadUserImage, err_7, result_err;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                email = req.email;
+                user_id = req.user_id;
                 new_filename = req.file.filename;
-                console.log("new_filename: ", new_filename);
                 return [4 /*yield*/, userService_1.default.uploadUserImage({
-                        email: email,
+                        user_id: user_id,
                         new_filename: new_filename,
                     })];
             case 1:

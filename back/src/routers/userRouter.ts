@@ -82,9 +82,10 @@ const userCurrent = async (
   next: express.NextFunction
 ) => {
   try {
-    const email = req.email;
-    // console.log("라우터에서 토큰 확인: ", email);
-    const currentUser = await userService.getCurrentUser({ email });
+    // const email = req.email;
+    const user_id = req.user_id;
+    // console.log("라우터에서 토큰 확인: ", user_id);
+    const currentUser = await userService.getCurrentUser({ user_id });
     console.log(currentUser);
     res.status(200).json(currentUser);
   } catch (err) {
@@ -290,12 +291,14 @@ const userUpdate = async (
   next: express.NextFunction
 ) => {
   try {
-    const email = req.email;
+    // const email = req.email;
+    const user_id = req.user_id;
+    // console.log("user_id: ", user_id);
     const currentPassword = req.body.currentPassword;
     const password = req.body.password;
     const nickname = req.body.nickname;
     const updateUser = await userService.updateUser({
-      email,
+      user_id,
       currentPassword,
       password,
       nickname,
@@ -362,10 +365,11 @@ const userDelete = async (
   next: express.NextFunction
 ) => {
   try {
-    const email = req.email;
+    // const email = req.email;
+    const user_id = req.user_id;
     const password = req.body.password;
     const deleteUser = await userService.deleteUser({
-      email,
+      user_id,
       password,
     });
     console.log(deleteUser);
@@ -424,12 +428,13 @@ const userUploadImage = async (
   next: express.NextFunction
 ) => {
   try {
-    const email = req.email;
+    // const email = req.email;
+    const user_id = req.user_id;
     // const old_filename = req.filename;
     const new_filename = req.file.filename;
-    console.log("new_filename: ", new_filename);
+    // console.log("new_filename: ", new_filename);
     const uploadUserImage = await userService.uploadUserImage({
-      email,
+      user_id,
       new_filename,
     });
     console.log(uploadUserImage);

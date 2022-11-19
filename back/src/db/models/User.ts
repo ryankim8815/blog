@@ -13,6 +13,14 @@ class User {
     return rows;
   }
 
+  static async findByUserId({ user_id }) {
+    const [rows, fields] = await promisePool.query({
+      sql: "SELECT * FROM users WHERE `user_id` = ?",
+      values: [user_id],
+    });
+    return rows;
+  }
+
   static async findByEmail({ email }) {
     const [rows, fields] = await promisePool.query({
       sql: "SELECT * FROM users WHERE `email` = ?",
@@ -44,25 +52,25 @@ class User {
     return rows;
   }
 
-  static async update({ email, password, nickname }) {
+  static async update({ user_id, password, nickname }) {
     const [rows, fields] = await promisePool.query({
-      sql: "UPDATE users SET `password` = ?, `nickname` = ? WHERE `email` = ?",
-      values: [password, nickname, email],
+      sql: "UPDATE users SET `password` = ?, `nickname` = ? WHERE `user_id` = ?",
+      values: [password, nickname, user_id],
     });
     return rows;
   }
-  static async updateFilename({ email, new_filename }) {
+  static async updateFilename({ user_id, new_filename }) {
     const [rows, fields] = await promisePool.query({
-      sql: "UPDATE users SET `profile_image` = ? WHERE `email` = ?",
-      values: [new_filename, email],
+      sql: "UPDATE users SET `profile_image` = ? WHERE `user_id` = ?",
+      values: [new_filename, user_id],
     });
     return rows;
   }
 
-  static async delete({ email }) {
+  static async delete({ user_id }) {
     const [rows, fields] = await promisePool.query({
-      sql: "DELETE FROM users WHERE `email` = ?",
-      values: [email],
+      sql: "DELETE FROM users WHERE `user_id` = ?",
+      values: [user_id],
     });
     return rows;
   }
