@@ -10,6 +10,8 @@ var socialLoginRouter_1 = __importDefault(require("./routers/socialLoginRouter")
 var postRouter_1 = __importDefault(require("./routers/postRouter"));
 var commentRouter_1 = __importDefault(require("./routers/commentRouter"));
 var likeRouter_1 = __importDefault(require("./routers/likeRouter"));
+// for test
+var morgan_1 = __importDefault(require("morgan"));
 var app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 //application/json의 Content-Type에 대해 파싱해주는 역할 - req.body에 접근 가능
@@ -24,6 +26,8 @@ app.use(postRouter_1.default);
 app.use(commentRouter_1.default);
 app.use(likeRouter_1.default);
 app.use(swagger_1.default);
+// for test
+app.use((0, morgan_1.default)("dev"));
 // 기본 페이지
 app.get("/", function (req, res) {
     res.send("안녕하세요, 개발자A의 첫 개인 프로젝트입니다.");
