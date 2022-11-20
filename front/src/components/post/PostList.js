@@ -13,7 +13,7 @@ function PostList() {
   //   let tag = ""; // 임시, 추후 tag 상태를 가져와야함
 
   const apiGetAllPosts = async () => {
-    Api.get("p")
+    Api.get("posts")
       .then((res) => {
         setPosts(res.data.list);
       })
@@ -21,7 +21,7 @@ function PostList() {
   };
   const apiGetPostsByTag = async (tag) => {
     // console.log("검색한 테그: ", tag);
-    Api.get(`p/tag/${tag}`)
+    Api.get(`posts/tag/${tag}`)
       .then((res) => {
         setPosts(res.data.list);
         console.log("created_at: ", res.data.list[0].created_at);

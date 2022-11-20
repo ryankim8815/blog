@@ -10,19 +10,19 @@ function About() {
   const [posts, setPosts] = useState([]);
   // 게시할 글을 작성하면 tag로 검색해서 노출 시키기
   // 추가적으로 전체 게시글 리스트에서 해당 테그 제외하기
-  const apiGetPostByPostId = async (post_id) => {
-    await Api.get(`p/id/${post_id}`)
+  const apiGetPostByTag = async (tag) => {
+    await Api.get(`posts/tag/${tag}`)
       .then((res) => {
-        let test = [];
-        test[0] = res.data;
-        setPosts(test);
+        // let test = [];
+        // test[0] = res.data;
+        setPosts(res.data.list);
       })
       .catch((err) => console.log(err));
   };
 
   useEffect(() => {
     // 업로드할 게시글이 작성되면 테그를 넣어서 작동시키기
-    apiGetPostByPostId("642f95d3-3193-4423-a8a4-951720560ccb");
+    apiGetPostByTag("resume");
   }, []);
 
   return (

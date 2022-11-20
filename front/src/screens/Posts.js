@@ -14,7 +14,7 @@ function Posts() {
   const [posts, setPosts] = useState([]);
 
   const apiGetPostByPostId = async (post_id) => {
-    await Api.get(`p/id/${post_id}`)
+    await Api.get(`post/${post_id}`)
       .then((res) => {
         let post = [];
         post[0] = res.data;
