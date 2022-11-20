@@ -1,89 +1,66 @@
 import React, { useEffect, useRef, useState } from "react";
-// import styled from "styled-components";
+import styled from "styled-components";
+// import * as FI from "react-icons/fi";
 
-const CarouselA = () => {
-  //   const SHOWING_CLASS = "showing";
-  //   const firstSlide = document.querySelector(".slider__item:first-child");
-  async function slide() {
-    //   const slide = async () => {
-    const SHOWING_CLASS = "showing";
-    const firstSlide = document.querySelector(".slider__item:first-child");
-    console.log("firstSlide: ", firstSlide);
-    const currentSlide = document.querySelector(`.${SHOWING_CLASS}`);
-    if (currentSlide) {
-      console.log("current: ", currentSlide);
-      currentSlide.classList.remove(SHOWING_CLASS);
-      const nextSlide = currentSlide.nextElementSibling;
-      if (nextSlide) {
-        console.log("next: ", nextSlide);
-        nextSlide.classList.add(SHOWING_CLASS);
-      } else {
-        console.log("first: ", firstSlide);
-        firstSlide.classList.add(SHOWING_CLASS);
-      }
-    } else {
-      console.log("first2: ", firstSlide);
-      await firstSlide.classList.add(SHOWING_CLASS);
-    }
-  }
-  slide(); // 이 코드를 주석 처리하고 추가하면 페이지가 정상 작동함, 새로고침 시 문제 발생
-  setInterval(slide, 5000);
+const Carousel = () => {
+  const CarouselDiv = styled.div`
+    // background-color: #4f3466ff;
+    // background-color: #5f4a8b;
+    // background: linear-gradient(135deg, #51087e, #b24bf3);
+    // background-color: #1d490d;
+    // background-color: #004523;
+    // background-color: #2c5f2dff;
+    background: linear-gradient(135deg, #3f5c4a, #91a86f);
+    width: 100%;
+    // height: 350px;
+    height: 300px;
+    display: flex;
+    align-items: center; // 상하 정렬
+    justify-content: center; // 좌우 정렬
+  `;
+  const InnerDiv = styled.div`
+    // background-color: skyblue; // 위치 확인용
+    width: 1024px;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  `;
+  const Title = styled.text`
+    font-family: Elice Digital Baeum;
+    font-weight: 600;
+    color: #ffffff;
+    // color: #ffe77aff;
+    font-size: 36px;
+    padding-bottom: 20px;
+    display: flex;
+  `;
+  const SubTitle = styled.text`
+    width: 70%;
+    font-family: Elice Digital Coding;
+    font-weight: 100;
+    color: #ffffff;
+    font-size: 16px;
+    display: flex;
+    word-break: keep-all;
+    text-align: center;
+    justify-content: center; // 좌우 정렬
+  `;
 
   return (
-    <div id="slider">
-      <div className="slider__item">
-        <h1>1</h1>
-      </div>
-      <div className="slider__item">
-        <h1>2</h1>
-      </div>
-      <div className="slider__item">
-        <h1>3</h1>
-      </div>
-      <div className="slider__item">
-        <h1>4</h1>
-      </div>
-      <div className="slider__item">
-        <h1>5</h1>
-      </div>
-    </div>
+    <CarouselDiv>
+      <InnerDiv>
+        <Title>Tech Blog</Title>
+        <SubTitle>
+          유튜브에서 '개발자A' 채널을 운영하고 있는 backend 개발자입니다.
+        </SubTitle>
+        <SubTitle>
+          제 실수와 생각들을 기억하기 위해서 기록하고 있습니다.
+        </SubTitle>
+      </InnerDiv>
+    </CarouselDiv>
   );
 };
 
-export default CarouselA;
-
-// //https://webaura.tistory.com/entry/React-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-%EC%97%86%EC%9D%B4-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%8D%94-%EB%A7%8C%EB%93%A4%EA%B8%B0
-
-// import React, { useState, useEffect } from "react";
-
-// const CarouselA = () => {
-//   const [projectList, setProjectList] = useState([]);
-//   const [scrollState, setScrollState] = useState(0);
-
-//   let count = 0;
-
-//   const nextButton = () => {
-//     count = projectList.length - 1 === count ? 0 : count + 1;
-//     setScrollState("-" + count * 100 + "vw");
-//   };
-//   const prevButton = () => {
-//     count = count === 0 ? projectList.length - 1 : count - 1;
-//     setScrollState("-" + count * 100 + "vw");
-//   };
-
-//   useEffect(() => {
-//     getProjectList().then((docs) => {
-//       setProjectList(docs);
-//     });
-//   }, []);
-
-//   return (
-//     <div>
-//       <h1>제발</h1>
-//       <button onClick={prevButton}> Prev </button>
-//       <button onClick={nextButton}> Next </button>
-//     </div>
-//   );
-// };
-
-// export default CarouselA;
+export default Carousel;

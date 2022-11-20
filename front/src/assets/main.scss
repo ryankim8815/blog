@@ -1,6 +1,6 @@
 $font-elice-title: "Elice Digital Baeum", sans-serif;
 $font-elice-content: "Elice Digital Coding", "monospace";
-
+$font-color-white: #ffffff;
 $color1: red;
 
 h1 {
@@ -196,7 +196,7 @@ a {
 @import url("https://font.elice.io/EliceDigitalCoding.css");
 
 // @import "./editor"; // lexical text editor
-@import "../components/post/carousel.scss";
+// @import "../components/post/carousel.scss";
 @import "../components/post/PostList.scss";
 @import "../components/editor/editor.scss"; // lexical text editor
 // @import "./carousel";

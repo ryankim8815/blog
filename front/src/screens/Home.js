@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Carousel } from "react-bootstrap";
+// import { Carousel } from "react-bootstrap";
 import PostList from "../components/post/PostList";
-import CarouselA from "../components/post/Carousel";
+import Carousel from "../components/post/Carousel";
+import Banner from "../components/common/Banner";
 // import { Carousel } from "react-bootstrap/Carousel";
 
 function Home() {
@@ -16,7 +17,8 @@ function Home() {
 
   return (
     <div>
-      <Carousel>
+      <Carousel />
+      {/* <Carousel>
         <Carousel.Item interval={time}>
           <img
             className="d-block w-100"
@@ -26,6 +28,7 @@ function Home() {
             src={
               "https://cdn.pixabay.com/photo/2020/09/27/13/15/data-5606639__480.jpg"
             }
+            // title="Gold"
             width={width}
             height={height}
             alt="First slide"
@@ -67,7 +70,7 @@ function Home() {
             </p>
           </Carousel.Caption>
         </Carousel.Item>
-      </Carousel>
+      </Carousel> */}
       {/* <CarouselA /> */}
       <PostList />
     </div>
