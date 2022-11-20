@@ -8,23 +8,37 @@ import styled from "styled-components";
 // tag 리스트를 for문으로 돌려서 만들어 지도록 개선해야함
 function PostList() {
   // category button list
-  const CategoryBox = styled.div`
+  const CategoryDiv = styled.div`
     width: 100%;
-    // background-color: tomato;   // 영역확인용
+    // background-color: green; // 영역확인용
     margin: 50px 0px;
-    padding-right: 15%;
-    padding-left: 15%;
+    display: flex;
     text-align: center; // display를 inline으로 했기 때문에 정렬 가능
+    align-items: center; // 상하 정렬
+    justify-content: center; // 좌우 정렬
+  `;
+  const CategoryBox = styled.div`
+    width: 1024px;
+    // background-color: tomato; // 영역확인용
   `;
 
   // posts list
-  const PostBox = styled.div`
+  const PostBoxDiv = styled.div`
     width: 100%;
+    // background-color: green; // 영역확인용
+    margin: 50px 0px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column; /*수직 정렬*/
+    align-items: center; // 상하 정렬
+    justify-content: center; // 좌우 정렬
+  `;
+  const PostBox = styled.div`
+    width: 1024px;
     // background-color: tomato; // 영역확인용
     margin: 50px 0px;
-    padding-right: 15%;
-    padding-left: 15%;
     text-align: left; // display를 inline으로 했기 때문에 정렬 가능
+    display: flex-column;
   `;
   const StyledA = styled.a`
     text-decoration-line: none;
@@ -62,81 +76,81 @@ function PostList() {
   };
   useEffect(() => {
     activeCat === "All" ? apiGetAllPosts() : apiGetPostsByTag(activeCat);
-    //   : setPosts(posts.filter((e) => e.tag === activeCat));
   }, [activeCat]);
-  //   useEffect(() => {
-  //     apiGet(tag);
-  //   }, [tag]);
-  //////////
+
   return (
     <div>
-      <CategoryBox>
-        <Catbtn
-          name="All"
-          catActive={activeCat === "All" ? true : false}
-          handleSetCat={setActiveCat}
-        />
-        <Catbtn
-          name="tag"
-          catActive={activeCat === "tag" ? true : false}
-          handleSetCat={setActiveCat}
-        />
-        <Catbtn
-          name="SERVER"
-          catActive={activeCat === "SERVER" ? true : false}
-          handleSetCat={setActiveCat}
-        />
-        <Catbtn
-          name="BACKEND"
-          catActive={activeCat === "BACKEND" ? true : false}
-          handleSetCat={setActiveCat}
-        />
-        <Catbtn
-          name="FRONTEND"
-          catActive={activeCat === "FRONTEND" ? true : false}
-          handleSetCat={setActiveCat}
-        />
-        <Catbtn
-          name="DEVOPS"
-          catActive={activeCat === "DEVOPS" ? true : false}
-          handleSetCat={setActiveCat}
-        />
-        <Catbtn
-          name="QA"
-          catActive={activeCat === "QA" ? true : false}
-          handleSetCat={setActiveCat}
-        />
-        <Catbtn
-          name="SECURITY"
-          catActive={activeCat === "SECURITY" ? true : false}
-          handleSetCat={setActiveCat}
-        />
-        <Catbtn
-          name="DATA"
-          catActive={activeCat === "DATA" ? true : false}
-          handleSetCat={setActiveCat}
-        />
-        <Catbtn
-          name="etc"
-          catActive={activeCat === "etc" ? true : false}
-          handleSetCat={setActiveCat}
-        />
-      </CategoryBox>
-      {posts.map((post, index) => (
-        <PostBox key={index}>
-          <h6>
-            {post.created_at.split("T", 1)}
-            &nbsp;&nbsp;&nbsp;@{post.nickname}
-          </h6>
-          <h2>
-            <StyledA href={"/post/" + post.post_id}>{post.title}</StyledA>
-            {/* <a href="/posts/">{post.title}</a> */}
-          </h2>
-          <h6>{post.sub_title}</h6>
-          {/* <div className="division-line"></div> */}
-          <DivisionLine />
-        </PostBox>
-      ))}
+      <CategoryDiv>
+        <CategoryBox>
+          <Catbtn
+            name="All"
+            catActive={activeCat === "All" ? true : false}
+            handleSetCat={setActiveCat}
+          />
+          {/* <Catbtn
+            name="tag"
+            catActive={activeCat === "tag" ? true : false}
+            handleSetCat={setActiveCat}
+          /> */}
+          {/* <Catbtn
+            name="SERVER"
+            catActive={activeCat === "SERVER" ? true : false}
+            handleSetCat={setActiveCat}
+          /> */}
+          <Catbtn
+            name="BACKEND"
+            catActive={activeCat === "BACKEND" ? true : false}
+            handleSetCat={setActiveCat}
+          />
+          <Catbtn
+            name="FRONTEND"
+            catActive={activeCat === "FRONTEND" ? true : false}
+            handleSetCat={setActiveCat}
+          />
+          <Catbtn
+            name="DEVOPS"
+            catActive={activeCat === "DEVOPS" ? true : false}
+            handleSetCat={setActiveCat}
+          />
+          <Catbtn
+            name="QA"
+            catActive={activeCat === "QA" ? true : false}
+            handleSetCat={setActiveCat}
+          />
+          <Catbtn
+            name="SECURITY"
+            catActive={activeCat === "SECURITY" ? true : false}
+            handleSetCat={setActiveCat}
+          />
+          <Catbtn
+            name="DATA"
+            catActive={activeCat === "DATA" ? true : false}
+            handleSetCat={setActiveCat}
+          />
+          <Catbtn
+            name="etc"
+            catActive={activeCat === "etc" ? true : false}
+            handleSetCat={setActiveCat}
+          />
+        </CategoryBox>
+      </CategoryDiv>
+      <PostBoxDiv>
+        {posts.map((post, index) => (
+          <PostBox key={index}>
+            <h6>
+              {post.created_at.split("T", 1)}
+              &nbsp;&nbsp;&nbsp;@{post.nickname}
+            </h6>
+            <h2>
+              <StyledA href={"/post/" + post.post_id}>{post.title}</StyledA>
+              {/* <a href="/posts/">{post.title}</a> */}
+            </h2>
+            <h6>{post.sub_title}</h6>
+            {/* <div className="division-line"></div> */}
+            <DivisionLine />
+          </PostBox>
+        ))}
+      </PostBoxDiv>
     </div>
   );
 }

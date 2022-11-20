@@ -32,32 +32,16 @@ const Carousel = () => {
     align-items: center;
     justify-content: center;
   `;
-  // const Title = styled(Link)`
-  //   font-family: Elice Digital Baeum;
-  //   font-weight: 600;
-  //   color: #ffffff;
-  //   // color: #ffe77aff;
-  //   font-size: 36px;
-  //   padding-bottom: 12px;
-  //   display: flex;
-  //   textdecoration: "none";
-  //   &:hover,
-  //   &:focus {
-  //     color: blue;
-  //   }
-  //   &:active {
-  //     color: red;
-  //   }
-  // `;
+
   const Title = styled.text`
     font-family: Elice Digital Baeum;
     font-weight: 600;
     color: #ffffff;
-    // color: #ffe77aff; 
+    // color: #ffe77aff;
     font-size: 36px;
     padding-bottom: 24px;
     display: flex;
-d  `;
+  `;
   const SubTitle = styled.text`
     width: 70%;
     font-family: Elice Digital Coding;
@@ -75,6 +59,7 @@ d  `;
     font-weight: 100;
     color: #ffffff !important;
     font-size: 16px;
+    text-decoration-line: none;
     display: flex;
     word-break: keep-all;
     text-align: center;
@@ -84,15 +69,15 @@ d  `;
   const Icon = styled(FA.FaYoutube)`
     font-size: 1.5rem;
     cursor: pointer;
+    &:hover {
+      color: #ffa5a5;
+    }
   `;
 
   return (
     <CarouselDiv>
       <InnerDiv>
         <Title>Tech Blog</Title>
-        {/* <Title to={{ pathname: "https://www.naver.com" }} target="_blank">
-          Tech Blog
-        </Title> */}
         <SubTitle>
           제 실수와 생각들을 기억하기 위해서 기록하고 있습니다.
         </SubTitle>

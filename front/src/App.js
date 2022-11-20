@@ -21,9 +21,11 @@ import Editor from "./components/editor/Editor";
 // import EditorA from "./components/editor/EditorA";
 // components
 import NavBarElements from "./components/common/NavBarElements";
+// import Footer from "./components/common/Footer";
 // import NavBarElements from "./components/Common/NavBarElements";
 // import "./assets/main.css";
 import LoginForm from "./components/user/LoginForm";
+import Footer from "./components/common/Footer";
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
@@ -83,6 +85,7 @@ function App() {
             <Route path="/editor" element={<Editor />} />
             <Route path="/login" element={<LoginForm />} />
           </Routes>
+          <Footer />
         </Router>
       </UserStateContext.Provider>
     </DispatchContext.Provider>

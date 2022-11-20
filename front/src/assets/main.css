@@ -1,4 +1,4 @@
-@import url("https://font.elice.io/EliceDigitalBaeum.css");
+/* @import url("https://font.elice.io/EliceDigitalBaeum.css");
 @import url("https://font.elice.io/EliceDigitalCoding.css");
 h1,
 .h1 {
@@ -34,9 +34,9 @@ h6,
   color: gray;
   font-family: "Elice Digital Baeum", sans-serif;
   font-weight: 900;
-}
+} */
 
-.navbar-brand {
+/* .navbar-brand {
   font-family: "Elice Digital Baeum", sans-serif;
   font-weight: bold;
   color: orange;
@@ -143,21 +143,20 @@ a {
 a {
   text-decoration-line: none;
   color: black;
-}
+} */
 
-::placeholder {
-  /* Chrome, Firefox, Opera, Safari 10.1+ */
+/* ::placeholder {
   color: #ccc;
-}
+} */
 
-.title-box {
+/* .title-box {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: center;
   width: 100%;
   padding-top: 10px;
-}
+} */
 
 .editor-title {
   width: 90%;
