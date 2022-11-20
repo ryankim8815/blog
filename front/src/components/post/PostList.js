@@ -3,8 +3,39 @@ import React, { useState, useEffect } from "react";
 import Catbtn from "./Catbtn";
 // import { useNavigate, useParams } from "react-router-dom";
 import * as Api from "../utils/Api";
+import styled from "styled-components";
+
 // tag 리스트를 for문으로 돌려서 만들어 지도록 개선해야함
 function PostList() {
+  // category button list
+  const CategoryBox = styled.div`
+    width: 100%;
+    // background-color: tomato;   // 영역확인용
+    margin: 50px 0px;
+    padding-right: 15%;
+    padding-left: 15%;
+    text-align: center; // display를 inline으로 했기 때문에 정렬 가능
+  `;
+
+  // posts list
+  const PostBox = styled.div`
+    width: 100%;
+    // background-color: tomato; // 영역확인용
+    margin: 50px 0px;
+    padding-right: 15%;
+    padding-left: 15%;
+    text-align: left; // display를 inline으로 했기 때문에 정렬 가능
+  `;
+  const StyledA = styled.a`
+    text-decoration-line: none;
+    color: black;
+  `;
+  const DivisionLine = styled.div`
+    border-top: 1px solid lightgray;
+    margin: 50px auto;
+    width: 100%;
+  `;
+
   const [posts, setPosts] = useState([]);
   //   const [tag, setTag] = useState([]);
   /////
@@ -39,7 +70,7 @@ function PostList() {
   //////////
   return (
     <div>
-      <div className="box-category">
+      <CategoryBox>
         <Catbtn
           name="All"
           catActive={activeCat === "All" ? true : false}
@@ -90,20 +121,21 @@ function PostList() {
           catActive={activeCat === "etc" ? true : false}
           handleSetCat={setActiveCat}
         />
-      </div>
+      </CategoryBox>
       {posts.map((post, index) => (
-        <div key={index} className="box-post-list">
+        <PostBox key={index}>
           <h6>
             {post.created_at.split("T", 1)}
             &nbsp;&nbsp;&nbsp;@{post.nickname}
           </h6>
           <h2>
-            <a href={"/post/" + post.post_id}>{post.title}</a>
+            <StyledA href={"/post/" + post.post_id}>{post.title}</StyledA>
             {/* <a href="/posts/">{post.title}</a> */}
           </h2>
           <h6>{post.sub_title}</h6>
-          <div className="division-line"></div>
-        </div>
+          {/* <div className="division-line"></div> */}
+          <DivisionLine />
+        </PostBox>
       ))}
     </div>
   );

@@ -1,16 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-// import * as FI from "react-icons/fi";
+import * as FA from "react-icons/fa";
 
 const Carousel = () => {
+  // const YouTubeIcon = () => {
+  //   return <FA className="FaYoutube"></FA>;
+  // };
+
   const CarouselDiv = styled.div`
-    // background-color: #4f3466ff;
+    // background-color: #584bbf;
     // background-color: #5f4a8b;
-    // background: linear-gradient(135deg, #51087e, #b24bf3);
+    background: linear-gradient(135deg, #342a97, #9d95da);
     // background-color: #1d490d;
     // background-color: #004523;
     // background-color: #2c5f2dff;
-    background: linear-gradient(135deg, #3f5c4a, #91a86f);
+    // background: linear-gradient(135deg, #3f5c4a, #91a86f);
     width: 100%;
     // height: 350px;
     height: 300px;
@@ -27,15 +32,32 @@ const Carousel = () => {
     align-items: center;
     justify-content: center;
   `;
+  // const Title = styled(Link)`
+  //   font-family: Elice Digital Baeum;
+  //   font-weight: 600;
+  //   color: #ffffff;
+  //   // color: #ffe77aff;
+  //   font-size: 36px;
+  //   padding-bottom: 12px;
+  //   display: flex;
+  //   textdecoration: "none";
+  //   &:hover,
+  //   &:focus {
+  //     color: blue;
+  //   }
+  //   &:active {
+  //     color: red;
+  //   }
+  // `;
   const Title = styled.text`
     font-family: Elice Digital Baeum;
     font-weight: 600;
     color: #ffffff;
-    // color: #ffe77aff;
+    // color: #ffe77aff; 
     font-size: 36px;
-    padding-bottom: 20px;
+    padding-bottom: 24px;
     display: flex;
-  `;
+d  `;
   const SubTitle = styled.text`
     width: 70%;
     font-family: Elice Digital Coding;
@@ -47,17 +69,37 @@ const Carousel = () => {
     text-align: center;
     justify-content: center; // 좌우 정렬
   `;
+  const SubTitleLink = styled.a`
+    width: 70%;
+    font-family: Elice Digital Coding;
+    font-weight: 100;
+    color: #ffffff !important;
+    font-size: 16px;
+    display: flex;
+    word-break: keep-all;
+    text-align: center;
+    justify-content: center; // 좌우 정렬
+    // padding-top: 20px;
+  `;
+  const Icon = styled(FA.FaYoutube)`
+    font-size: 1.5rem;
+    cursor: pointer;
+  `;
 
   return (
     <CarouselDiv>
       <InnerDiv>
         <Title>Tech Blog</Title>
-        <SubTitle>
-          유튜브에서 '개발자A' 채널을 운영하고 있는 backend 개발자입니다.
-        </SubTitle>
+        {/* <Title to={{ pathname: "https://www.naver.com" }} target="_blank">
+          Tech Blog
+        </Title> */}
         <SubTitle>
           제 실수와 생각들을 기억하기 위해서 기록하고 있습니다.
         </SubTitle>
+        <SubTitleLink href="https://www.youtube.com/@dogfoot.">
+          <Icon />
+          &nbsp;@dogfoot.
+        </SubTitleLink>
       </InnerDiv>
     </CarouselDiv>
   );

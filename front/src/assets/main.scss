@@ -1,57 +1,59 @@
-$font-elice-title: "Elice Digital Baeum", sans-serif;
-$font-elice-content: "Elice Digital Coding", "monospace";
-$font-color-white: #ffffff;
-$color1: red;
+// $font-elice-title: "Elice Digital Baeum", sans-serif;
+// $font-elice-content: "Elice Digital Coding", "monospace";
+// $font-color-white: #ffffff;
+// // $color1: red;
 
-h1 {
-  color: black;
-  font-family: $font-elice-title;
-  font-weight: 900;
-}
+// h1 {
+//   color: black;
+//   font-family: $font-elice-title;
+//   font-weight: 900;
+// }
 
-$color2: blue;
+// $color2: blue;
 
-h2 {
-  color: black;
-  font-family: $font-elice-title;
-  // font-family: sans-serif;
-  font-weight: 900 !important;
-  // border: 10px;
-  // border-color: black;
-}
+// h2 {
+//   color: black;
+//   font-family: $font-elice-title;
+//   // font-family: sans-serif;
+//   font-weight: 900 !important;
+//   // border: 10px;
+//   // border-color: black;
+// }
 
-$color3: tomato;
+// $color3: tomato;
 
-h3 {
-  color: $color3;
-}
-h4 {
-  color: $color3;
-}
-h5 {
-  color: $color3;
-}
-h6 {
-  color: gray;
-  font-family: $font-elice-title;
-  font-weight: 900;
-}
+// h3 {
+//   color: $color3;
+// }
+// h4 {
+//   color: $color3;
+// }
+// h5 {
+//   color: $color3;
+// }
+// h6 {
+//   color: gray;
+//   font-family: $font-elice-title;
+//   font-weight: 900;
+// }
 
-// 네비게이션바
-.navbar-brand {
-  font-family: "Elice Digital Baeum", sans-serif;
-  font-weight: bold;
-  color: orange; // 적용안됨
-}
+// // 네비게이션바
+// .navbar-brand {
+//   font-family: "Elice Digital Baeum", sans-serif;
+//   font-weight: bold;
+//   color: orange; // 적용안됨
+// }
 
-$custom: black;
-.btn-outline-dark {
-  $primary: black;
-}
-a {
-  text-decoration-line: none !important;
-  color: black !important;
-}
+// $custom: black;
+// .btn-outline-dark {
+//   $primary: black;
+// }
+
+// 임시로 처리함
+// a {
+//   text-decoration-line: none !important;
+//   color: black !important;
+// }
 
 // .flex-start {
 //   justify-content: flex-start;
@@ -70,64 +72,64 @@ a {
 // }
 
 // 카테고리 박스
-.box-category {
-  width: 100%;
-  // background-color: tomato;   // 영역확인용
-  margin: 50px 0px;
-  padding-right: 15%;
-  padding-left: 15%;
-  text-align: center; // display를 inline으로 했기 때문에 정렬 가능
-}
-.btn-post-category {
-  // width: 200px;
-  height: 24px;
-  color: black;
-  font-size: 12px;
-  font-family: $font-elice-content;
-  align-items: center;
-  justify-content: flex-end;
-  border: 1px solid lightgray;
-  background: white;
-  border-radius: 12px;
-  margin: 10px 20px;
-  display: inline-flex;
-  cursor: pointer;
-  &:hover {
-    background: lightgray;
-    color: black;
-    border: 1px solid gray;
-    box-shadow: 0 0 2px 0px lightgray;
-  }
-}
-.active_btn {
-  background: lightgray;
-  color: black;
-  border: 1px solid gray;
-  box-shadow: 0 0 2px 0px lightgray;
-}
+// .box-category {
+//   width: 100%;
+//   // background-color: tomato;   // 영역확인용
+//   margin: 50px 0px;
+//   padding-right: 15%;
+//   padding-left: 15%;
+//   text-align: center; // display를 inline으로 했기 때문에 정렬 가능
+// }
+// .btn-post-category {
+//   // width: 200px;
+//   height: 24px;
+//   color: black;
+//   font-size: 12px;
+//   font-family: $font-elice-content;
+//   align-items: center;
+//   justify-content: flex-end;
+//   border: 1px solid lightgray;
+//   background: white;
+//   border-radius: 12px;
+//   margin: 10px 20px;
+//   display: inline-flex;
+//   cursor: pointer;
+//   &:hover {
+//     background: lightgray;
+//     color: black;
+//     border: 1px solid gray;
+//     box-shadow: 0 0 2px 0px lightgray;
+//   }
+// }
+// .active_btn {
+//   background: lightgray;
+//   color: black;
+//   border: 1px solid gray;
+//   box-shadow: 0 0 2px 0px lightgray;
+// }
 
-// 포스트 리스트 박스
-.box-post-list {
-  width: 100%;
-  // background-color: tomato; // 영역확인용
-  margin: 50px 0px;
-  padding-right: 15%;
-  padding-left: 15%;
-  text-align: left; // display를 inline으로 했기 때문에 정렬 가능
-}
-.title1 {
-  height: 24px;
-  color: black;
-  font-size: 12px;
-  font-family: $font-elice-content;
-  align-items: center;
-  justify-content: flex-end;
-}
-.division-line {
-  border-top: 1px solid lightgray;
-  margin: 50px auto;
-  width: 100%;
-}
+// // 포스트 리스트 박스
+// .box-post-list {
+//   width: 100%;
+//   // background-color: tomato; // 영역확인용
+//   margin: 50px 0px;
+//   padding-right: 15%;
+//   padding-left: 15%;
+//   text-align: left; // display를 inline으로 했기 때문에 정렬 가능
+// }
+// .title1 {
+//   height: 24px;
+//   color: black;
+//   font-size: 12px;
+//   font-family: $font-elice-content;
+//   align-items: center;
+//   justify-content: flex-end;
+// // }
+// .division-line {
+//   border-top: 1px solid lightgray;
+//   margin: 50px auto;
+//   width: 100%;
+// }
 
 // .offcanvas-body {
 //   flex-grow: 5;
@@ -192,12 +194,12 @@ a {
 // @import "./navbar";
 // @import "./offcanvas";
 // @import "./close";
-@import url("https://font.elice.io/EliceDigitalBaeum.css");
-@import url("https://font.elice.io/EliceDigitalCoding.css");
+// @import url("https://font.elice.io/EliceDigitalBaeum.css");
+// @import url("https://font.elice.io/EliceDigitalCoding.css");
 
 // @import "./editor"; // lexical text editor
 // @import "../components/post/carousel.scss";
-@import "../components/post/PostList.scss";
-@import "../components/editor/editor.scss"; // lexical text editor
+// @import "../components/post/PostList.scss";
+// @import "../components/editor/editor.scss"; // lexical text editor
 // @import "./carousel";
 @import "../../node_modules/bootstrap/scss/bootstrap";
