@@ -78,7 +78,7 @@ const Footer = () => {
     // width: 40%;
     min-width: 512px;
     // height: 100%;
-    height: 120px;
+    height: 50px;
     display: flex;
     // background-color: yellow; // 영역확인용
     // flex-wrap: wrap;
