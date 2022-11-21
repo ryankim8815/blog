@@ -75,7 +75,7 @@ function App() {
       <UserStateContext.Provider value={userState}>
         <Router>
           {/* <NavBar /> */}
-          <NavBarElements />
+          {/* <NavBarElements /> */}
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
