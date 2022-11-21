@@ -34,6 +34,7 @@ const Footer = () => {
     justify-content: center; // 좌우 정렬
     // word-break: keep-all;
     padding-top: 50px;
+    padding-bottom: 100px;
   `;
   const Footerleft = styled.div`
     // width: 20%;
