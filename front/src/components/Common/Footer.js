@@ -77,7 +77,8 @@ const Footer = () => {
 
   const FooterRight = styled.div`
     // width: 40%;
-    min-width: 512px;
+    // min-width: 512px; // 이것 때문에 옆으로 조금 밀렸음
+    min-width: 360px;
     // height: 100%;
     height: 50px;
     display: flex;

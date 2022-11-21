@@ -18,7 +18,8 @@ function PostList() {
     justify-content: center; // 좌우 정렬
   `;
   const CategoryBox = styled.div`
-    width: 1024px;
+    width: 950%;
+    max-width: 1024px;
     // background-color: tomato; // 영역확인용
   `;
 
@@ -34,7 +35,9 @@ function PostList() {
     justify-content: center; // 좌우 정렬
   `;
   const PostBox = styled.div`
-    width: 1024px;
+    width: 90%;
+    // min-width: 360px;
+    max-width: 1024px;
     // background-color: tomato; // 영역확인용
     // font-family: Elice Digital Baeum;
     margin: 50px 0px;
