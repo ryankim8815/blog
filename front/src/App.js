@@ -21,6 +21,7 @@ import Editor from "./components/editor/Editor";
 // import EditorA from "./components/editor/EditorA";
 // components
 import NavBarElements from "./components/common/NavBarElements";
+import NavBar from "./components/common/NavBar";
 // import Footer from "./components/common/Footer";
 // import NavBarElements from "./components/Common/NavBarElements";
 // import "./assets/main.css";
@@ -73,6 +74,7 @@ function App() {
     <DispatchContext.Provider value={dispatch}>
       <UserStateContext.Provider value={userState}>
         <Router>
+          {/* <NavBar /> */}
           <NavBarElements />
           <Routes>
             <Route path="/" element={<Home />} />
@@ -85,6 +87,7 @@ function App() {
             <Route path="/editor" element={<Editor />} />
             <Route path="/login" element={<LoginForm />} />
           </Routes>
+          <NavBar />
           <Footer />
         </Router>
       </UserStateContext.Provider>

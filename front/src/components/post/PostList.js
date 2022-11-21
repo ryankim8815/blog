@@ -36,6 +36,7 @@ function PostList() {
   const PostBox = styled.div`
     width: 1024px;
     // background-color: tomato; // 영역확인용
+    // font-family: Elice Digital Baeum;
     margin: 50px 0px;
     text-align: left; // display를 inline으로 했기 때문에 정렬 가능
     display: flex-column;

@@ -79,7 +79,7 @@ const Carousel = () => {
       <InnerDiv>
         <Title>Tech Blog</Title>
         <SubTitle>
-          제 실수와 생각들을 기억하기 위해서 기록하고 있습니다.
+          어제의 나를 유지보수 하면서 겪은 일들을 기록하고 있습니다.
         </SubTitle>
         <SubTitleLink href="https://www.youtube.com/@dogfoot.">
           <Icon />
