@@ -121,7 +121,7 @@ var Comment = /** @class */ (function () {
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0: return [4 /*yield*/, database_1.default.query({
-                            sql: "SELECT email, nickname, content, comments.created_at, comments.updated_at FROM comments INNER JOIN users ON comments.user_id = users.user_id WHERE `post_id` = ?",
+                            sql: "SELECT comment_id, email, nickname, content, comments.created_at, comments.updated_at FROM comments INNER JOIN users ON comments.user_id = users.user_id WHERE `post_id` = ?",
                             values: [post_id],
                         })];
                     case 1:

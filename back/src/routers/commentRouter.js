@@ -63,6 +63,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 var express = __importStar(require("express"));
 var authMiddleware_1 = __importDefault(require("../middlewares/authMiddleware"));
+var validation = __importStar(require("../middlewares/commentValidationMiddleware"));
 var commentService_1 = __importDefault(require("../services/commentService"));
 var commentRouter = express.Router();
 // GET: 특정 게시글의 댓글 조회
@@ -155,7 +156,7 @@ var commentCreate = function (req, res, next) { return __awaiter(void 0, void 0,
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                user_id = req.user_id;
+                user_id = req.body.user_id;
                 post_id = req.params.post_id;
                 content = req.body.content;
                 _a.label = 1;
@@ -227,11 +228,12 @@ var commentCreate = function (req, res, next) { return __awaiter(void 0, void 0,
  */
 // PUT: 댓글 수정
 var commentUpdate = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var user_id, comment_id, content, updatedComment, err_3, result_err;
+    var user_id, post_id, comment_id, content, updatedComment, err_3, result_err;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                user_id = req.user_id;
+                user_id = req.body.user_id;
+                post_id = req.params.post_id;
                 comment_id = req.params.comment_id;
                 content = req.body.content;
                 _a.label = 1;
@@ -307,7 +309,7 @@ var commentDelete = function (req, res, next) { return __awaiter(void 0, void 0,
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                user_id = req.user_id;
+                user_id = req.body.user_id;
                 comment_id = req.params.comment_id;
                 _a.label = 1;
             case 1:
@@ -367,8 +369,8 @@ var commentDelete = function (req, res, next) { return __awaiter(void 0, void 0,
  *                   example: 댓글 삭제가 성공적으로 이뤄졌습니다.
  */
 // api index
-commentRouter.get("/post/:post_id/comments", commentList); // 특정 게시글의 댓글 검섹
-commentRouter.post("/post/:post_id/comment", authMiddleware_1.default, commentCreate); // 댓글 생성
-commentRouter.put("/post/:post_id/comment/:comment_id", authMiddleware_1.default, commentUpdate); //  댓글 수정
-commentRouter.delete("/post/:post_id/comment/:comment_id", authMiddleware_1.default, commentDelete); // 댓글 삭제
+commentRouter.get("/post/:post_id/comments", validation.validateCommentByPostId, commentList); // 특정 게시글의 댓글 검섹
+commentRouter.post("/post/:post_id/comment", authMiddleware_1.default, validation.validateCommentCreate, commentCreate); // 댓글 생성
+commentRouter.put("/post/:post_id/comment/:comment_id", authMiddleware_1.default, validation.validateCommentUpdate, commentUpdate); //  댓글 수정
+commentRouter.delete("/post/:post_id/comment/:comment_id", authMiddleware_1.default, validation.validateCommentDelete, commentDelete); // 댓글 삭제
 module.exports = commentRouter;

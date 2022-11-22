@@ -1,5 +1,6 @@
 import * as express from "express";
 import authMiddleware from "../middlewares/authMiddleware";
+import * as validation from "../middlewares/commentValidationMiddleware";
 import commentService from "../services/commentService";
 
 const commentRouter = express.Router();
@@ -91,7 +92,7 @@ const commentCreate = async (
   next: express.NextFunction
 ) => {
   // const email = req.email;
-  const user_id = req.user_id;
+  const user_id = req.body.user_id;
   const post_id = req.params.post_id;
   const content = req.body.content;
   try {
@@ -161,7 +162,8 @@ const commentUpdate = async (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const user_id = req.user_id;
+  const user_id = req.body.user_id;
+  const post_id = req.params.post_id;
   const comment_id = req.params.comment_id;
   const content = req.body.content;
   try {
@@ -231,7 +233,7 @@ const commentDelete = async (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const user_id = req.user_id;
+  const user_id = req.body.user_id;
   const comment_id = req.params.comment_id;
   try {
     const deletedComment = await commentService.deleteComment({
@@ -285,16 +287,27 @@ const commentDelete = async (
  */
 
 // api index
-commentRouter.get("/post/:post_id/comments", commentList); // 특정 게시글의 댓글 검섹
-commentRouter.post("/post/:post_id/comment", authMiddleware, commentCreate); // 댓글 생성
+commentRouter.get(
+  "/post/:post_id/comments",
+  validation.validateCommentByPostId,
+  commentList
+); // 특정 게시글의 댓글 검섹
+commentRouter.post(
+  "/post/:post_id/comment",
+  authMiddleware,
+  validation.validateCommentCreate,
+  commentCreate
+); // 댓글 생성
 commentRouter.put(
   "/post/:post_id/comment/:comment_id",
   authMiddleware,
+  validation.validateCommentUpdate,
   commentUpdate
 ); //  댓글 수정
 commentRouter.delete(
   "/post/:post_id/comment/:comment_id",
   authMiddleware,
+  validation.validateCommentDelete,
   commentDelete
 ); // 댓글 삭제
 

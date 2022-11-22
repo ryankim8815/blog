@@ -155,9 +155,9 @@ class commentService {
     if (checkPostObject.length !== 1) {
       const result_errPost = {
         result: false,
-        cause: "authority",
+        cause: "authority|db",
         message:
-          "댓글 삭제는 작성자만 할 수 있습니다. 삭제 요청자가 작성자인지 확인해주세요.",
+          "댓글 삭제 중에 문제가 발생했습니다. 댓글 작성자가 아니거나 댓글이 존재하지 않습니다.",
       };
       return result_errPost;
     } else {

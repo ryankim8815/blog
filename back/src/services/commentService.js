@@ -241,8 +241,8 @@ var commentService = /** @class */ (function () {
                         if (!(checkPostObject.length !== 1)) return [3 /*break*/, 3];
                         result_errPost = {
                             result: false,
-                            cause: "authority",
-                            message: "댓글 삭제는 작성자만 할 수 있습니다. 삭제 요청자가 작성자인지 확인해주세요.",
+                            cause: "authority|db",
+                            message: "댓글 삭제 중에 문제가 발생했습니다. 댓글 작성자가 아니거나 댓글이 존재하지 않습니다.",
                         };
                         return [2 /*return*/, result_errPost];
                     case 3: return [4 /*yield*/, Comment_1.default.delete({

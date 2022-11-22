@@ -35,7 +35,7 @@ class Comment {
   // post_id로 검색
   static async findByComment({ post_id }) {
     const [rows, fields] = await promisePool.query({
-      sql: "SELECT email, nickname, content, comments.created_at, comments.updated_at FROM comments INNER JOIN users ON comments.user_id = users.user_id WHERE `post_id` = ?",
+      sql: "SELECT comment_id, email, nickname, content, comments.created_at, comments.updated_at FROM comments INNER JOIN users ON comments.user_id = users.user_id WHERE `post_id` = ?",
       values: [post_id],
     });
     return rows;
