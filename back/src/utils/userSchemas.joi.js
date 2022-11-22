@@ -41,7 +41,9 @@ exports.userUpdateSchema = joi_1.default.object().keys({
     password: joi_1.default.string()
         .pattern(new RegExp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$"))
         .required(),
-    nickname: joi_1.default.string().required(),
+    nickname: joi_1.default.string()
+        .pattern(new RegExp("^[A-Za-z0-9_-]{2,16}$")) // 최소 2~16 자, 영어 숫자
+        .required(),
 });
 exports.userDeleteSchema = joi_1.default.object().keys({
     user_id: joi_1.default.string().required(),

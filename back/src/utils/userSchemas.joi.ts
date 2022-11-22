@@ -47,7 +47,9 @@ export const userUpdateSchema = Joi.object().keys({
       )
     )
     .required(), // 최소 8 자, 최소 하나의 문자, 하나의 숫자 및 하나의 특수 문자
-  nickname: Joi.string().required(),
+  nickname: Joi.string()
+    .pattern(new RegExp("^[A-Za-z0-9_-]{2,16}$")) // 최소 2~16 자, 영어 숫자
+    .required(),
 });
 
 export const userDeleteSchema = Joi.object().keys({
