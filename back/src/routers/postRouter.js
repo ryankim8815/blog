@@ -63,6 +63,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 var express = __importStar(require("express"));
 var authMiddleware_1 = __importDefault(require("../middlewares/authMiddleware"));
+var validation = __importStar(require("../middlewares/postValidationMiddleware"));
 // import upload from "../middlewares/uploadMiddleware";   // 사진 업로드 기능은 resize 적용 후 사용
 var postService_1 = __importDefault(require("../services/postService"));
 // import asyncHandler from "../utils/asyncHandler";
@@ -377,7 +378,7 @@ var postCreate = function (req, res, next) { return __awaiter(void 0, void 0, vo
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                user_id = req.user_id;
+                user_id = req.body.user_id;
                 title = req.body.title;
                 sub_title = req.body.sub_title;
                 content = req.body.content;
@@ -453,13 +454,14 @@ var postCreate = function (req, res, next) { return __awaiter(void 0, void 0, vo
  */
 // PUT: 게시글 수정
 var postUpdate = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var user_id, post_id, title, content, tag, updatedPost, err_5, result_err;
+    var user_id, post_id, title, sub_title, content, tag, updatedPost, err_5, result_err;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                user_id = req.user_id;
+                user_id = req.body.user_id;
                 post_id = req.params.post_id;
                 title = req.body.title;
+                sub_title = req.body.sub_title;
                 content = req.body.content;
                 tag = req.body.tag;
                 _a.label = 1;
@@ -469,6 +471,7 @@ var postUpdate = function (req, res, next) { return __awaiter(void 0, void 0, vo
                         user_id: user_id,
                         post_id: post_id,
                         title: title,
+                        sub_title: sub_title,
                         content: content,
                         tag: tag,
                     })];
@@ -543,7 +546,7 @@ var postDelete = function (req, res, next) { return __awaiter(void 0, void 0, vo
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                user_id = req.user_id;
+                user_id = req.body.user_id;
                 post_id = req.params.post_id;
                 _a.label = 1;
             case 1:
@@ -604,9 +607,9 @@ var postDelete = function (req, res, next) { return __awaiter(void 0, void 0, vo
  */
 // api index
 postRouter.get("/posts", postList); // 전체 게시글 검섹
-postRouter.get("/posts/tag/:tag", postListByTag); // tag로 게시글 검섹
-postRouter.get("/post/:post_id", postByPostId); // post_id로 게시글 검섹
-postRouter.post("/post", authMiddleware_1.default, postCreate); // 게시글 생성
-postRouter.put("/post/:post_id", authMiddleware_1.default, postUpdate); //  게시글 수정
-postRouter.delete("/post/:post_id", authMiddleware_1.default, postDelete); // 게시글 삭제
+postRouter.get("/posts/tag/:tag", validation.validatePostByTag, postListByTag); // tag로 게시글 검섹
+postRouter.get("/post/:post_id", validation.validatePostByPostId, postByPostId); // post_id로 게시글 검섹
+postRouter.post("/post", authMiddleware_1.default, validation.validatePostCreate, postCreate); // 게시글 생성
+postRouter.put("/post/:post_id", authMiddleware_1.default, validation.validatePostUpdate, postUpdate); //  게시글 수정
+postRouter.delete("/post/:post_id", authMiddleware_1.default, validation.validatePostDelete, postDelete); // 게시글 삭제
 module.exports = postRouter;

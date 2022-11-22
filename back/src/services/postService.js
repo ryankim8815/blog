@@ -206,7 +206,7 @@ var postService = /** @class */ (function () {
     };
     //// 게시글 수정
     postService.updatePost = function (_a) {
-        var user_id = _a.user_id, post_id = _a.post_id, title = _a.title, content = _a.content, tag = _a.tag;
+        var user_id = _a.user_id, post_id = _a.post_id, title = _a.title, sub_title = _a.sub_title, content = _a.content, tag = _a.tag;
         return __awaiter(this, void 0, void 0, function () {
             var updated_at, user, userString, userObject, result_errUserId, checkPost, checkPostString, checkPostObject, result_errPost, updatedPost, updatedPostString, updatedPostObject, affectedRows, result_errUpdate, result_success;
             return __generator(this, function (_b) {
@@ -241,6 +241,7 @@ var postService = /** @class */ (function () {
                     case 3: return [4 /*yield*/, Post_1.default.update({
                             post_id: post_id,
                             title: title,
+                            sub_title: sub_title,
                             content: content,
                             tag: tag,
                             updated_at: updated_at,

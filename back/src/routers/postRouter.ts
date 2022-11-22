@@ -1,5 +1,6 @@
 import * as express from "express";
 import authMiddleware from "../middlewares/authMiddleware";
+import * as validation from "../middlewares/postValidationMiddleware";
 // import upload from "../middlewares/uploadMiddleware";   // 사진 업로드 기능은 resize 적용 후 사용
 import postService from "../services/postService";
 // import asyncHandler from "../utils/asyncHandler";
@@ -299,7 +300,7 @@ const postCreate = async (
   next: express.NextFunction
 ) => {
   // const email = req.email;
-  const user_id = req.user_id;
+  const user_id = req.body.user_id;
   const title = req.body.title;
   const sub_title = req.body.sub_title;
   const content = req.body.content;
@@ -374,9 +375,10 @@ const postUpdate = async (
   next: express.NextFunction
 ) => {
   // const email = req.email;
-  const user_id = req.user_id;
+  const user_id = req.body.user_id;
   const post_id = req.params.post_id;
   const title = req.body.title;
+  const sub_title = req.body.sub_title;
   const content = req.body.content;
   const tag = req.body.tag;
   try {
@@ -384,6 +386,7 @@ const postUpdate = async (
       user_id,
       post_id,
       title,
+      sub_title,
       content,
       tag,
     });
@@ -455,7 +458,7 @@ const postDelete = async (
   next: express.NextFunction
 ) => {
   // const email = req.email;
-  const user_id = req.user_id;
+  const user_id = req.body.user_id;
   const post_id = req.params.post_id;
   try {
     const deletedPost = await postService.deletePost({
@@ -510,10 +513,25 @@ const postDelete = async (
 
 // api index
 postRouter.get("/posts", postList); // 전체 게시글 검섹
-postRouter.get("/posts/tag/:tag", postListByTag); // tag로 게시글 검섹
-postRouter.get("/post/:post_id", postByPostId); // post_id로 게시글 검섹
-postRouter.post("/post", authMiddleware, postCreate); // 게시글 생성
-postRouter.put("/post/:post_id", authMiddleware, postUpdate); //  게시글 수정
-postRouter.delete("/post/:post_id", authMiddleware, postDelete); // 게시글 삭제
+postRouter.get("/posts/tag/:tag", validation.validatePostByTag, postListByTag); // tag로 게시글 검섹
+postRouter.get("/post/:post_id", validation.validatePostByPostId, postByPostId); // post_id로 게시글 검섹
+postRouter.post(
+  "/post",
+  authMiddleware,
+  validation.validatePostCreate,
+  postCreate
+); // 게시글 생성
+postRouter.put(
+  "/post/:post_id",
+  authMiddleware,
+  validation.validatePostUpdate,
+  postUpdate
+); //  게시글 수정
+postRouter.delete(
+  "/post/:post_id",
+  authMiddleware,
+  validation.validatePostDelete,
+  postDelete
+); // 게시글 삭제
 
 export = postRouter;

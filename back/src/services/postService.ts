@@ -124,7 +124,14 @@ class postService {
     }
   }
   //// 게시글 수정
-  static async updatePost({ user_id, post_id, title, content, tag }) {
+  static async updatePost({
+    user_id,
+    post_id,
+    title,
+    sub_title,
+    content,
+    tag,
+  }) {
     const updated_at = moment().format("YYYY-MM-DD HH:mm:ss");
     // 필요할까?
     const user = await User.findByUserId({ user_id });
@@ -155,6 +162,7 @@ class postService {
       const updatedPost = await Post.update({
         post_id,
         title,
+        sub_title,
         content,
         tag,
         updated_at,
