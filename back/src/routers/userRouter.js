@@ -77,8 +77,7 @@ var userList = function (req, res, next) { return __awaiter(void 0, void 0, void
             case 1:
                 allUsers = _a.sent();
                 console.log(allUsers);
-                res.status(200).json(allUsers);
-                return [3 /*break*/, 3];
+                return [2 /*return*/, res.status(200).json(allUsers)];
             case 2:
                 err_1 = _a.sent();
                 result_err = {
@@ -87,8 +86,7 @@ var userList = function (req, res, next) { return __awaiter(void 0, void 0, void
                     message: "userList api에서 오류가 발생했습니다.",
                 };
                 console.log(result_err);
-                res.status(200).json(result_err);
-                return [3 /*break*/, 3];
+                return [2 /*return*/, res.status(200).json(result_err)];
             case 3: return [2 /*return*/];
         }
     });
@@ -153,8 +151,7 @@ var userCurrent = function (req, res, next) { return __awaiter(void 0, void 0, v
             case 1:
                 currentUser = _a.sent();
                 console.log(currentUser);
-                res.status(200).json(currentUser);
-                return [3 /*break*/, 3];
+                return [2 /*return*/, res.status(200).json(currentUser)];
             case 2:
                 err_2 = _a.sent();
                 result_err = {
@@ -163,8 +160,7 @@ var userCurrent = function (req, res, next) { return __awaiter(void 0, void 0, v
                     message: "userCurrent api에서 오류가 발생했습니다.",
                 };
                 console.log(result_err);
-                res.status(200).json(result_err);
-                return [3 /*break*/, 3];
+                return [2 /*return*/, res.status(200).json(result_err)];
             case 3: return [2 /*return*/];
         }
     });
@@ -223,8 +219,7 @@ var userRegister = function (req, res, next) { return __awaiter(void 0, void 0, 
             case 1:
                 newUser = _a.sent();
                 console.log(newUser);
-                res.status(200).json(newUser);
-                return [3 /*break*/, 3];
+                return [2 /*return*/, res.status(200).json(newUser)];
             case 2:
                 err_3 = _a.sent();
                 result_err = {
@@ -233,8 +228,7 @@ var userRegister = function (req, res, next) { return __awaiter(void 0, void 0, 
                     message: "userRegister api에서 오류가 발생했습니다.",
                 };
                 console.log(result_err);
-                res.status(200).json(result_err);
-                return [3 /*break*/, 3];
+                return [2 /*return*/, res.status(200).json(result_err)];
             case 3: return [2 /*return*/];
         }
     });
@@ -292,8 +286,7 @@ var userLogin = function (req, res, next) { return __awaiter(void 0, void 0, voi
             case 1:
                 logedinUser = _a.sent();
                 console.log(logedinUser);
-                res.status(200).json(logedinUser);
-                return [3 /*break*/, 3];
+                return [2 /*return*/, res.status(200).json(logedinUser)];
             case 2:
                 err_4 = _a.sent();
                 result_err = {
@@ -302,8 +295,7 @@ var userLogin = function (req, res, next) { return __awaiter(void 0, void 0, voi
                     message: "userLogin api에서 오류가 발생했습니다.",
                 };
                 console.log(result_err);
-                res.status(200).json(result_err);
-                return [3 /*break*/, 3];
+                return [2 /*return*/, res.status(200).json(result_err)];
             case 3: return [2 /*return*/];
         }
     });
@@ -386,8 +378,7 @@ var userUpdate = function (req, res, next) { return __awaiter(void 0, void 0, vo
             case 1:
                 updateUser = _a.sent();
                 console.log(updateUser);
-                res.status(200).json(updateUser);
-                return [3 /*break*/, 3];
+                return [2 /*return*/, res.status(200).json(updateUser)];
             case 2:
                 err_5 = _a.sent();
                 result_err = {
@@ -396,8 +387,7 @@ var userUpdate = function (req, res, next) { return __awaiter(void 0, void 0, vo
                     message: "userUpdate api에서 오류가 발생했습니다.",
                 };
                 console.log(result_err);
-                res.status(200).json(result_err);
-                return [3 /*break*/, 3];
+                return [2 /*return*/, res.status(200).json(result_err)];
             case 3: return [2 /*return*/];
         }
     });
@@ -460,8 +450,7 @@ var userDelete = function (req, res, next) { return __awaiter(void 0, void 0, vo
             case 1:
                 deleteUser = _a.sent();
                 console.log(deleteUser);
-                res.status(200).json(deleteUser);
-                return [3 /*break*/, 3];
+                return [2 /*return*/, res.status(200).json(deleteUser)];
             case 2:
                 err_6 = _a.sent();
                 result_err = {
@@ -470,8 +459,7 @@ var userDelete = function (req, res, next) { return __awaiter(void 0, void 0, vo
                     message: "userDelete api에서 오류가 발생했습니다.",
                 };
                 console.log(result_err);
-                res.status(200).json(result_err);
-                return [3 /*break*/, 3];
+                return [2 /*return*/, res.status(200).json(result_err)];
             case 3: return [2 /*return*/];
         }
     });
@@ -528,8 +516,7 @@ var userUploadImage = function (req, res, next) { return __awaiter(void 0, void 
             case 1:
                 uploadUserImage = _a.sent();
                 console.log(uploadUserImage);
-                res.status(200).json(uploadUserImage);
-                return [3 /*break*/, 3];
+                return [2 /*return*/, res.status(200).json(uploadUserImage)];
             case 2:
                 err_7 = _a.sent();
                 result_err = {
@@ -538,8 +525,7 @@ var userUploadImage = function (req, res, next) { return __awaiter(void 0, void 
                     message: "uploadUserImage api에서 오류가 발생했습니다.",
                 };
                 console.log(result_err);
-                res.status(200).json(result_err);
-                return [3 /*break*/, 3];
+                return [2 /*return*/, res.status(200).json(result_err)];
             case 3: return [2 /*return*/];
         }
     });
@@ -587,5 +573,5 @@ userRouter.post("/signup", userRegister); // 자체 회원가입
 userRouter.post("/signin", userLogin); // 로그인
 userRouter.put("/user", authMiddleware_1.default, userUpdate); // 유저 정보 업데이트(pw & nickname)
 userRouter.delete("/user", authMiddleware_1.default, userDelete); // 유저 삭제
-userRouter.post("/user", authMiddleware_1.default, uploadMiddleware_1.default.single("file"), userUploadImage); // 프로필 사진 업로드(기존 사진 자동 삭제)
+userRouter.post("/user", uploadMiddleware_1.default, authMiddleware_1.default, userUploadImage); // 프로필 사진 업로드(기존 사진 자동 삭제)
 module.exports = userRouter;

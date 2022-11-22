@@ -77,8 +77,7 @@ var commentList = function (req, res, next) { return __awaiter(void 0, void 0, v
             case 1:
                 postComments = _a.sent();
                 console.log(postComments);
-                res.status(200).json(postComments);
-                return [3 /*break*/, 3];
+                return [2 /*return*/, res.status(200).json(postComments)];
             case 2:
                 err_1 = _a.sent();
                 result_err = {
@@ -87,8 +86,7 @@ var commentList = function (req, res, next) { return __awaiter(void 0, void 0, v
                     message: "commentList api에서 오류가 발생했습니다.",
                 };
                 console.log(result_err);
-                res.status(200).json(result_err);
-                return [3 /*break*/, 3];
+                return [2 /*return*/, res.status(200).json(result_err)];
             case 3: return [2 /*return*/];
         }
     });
@@ -171,8 +169,7 @@ var commentCreate = function (req, res, next) { return __awaiter(void 0, void 0,
             case 2:
                 createdComment = _a.sent();
                 console.log(createdComment);
-                res.status(200).json(createdComment);
-                return [3 /*break*/, 4];
+                return [2 /*return*/, res.status(200).json(createdComment)];
             case 3:
                 err_2 = _a.sent();
                 result_err = {
@@ -181,8 +178,7 @@ var commentCreate = function (req, res, next) { return __awaiter(void 0, void 0,
                     message: "commentCreate api에서 오류가 발생했습니다.",
                 };
                 console.log(result_err);
-                res.status(200).json(result_err);
-                return [3 /*break*/, 4];
+                return [2 /*return*/, res.status(200).json(result_err)];
             case 4: return [2 /*return*/];
         }
     });
@@ -249,8 +245,7 @@ var commentUpdate = function (req, res, next) { return __awaiter(void 0, void 0,
             case 2:
                 updatedComment = _a.sent();
                 console.log(updatedComment);
-                res.status(200).json(updatedComment);
-                return [3 /*break*/, 4];
+                return [2 /*return*/, res.status(200).json(updatedComment)];
             case 3:
                 err_3 = _a.sent();
                 result_err = {
@@ -259,8 +254,7 @@ var commentUpdate = function (req, res, next) { return __awaiter(void 0, void 0,
                     message: "commentUpdate api에서 오류가 발생했습니다.",
                 };
                 console.log(result_err);
-                res.status(200).json(result_err);
-                return [3 /*break*/, 4];
+                return [2 /*return*/, res.status(200).json(result_err)];
             case 4: return [2 /*return*/];
         }
     });
@@ -325,8 +319,7 @@ var commentDelete = function (req, res, next) { return __awaiter(void 0, void 0,
             case 2:
                 deletedComment = _a.sent();
                 console.log(deletedComment);
-                res.status(200).json(deletedComment);
-                return [3 /*break*/, 4];
+                return [2 /*return*/, res.status(200).json(deletedComment)];
             case 3:
                 err_4 = _a.sent();
                 result_err = {
@@ -335,8 +328,7 @@ var commentDelete = function (req, res, next) { return __awaiter(void 0, void 0,
                     message: "commentDelete api에서 오류가 발생했습니다.",
                 };
                 console.log(result_err);
-                res.status(200).json(result_err);
-                return [3 /*break*/, 4];
+                return [2 /*return*/, res.status(200).json(result_err)];
             case 4: return [2 /*return*/];
         }
     });

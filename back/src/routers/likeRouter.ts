@@ -14,7 +14,7 @@ const likeList = async (
   try {
     const postLikes = await likeService.getPostLikes({ post_id });
     console.log(postLikes);
-    res.status(200).json(postLikes);
+    return res.status(200).json(postLikes);
   } catch (err) {
     const result_err = {
       result: false,
@@ -22,7 +22,7 @@ const likeList = async (
       message: "likeList api에서 오류가 발생했습니다.",
     };
     console.log(result_err);
-    res.status(200).json(result_err);
+    return res.status(200).json(result_err);
   }
 };
 /**
@@ -87,7 +87,7 @@ const likeClick = async (
       post_id,
     });
     console.log(clickedlike);
-    res.status(200).json(clickedlike);
+    return res.status(200).json(clickedlike);
   } catch (err) {
     const result_err = {
       result: false,
@@ -95,7 +95,7 @@ const likeClick = async (
       message: "likeClick api에서 오류가 발생했습니다.",
     };
     console.log(result_err);
-    res.status(200).json(result_err);
+    return res.status(200).json(result_err);
   }
 };
 /**

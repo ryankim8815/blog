@@ -79,8 +79,7 @@ var likeList = function (req, res, next) { return __awaiter(void 0, void 0, void
             case 2:
                 postLikes = _a.sent();
                 console.log(postLikes);
-                res.status(200).json(postLikes);
-                return [3 /*break*/, 4];
+                return [2 /*return*/, res.status(200).json(postLikes)];
             case 3:
                 err_1 = _a.sent();
                 result_err = {
@@ -89,8 +88,7 @@ var likeList = function (req, res, next) { return __awaiter(void 0, void 0, void
                     message: "likeList api에서 오류가 발생했습니다.",
                 };
                 console.log(result_err);
-                res.status(200).json(result_err);
-                return [3 /*break*/, 4];
+                return [2 /*return*/, res.status(200).json(result_err)];
             case 4: return [2 /*return*/];
         }
     });
@@ -159,8 +157,7 @@ var likeClick = function (req, res, next) { return __awaiter(void 0, void 0, voi
             case 2:
                 clickedlike = _a.sent();
                 console.log(clickedlike);
-                res.status(200).json(clickedlike);
-                return [3 /*break*/, 4];
+                return [2 /*return*/, res.status(200).json(clickedlike)];
             case 3:
                 err_2 = _a.sent();
                 result_err = {
@@ -169,8 +166,7 @@ var likeClick = function (req, res, next) { return __awaiter(void 0, void 0, voi
                     message: "likeClick api에서 오류가 발생했습니다.",
                 };
                 console.log(result_err);
-                res.status(200).json(result_err);
-                return [3 /*break*/, 4];
+                return [2 /*return*/, res.status(200).json(result_err)];
             case 4: return [2 /*return*/];
         }
     });

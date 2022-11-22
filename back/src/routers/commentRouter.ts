@@ -14,7 +14,7 @@ const commentList = async (
     const post_id = req.params.post_id;
     const postComments = await commentService.getPostComments({ post_id });
     console.log(postComments);
-    res.status(200).json(postComments);
+    return res.status(200).json(postComments);
   } catch (err) {
     const result_err = {
       result: false,
@@ -22,7 +22,7 @@ const commentList = async (
       message: "commentList api에서 오류가 발생했습니다.",
     };
     console.log(result_err);
-    res.status(200).json(result_err);
+    return res.status(200).json(result_err);
   }
 };
 /**
@@ -101,7 +101,7 @@ const commentCreate = async (
       content,
     });
     console.log(createdComment);
-    res.status(200).json(createdComment);
+    return res.status(200).json(createdComment);
   } catch (err) {
     const result_err = {
       result: false,
@@ -109,7 +109,7 @@ const commentCreate = async (
       message: "commentCreate api에서 오류가 발생했습니다.",
     };
     console.log(result_err);
-    res.status(200).json(result_err);
+    return res.status(200).json(result_err);
   }
 };
 /**
@@ -171,7 +171,7 @@ const commentUpdate = async (
       content,
     });
     console.log(updatedComment);
-    res.status(200).json(updatedComment);
+    return res.status(200).json(updatedComment);
   } catch (err) {
     const result_err = {
       result: false,
@@ -179,7 +179,7 @@ const commentUpdate = async (
       message: "commentUpdate api에서 오류가 발생했습니다.",
     };
     console.log(result_err);
-    res.status(200).json(result_err);
+    return res.status(200).json(result_err);
   }
 };
 /**
@@ -239,7 +239,7 @@ const commentDelete = async (
       comment_id,
     });
     console.log(deletedComment);
-    res.status(200).json(deletedComment);
+    return res.status(200).json(deletedComment);
   } catch (err) {
     const result_err = {
       result: false,
@@ -247,7 +247,7 @@ const commentDelete = async (
       message: "commentDelete api에서 오류가 발생했습니다.",
     };
     console.log(result_err);
-    res.status(200).json(result_err);
+    return res.status(200).json(result_err);
   }
 };
 /**

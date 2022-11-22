@@ -15,7 +15,7 @@ const postList = async (
   try {
     const allPosts = await postService.getAllPosts();
     console.log(allPosts);
-    res.status(200).json(allPosts);
+    return res.status(200).json(allPosts);
   } catch (err) {
     const result_err = {
       result: false,
@@ -23,7 +23,7 @@ const postList = async (
       message: "postList api에서 오류가 발생했습니다.",
     };
     console.log(result_err);
-    res.status(200).json(result_err);
+    return res.status(200).json(result_err);
   }
 };
 /**
@@ -117,7 +117,7 @@ const postListByTag = async (
   try {
     const Posts = await postService.getPostsByTag({ tag });
     console.log(Posts);
-    res.status(200).json(Posts);
+    return res.status(200).json(Posts);
   } catch (err) {
     const result_err = {
       result: false,
@@ -125,7 +125,7 @@ const postListByTag = async (
       message: "postListByTag api에서 오류가 발생했습니다.",
     };
     console.log(result_err);
-    res.status(200).json(result_err);
+    return res.status(200).json(result_err);
   }
 };
 /**
@@ -218,7 +218,7 @@ const postByPostId = async (
   try {
     const Post = await postService.getPostByPostId({ post_id });
     console.log(Post);
-    res.status(200).json(Post);
+    return res.status(200).json(Post);
   } catch (err) {
     const result_err = {
       result: false,
@@ -226,7 +226,7 @@ const postByPostId = async (
       message: "postByPostId api에서 오류가 발생했습니다.",
     };
     console.log(result_err);
-    res.status(200).json(result_err);
+    return res.status(200).json(result_err);
   }
 };
 /**
@@ -313,7 +313,7 @@ const postCreate = async (
       tag,
     });
     console.log(createdPost);
-    res.status(200).json(createdPost);
+    return res.status(200).json(createdPost);
   } catch (err) {
     const result_err = {
       result: false,
@@ -321,7 +321,7 @@ const postCreate = async (
       message: "postCreate api에서 오류가 발생했습니다.",
     };
     console.log(result_err);
-    res.status(200).json(result_err);
+    return res.status(200).json(result_err);
   }
 };
 /**
@@ -388,7 +388,7 @@ const postUpdate = async (
       tag,
     });
     console.log(updatedPost);
-    res.status(200).json(updatedPost);
+    return res.status(200).json(updatedPost);
   } catch (err) {
     const result_err = {
       result: false,
@@ -396,7 +396,7 @@ const postUpdate = async (
       message: "postUpdate api에서 오류가 발생했습니다.",
     };
     console.log(result_err);
-    res.status(200).json(result_err);
+    return res.status(200).json(result_err);
   }
 };
 /**
@@ -463,7 +463,7 @@ const postDelete = async (
       post_id,
     });
     console.log(deletedPost);
-    res.status(200).json(deletedPost);
+    return res.status(200).json(deletedPost);
   } catch (err) {
     const result_err = {
       result: false,
@@ -471,7 +471,7 @@ const postDelete = async (
       message: "deletedPost api에서 오류가 발생했습니다.",
     };
     console.log(result_err);
-    res.status(200).json(result_err);
+    return res.status(200).json(result_err);
   }
 };
 /**

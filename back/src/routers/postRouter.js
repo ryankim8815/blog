@@ -79,8 +79,7 @@ var postList = function (req, res, next) { return __awaiter(void 0, void 0, void
             case 1:
                 allPosts = _a.sent();
                 console.log(allPosts);
-                res.status(200).json(allPosts);
-                return [3 /*break*/, 3];
+                return [2 /*return*/, res.status(200).json(allPosts)];
             case 2:
                 err_1 = _a.sent();
                 result_err = {
@@ -89,8 +88,7 @@ var postList = function (req, res, next) { return __awaiter(void 0, void 0, void
                     message: "postList api에서 오류가 발생했습니다.",
                 };
                 console.log(result_err);
-                res.status(200).json(result_err);
-                return [3 /*break*/, 3];
+                return [2 /*return*/, res.status(200).json(result_err)];
             case 3: return [2 /*return*/];
         }
     });
@@ -189,8 +187,7 @@ var postListByTag = function (req, res, next) { return __awaiter(void 0, void 0,
             case 2:
                 Posts = _a.sent();
                 console.log(Posts);
-                res.status(200).json(Posts);
-                return [3 /*break*/, 4];
+                return [2 /*return*/, res.status(200).json(Posts)];
             case 3:
                 err_2 = _a.sent();
                 result_err = {
@@ -199,8 +196,7 @@ var postListByTag = function (req, res, next) { return __awaiter(void 0, void 0,
                     message: "postListByTag api에서 오류가 발생했습니다.",
                 };
                 console.log(result_err);
-                res.status(200).json(result_err);
-                return [3 /*break*/, 4];
+                return [2 /*return*/, res.status(200).json(result_err)];
             case 4: return [2 /*return*/];
         }
     });
@@ -299,8 +295,7 @@ var postByPostId = function (req, res, next) { return __awaiter(void 0, void 0, 
             case 2:
                 Post = _a.sent();
                 console.log(Post);
-                res.status(200).json(Post);
-                return [3 /*break*/, 4];
+                return [2 /*return*/, res.status(200).json(Post)];
             case 3:
                 err_3 = _a.sent();
                 result_err = {
@@ -309,8 +304,7 @@ var postByPostId = function (req, res, next) { return __awaiter(void 0, void 0, 
                     message: "postByPostId api에서 오류가 발생했습니다.",
                 };
                 console.log(result_err);
-                res.status(200).json(result_err);
-                return [3 /*break*/, 4];
+                return [2 /*return*/, res.status(200).json(result_err)];
             case 4: return [2 /*return*/];
         }
     });
@@ -401,8 +395,7 @@ var postCreate = function (req, res, next) { return __awaiter(void 0, void 0, vo
             case 2:
                 createdPost = _a.sent();
                 console.log(createdPost);
-                res.status(200).json(createdPost);
-                return [3 /*break*/, 4];
+                return [2 /*return*/, res.status(200).json(createdPost)];
             case 3:
                 err_4 = _a.sent();
                 result_err = {
@@ -411,8 +404,7 @@ var postCreate = function (req, res, next) { return __awaiter(void 0, void 0, vo
                     message: "postCreate api에서 오류가 발생했습니다.",
                 };
                 console.log(result_err);
-                res.status(200).json(result_err);
-                return [3 /*break*/, 4];
+                return [2 /*return*/, res.status(200).json(result_err)];
             case 4: return [2 /*return*/];
         }
     });
@@ -483,8 +475,7 @@ var postUpdate = function (req, res, next) { return __awaiter(void 0, void 0, vo
             case 2:
                 updatedPost = _a.sent();
                 console.log(updatedPost);
-                res.status(200).json(updatedPost);
-                return [3 /*break*/, 4];
+                return [2 /*return*/, res.status(200).json(updatedPost)];
             case 3:
                 err_5 = _a.sent();
                 result_err = {
@@ -493,8 +484,7 @@ var postUpdate = function (req, res, next) { return __awaiter(void 0, void 0, vo
                     message: "postUpdate api에서 오류가 발생했습니다.",
                 };
                 console.log(result_err);
-                res.status(200).json(result_err);
-                return [3 /*break*/, 4];
+                return [2 /*return*/, res.status(200).json(result_err)];
             case 4: return [2 /*return*/];
         }
     });
@@ -565,8 +555,7 @@ var postDelete = function (req, res, next) { return __awaiter(void 0, void 0, vo
             case 2:
                 deletedPost = _a.sent();
                 console.log(deletedPost);
-                res.status(200).json(deletedPost);
-                return [3 /*break*/, 4];
+                return [2 /*return*/, res.status(200).json(deletedPost)];
             case 3:
                 err_6 = _a.sent();
                 result_err = {
@@ -575,8 +564,7 @@ var postDelete = function (req, res, next) { return __awaiter(void 0, void 0, vo
                     message: "deletedPost api에서 오류가 발생했습니다.",
                 };
                 console.log(result_err);
-                res.status(200).json(result_err);
-                return [3 /*break*/, 4];
+                return [2 /*return*/, res.status(200).json(result_err)];
             case 4: return [2 /*return*/];
         }
     });

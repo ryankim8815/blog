@@ -1,6 +1,6 @@
 import * as express from "express";
 import authMiddleware from "../middlewares/authMiddleware";
-import upload from "../middlewares/uploadMiddleware";
+import ploadMiddleware from "../middlewares/uploadMiddleware";
 import userService from "../services/userService";
 // import asyncHandler from "../utils/asyncHandler";
 import type { MulterFile } from "../customType/multer.d";
@@ -15,7 +15,7 @@ const userList = async (
   try {
     const allUsers = await userService.getAllUsers();
     console.log(allUsers);
-    res.status(200).json(allUsers);
+    return res.status(200).json(allUsers);
   } catch (err) {
     const result_err = {
       result: false,
@@ -23,7 +23,7 @@ const userList = async (
       message: "userList api에서 오류가 발생했습니다.",
     };
     console.log(result_err);
-    res.status(200).json(result_err);
+    return res.status(200).json(result_err);
   }
 };
 /**
@@ -87,7 +87,7 @@ const userCurrent = async (
     // console.log("라우터에서 토큰 확인: ", user_id);
     const currentUser = await userService.getCurrentUser({ user_id });
     console.log(currentUser);
-    res.status(200).json(currentUser);
+    return res.status(200).json(currentUser);
   } catch (err) {
     const result_err = {
       result: false,
@@ -95,7 +95,7 @@ const userCurrent = async (
       message: "userCurrent api에서 오류가 발생했습니다.",
     };
     console.log(result_err);
-    res.status(200).json(result_err);
+    return res.status(200).json(result_err);
   }
 };
 /**
@@ -151,7 +151,7 @@ const userRegister = async (
     const nickname = req.body.nickname;
     const newUser = await userService.addUser({ email, password, nickname });
     console.log(newUser);
-    res.status(200).json(newUser);
+    return res.status(200).json(newUser);
   } catch (err) {
     const result_err = {
       result: false,
@@ -159,7 +159,7 @@ const userRegister = async (
       message: "userRegister api에서 오류가 발생했습니다.",
     };
     console.log(result_err);
-    res.status(200).json(result_err);
+    return res.status(200).json(result_err);
   }
 };
 /**
@@ -214,7 +214,7 @@ const userLogin = async (
     const password = req.body.password;
     const logedinUser = await userService.getUser({ email, password });
     console.log(logedinUser);
-    res.status(200).json(logedinUser);
+    return res.status(200).json(logedinUser);
   } catch (err) {
     const result_err = {
       result: false,
@@ -222,7 +222,7 @@ const userLogin = async (
       message: "userLogin api에서 오류가 발생했습니다.",
     };
     console.log(result_err);
-    res.status(200).json(result_err);
+    return res.status(200).json(result_err);
   }
 };
 /**
@@ -304,7 +304,7 @@ const userUpdate = async (
       nickname,
     });
     console.log(updateUser);
-    res.status(200).json(updateUser);
+    return res.status(200).json(updateUser);
   } catch (err) {
     const result_err = {
       result: false,
@@ -312,7 +312,7 @@ const userUpdate = async (
       message: "userUpdate api에서 오류가 발생했습니다.",
     };
     console.log(result_err);
-    res.status(200).json(result_err);
+    return res.status(200).json(result_err);
   }
 };
 /**
@@ -373,7 +373,7 @@ const userDelete = async (
       password,
     });
     console.log(deleteUser);
-    res.status(200).json(deleteUser);
+    return res.status(200).json(deleteUser);
   } catch (err) {
     const result_err = {
       result: false,
@@ -381,7 +381,7 @@ const userDelete = async (
       message: "userDelete api에서 오류가 발생했습니다.",
     };
     console.log(result_err);
-    res.status(200).json(result_err);
+    return res.status(200).json(result_err);
   }
 };
 /**
@@ -438,7 +438,7 @@ const userUploadImage = async (
       new_filename,
     });
     console.log(uploadUserImage);
-    res.status(200).json(uploadUserImage);
+    return res.status(200).json(uploadUserImage);
   } catch (err) {
     const result_err = {
       result: false,
@@ -446,7 +446,7 @@ const userUploadImage = async (
       message: "uploadUserImage api에서 오류가 발생했습니다.",
     };
     console.log(result_err);
-    res.status(200).json(result_err);
+    return res.status(200).json(result_err);
   }
 };
 /**
@@ -493,11 +493,6 @@ userRouter.post("/signup", userRegister); // 자체 회원가입
 userRouter.post("/signin", userLogin); // 로그인
 userRouter.put("/user", authMiddleware, userUpdate); // 유저 정보 업데이트(pw & nickname)
 userRouter.delete("/user", authMiddleware, userDelete); // 유저 삭제
-userRouter.post(
-  "/user",
-  authMiddleware,
-  upload.single("file"),
-  userUploadImage
-); // 프로필 사진 업로드(기존 사진 자동 삭제)
+userRouter.post("/user", ploadMiddleware, authMiddleware, userUploadImage); // 프로필 사진 업로드(기존 사진 자동 삭제)
 
 export = userRouter;

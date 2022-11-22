@@ -60,8 +60,7 @@ var authMiddleware = function (req, res, next
                     message: "로그인한 유저만 사용할 수 있는 서비스입니다.",
                 };
                 console.log(result_errNoToken);
-                res.status(400).json(result_errNoToken);
-                return [2 /*return*/];
+                return [2 /*return*/, res.status(400).json(result_errNoToken)];
             }
             // 해당 token 이 정상적인 token인지 확인 -> 토큰에 담긴 user_id 정보 추출
             try {
@@ -80,7 +79,7 @@ var authMiddleware = function (req, res, next
                     message: "정상적인 토큰이 아닙니다. 다시 한 번 확인해 주세요.",
                 };
                 console.log(result_errInvalidToken);
-                res.status(400).json(result_errInvalidToken);
+                return [2 /*return*/, res.status(400).json(result_errInvalidToken)];
             }
             return [2 /*return*/];
         });
