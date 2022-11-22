@@ -87,7 +87,6 @@ var likeService = /** @class */ (function () {
                         user = _b.sent();
                         userString = JSON.stringify(user);
                         userObject = JSON.parse(userString);
-                        // const user_id = userObject[0].user_id; // 예외처리 필요
                         if (userObject.length === 0) {
                             result_errUserId = {
                                 result: false,

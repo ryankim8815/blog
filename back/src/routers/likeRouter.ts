@@ -1,5 +1,6 @@
 import * as express from "express";
 import authMiddleware from "../middlewares/authMiddleware";
+import * as validation from "../middlewares/likeValidationMiddleware";
 import likeService from "../services/likeService";
 
 const likeRouter = express.Router();
@@ -78,8 +79,7 @@ const likeClick = async (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  // const email = req.email;
-  const user_id = req.user_id;
+  const user_id = req.body.user_id;
   const post_id = req.params.post_id;
   try {
     const clickedlike = await likeService.clickLike({
@@ -133,7 +133,16 @@ const likeClick = async (
  */
 
 // api index
-likeRouter.get("/post/:post_id/likes", likeList); // 특정 게시물의 좋아요 리스트
-likeRouter.post("/post/:post_id/like", authMiddleware, likeClick); // 좋아요 생성/삭제
+likeRouter.get(
+  "/post/:post_id/likes",
+  validation.validateLikesByPostId,
+  likeList
+); // 특정 게시물의 좋아요 리스트
+likeRouter.post(
+  "/post/:post_id/like",
+  authMiddleware,
+  validation.validateLikeClick,
+  likeClick
+); // 좋아요 생성/삭제
 
 export = likeRouter;

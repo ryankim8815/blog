@@ -11,10 +11,6 @@ class likeService {
     const postLikes = await Like.findByPostId({ post_id });
     const postLikesString = JSON.stringify(postLikes);
     const postLikesObject = JSON.parse(postLikesString);
-    // 쿼리문과 시간 비교 궁금
-    // for (let i = 0; i < postLikesObject.length; i++) {
-    //   delete postLikesObject[i].user_id;
-    // }
     // 좋아요 개수
     const countLikes = await Like.countByPostId({ post_id });
     const countLikesString = JSON.stringify(countLikes);
@@ -35,7 +31,6 @@ class likeService {
     const user = await User.findByUserId({ user_id });
     const userString = JSON.stringify(user);
     const userObject = JSON.parse(userString);
-    // const user_id = userObject[0].user_id; // 예외처리 필요
     if (userObject.length === 0) {
       const result_errUserId = {
         result: false,

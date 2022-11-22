@@ -63,6 +63,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 var express = __importStar(require("express"));
 var authMiddleware_1 = __importDefault(require("../middlewares/authMiddleware"));
+var validation = __importStar(require("../middlewares/likeValidationMiddleware"));
 var likeService_1 = __importDefault(require("../services/likeService"));
 var likeRouter = express.Router();
 // GET: 특정 게시물의 좋아요 리스트
@@ -145,7 +146,7 @@ var likeClick = function (req, res, next) { return __awaiter(void 0, void 0, voi
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                user_id = req.user_id;
+                user_id = req.body.user_id;
                 post_id = req.params.post_id;
                 _a.label = 1;
             case 1:
@@ -205,6 +206,6 @@ var likeClick = function (req, res, next) { return __awaiter(void 0, void 0, voi
  *                   example: 좋아요 생성이 성공적으로 이뤄졌습니다.
  */
 // api index
-likeRouter.get("/post/:post_id/likes", likeList); // 특정 게시물의 좋아요 리스트
-likeRouter.post("/post/:post_id/like", authMiddleware_1.default, likeClick); // 좋아요 생성/삭제
+likeRouter.get("/post/:post_id/likes", validation.validateLikesByPostId, likeList); // 특정 게시물의 좋아요 리스트
+likeRouter.post("/post/:post_id/like", authMiddleware_1.default, validation.validateLikeClick, likeClick); // 좋아요 생성/삭제
 module.exports = likeRouter;
