@@ -1,6 +1,7 @@
 import * as express from "express";
 import authMiddleware from "../middlewares/authMiddleware";
-import ploadMiddleware from "../middlewares/uploadMiddleware";
+import uploadMiddleware from "../middlewares/uploadMiddleware";
+import * as validation from "../middlewares/userValidationMiddleware";
 import userService from "../services/userService";
 // import asyncHandler from "../utils/asyncHandler";
 import type { MulterFile } from "../customType/multer.d";
@@ -83,7 +84,7 @@ const userCurrent = async (
 ) => {
   try {
     // const email = req.email;
-    const user_id = req.user_id;
+    const user_id = req.body.user_id;
     // console.log("라우터에서 토큰 확인: ", user_id);
     const currentUser = await userService.getCurrentUser({ user_id });
     console.log(currentUser);
@@ -292,7 +293,7 @@ const userUpdate = async (
 ) => {
   try {
     // const email = req.email;
-    const user_id = req.user_id;
+    const user_id = req.body.user_id;
     // console.log("user_id: ", user_id);
     const currentPassword = req.body.currentPassword;
     const password = req.body.password;
@@ -366,7 +367,7 @@ const userDelete = async (
 ) => {
   try {
     // const email = req.email;
-    const user_id = req.user_id;
+    const user_id = req.body.user_id;
     const password = req.body.password;
     const deleteUser = await userService.deleteUser({
       user_id,
@@ -429,7 +430,7 @@ const userUploadImage = async (
 ) => {
   try {
     // const email = req.email;
-    const user_id = req.user_id;
+    const user_id = req.body.user_id;
     // const old_filename = req.filename;
     const new_filename = req.file.filename;
     // console.log("new_filename: ", new_filename);
@@ -488,11 +489,32 @@ const userUploadImage = async (
 
 // api index
 userRouter.get("/users", userList); // 전체 사용자 검섹
-userRouter.get("/user", authMiddleware, userCurrent); // 현재 사용자 정보 조회
-userRouter.post("/signup", userRegister); // 자체 회원가입
-userRouter.post("/signin", userLogin); // 로그인
-userRouter.put("/user", authMiddleware, userUpdate); // 유저 정보 업데이트(pw & nickname)
-userRouter.delete("/user", authMiddleware, userDelete); // 유저 삭제
-userRouter.post("/user", ploadMiddleware, authMiddleware, userUploadImage); // 프로필 사진 업로드(기존 사진 자동 삭제)
+userRouter.get(
+  "/user",
+  authMiddleware,
+  validation.validateUserCurrent,
+  userCurrent
+); // 현재 사용자 정보 조회
+userRouter.post("/signup", validation.validateUserCreate, userRegister); // 자체 회원가입
+userRouter.post("/signin", validation.validateUserLogin, userLogin); // 로그인
+userRouter.put(
+  "/user",
+  authMiddleware,
+  validation.validateUserUpdate,
+  userUpdate
+); // 유저 정보 업데이트(pw & nickname)
+userRouter.delete(
+  "/user",
+  authMiddleware,
+  validation.validateUserDelete,
+  userDelete
+); // 유저 삭제
+userRouter.post(
+  "/user",
+  uploadMiddleware,
+  authMiddleware,
+  validation.validateUserUploadImage,
+  userUploadImage
+); // 프로필 사진 업로드(기존 사진 자동 삭제)
 
 export = userRouter;

@@ -69,7 +69,7 @@ var authMiddleware = function (req, res, next
                 user_id = jwtDecoded.user_id;
                 // console.log("미들웨어에서 토큰 확인: ", user_id);
                 // req.email = email; // src/customType/express.d.ts에서 추가해주었다.
-                req.user_id = user_id; // src/customType/express.d.ts에서 추가해주었다.
+                req.body.user_id = user_id; // src/customType/express.d.ts에서 추가해주었다.
                 next();
             }
             catch (error) {
