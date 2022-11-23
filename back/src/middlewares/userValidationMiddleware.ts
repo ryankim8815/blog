@@ -41,7 +41,7 @@ const validateUserCreate = async function (
     const result_err = {
       result: false,
       cause: "type",
-      message: "api 요청시 잘못된 type이 첨부되었습니다." + err,
+      message: "api 요청시 잘못된 type이 첨부되었습니다.",
     };
     console.log(result_err);
     return res.status(499).json(result_err);
