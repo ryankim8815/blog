@@ -1,6 +1,7 @@
 import * as express from "express";
 import authMiddleware from "../middlewares/authMiddleware";
 import uploadMiddleware from "../middlewares/uploadMiddleware";
+import sendEmail from "../middlewares/nodemailerMiddleware";
 import * as validation from "../middlewares/userValidationMiddleware";
 import userService from "../services/userService";
 // import asyncHandler from "../utils/asyncHandler";
@@ -487,6 +488,32 @@ const userUploadImage = async (
  *                   example: ${nickname}님의 프로필 사진 업데이트가 성공적으로 이뤄졌습니다.
  */
 
+/// POST: email 인증을 위한 코드 발송
+const userSendEmail = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  try {
+    const email = req.body.email;
+    // const sendCodeToEmail = await userService.uploadUserImage({ // redis 활용
+    //   user_id,
+    //   new_filename,
+    // });
+    // console.log(uploadUserImage);
+    // return res.status(200).json(uploadUserImage);
+    console.log(`${email}로 인증 코드를 발송했습니다.`);
+  } catch (err) {
+    const result_err = {
+      result: false,
+      cause: "api",
+      message: "userSendEmail api에서 오류가 발생했습니다.",
+    };
+    console.log(result_err);
+    return res.status(200).json(result_err);
+  }
+};
+
 // api index
 userRouter.get("/users", userList); // 전체 사용자 검섹
 userRouter.get(
@@ -516,5 +543,6 @@ userRouter.post(
   validation.validateUserUploadImage,
   userUploadImage
 ); // 프로필 사진 업로드(기존 사진 자동 삭제)
+userRouter.post("/user/mail", sendEmail, userSendEmail); // email로 코드 발송
 
 export = userRouter;

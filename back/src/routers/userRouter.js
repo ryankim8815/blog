@@ -64,6 +64,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 var express = __importStar(require("express"));
 var authMiddleware_1 = __importDefault(require("../middlewares/authMiddleware"));
 var uploadMiddleware_1 = __importDefault(require("../middlewares/uploadMiddleware"));
+var nodemailerMiddleware_1 = __importDefault(require("../middlewares/nodemailerMiddleware"));
 var validation = __importStar(require("../middlewares/userValidationMiddleware"));
 var userService_1 = __importDefault(require("../services/userService"));
 var userRouter = express.Router();
@@ -567,6 +568,32 @@ var userUploadImage = function (req, res, next) { return __awaiter(void 0, void 
  *                   type: string
  *                   example: ${nickname}님의 프로필 사진 업데이트가 성공적으로 이뤄졌습니다.
  */
+/// POST: email 인증을 위한 코드 발송
+var userSendEmail = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var email, result_err;
+    return __generator(this, function (_a) {
+        try {
+            email = req.body.email;
+            // const sendCodeToEmail = await userService.uploadUserImage({ // redis 활용
+            //   user_id,
+            //   new_filename,
+            // });
+            // console.log(uploadUserImage);
+            // return res.status(200).json(uploadUserImage);
+            console.log("".concat(email, "\uB85C \uC778\uC99D \uCF54\uB4DC\uB97C \uBC1C\uC1A1\uD588\uC2B5\uB2C8\uB2E4."));
+        }
+        catch (err) {
+            result_err = {
+                result: false,
+                cause: "api",
+                message: "userSendEmail api에서 오류가 발생했습니다.",
+            };
+            console.log(result_err);
+            return [2 /*return*/, res.status(200).json(result_err)];
+        }
+        return [2 /*return*/];
+    });
+}); };
 // api index
 userRouter.get("/users", userList); // 전체 사용자 검섹
 userRouter.get("/user", authMiddleware_1.default, validation.validateUserCurrent, userCurrent); // 현재 사용자 정보 조회
@@ -575,4 +602,5 @@ userRouter.post("/signin", validation.validateUserLogin, userLogin); // 로그�
 userRouter.put("/user", authMiddleware_1.default, validation.validateUserUpdate, userUpdate); // 유저 정보 업데이트(pw & nickname)
 userRouter.delete("/user", authMiddleware_1.default, validation.validateUserDelete, userDelete); // 유저 삭제
 userRouter.post("/user", uploadMiddleware_1.default, authMiddleware_1.default, validation.validateUserUploadImage, userUploadImage); // 프로필 사진 업로드(기존 사진 자동 삭제)
+userRouter.post("/user/mail", nodemailerMiddleware_1.default, userSendEmail); // email로 코드 발송
 module.exports = userRouter;
