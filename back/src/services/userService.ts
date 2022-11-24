@@ -388,6 +388,7 @@ class userService {
         result: true,
         cause: "success",
         message: `code 발급이 성공적으로 이뤄졌습니다.`,
+        code: code,
       };
       return result_success;
     } else if (saveCodeObject.affectedRows == 2) {
@@ -395,6 +396,7 @@ class userService {
         result: true,
         cause: "success",
         message: `code 재발급이 성공적으로 이뤄졌습니다.`,
+        code: code,
       };
       return result_success;
     }

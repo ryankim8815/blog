@@ -628,11 +628,14 @@ var userSendEmail = function (req, res, next) { return __awaiter(void 0, void 0,
  *                   type: boolean
  *                   example: true
  *                 cause:
- *                   type: strin송
+ *                   type: string
  *                   example: success
  *                 message:
  *                   type: string
  *                   example: 메일 인증을 위한 코드 발송이 성공적으로 이뤄졌습니다.
+ *                 code:
+ *                   type: int
+ *                   example: 0000
  */
 // api index
 userRouter.get("/users", userList); // 전체 사용자 검섹
