@@ -1,4 +1,5 @@
 import User from "../db/models/User";
+import Code from "../db/models/Code";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import fs from "fs";
@@ -368,6 +369,32 @@ class userService {
         result: true,
         cause: "success",
         message: `${checkUserIdObject[0].nickname}님의 회원정보 삭제가 성공적으로 이뤄졌습니다.`,
+      };
+      return result_success;
+    }
+  }
+
+  ///////////////////////////////// codeService를 만들지 고민 중
+  //// 회원가입 전 이메일 인증
+  static async sendCode({ email, code }) {
+    const saveCode = await Code.create({
+      email,
+      code,
+    });
+    const saveCodeString = JSON.stringify(saveCode);
+    const saveCodeObject = JSON.parse(saveCodeString);
+    if (saveCodeObject.affectedRows == 1) {
+      const result_success = {
+        result: true,
+        cause: "success",
+        message: `code 발급이 성공적으로 이뤄졌습니다.`,
+      };
+      return result_success;
+    } else if (saveCodeObject.affectedRows == 2) {
+      const result_success = {
+        result: true,
+        cause: "success",
+        message: `code 재발급이 성공적으로 이뤄졌습니다.`,
       };
       return result_success;
     }

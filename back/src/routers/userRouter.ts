@@ -1,7 +1,7 @@
 import * as express from "express";
 import authMiddleware from "../middlewares/authMiddleware";
 import uploadMiddleware from "../middlewares/uploadMiddleware";
-import sendEmail from "../middlewares/nodemailerMiddleware";
+import nodemailerMiddleware from "../middlewares/nodemailerMiddleware";
 import * as validation from "../middlewares/userValidationMiddleware";
 import userService from "../services/userService";
 // import asyncHandler from "../utils/asyncHandler";
@@ -488,6 +488,7 @@ const userUploadImage = async (
  *                   example: ${nickname}님의 프로필 사진 업데이트가 성공적으로 이뤄졌습니다.
  */
 
+///////////////////////////////// codeRouter를 만들지 고민 중
 /// POST: email 인증을 위한 코드 발송
 const userSendEmail = async (
   req: express.Request,
@@ -496,13 +497,14 @@ const userSendEmail = async (
 ) => {
   try {
     const email = req.body.email;
-    // const sendCodeToEmail = await userService.uploadUserImage({ // redis 활용
-    //   user_id,
-    //   new_filename,
-    // });
-    // console.log(uploadUserImage);
-    // return res.status(200).json(uploadUserImage);
-    console.log(`${email}로 인증 코드를 발송했습니다.`);
+    const code = req.body.code;
+    const sendCodeToEmail = await userService.sendCode({
+      // redis 활용 고려
+      email,
+      code,
+    });
+    console.log(sendCodeToEmail);
+    return res.status(200).json(sendCodeToEmail);
   } catch (err) {
     const result_err = {
       result: false,
@@ -513,6 +515,40 @@ const userSendEmail = async (
     return res.status(200).json(result_err);
   }
 };
+/**
+ * @swagger
+ * /user/mail:
+ *   post:
+ *     summary: email 인증을 위한 코드 발송
+ *     description:  재발급 가능하며, 회원 가입시 코드는 폐기됩니다.
+ *     tags: ["userRouter"]
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: example@gmail.com
+ *     responses:
+ *       200:
+ *         description: successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 result:
+ *                   type: boolean
+ *                   example: true
+ *                 cause:
+ *                   type: strin송
+ *                   example: success
+ *                 message:
+ *                   type: string
+ *                   example: 메일 인증을 위한 코드 발송이 성공적으로 이뤄졌습니다.
+ */
 
 // api index
 userRouter.get("/users", userList); // 전체 사용자 검섹
@@ -543,6 +579,6 @@ userRouter.post(
   validation.validateUserUploadImage,
   userUploadImage
 ); // 프로필 사진 업로드(기존 사진 자동 삭제)
-userRouter.post("/user/mail", sendEmail, userSendEmail); // email로 코드 발송
+userRouter.post("/user/mail", nodemailerMiddleware, userSendEmail); // email로 코드 발송
 
 export = userRouter;
