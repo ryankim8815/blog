@@ -25,7 +25,7 @@ export const userCreateSchema = Joi.object().keys({
   // [미관상 길이]: 한글+숫자 2~8 | 영어+숫자 2~12
   // **MySQL 4.1버전부터 varchar(n)에서 n은 byte가 아닌 글자 수를 의미
   nickname: Joi.string()
-    .pattern(new RegExp("^([ㄱ-힣0-9_-]{2,8}|[A-Za-z0-9_-]{2,12})$"))
+    .pattern(new RegExp("^([가-힣0-9]{2,8}|[A-Za-z0-9]{2,12})$"))
     .required(),
 });
 
@@ -52,7 +52,7 @@ export const userUpdateSchema = Joi.object().keys({
     )
     .required(), // 최소 8 자, 최소 하나의 문자, 하나의 숫자 및 하나의 특수 문자
   nickname: Joi.string()
-    .pattern(new RegExp("^([ㄱ-힣0-9_-]{2,8}|[A-Za-z0-9_-]{2,12})$"))
+    .pattern(new RegExp("^([가-힣0-9]{2,8}|[A-Za-z0-9]{2,12})$"))
     .required(),
 });
 

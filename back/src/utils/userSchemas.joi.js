@@ -25,7 +25,7 @@ exports.userCreateSchema = joi_1.default.object().keys({
     // [미관상 길이]: 한글+숫자 2~8 | 영어+숫자 2~12
     // **MySQL 4.1버전부터 varchar(n)에서 n은 byte가 아닌 글자 수를 의미
     nickname: joi_1.default.string()
-        .pattern(new RegExp("^([ㄱ-힣0-9_-]{2,8}|[A-Za-z0-9_-]{2,12})$"))
+        .pattern(new RegExp("^([가-힣0-9]{2,8}|[A-Za-z0-9]{2,12})$"))
         .required(),
 });
 exports.userLoginSchema = joi_1.default.object().keys({
@@ -46,7 +46,7 @@ exports.userUpdateSchema = joi_1.default.object().keys({
         .pattern(new RegExp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$"))
         .required(),
     nickname: joi_1.default.string()
-        .pattern(new RegExp("^([ㄱ-힣0-9_-]{2,8}|[A-Za-z0-9_-]{2,12})$"))
+        .pattern(new RegExp("^([가-힣0-9]{2,8}|[A-Za-z0-9]{2,12})$"))
         .required(),
 });
 exports.userDeleteSchema = joi_1.default.object().keys({
