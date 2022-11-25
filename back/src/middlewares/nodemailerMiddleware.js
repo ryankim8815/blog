@@ -39,14 +39,28 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 var nodemailer_1 = __importDefault(require("nodemailer"));
+var User_1 = __importDefault(require("../db/models/User"));
 var nodemailerMiddleware = function (req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var email, code, transporter, info, err_1, result_err;
+        var email, checkEmail, checkEmailString, checkEmailObject, result_errEmail, code, transporter, info, err_1, result_err;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 2, , 3]);
+                    _a.trys.push([0, 3, , 4]);
                     email = req.body.email;
+                    return [4 /*yield*/, User_1.default.findByEmail({ email: email })];
+                case 1:
+                    checkEmail = _a.sent();
+                    checkEmailString = JSON.stringify(checkEmail);
+                    checkEmailObject = JSON.parse(checkEmailString);
+                    if (checkEmailObject.length !== 0) {
+                        result_errEmail = {
+                            result: false,
+                            cause: "email",
+                            message: "입력하신 email로 이미 가입된 내역이 있습니다. 다시 한 번 확인해 주세요.",
+                        };
+                        return [2 /*return*/, res.status(200).json(result_errEmail)];
+                    }
                     code = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
                     req.body.code = code;
                     transporter = nodemailer_1.default.createTransport({
@@ -62,11 +76,11 @@ var nodemailerMiddleware = function (req, res, next) {
                             subject: "DogFoot에서 메일 확인을 위해 보내드립니다. ✔",
                             html: "\n            <b>Hello world?</b>\n            <h1>".concat(code, "</h1> \n            <h3>\uC704\uC758 \uBC88\uD638\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.</h3>\n      "),
                         })];
-                case 1:
+                case 2:
                     info = _a.sent();
                     next();
-                    return [3 /*break*/, 3];
-                case 2:
+                    return [3 /*break*/, 4];
+                case 3:
                     err_1 = _a.sent();
                     result_err = {
                         result: false,
@@ -75,7 +89,7 @@ var nodemailerMiddleware = function (req, res, next) {
                     };
                     console.log(result_err);
                     return [2 /*return*/, res.status(499).json(result_err)];
-                case 3: return [2 /*return*/];
+                case 4: return [2 /*return*/];
             }
         });
     });
