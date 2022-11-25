@@ -483,6 +483,39 @@ var userService = /** @class */ (function () {
             });
         });
     };
+    //// 회원가입 전 nickname 중복확인
+    userService.nicknameDuplicateCheck = function (_a) {
+        var nickname = _a.nickname;
+        return __awaiter(this, void 0, void 0, function () {
+            var checkNickname, checkNicknameString, checkNicknameObject, result_errNickname, result_success;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, User_1.default.findByNickname({ nickname: nickname })];
+                    case 1:
+                        checkNickname = _b.sent();
+                        checkNicknameString = JSON.stringify(checkNickname);
+                        checkNicknameObject = JSON.parse(checkNicknameString);
+                        if (checkNicknameObject.length !== 0) {
+                            result_errNickname = {
+                                result: false,
+                                cause: "nickname",
+                                message: "입력하신 nickname로 이미 가입된 내역이 있습니다. 다시 한 번 확인해 주세요.",
+                            };
+                            return [2 /*return*/, result_errNickname];
+                        }
+                        else {
+                            result_success = {
+                                result: true,
+                                cause: "success",
+                                message: "\uC911\uBCF5\uB41C nickname\uC774 \uC5C6\uC2B5\uB2C8\uB2E4. \uAC00\uC785\uC744 \uC9C4\uD589\uD574\uC8FC\uC138\uC694.",
+                            };
+                            return [2 /*return*/, result_success];
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
     return userService;
 }());
 module.exports = userService;

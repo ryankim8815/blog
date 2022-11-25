@@ -401,5 +401,28 @@ class userService {
       return result_success;
     }
   }
+
+  //// 회원가입 전 nickname 중복확인
+  static async nicknameDuplicateCheck({ nickname }) {
+    const checkNickname = await User.findByNickname({ nickname });
+    const checkNicknameString = JSON.stringify(checkNickname);
+    const checkNicknameObject = JSON.parse(checkNicknameString);
+    if (checkNicknameObject.length !== 0) {
+      const result_errNickname = {
+        result: false,
+        cause: "nickname",
+        message:
+          "입력하신 nickname로 이미 가입된 내역이 있습니다. 다시 한 번 확인해 주세요.",
+      };
+      return result_errNickname;
+    } else {
+      const result_success = {
+        result: true,
+        cause: "success",
+        message: `중복된 nickname이 없습니다. 가입을 진행해주세요.`,
+      };
+      return result_success;
+    }
+  }
 }
 export = userService;

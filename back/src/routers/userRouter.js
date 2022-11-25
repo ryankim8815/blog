@@ -568,9 +568,8 @@ var userUploadImage = function (req, res, next) { return __awaiter(void 0, void 
  *                   type: string
  *                   example: ${nickname}님의 프로필 사진 업데이트가 성공적으로 이뤄졌습니다.
  */
-///////////////////////////////// codeRouter를 만들지 고민 중
 /// POST: email 인증을 위한 코드 발송
-var userSendEmail = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+var signupEmail = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var email, code, sendCodeToEmail, err_8, result_err;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -592,7 +591,7 @@ var userSendEmail = function (req, res, next) { return __awaiter(void 0, void 0,
                 result_err = {
                     result: false,
                     cause: "api",
-                    message: "userSendEmail api에서 오류가 발생했습니다.",
+                    message: "signupEmail api에서 오류가 발생했습니다.",
                 };
                 console.log(result_err);
                 return [2 /*return*/, res.status(200).json(result_err)];
@@ -602,7 +601,7 @@ var userSendEmail = function (req, res, next) { return __awaiter(void 0, void 0,
 }); };
 /**
  * @swagger
- * /user/mail:
+ * /signup/mail:
  *   post:
  *     summary: email 인증을 위한 코드 발송
  *     description:  재발급 가능하며, 회원 가입시 코드는 폐기됩니다.
@@ -637,6 +636,65 @@ var userSendEmail = function (req, res, next) { return __awaiter(void 0, void 0,
  *                   type: int
  *                   example: 0000
  */
+/// GET: 회원가입 단계에서 nickname 중복확인
+var signupNickname = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var nickname, checkNickname, err_9, result_err;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                nickname = req.params.nickname;
+                return [4 /*yield*/, userService_1.default.nicknameDuplicateCheck({
+                        nickname: nickname,
+                    })];
+            case 1:
+                checkNickname = _a.sent();
+                console.log(checkNickname);
+                return [2 /*return*/, res.status(200).json(checkNickname)];
+            case 2:
+                err_9 = _a.sent();
+                result_err = {
+                    result: false,
+                    cause: "api",
+                    message: "signupNickname api에서 오류가 발생했습니다.",
+                };
+                console.log(result_err);
+                return [2 /*return*/, res.status(200).json(result_err)];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+/**
+ * @swagger
+ * /signup/nickname/{nickname}:
+ *   get:
+ *     summary: nickname 중복확인
+ *     description:  nickname 중복확인
+ *     tags: ["userRouter"]
+ *     parameters:
+ *       - in: path
+ *         name: nickname
+ *         schema:
+ *           type: string
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 result:
+ *                   type: boolean
+ *                   example: true
+ *                 cause:
+ *                   type: string
+ *                   example: success
+ *                 message:
+ *                   type: string
+ *                   example: 중복된 nickname이 없습니다. 가입을 진행해주세요.
+ */
 // api index
 userRouter.get("/users", userList); // 전체 사용자 검섹
 userRouter.get("/user", authMiddleware_1.default, validation.validateUserCurrent, userCurrent); // 현재 사용자 정보 조회
@@ -645,5 +703,6 @@ userRouter.post("/signin", validation.validateUserLogin, userLogin); // 로그�
 userRouter.put("/user", authMiddleware_1.default, validation.validateUserUpdate, userUpdate); // 유저 정보 업데이트(pw & nickname)
 userRouter.delete("/user", authMiddleware_1.default, validation.validateUserDelete, userDelete); // 유저 삭제
 userRouter.post("/user", uploadMiddleware_1.default, authMiddleware_1.default, validation.validateUserUploadImage, userUploadImage); // 프로필 사진 업로드(기존 사진 자동 삭제)
-userRouter.post("/user/mail", nodemailerMiddleware_1.default, userSendEmail); // email로 코드 발송
+userRouter.post("/signup/mail", nodemailerMiddleware_1.default, signupEmail); // email로 코드 발송
+userRouter.get("/signup/nickname/:nickname", signupNickname); // nickname 중복확인
 module.exports = userRouter;
