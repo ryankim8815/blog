@@ -6,6 +6,9 @@ import * as validation from "../middlewares/userValidationMiddleware";
 import userService from "../services/userService";
 // import asyncHandler from "../utils/asyncHandler";
 import type { MulterFile } from "../customType/multer.d";
+const logger = require("../../config/logger");
+// import logger from "../../config/logger";
+
 const userRouter = express.Router();
 
 // GET: 사용자 리스트 조회 기능
@@ -16,6 +19,7 @@ const userList = async (
 ) => {
   try {
     const allUsers = await userService.getAllUsers();
+    logger.info(allUsers); // logger test
     console.log(allUsers);
     return res.status(200).json(allUsers);
   } catch (err) {

@@ -67,6 +67,8 @@ var uploadMiddleware_1 = __importDefault(require("../middlewares/uploadMiddlewar
 var nodemailerMiddleware_1 = __importDefault(require("../middlewares/nodemailerMiddleware"));
 var validation = __importStar(require("../middlewares/userValidationMiddleware"));
 var userService_1 = __importDefault(require("../services/userService"));
+var logger = require("../../config/logger");
+// import logger from "../../config/logger";
 var userRouter = express.Router();
 // GET: 사용자 리스트 조회 기능
 var userList = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
@@ -78,6 +80,7 @@ var userList = function (req, res, next) { return __awaiter(void 0, void 0, void
                 return [4 /*yield*/, userService_1.default.getAllUsers()];
             case 1:
                 allUsers = _a.sent();
+                logger.info(allUsers); // logger test
                 console.log(allUsers);
                 return [2 /*return*/, res.status(200).json(allUsers)];
             case 2:
