@@ -601,7 +601,7 @@ var signupEmail = function (req, res, next) { return __awaiter(void 0, void 0, v
 }); };
 /**
  * @swagger
- * /signup/mail:
+ * /signup/email:
  *   post:
  *     summary: email 인증을 위한 코드 발송
  *     description:  재발급 가능하며, 회원 가입시 코드는 폐기됩니다.
@@ -703,6 +703,6 @@ userRouter.post("/signin", validation.validateUserLogin, userLogin); // 로그�
 userRouter.put("/user", authMiddleware_1.default, validation.validateUserUpdate, userUpdate); // 유저 정보 업데이트(pw & nickname)
 userRouter.delete("/user", authMiddleware_1.default, validation.validateUserDelete, userDelete); // 유저 삭제
 userRouter.post("/user", uploadMiddleware_1.default, authMiddleware_1.default, validation.validateUserUploadImage, userUploadImage); // 프로필 사진 업로드(기존 사진 자동 삭제)
-userRouter.post("/signup/mail", nodemailerMiddleware_1.default, signupEmail); // email로 코드 발송
+userRouter.post("/signup/email", nodemailerMiddleware_1.default, signupEmail); // email로 코드 발송
 userRouter.get("/signup/nickname/:nickname", signupNickname); // nickname 중복확인
 module.exports = userRouter;
