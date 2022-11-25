@@ -372,11 +372,11 @@ var userService = /** @class */ (function () {
             });
         });
     };
-    //// 회원정보 삭제
+    //// 회원정보 삭제 -> 탈퇴
     userService.deleteUser = function (_a) {
         var user_id = _a.user_id, password = _a.password;
         return __awaiter(this, void 0, void 0, function () {
-            var checkUserId, checkUserIdString, checkUserIdObject, result_errUserId, thisUser, hashedCorrectPassword, isPasswordCorrect, result_errPassword, updatedUser, updatedUserString, updatedUserObject, checkDeletedUser, checkDeletedUserString, checkDeletedUserObject, result_errDelete, result_success;
+            var checkUserId, checkUserIdString, checkUserIdObject, result_errUserId, thisUser, hashedCorrectPassword, isPasswordCorrect, result_errPassword, updatedUser, updatedUserString, updatedUserObject, result_success;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0: return [4 /*yield*/, User_1.default.findByUserId({ user_id: user_id })];
@@ -405,33 +405,18 @@ var userService = /** @class */ (function () {
                             };
                             return [2 /*return*/, result_errPassword];
                         }
-                        return [4 /*yield*/, User_1.default.delete({
+                        return [4 /*yield*/, User_1.default.withdraw({
                                 user_id: user_id,
                             })];
                     case 3:
                         updatedUser = _b.sent();
                         updatedUserString = JSON.stringify(updatedUser);
                         updatedUserObject = JSON.parse(updatedUserString);
-                        return [4 /*yield*/, User_1.default.findByUserId({ user_id: user_id })];
-                    case 4:
-                        checkDeletedUser = _b.sent();
-                        checkDeletedUserString = JSON.stringify(checkDeletedUser);
-                        checkDeletedUserObject = JSON.parse(checkDeletedUserString);
-                        if (updatedUserObject.affectedRows !== 1 &&
-                            checkDeletedUserObject.length !== 0) {
-                            result_errDelete = {
-                                result: true,
-                                cause: "delete",
-                                message: "".concat(checkUserIdObject[0].nickname, "\uB2D8\uC758 \uD68C\uC6D0\uC815\uBCF4 \uC0AD\uC81C\uB97C \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4."),
-                            };
-                            return [2 /*return*/, result_errDelete];
-                        }
-                        else if (updatedUserObject.affectedRows == 1 &&
-                            checkDeletedUserObject.length == 0) {
+                        if (updatedUserObject.affectedRows == 1) {
                             result_success = {
                                 result: true,
                                 cause: "success",
-                                message: "".concat(checkUserIdObject[0].nickname, "\uB2D8\uC758 \uD68C\uC6D0\uC815\uBCF4 \uC0AD\uC81C\uAC00 \uC131\uACF5\uC801\uC73C\uB85C \uC774\uB904\uC84C\uC2B5\uB2C8\uB2E4."),
+                                message: "".concat(checkUserIdObject[0].nickname, "\uB2D8\uC758 \uD0C8\uD1F4\uAC00 \uC131\uACF5\uC801\uC73C\uB85C \uC774\uB904\uC84C\uC2B5\uB2C8\uB2E4. 30\uC77C \uD6C4 \uD68C\uC6D0 \uC815\uBCF4\uAC00 \uC0AD\uC81C\uB429\uB2C8\uB2E4."),
                             };
                             return [2 /*return*/, result_success];
                         }
@@ -440,7 +425,6 @@ var userService = /** @class */ (function () {
             });
         });
     };
-    ///////////////////////////////// codeService를 만들지 고민 중
     //// 회원가입 전 이메일 인증
     userService.sendCode = function (_a) {
         var email = _a.email, code = _a.code;

@@ -310,7 +310,7 @@ class userService {
     return result_success;
   }
 
-  //// 회원정보 삭제
+  //// 회원정보 삭제 -> 탈퇴
   static async deleteUser({ user_id, password }) {
     // email 확인
     const checkUserId = await User.findByUserId({ user_id });
@@ -342,39 +342,22 @@ class userService {
       };
       return result_errPassword;
     }
-    // 사용자 삭제
-    const updatedUser = await User.delete({
+    // 사용자 삭제 -> 탈퇴 신청(status: pending)  상태로 바꾸기
+    const updatedUser = await User.withdraw({
       user_id,
     });
     const updatedUserString = JSON.stringify(updatedUser);
     const updatedUserObject = JSON.parse(updatedUserString);
-    const checkDeletedUser = await User.findByUserId({ user_id });
-    const checkDeletedUserString = JSON.stringify(checkDeletedUser);
-    const checkDeletedUserObject = JSON.parse(checkDeletedUserString);
-    if (
-      updatedUserObject.affectedRows !== 1 &&
-      checkDeletedUserObject.length !== 0
-    ) {
-      const result_errDelete = {
-        result: true,
-        cause: "delete",
-        message: `${checkUserIdObject[0].nickname}님의 회원정보 삭제를 실패했습니다.`,
-      };
-      return result_errDelete;
-    } else if (
-      updatedUserObject.affectedRows == 1 &&
-      checkDeletedUserObject.length == 0
-    ) {
+    if (updatedUserObject.affectedRows == 1) {
       const result_success = {
         result: true,
         cause: "success",
-        message: `${checkUserIdObject[0].nickname}님의 회원정보 삭제가 성공적으로 이뤄졌습니다.`,
+        message: `${checkUserIdObject[0].nickname}님의 탈퇴가 성공적으로 이뤄졌습니다. 30일 후 회원 정보가 삭제됩니다.`,
       };
       return result_success;
     }
   }
 
-  ///////////////////////////////// codeService를 만들지 고민 중
   //// 회원가입 전 이메일 인증
   static async sendCode({ email, code }) {
     const saveCode = await Code.create({
