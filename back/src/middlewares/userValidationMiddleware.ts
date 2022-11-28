@@ -5,6 +5,9 @@ import {
   userUpdateSchema,
   userDeleteSchema,
   userUploadImageSchema,
+  signupEmailSchema,
+  verifyEmailSchema,
+  signupNicknameSchema,
 } from "../utils/userSchemas.joi";
 import * as express from "express";
 
@@ -130,6 +133,63 @@ const validateUserUploadImage = async function (
   }
 };
 
+const validateSignupEmail = async function (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) {
+  try {
+    const body = req.body;
+    await signupEmailSchema.validateAsync(body);
+    next();
+  } catch (err) {
+    const result_err = {
+      result: false,
+      cause: "type",
+      message: "api 요청시 잘못된 type이 첨부되었습니다.",
+    };
+    return res.status(499).json(result_err);
+  }
+};
+
+const validateVerifyEmail = async function (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) {
+  try {
+    const body = req.params;
+    await verifyEmailSchema.validateAsync(body);
+    next();
+  } catch (err) {
+    const result_err = {
+      result: false,
+      cause: "type",
+      message: "api 요청시 잘못된 type이 첨부되었습니다.",
+    };
+    return res.status(499).json(result_err);
+  }
+};
+
+const validateSignupNickname = async function (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) {
+  try {
+    const body = req.params;
+    await signupNicknameSchema.validateAsync(body);
+    next();
+  } catch (err) {
+    const result_err = {
+      result: false,
+      cause: "type",
+      message: "api 요청시 잘못된 type이 첨부되었습니다.",
+    };
+    return res.status(499).json(result_err);
+  }
+};
+
 export {
   validateUserCurrent,
   validateUserCreate,
@@ -137,4 +197,7 @@ export {
   validateUserUpdate,
   validateUserDelete,
   validateUserUploadImage,
+  validateSignupEmail,
+  validateVerifyEmail,
+  validateSignupNickname,
 };

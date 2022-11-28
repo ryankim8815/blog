@@ -83,3 +83,32 @@ export const userUploadImageSchema = Joi.object().keys({
     .max(1024 * 1000 * 5)
     .required(), // 5mb 이하
 });
+
+export const signupEmailSchema = Joi.object().keys({
+  email: Joi.string()
+    .email({
+      minDomainSegments: 2,
+      tlds: {
+        allow: ["com", "net"],
+      },
+    })
+    .required(),
+});
+
+export const verifyEmailSchema = Joi.object().keys({
+  email: Joi.string()
+    .email({
+      minDomainSegments: 2,
+      tlds: {
+        allow: ["com", "net"],
+      },
+    })
+    .required(),
+  code: Joi.string().pattern(new RegExp("^[0-9]{4,4}$")).required(),
+});
+
+export const signupNicknameSchema = Joi.object().keys({
+  nickname: Joi.string()
+    .pattern(new RegExp("^([가-힣0-9]{2,8}|[A-Za-z0-9]{2,12})$")) // 한글+숫자 2~8 | 영어+숫자 2~12 - FE에서 보여지는 길이 기준
+    .required(),
+});

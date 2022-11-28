@@ -639,9 +639,73 @@ var signupEmail = function (req, res, next) { return __awaiter(void 0, void 0, v
  *                   type: int
  *                   example: 0000
  */
+/// GET: email 인증 코드 확인
+var signupVerifyEmail = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var email, code, verifyEmailCode, err_9, result_err;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                email = req.params.email;
+                code = req.params.code;
+                return [4 /*yield*/, userService_1.default.verifyCode({
+                        email: email,
+                        code: code,
+                    })];
+            case 1:
+                verifyEmailCode = _a.sent();
+                return [2 /*return*/, res.status(200).json(verifyEmailCode)];
+            case 2:
+                err_9 = _a.sent();
+                result_err = {
+                    result: false,
+                    cause: "api",
+                    message: "signupVerifyEmail api에서 오류가 발생했습니다.",
+                };
+                return [2 /*return*/, res.status(200).json(result_err)];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+/**
+ * @swagger
+ * /signup/email/{email}/code/{code}:
+ *   get:
+ *     summary: email 인증 코드 확인
+ *     description: 인증 완료시 code는 삭제됩니다.
+ *     tags: ["userRouter"]
+ *     parameters:
+ *       - in: path
+ *         name: email
+ *         schema:
+ *           type: string
+ *         required: true
+ *       - in: path
+ *         name: code
+ *         schema:
+ *           type: string
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 result:
+ *                   type: boolean
+ *                   example: true
+ *                 cause:
+ *                   type: string
+ *                   example: success
+ *                 message:
+ *                   type: string
+ *                   example: email 인증을 위한 코드 인증
+ */
 /// GET: 회원가입 단계에서 nickname 중복확인
 var signupNickname = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var nickname, checkNickname, err_9, result_err;
+    var nickname, checkNickname, err_10, result_err;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -655,7 +719,7 @@ var signupNickname = function (req, res, next) { return __awaiter(void 0, void 0
                 console.log(checkNickname);
                 return [2 /*return*/, res.status(200).json(checkNickname)];
             case 2:
-                err_9 = _a.sent();
+                err_10 = _a.sent();
                 result_err = {
                     result: false,
                     cause: "api",
@@ -706,6 +770,7 @@ userRouter.post("/signin", validation.validateUserLogin, userLogin); // 로그�
 userRouter.put("/user", authMiddleware_1.default, validation.validateUserUpdate, userUpdate); // 유저 정보 업데이트(pw & nickname)
 userRouter.delete("/user", authMiddleware_1.default, validation.validateUserDelete, userDelete); // 유저 삭제
 userRouter.post("/user", uploadMiddleware_1.default, authMiddleware_1.default, validation.validateUserUploadImage, userUploadImage); // 프로필 사진 업로드(기존 사진 자동 삭제)
-userRouter.post("/signup/email", nodemailerMiddleware_1.default, signupEmail); // email로 코드 발송
-userRouter.get("/signup/nickname/:nickname", signupNickname); // nickname 중복확인
+userRouter.post("/signup/email", validation.validateSignupEmail, nodemailerMiddleware_1.default, signupEmail); // email로 코드 발송
+userRouter.get("/signup/email/:email/code/:code", validation.validateVerifyEmail, signupVerifyEmail); // email 인증
+userRouter.get("/signup/nickname/:nickname", validation.validateSignupNickname, signupNickname); // nickname 중복확인
 module.exports = userRouter;
