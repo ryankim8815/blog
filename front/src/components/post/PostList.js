@@ -65,6 +65,7 @@ function PostList() {
     try {
       const result = await Api.get("posts");
       setPosts(result.data.list);
+      console.log("전체 게시물: ", result.data);
     } catch (e) {
       console.log(e);
     }
@@ -74,6 +75,7 @@ function PostList() {
     try {
       const result = await Api.get(`posts/tag/${tag}`);
       setPosts(result.data.list);
+      console.log(`테그 ${tag} 게시물: `, result.data);
     } catch (e) {
       console.log(e);
     }
@@ -139,8 +141,8 @@ function PostList() {
         </CategoryBox>
       </CategoryDiv>
       <PostBoxDiv>
-        {posts.map((post, index) => (
-          <PostBox key={index}>
+        {posts.map((post) => (
+          <PostBox key={post.post_id}>
             <h6>
               {post.created_at.split("T", 1)}
               &nbsp;&nbsp;&nbsp;@{post.nickname}

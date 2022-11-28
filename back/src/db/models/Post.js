@@ -156,7 +156,7 @@ var Post = /** @class */ (function () {
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0: return [4 /*yield*/, database_1.default.query({
-                            sql: "SELECT * FROM posts INNER JOIN users ON posts.user_id = users.user_id WHERE `tag` = ? ORDER BY posts.created_at DESC",
+                            sql: "SELECT * FROM posts INNER JOIN (SELECT user_id, email, nickname, profile_image, admin FROM users) AS users ON posts.user_id = users.user_id WHERE `tag` = ? ORDER BY posts.created_at DESC",
                             values: [tag],
                         })];
                     case 1:
