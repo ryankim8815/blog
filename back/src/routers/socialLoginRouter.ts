@@ -9,11 +9,11 @@ const socialLoginRouter = express.Router();
 
 // axios에서 error 발생시 troubleshooting 용이성을 위해
 axios.interceptors.response.use(
-  (res) => {
-    return res.data;
+  (result) => {
+    return result.data;
   },
-  (err) => {
-    console.log(err);
+  (error) => {
+    console.log(error);
     throw new Error("(!) axios error");
   }
 );
@@ -38,8 +38,7 @@ const kakaoOauth = async (
   const REST_API_KEY = process.env.KAKAO_REST_API_KEY;
   const REDIRECT_URI = process.env.KAKAO_REDIRECT_URL;
   try {
-    let kakaoToken: any = "";
-    await axios({
+    const resultToken = await axios({
       method: "POST",
       headers: {
         "content-type": "application/x-www-form-urlencoded;charset=utf-8",
@@ -51,41 +50,36 @@ const kakaoOauth = async (
         redirect_uri: REDIRECT_URI,
         code: code,
       }),
-    })
-      .then((res) => {
-        kakaoToken = res;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    });
+    const resultTokenString = JSON.stringify(resultToken);
+    const resultTokenObject = JSON.parse(resultTokenString);
+    // api 결과 예외 처리
 
     ///////정보 받아오기///////
-    let kakaoUser: any = "";
-    const access_token = kakaoToken.access_token;
-    await axios({
+    const access_token = resultTokenObject.access_token;
+    const resultAccount = await axios({
       method: "GET",
       headers: {
         Authorization: `bearer ${access_token}`,
       },
       url: "https://kapi.kakao.com/v1/oidc/userinfo",
-    })
-      .then((res) => {
-        kakaoUser = res;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
+    });
+    const resultAccountString = JSON.stringify(resultAccount);
+    const resultAccountObject = JSON.parse(resultAccountString);
     // 로그인 & 회원가입
-    const email = kakaoUser.email;
-    const logedinUser = await socialLoginService.kakao({ email, access_token });
+    const email = resultAccountObject.email;
+    const logedinUser = await socialLoginService.kakao({
+      email,
+      access_token,
+    });
     console.log(logedinUser);
     return res.status(200).json(logedinUser);
-  } catch (err) {
+  } catch (error) {
+    console.log(error);
     const result_err = {
       result: false,
       cause: "api",
-      message: "kakaoOauth api에서 오류가 발생했습니다.",
+      message: `kakaoOauth api에서 오류가 발생했습니다.`,
     };
     console.log(result_err);
     return res.status(200).json(result_err);
@@ -165,35 +159,25 @@ const naverOauth = async (
   //   const FE_url = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${client_id}&redirect_uri=${encoded}&state=${state}`;
   //   console.log("FE_url: ", FE_url);
   try {
-    let naverToken: any = "";
-    await axios({
+    const resultToken = await axios({
       method: "GET",
       url: url,
-    })
-      .then((res) => {
-        naverToken = res;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    });
+    const resultTokenString = JSON.stringify(resultToken);
+    const resultTokenObject = JSON.parse(resultTokenString);
     ///////정보 받아오기///////
-    let naverUser: any = "";
-    const access_token = naverToken.access_token;
-    await axios({
+    const access_token = resultTokenObject.access_token;
+    const resultAccount = await axios({
       method: "GET",
       headers: {
         Authorization: `bearer ${access_token}`,
       },
       url: "https://openapi.naver.com/v1/nid/me",
-    })
-      .then((res) => {
-        naverUser = res;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    });
+    const resultAccountString = JSON.stringify(resultAccount);
+    const resultAccountObject = JSON.parse(resultAccountString);
     // 로그인 & 회원가입
-    const naverUserRes = naverUser.response;
+    const naverUserRes = resultAccountObject.response;
     const email = naverUserRes.email;
     const logedinUser = await socialLoginService.naver({ email, access_token });
     console.log(logedinUser);
@@ -289,7 +273,7 @@ const googleOauth = async (
   console.log("url: ", FE_url);
 
   try {
-    let googleToken: any = "";
+    // let googleToken: any = "";
     const data = {
       code: code,
       client_id: client_id,
@@ -297,25 +281,20 @@ const googleOauth = async (
       redirect_uri: redirectURI,
       grant_type: "authorization_code",
     };
-    await axios({
+    const resultToken = await axios({
       method: "POST",
       headers: { "content-type": "application/x-www-form-urlencoded" },
       data: qs.stringify(data),
       url: "https://oauth2.googleapis.com/token",
-    })
-      .then((res) => {
-        googleToken = res;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    });
+    const resultTokenString = JSON.stringify(resultToken);
+    const resultTokenObject = JSON.parse(resultTokenString);
     ///////정보 받아오기///////
-    const jwtDecoded = jwt.decode(googleToken.id_token);
-    // const email = jwtDecoded.email;  // 값은 추출되지만 tsc 에서 오류 발생
+    const jwtDecoded = jwt.decode(resultTokenObject.id_token);
     const jwtDecodedString = JSON.stringify(jwtDecoded);
     const jwtDecodedObject = JSON.parse(jwtDecodedString);
     const email = jwtDecodedObject.email;
-    const refresh_token = googleToken.refresh_token;
+    const refresh_token = resultTokenObject.refresh_token;
     // 로그인 & 회원가입
     const logedinUser = await socialLoginService.google({
       email,

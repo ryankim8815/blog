@@ -11,13 +11,12 @@ function About() {
   // 게시할 글을 작성하면 tag로 검색해서 노출 시키기
   // 추가적으로 전체 게시글 리스트에서 해당 테그 제외하기
   const apiGetPostByTag = async (tag) => {
-    await Api.get(`posts/tag/${tag}`)
-      .then((res) => {
-        // let test = [];
-        // test[0] = res.data;
-        setPosts(res.data.list);
-      })
-      .catch((err) => console.log(err));
+    try {
+      const result = await Api.get(`posts/tag/${tag}`);
+      setPosts(result.data.list);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   useEffect(() => {

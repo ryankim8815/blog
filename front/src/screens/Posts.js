@@ -14,13 +14,14 @@ function Posts() {
   const [posts, setPosts] = useState([]);
 
   const apiGetPostByPostId = async (post_id) => {
-    await Api.get(`post/${post_id}`)
-      .then((res) => {
-        let post = [];
-        post[0] = res.data;
-        setPosts(post);
-      })
-      .catch((err) => console.log(err));
+    try {
+      const result = await Api.get(`post/${post_id}`);
+      let post = [];
+      post[0] = result.data;
+      setPosts(post);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   useEffect(() => {

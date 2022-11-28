@@ -62,21 +62,21 @@ function PostList() {
   //   let tag = ""; // 임시, 추후 tag 상태를 가져와야함
 
   const apiGetAllPosts = async () => {
-    Api.get("posts")
-      .then((res) => {
-        setPosts(res.data.list);
-      })
-      .catch((err) => console.log(err));
+    try {
+      const result = await Api.get("posts");
+      setPosts(result.data.list);
+    } catch (e) {
+      console.log(e);
+    }
   };
+
   const apiGetPostsByTag = async (tag) => {
-    // console.log("검색한 테그: ", tag);
-    Api.get(`posts/tag/${tag}`)
-      .then((res) => {
-        setPosts(res.data.list);
-        console.log("created_at: ", res.data.list[0].created_at);
-        console.log("created_at   타입: ", typeof res.data.list[0].created_at);
-      })
-      .catch((err) => console.log(err));
+    try {
+      const result = await Api.get(`posts/tag/${tag}`);
+      setPosts(result.data.list);
+    } catch (e) {
+      console.log(e);
+    }
   };
   useEffect(() => {
     activeCat === "All" ? apiGetAllPosts() : apiGetPostsByTag(activeCat);
