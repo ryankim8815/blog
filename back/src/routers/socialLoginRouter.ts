@@ -273,7 +273,6 @@ const googleOauth = async (
   // console.log("url: ", FE_url);
 
   try {
-    // let googleToken: any = "";
     const data = {
       code: code,
       client_id: client_id,
