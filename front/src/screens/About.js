@@ -27,8 +27,8 @@ function About() {
   return (
     <div>
       {/* <div>소개글을 작성한 게시글 불러오기</div> */}
-      {posts.map((post, index) => (
-        <div key={index} className="box-post-list">
+      {posts.map((post) => (
+        <div key={post.post_id} className="box-post-list">
           <h6>UPDATED: {post.created_at.split("T", 1)}</h6>
           {/* <Catbtn name={post.tag} /> */}
           <h2>{post.title}</h2>

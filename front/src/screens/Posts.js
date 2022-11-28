@@ -42,8 +42,8 @@ function Posts() {
         <button className="post-list">게시글 리스트</button>
         <button className="post-next">다음글</button>
       </div>
-      {posts.map((post, index) => (
-        <div key={index} className="box-post-list">
+      {posts.map((post) => (
+        <div key={post.post_id} className="box-post-list">
           <h6>
             {post.created_at.split("T", 1)}
             &nbsp;&nbsp;&nbsp;@{post.nickname}
