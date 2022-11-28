@@ -177,8 +177,8 @@ const naverOauth = async (
     const resultAccountString = JSON.stringify(resultAccount);
     const resultAccountObject = JSON.parse(resultAccountString);
     // 로그인 & 회원가입
-    const naverUserRes = resultAccountObject.response;
-    const email = naverUserRes.email;
+    const naverUserResult = resultAccountObject.response;
+    const email = naverUserResult.email;
     const logedinUser = await socialLoginService.naver({ email, access_token });
     console.log(logedinUser);
     return res.status(200).json(logedinUser);
@@ -269,8 +269,8 @@ const googleOauth = async (
   const hd = process.env.GOOGLE_HD;
   const encoded = encodeURIComponent(redirectURI);
   // FE용
-  const FE_url = `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=${client_id}&scope=openid%20email&redirect_uri=${encoded}&state=${state}&login_hint=${login_hint}&nonce=${nonce}&hd=${hd}`;
-  console.log("url: ", FE_url);
+  // const FE_url = `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=${client_id}&scope=openid%20email&redirect_uri=${encoded}&state=${state}&login_hint=${login_hint}&nonce=${nonce}&hd=${hd}`;
+  // console.log("url: ", FE_url);
 
   try {
     // let googleToken: any = "";

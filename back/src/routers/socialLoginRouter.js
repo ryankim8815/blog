@@ -209,7 +209,7 @@ var kakaoOauth = function (req, res, next) { return __awaiter(void 0, void 0, vo
 /////////////  네  이  버  ///////////////
 ////////////////////////////////////////
 var naverOauth = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var code, state, client_id, client_secret, redirectURI, encoded, url, resultToken, resultTokenString, resultTokenObject, access_token, resultAccount, resultAccountString, resultAccountObject, naverUserRes, email, logedinUser, err_1, result_err;
+    var code, state, client_id, client_secret, redirectURI, encoded, url, resultToken, resultTokenString, resultTokenObject, access_token, resultAccount, resultAccountString, resultAccountObject, naverUserResult, email, logedinUser, err_1, result_err;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -243,8 +243,8 @@ var naverOauth = function (req, res, next) { return __awaiter(void 0, void 0, vo
                 resultAccount = _a.sent();
                 resultAccountString = JSON.stringify(resultAccount);
                 resultAccountObject = JSON.parse(resultAccountString);
-                naverUserRes = resultAccountObject.response;
-                email = naverUserRes.email;
+                naverUserResult = resultAccountObject.response;
+                email = naverUserResult.email;
                 return [4 /*yield*/, socialLoginService_1.default.naver({ email: email, access_token: access_token })];
             case 4:
                 logedinUser = _a.sent();
@@ -325,7 +325,7 @@ var naverOauth = function (req, res, next) { return __awaiter(void 0, void 0, vo
 /////////////   구   글   ///////////////
 ////////////////////////////////////////
 var googleOauth = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var code, login_hint, nonce, state, client_id, client_secret, redirectURI, hd, encoded, FE_url, data, resultToken, resultTokenString, resultTokenObject, jwtDecoded, jwtDecodedString, jwtDecodedObject, email, refresh_token, logedinUser, err_2, result_err;
+    var code, login_hint, nonce, state, client_id, client_secret, redirectURI, hd, encoded, data, resultToken, resultTokenString, resultTokenObject, jwtDecoded, jwtDecodedString, jwtDecodedObject, email, refresh_token, logedinUser, err_2, result_err;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -338,8 +338,6 @@ var googleOauth = function (req, res, next) { return __awaiter(void 0, void 0, v
                 redirectURI = process.env.GOOGLE_REDIRECT_URL;
                 hd = process.env.GOOGLE_HD;
                 encoded = encodeURIComponent(redirectURI);
-                FE_url = "https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=".concat(client_id, "&scope=openid%20email&redirect_uri=").concat(encoded, "&state=").concat(state, "&login_hint=").concat(login_hint, "&nonce=").concat(nonce, "&hd=").concat(hd);
-                console.log("url: ", FE_url);
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 4, , 5]);
