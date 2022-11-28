@@ -5,55 +5,55 @@ import Catbtn from "./Catbtn";
 import * as Api from "../utils/Api";
 import styled from "styled-components";
 
+// category button list
+const CategoryDiv = styled.div`
+  width: 100%;
+  // background-color: green; // 영역확인용
+  margin: 50px 0px;
+  display: flex;
+  text-align: center; // display를 inline으로 했기 때문에 정렬 가능
+  align-items: center; // 상하 정렬
+  justify-content: center; // 좌우 정렬
+`;
+const CategoryBox = styled.div`
+  width: 950%;
+  max-width: 1024px;
+  // background-color: tomato; // 영역확인용
+`;
+
+// posts list
+const PostBoxDiv = styled.div`
+  width: 100%;
+  // background-color: green; // 영역확인용
+  margin: 50px 0px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column; /*수직 정렬*/
+  align-items: center; // 상하 정렬
+  justify-content: center; // 좌우 정렬
+`;
+const PostBox = styled.div`
+  width: 90%;
+  // min-width: 360px;
+  max-width: 1024px;
+  // background-color: tomato; // 영역확인용
+  // font-family: Elice Digital Baeum;
+  margin: 50px 0px;
+  text-align: left; // display를 inline으로 했기 때문에 정렬 가능
+  display: flex-column;
+`;
+const StyledA = styled.a`
+  text-decoration-line: none;
+  color: black;
+`;
+const DivisionLine = styled.div`
+  border-top: 1px solid lightgray;
+  margin: 50px auto;
+  width: 100%;
+`;
+
 // tag 리스트를 for문으로 돌려서 만들어 지도록 개선해야함
 function PostList() {
-  // category button list
-  const CategoryDiv = styled.div`
-    width: 100%;
-    // background-color: green; // 영역확인용
-    margin: 50px 0px;
-    display: flex;
-    text-align: center; // display를 inline으로 했기 때문에 정렬 가능
-    align-items: center; // 상하 정렬
-    justify-content: center; // 좌우 정렬
-  `;
-  const CategoryBox = styled.div`
-    width: 950%;
-    max-width: 1024px;
-    // background-color: tomato; // 영역확인용
-  `;
-
-  // posts list
-  const PostBoxDiv = styled.div`
-    width: 100%;
-    // background-color: green; // 영역확인용
-    margin: 50px 0px;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column; /*수직 정렬*/
-    align-items: center; // 상하 정렬
-    justify-content: center; // 좌우 정렬
-  `;
-  const PostBox = styled.div`
-    width: 90%;
-    // min-width: 360px;
-    max-width: 1024px;
-    // background-color: tomato; // 영역확인용
-    // font-family: Elice Digital Baeum;
-    margin: 50px 0px;
-    text-align: left; // display를 inline으로 했기 때문에 정렬 가능
-    display: flex-column;
-  `;
-  const StyledA = styled.a`
-    text-decoration-line: none;
-    color: black;
-  `;
-  const DivisionLine = styled.div`
-    border-top: 1px solid lightgray;
-    margin: 50px auto;
-    width: 100%;
-  `;
-
   const [posts, setPosts] = useState([]);
   //   const [tag, setTag] = useState([]);
   /////
@@ -65,7 +65,6 @@ function PostList() {
     try {
       const result = await Api.get("posts");
       setPosts(result.data.list);
-      console.log("전체 게시물: ", result.data);
     } catch (e) {
       console.log(e);
     }
@@ -75,7 +74,6 @@ function PostList() {
     try {
       const result = await Api.get(`posts/tag/${tag}`);
       setPosts(result.data.list);
-      console.log(`테그 ${tag} 게시물: `, result.data);
     } catch (e) {
       console.log(e);
     }

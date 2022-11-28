@@ -56,102 +56,102 @@ import * as FA from "react-icons/fa";
 // import { FaHome } from "react-icons/fa";
 import * as FI from "react-icons/fi";
 
+const NavDiv = styled.div`
+  width: 100%;
+  // height: 300px;
+  height: 70px;
+  position: fixed;
+  bottom: 0;
+  /* width: 100% */
+  left: 0;
+  right: 0;
+  // background-color: pink; // 영역확인용
+  background-color: #ffffff;
+  opacity: 0.9;
+  // backdrop-filter: blur(10px); // 작동안함
+  display: flex;
+  flex-direction: column; /*수직 정렬*/
+  // text-align: center; // display를 inline으로 했기 때문에 정렬 가능
+  align-items: center; // 상하 정렬
+  // justify-content: center; // 좌우 정렬
+  justify-content: flex-start; // 좌우 정렬
+  // border-top: 1px solid #dbdbdb;
+`;
+const NavBox = styled.div`
+  width: 100%;
+  max-width: 1280px;
+  height: 100%;
+  // background-color: tomato; // 영역확인용
+  // margin: 50px 0px;
+  // padding-right: 15%;
+  // padding-left: 15%;
+  // padding-bottom: 70px;
+  display: flex;
+  // flex-wrap: wrap;
+  // text-align: center; // display를 inline으로 했기 때문에 정렬 가능
+  // align-items: top; // 상하 정렬
+  // align-content: flex-start; // 상하 정렬
+  // justify-content: center; // 좌우 정렬
+  // justify-content: left; // 좌우 정렬
+  justify-content: space-around; // 좌우 정렬
+  // word-break: keep-all;
+  // padding-top: 50px;
+`;
+const NavItem = styled(Link)`
+  // width: 20%;
+  min-width: 50px;
+  // height: 230px;
+  // text-align: left;
+  // background-color: pink; // 영역확인용
+  // padding-bottom: 30px;
+  color: gray;
+  display: flex;
+  // flex-wrap: wrap;
+  flex-direction: column; /*수직 정렬*/
+  justify-content: center; // 좌우 정렬
+  text-decoration-line: none;
+  &:hover {
+    color: #342a97;
+  }
+`;
+const NavItemText = styled.text`
+  // width: 20%;
+  // min-width: 256px;
+  // height: 230px;
+  // text-size: 2.5rem;
+  // text-align: left;
+  // background-color: pink; // 영역확인용
+  // padding-bottom: 30px;
+  font-size: 12px;
+  display: flex;
+  // flex-wrap: wrap;
+  // flex-direction: column; /*수직 정렬*/
+  justify-content: center; // 좌우 정렬
+
+  .icon {
+    size: 2.5rem;
+  }
+`;
+//   const NavItemIcon = styled(FA)`
+//     // width: 20%;
+//     // min-width: 256px;
+//     // height: 230px;
+//     // text-size: 2.5rem;
+//     size: 2.5rem;
+//     // text-align: left;
+//     // background-color: pink; // 영역확인용
+//     // padding-bottom: 30px;
+//     display: flex;
+//     // flex-wrap: wrap;
+//     // flex-direction: column; /*수직 정렬*/
+//     justify-content: center; // 좌우 정렬
+
+//     .icon {
+//       size: 2.5rem;
+//     }
+//   `;
+
 function NavBar() {
-  const NavDiv = styled.div`
-    width: 100%;
-    // height: 300px;
-    height: 70px;
-    position: fixed;
-    bottom: 0;
-    /* width: 100% */
-    left: 0;
-    right: 0;
-    // background-color: pink; // 영역확인용
-    background-color: #ffffff;
-    opacity: 0.9;
-    // backdrop-filter: blur(10px); // 작동안함
-    display: flex;
-    flex-direction: column; /*수직 정렬*/
-    // text-align: center; // display를 inline으로 했기 때문에 정렬 가능
-    align-items: center; // 상하 정렬
-    // justify-content: center; // 좌우 정렬
-    justify-content: flex-start; // 좌우 정렬
-    // border-top: 1px solid #dbdbdb;
-  `;
-  const NavBox = styled.div`
-    width: 100%;
-    max-width: 1280px;
-    height: 100%;
-    // background-color: tomato; // 영역확인용
-    // margin: 50px 0px;
-    // padding-right: 15%;
-    // padding-left: 15%;
-    // padding-bottom: 70px;
-    display: flex;
-    // flex-wrap: wrap;
-    // text-align: center; // display를 inline으로 했기 때문에 정렬 가능
-    // align-items: top; // 상하 정렬
-    // align-content: flex-start; // 상하 정렬
-    // justify-content: center; // 좌우 정렬
-    // justify-content: left; // 좌우 정렬
-    justify-content: space-around; // 좌우 정렬
-    // word-break: keep-all;
-    // padding-top: 50px;
-  `;
-  const NavItem = styled(Link)`
-    // width: 20%;
-    min-width: 50px;
-    // height: 230px;
-    // text-align: left;
-    // background-color: pink; // 영역확인용
-    // padding-bottom: 30px;
-    color: gray;
-    display: flex;
-    // flex-wrap: wrap;
-    flex-direction: column; /*수직 정렬*/
-    justify-content: center; // 좌우 정렬
-    text-decoration-line: none;
-    &:hover {
-      color: #342a97;
-    }
-  `;
-  const NavItemText = styled.text`
-    // width: 20%;
-    // min-width: 256px;
-    // height: 230px;
-    // text-size: 2.5rem;
-    // text-align: left;
-    // background-color: pink; // 영역확인용
-    // padding-bottom: 30px;
-    font-size: 12px;
-    display: flex;
-    // flex-wrap: wrap;
-    // flex-direction: column; /*수직 정렬*/
-    justify-content: center; // 좌우 정렬
-
-    .icon {
-      size: 2.5rem;
-    }
-  `;
-  //   const NavItemIcon = styled(FA)`
-  //     // width: 20%;
-  //     // min-width: 256px;
-  //     // height: 230px;
-  //     // text-size: 2.5rem;
-  //     size: 2.5rem;
-  //     // text-align: left;
-  //     // background-color: pink; // 영역확인용
-  //     // padding-bottom: 30px;
-  //     display: flex;
-  //     // flex-wrap: wrap;
-  //     // flex-direction: column; /*수직 정렬*/
-  //     justify-content: center; // 좌우 정렬
-
-  //     .icon {
-  //       size: 2.5rem;
-  //     }
-  //   `;
-
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
 
