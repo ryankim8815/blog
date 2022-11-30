@@ -68,8 +68,9 @@ function Editor() {
     try {
       // "user/register" 엔드포인트로 post요청함.
       const tag = "backend";
+      // const tag = "resume";
       const sub_title = subTitle;
-      await Api.post("p", {
+      await Api.post("post", {
         title,
         sub_title,
         content,
