@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Col, Row, Form } from "react-bootstrap";
 
 import * as Api from "../utils/Api";
 import styled from "styled-components";

@@ -192,7 +192,7 @@ function Register() {
           <input
             name="email"
             type="text"
-            placeholder="dogfoot@dogfoot.info"
+            placeholder="dogfoot@dogfoot.infoog"
             onChange={onChangeEmail}
           />
 

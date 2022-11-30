@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-// import { Carousel } from "react-bootstrap";
 import PostList from "../components/post/PostList";
 import Carousel from "../components/post/Carousel";
 import Banner from "../components/common/Banner";
-// import { Carousel } from "react-bootstrap/Carousel";
 
 function Home() {
   const [welcome, setWelcome] = useState([]);
