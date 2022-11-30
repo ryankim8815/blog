@@ -16,6 +16,7 @@ const LoginBoxDiv = styled.div`
   text-align: center; // display를 inline으로 했기 때문에 정렬 가능
   // align-items: center; // 상하 정렬
   justify-content: center; // 좌우 정렬
+  padding: 120px 0;
 `;
 const LoginBox = styled.div`
   width: 80%;
@@ -108,8 +109,9 @@ const SocialLoginBox = styled.div`
   max-width: 500px;
   // align-items: center; // 상하 정렬
   // text-align: center;
-  justify-content: space-around; // 좌우 정렬
-  display: inline-block;
+  justify-content: center; // 좌우 정렬
+  // display: inline-block;
+  display: flex;
   // background-color: tomato; // 영역확인용
 `;
 
@@ -187,6 +189,7 @@ const Button = styled.button`
   height: 70px;
   width: 70px;
   vertical-align: middle;
+  margin: 0 10px;
 `;
 
 // posts list
@@ -273,7 +276,7 @@ function LoginForm() {
   };
 
   return (
-    <>
+    <div>
       <LoginBoxDiv>
         <LoginBox>
           <Title>로그인</Title>
@@ -298,40 +301,42 @@ function LoginForm() {
             </LoginButton>
           </form>
           <DivisionLine />
+          <p>간편로그인</p>
           <SocialLoginBox>
-            <p>간편로그인</p>
-            <ul>
-              <li>
-                <Button>구글</Button>
-                <span>구글</span>
+            {/* <ul>
+              <li> */}
+            {/* <Button backgroundImage="../../assets/img/googleIcon.png"> */}
+            <Button path="/">구글</Button>
+            {/* <span>구글</span>
               </li>
-              <li>
-                {/* <a href={KAKAO_AUTH_URL}> */}
-                <a href="www.daum.net">
-                  <Button>카카오</Button>
-                </a>
-                <span>카카오</span>
-              </li>
-              <li>
-                {/* <a href={naverUrl}> */}
-                <a href="www.naver.com">
-                  <Button>네이버</Button>
-                </a>
-
-                <span>네이버</span>
-              </li>
-            </ul>
+              <li> */}
+            {/* <a href={KAKAO_AUTH_URL}> */}
+            {/* <a href="www.daum.net"> */}
+            <Button path="/">카카오</Button>
+            {/* </a> */}
+            {/* <span>카카오</span> */}
+            {/* </li> */}
+            {/* <li> */}
+            {/* <a href={naverUrl}> */}
+            {/* <a href="www.naver.com"> */}
+            <Button type="button" onclick="location.href=www.naver.com;">
+              네이버
+            </Button>
+            {/* </a> */}
+            {/* <span>네이버</span> */}
+            {/* </li> */}
+            {/* </ul> */}
           </SocialLoginBox>
-          <></>
-          {/* <Button type="submit" disabled={!isFormValid}>
-            로그인
-          </Button>
-          <ButtonBox>
-            <Button onClick={() => navigate("/signup")}>회원가입</Button>
-          </ButtonBox> */}
         </LoginBox>
       </LoginBoxDiv>
-      {/* <Container>
+    </div>
+  );
+}
+
+export default LoginForm;
+
+{
+  /* <Container>
         <div className="content"></div>
         <Row className="justify-content-md-center mt-5">
           <Col lg={8}>
@@ -391,9 +396,5 @@ function LoginForm() {
             </Form>
           </Col>
         </Row>
-      </Container> */}
-    </>
-  );
+      </Container> */
 }
-
-export default LoginForm;
