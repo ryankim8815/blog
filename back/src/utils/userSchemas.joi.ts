@@ -38,7 +38,13 @@ export const userLoginSchema = Joi.object().keys({
       },
     })
     .required(),
-  password: Joi.string().required(),
+  password: Joi.string()
+    .pattern(
+      new RegExp(
+        "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$"
+      )
+    )
+    .required(), // 최소 8 자, 최소 하나의 문자, 하나의 숫자 및 하나의 특수 문자
 });
 
 export const userUpdateSchema = Joi.object().keys({

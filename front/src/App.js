@@ -41,7 +41,7 @@ function App() {
 
   const fetchCurrentUser = async () => {
     try {
-      const res = await Api.get("u/current");
+      const res = await Api.get("user");
       const currentUser = res.data;
       console.log("app에 있는 커런트 유저: ", currentUser);
 

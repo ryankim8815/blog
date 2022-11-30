@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { DispatchContext } from "../../App";
 import * as Api from "../utils/Api";
 import styled from "styled-components";
 import googleIcon from "../../assets/img/googleIcon.png";
@@ -115,60 +115,28 @@ const SocialLoginBox = styled.div`
   // background-color: tomato; // 영역확인용
 `;
 
-// const SocialLoginBox = styled.div`
-//   ${({ theme }) => theme.common.flexCenter};
-//   flex-direction: column;
-//   padding-top: 40px;
-//   border-top: 1px solid ${({ theme }) => theme.colors.greyBorder};
-
-//   p {
-//     margin-bottom: 20px;
-//     font-weight: 300;
-//     color: ${({ theme }) => theme.colors.greyText};
-//   }
-
-//   ul {
-//     ${({ theme }) => theme.common.flexCenter};
-//     margin-bottom: 64px;
-
-//     li {
-//       text-align: center;
-
-//       & + li {
-//         margin-left: 16px;
-//       }
-
-//       &:nth-child(1) button {
-//         background: url(${googleIcon}) no-repeat center;
-//         background-size: contain;
-//       }
-//       &:nth-child(2) button {
-//         background: url(${kakaoIcon}) no-repeat center;
-//         background-size: contain;
-//       }
-//       &:nth-child(3) button {
-//         background: url(${naverIcon}) no-repeat center;
-//         background-size: contain;
-//       }
-
-//       button {
-//         width: 64px;
-//         height: 64px;
-//         border-radius: 50%;
-//         text-indent: -9999px;
-//       }
-
-//       span {
-//         display: block;
-//         margin-top: 8px;
-//         font-weight: 300;
-//         font-size: ${({ theme }) => theme.fontSize.text};
-//         color: ${({ theme }) => theme.colors.greyText};
-//       }
-//     }
-//   }
-// `;
-
+const SocialLogo = styled.a`
+  font-size: 15px;
+  font-weight: 400;
+  color: gray;
+  // align-items: center; // 상하 정렬
+  // text-align: center;
+  justify-content: center; // 좌우 정렬
+  display: flex;
+  // background-image: url(${googleIcon});
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: 0px 0px;
+  background-size: contain;
+  vertical-align: middle;
+  object-fit: cover;
+  border: none;
+  cursor: pointer;
+  height: 70px;
+  width: 70px;
+  vertical-align: middle;
+  margin: 0 15px;
+`;
 const Button = styled.button`
   font-size: 15px;
   font-weight: 400;
@@ -218,9 +186,30 @@ const StyledA = styled.a`
   color: black;
 `;
 
+// google
+const GOOGLE_client_id = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+const GOOGLE_redirectURI = process.env.REACT_APP_GOOGLE_REDIRECT_URL;
+const GOOGLE_encoded = encodeURIComponent(GOOGLE_redirectURI);
+const GOOGLE_state = process.env.REACT_APP_GOOGLE_STATE;
+// const GOOGLE_AUTH_URL = `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=${client_id}&scope=openid%20email&redirect_uri=${encoded}&state=${state}&nonce=${nonce}&hd=${hd}`;
+const GOOGLE_AUTH_URL = `https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=${GOOGLE_encoded}&client_id=${GOOGLE_client_id}&access_type=offline&response_type=code&prompt=consent&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&state=${GOOGLE_state}`;
+
+// naver
+const NAVER_client_id = process.env.REACT_APP_NAVER_CLIENT_ID;
+const NAVER_redirectURI = process.env.REACT_APP_NAVER_REDIRECT_URL;
+const NAVER_encoded = encodeURIComponent(NAVER_redirectURI);
+const NAVER_state = process.env.REACT_APP_NAVER_STATE;
+const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_client_id}&redirect_uri=${NAVER_encoded}&state=${NAVER_state}`;
+console.log("네이버 링크크크크: ", NAVER_AUTH_URL);
+
+// kakao
+const KAKAO_client_id = process.env.REACT_APP_KAKAO_REST_API_KEY;
+const KAKAO_redirectURI = process.env.REACT_APP_KAKAO_REDIRECT_URL;
+const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_client_id}&redirect_uri=${KAKAO_redirectURI}&response_type=code`;
+
 function LoginForm() {
   const navigate = useNavigate();
-  //   const dispatch = useContext(DispatchContext);
+  const dispatch = useContext(DispatchContext);
   //   console.log(typeof dispatch); //function 왜???
   // console.log(typeof dispatch()); //
 
@@ -235,11 +224,16 @@ function LoginForm() {
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       );
   };
+  const validatePassword = (password) => {
+    return password.match(
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/
+    );
+  };
 
   const isEmailValid = validateEmail(email);
 
   //   const isPasswordValid = password.length >= 4;
-  const isPasswordValid = password.length >= 3;
+  const isPasswordValid = validatePassword(password);
 
   const isFormValid = isEmailValid && isPasswordValid;
 
@@ -251,25 +245,29 @@ function LoginForm() {
         email,
         password,
       });
-      const user = res.data;
-      console.log("로그인폼의 user: ", user);
-      const jwtToken = user.token;
-      //   console.log("jwtToken: ", jwtToken);
+      console.log("결과: ", res.data);
+      if (res.data.result == false) {
+        console.log("실패패패패패패");
+        // navigate("/login");
+        alert("로그인에 실패하였습니다.\n");
+      } else {
+        const user = res.data;
+        const jwtToken = user.token;
+        sessionStorage.setItem("userToken", jwtToken);
 
-      sessionStorage.setItem("userToken", jwtToken);
+        dispatch({
+          type: "LOGIN_SUCCESS",
+          payload: user,
+        });
+        console.log("디스패치 잘 됐나?");
+        console.log("디스페치 타입은?: ", typeof dispatch());
 
-      //////////////////////////오류발생, 꼭 필요한 코드인지 확인 중, app에서 처리 가능해보임
-      //   dispatch({
-      //     type: "LOGIN_SUCCESS",
-      //     payload: user,
-      //   });
-      //   console.log("디스패치 잘 됐나?");
-      //   console.log("디스페치 타입은?: ", typeof dispatch());
-
-      // 기본 페이지로 이동함.
-      //   navigate("/", { replace: true });
-      navigate("/");
-      console.log("네비게이트 잘 됐나?");
+        // 기본 페이지로 이동함.
+        //   navigate("/", { replace: true });
+        navigate("/");
+        window.location.reload();
+        console.log("네비게이트 잘 됐나?");
+      }
     } catch (err) {
       alert("로그인에 실패하였습니다.\n", err);
     }
@@ -281,11 +279,6 @@ function LoginForm() {
         <LoginBox>
           <Title>로그인</Title>
           <form onSubmit={handleSubmit}>
-            <LoginInput placeholder="email" />
-            {!isEmailValid && (
-              <ValidationP>이메일 형식이 올바르지 않습니다.</ValidationP>
-            )}
-            {/* <LoginInput placeholder="password" /> */}
             <LoginInput
               type="email"
               autoComplete="on"
@@ -293,9 +286,22 @@ function LoginForm() {
               placeholder="email"
               onChange={(e) => setEmail(e.target.value)}
             />
-            {!isPasswordValid && (
-              <ValidationP>비밀번호는 4글자 이상입니다.</ValidationP>
+            {!isEmailValid && (
+              <ValidationP>이메일 형식이 올바르지 않습니다.</ValidationP>
             )}
+            {isEmailValid && <ValidationP>이메일 형식 부합</ValidationP>}
+            {/* <LoginInput placeholder="password" /> */}
+            <LoginInput
+              type="password"
+              autoComplete="on"
+              value={password}
+              placeholder="password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {!isPasswordValid && (
+              <ValidationP>비밀번호는 8글자 이상입니다.</ValidationP>
+            )}
+            {isPasswordValid && <ValidationP>비밀번호 글자수 부합</ValidationP>}
             <LoginButton type="submit" disabled={!isFormValid}>
               로그인
             </LoginButton>
@@ -303,29 +309,24 @@ function LoginForm() {
           <DivisionLine />
           <p>간편로그인</p>
           <SocialLoginBox>
-            {/* <ul>
-              <li> */}
-            {/* <Button backgroundImage="../../assets/img/googleIcon.png"> */}
-            <Button path="/">구글</Button>
-            {/* <span>구글</span>
-              </li>
-              <li> */}
-            {/* <a href={KAKAO_AUTH_URL}> */}
-            {/* <a href="www.daum.net"> */}
-            <Button path="/">카카오</Button>
-            {/* </a> */}
-            {/* <span>카카오</span> */}
-            {/* </li> */}
-            {/* <li> */}
-            {/* <a href={naverUrl}> */}
-            {/* <a href="www.naver.com"> */}
-            <Button type="button" onclick="location.href=www.naver.com;">
-              네이버
-            </Button>
-            {/* </a> */}
-            {/* <span>네이버</span> */}
-            {/* </li> */}
-            {/* </ul> */}
+            <SocialLogo
+              href={GOOGLE_AUTH_URL}
+              style={{
+                backgroundImage: `url(${googleIcon})`,
+              }}
+            />
+            <SocialLogo
+              href={NAVER_AUTH_URL}
+              style={{
+                backgroundImage: `url(${naverIcon})`,
+              }}
+            />
+            <SocialLogo
+              href={KAKAO_AUTH_URL}
+              style={{
+                backgroundImage: `url(${kakaoIcon})`,
+              }}
+            />
           </SocialLoginBox>
         </LoginBox>
       </LoginBoxDiv>

@@ -15,7 +15,7 @@ const postList = async (
 ) => {
   try {
     const allPosts = await postService.getAllPosts();
-    console.log(allPosts);
+    // console.log(allPosts);
     return res.status(200).json(allPosts);
   } catch (err) {
     const result_err = {
@@ -117,7 +117,7 @@ const postListByTag = async (
   const tag = req.params.tag;
   try {
     const Posts = await postService.getPostsByTag({ tag });
-    console.log(Posts);
+    // console.log(Posts);
     return res.status(200).json(Posts);
   } catch (err) {
     const result_err = {
@@ -218,7 +218,7 @@ const postByPostId = async (
   const post_id = req.params.post_id;
   try {
     const Post = await postService.getPostByPostId({ post_id });
-    console.log(Post);
+    // console.log(Post);
     return res.status(200).json(Post);
   } catch (err) {
     const result_err = {
@@ -313,7 +313,7 @@ const postCreate = async (
       content,
       tag,
     });
-    console.log(createdPost);
+    // console.log(createdPost);
     return res.status(200).json(createdPost);
   } catch (err) {
     const result_err = {
@@ -390,7 +390,7 @@ const postUpdate = async (
       content,
       tag,
     });
-    console.log(updatedPost);
+    // console.log(updatedPost);
     return res.status(200).json(updatedPost);
   } catch (err) {
     const result_err = {
@@ -465,7 +465,7 @@ const postDelete = async (
       user_id,
       post_id,
     });
-    console.log(deletedPost);
+    // console.log(deletedPost);
     return res.status(200).json(deletedPost);
   } catch (err) {
     const result_err = {

@@ -79,7 +79,7 @@ var postList = function (req, res, next) { return __awaiter(void 0, void 0, void
                 return [4 /*yield*/, postService_1.default.getAllPosts()];
             case 1:
                 allPosts = _a.sent();
-                console.log(allPosts);
+                // console.log(allPosts);
                 return [2 /*return*/, res.status(200).json(allPosts)];
             case 2:
                 err_1 = _a.sent();
@@ -187,7 +187,7 @@ var postListByTag = function (req, res, next) { return __awaiter(void 0, void 0,
                 return [4 /*yield*/, postService_1.default.getPostsByTag({ tag: tag })];
             case 2:
                 Posts = _a.sent();
-                console.log(Posts);
+                // console.log(Posts);
                 return [2 /*return*/, res.status(200).json(Posts)];
             case 3:
                 err_2 = _a.sent();
@@ -295,7 +295,7 @@ var postByPostId = function (req, res, next) { return __awaiter(void 0, void 0, 
                 return [4 /*yield*/, postService_1.default.getPostByPostId({ post_id: post_id })];
             case 2:
                 Post = _a.sent();
-                console.log(Post);
+                // console.log(Post);
                 return [2 /*return*/, res.status(200).json(Post)];
             case 3:
                 err_3 = _a.sent();
@@ -395,7 +395,7 @@ var postCreate = function (req, res, next) { return __awaiter(void 0, void 0, vo
                     })];
             case 2:
                 createdPost = _a.sent();
-                console.log(createdPost);
+                // console.log(createdPost);
                 return [2 /*return*/, res.status(200).json(createdPost)];
             case 3:
                 err_4 = _a.sent();
@@ -477,7 +477,7 @@ var postUpdate = function (req, res, next) { return __awaiter(void 0, void 0, vo
                     })];
             case 2:
                 updatedPost = _a.sent();
-                console.log(updatedPost);
+                // console.log(updatedPost);
                 return [2 /*return*/, res.status(200).json(updatedPost)];
             case 3:
                 err_5 = _a.sent();
@@ -557,7 +557,7 @@ var postDelete = function (req, res, next) { return __awaiter(void 0, void 0, vo
                     })];
             case 2:
                 deletedPost = _a.sent();
-                console.log(deletedPost);
+                // console.log(deletedPost);
                 return [2 /*return*/, res.status(200).json(deletedPost)];
             case 3:
                 err_6 = _a.sent();

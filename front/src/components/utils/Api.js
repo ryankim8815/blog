@@ -11,7 +11,7 @@ const BASE_URL = `http://${window.location.hostname}:${backendPortNumber}/`;
 
 axios.interceptors.response.use(
   (res) => {
-    return res.data;
+    return res;
   },
   (err) => {
     console.log(err);

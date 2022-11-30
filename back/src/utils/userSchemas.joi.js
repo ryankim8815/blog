@@ -37,7 +37,9 @@ exports.userLoginSchema = joi_1.default.object().keys({
         },
     })
         .required(),
-    password: joi_1.default.string().required(),
+    password: joi_1.default.string()
+        .pattern(new RegExp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$"))
+        .required(), // 최소 8 자, 최소 하나의 문자, 하나의 숫자 및 하나의 특수 문자
 });
 exports.userUpdateSchema = joi_1.default.object().keys({
     user_id: joi_1.default.string().required(),
