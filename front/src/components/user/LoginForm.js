@@ -16,6 +16,10 @@ const LoginBoxDiv = styled.div`
   // align-items: center; // 상하 정렬
   justify-content: center; // 좌우 정렬
   padding: 120px 0;
+  @media screen and (max-width: 500px) {
+    padding: 30px 0;
+    // background-color: green; // 영역확인용
+  }
 `;
 const LoginBox = styled.div`
   width: 80%;
