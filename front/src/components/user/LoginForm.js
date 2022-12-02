@@ -104,7 +104,7 @@ const DivisionLine = styled.div`
 `;
 
 const SocialLoginBox = styled.div`
-  width: 950%;
+  width: 100%;
   // max-width: 1024px;
   max-width: 500px;
   // align-items: center; // 상하 정렬
