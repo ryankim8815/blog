@@ -8,7 +8,8 @@ import SocialLoginBox from "./SocialLogin";
 const LoginBoxDiv = styled.div`
   width: 100%;
   // background-color: green; // 영역확인용
-  margin: 50px 0px;
+  // margin: 50px 0px;
+  margin: auto 0px;
   display: flex;
   // display: inline-block;
   text-align: center; // display를 inline으로 했기 때문에 정렬 가능
@@ -29,8 +30,8 @@ const LoginBox = styled.div`
 
 const Title = styled.p`
   // background-color: pink; // 영역확인용
-  font-size: 50px;
-  font-weight: 900;
+  font-size: 40px;
+  font-weight: 400;
   color: black;
 `;
 
@@ -45,9 +46,11 @@ const LoginInput = styled.input`
   font-size: 15px;
   font-weight: 400;
   color: gray;
+  margin: 0px 0px 0px 0;
+  padding: 0 0 0 0;
   // justify-content: center; // 좌우 정렬
   &:focus {
-    outline: 2px solid purple;
+    outline: 2px solid #daadff;
     // border: 1px solid red;
   }
 `;
@@ -61,7 +64,8 @@ const ValidationP = styled.p`
   text-align: left;
   font-size: 15px;
   font-weight: 400;
-  color: gray;
+  // color: gray;
+  color: #ff7f7f;
   display: block;
   justify-content: center; // 좌우 정렬
 `;
@@ -72,21 +76,43 @@ const LoginButton = styled.button`
   height: 40px;
   border-radius: 2px;
   border: 1px solid #e1e1e1;
-  // background-color: pink; // 영역확인용
+  background-color: #835dfe;
   text-indent: 1em;
   font-size: 15px;
   font-weight: 400;
-  color: gray;
+  color: white;
   &:hover {
     // outline: 2px solid purple;
-    background-color: pink;
+    background-color: #7044ff;
     // border: 1px solid red;
   }
 `;
-
+// 상하간격 스페이서
+const SpacerSmallDiv = styled.div`
+  width: 100%;
+  // max-width: 1024px;
+  // max-width: 500px;
+  // hight: 20px
+  padding: 2px 0;
+  margin: 0 auto;
+  // display: inline-block;
+  display: flex;
+  // background-color: tomato; // 영역확인용
+`;
+const SpacerDiv = styled.div`
+  width: 100%;
+  // max-width: 1024px;
+  // max-width: 500px;
+  // hight: 20px
+  padding: 5px 0;
+  margin: 0 auto;
+  // display: inline-block;
+  display: flex;
+  // background-color: tomato; // 영역확인용
+`;
 const DivisionLine = styled.div`
   border-top: 1px solid lightgray;
-  margin: 30px auto;
+  margin: 40px auto;
   width: 100%;
 `;
 
@@ -159,12 +185,15 @@ function LoginForm() {
       <LoginBoxDiv>
         <LoginBox>
           <Title>로그인</Title>
+          <SpacerSmallDiv />
+          <SpacerDiv />
+          <SpacerDiv />
           <form onSubmit={handleSubmit}>
             <LoginInput
               type="email"
               autoComplete="on"
               value={email}
-              placeholder="email"
+              placeholder="이메일"
               onChange={(e) => setEmail(e.target.value)}
             />
             {!isEmailValid && (
@@ -175,7 +204,7 @@ function LoginForm() {
               type="password"
               autoComplete="on"
               value={password}
-              placeholder="password"
+              placeholder="비밀번호"
               onChange={(e) => setPassword(e.target.value)}
             />
             {!isPasswordValid && (

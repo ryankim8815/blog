@@ -38,7 +38,7 @@ const PostBox = styled.div`
   max-width: 1024px;
   // background-color: tomato; // 영역확인용
   // font-family: Elice Digital Baeum;
-  margin: 50px 0px;
+  // margin: 50px 0px;
   text-align: left; // display를 inline으로 했기 때문에 정렬 가능
   display: flex-column;
 `;
@@ -48,8 +48,20 @@ const StyledA = styled.a`
 `;
 const DivisionLine = styled.div`
   border-top: 1px solid lightgray;
-  margin: 50px auto;
+  margin: 40px auto;
   width: 100%;
+`;
+// 상하간격 스페이서
+const SpacerDiv = styled.div`
+  width: 100%;
+  // max-width: 1024px;
+  // max-width: 500px;
+  // hight: 20px
+  padding: 10px 0;
+  margin: 0 auto;
+  // display: inline-block;
+  display: flex;
+  // background-color: tomato; // 영역확인용
 `;
 
 // tag 리스트를 for문으로 돌려서 만들어 지도록 개선해야함
@@ -152,6 +164,7 @@ function PostList() {
             <h6>{post.sub_title}</h6>
             {/* <div className="division-line"></div> */}
             <DivisionLine />
+            <SpacerDiv />
           </PostBox>
         ))}
       </PostBoxDiv>

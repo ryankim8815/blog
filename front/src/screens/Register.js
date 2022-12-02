@@ -7,7 +7,8 @@ import SocialLoginBox from "../components/user/SocialLogin";
 const SignupBoxDiv = styled.div`
   width: 100%;
   // background-color: green; // 영역확인용
-  margin: 50px 0px;
+  // margin: 50px 0px;
+  margin: auto 0px;
   // display: flex;
   display: inline-block;
   text-align: center; // display를 inline으로 했기 때문에 정렬 가능
@@ -28,47 +29,61 @@ const SignupBox = styled.div`
 
 const Title = styled.p`
   // background-color: pink; // 영역확인용
-  font-size: 50px;
-  font-weight: 900;
-  color: black;
-`;
-const InputName = styled.p`
-  // background-color: skyblue; // 영역확인용
-  margin: 0px 0px;
-  padding: 15px 0px 0px 20px; // 상 우 하 좌
-  text-align: left;
-  font-size: 16px;
+  font-size: 40px;
   font-weight: 400;
   color: black;
 `;
 
-const CheckInput = styled.input`
-  width: 319px;
-  // width: 70%;
-  min-width: 200px;
+// 상하간격 스페이서
+const SpacerSmallDiv = styled.div`
+  width: 100%;
+  // max-width: 1024px;
+  // max-width: 500px;
+  // hight: 20px
+  padding: 2px 0;
+  margin: 0 auto;
+  // display: inline-block;
+  display: flex;
+  // background-color: tomato; // 영역확인용
+`;
+const SpacerDiv = styled.div`
+  width: 100%;
+  // max-width: 1024px;
+  // max-width: 500px;
+  // hight: 20px
+  padding: 5px 0;
+  margin: 0 auto;
+  // display: inline-block;
+  display: flex;
+  // background-color: tomato; // 영역확인용
+`;
+
+const ValidationP = styled.p`
+  width: 400px;
+  width: 95%;
   max-width: 500px;
-  height: 40px;
-  // display: flex;
-  border-radius: 2px;
-  border: 1px solid #e1e1e1;
-  // background-color: pink; // 영역확인용
-  text-indent: 1em;
-  font-size: 15px;
+  // height: 20px;
+  padding: 0px 0 0 0px;
+  margin: 0px 0px 0 0;
+  text-indent: 0.5em;
+  font-size: 14px;
   font-weight: 400;
-  color: gray;
-  justify-content: center; // 좌우 정렬
-  &:focus {
-    outline: 2px solid purple;
-    // border: 1px solid red;
-  }
+  color: #ff7f7f;
+  display: inline-block;
+  // display: flex;
+  // justify-content: center; // 좌우 정렬
+  // align-items: center; // 상하 정렬
+  text-align: left;
+  // float: right;
+  // background-color: pink; // 영역확인용
 `;
 
 const CheckButton = styled.button`
-  width: 150px;
-  // width: 30%;
+  // width: 150px;
+  width: 95%;
   min-width: 100px;
   max-width: 500px;
-  height: 44px;
+  height: 40px;
   // display: flex;
   border-radius: 2px;
   border: 1px solid #e1e1e1;
@@ -80,7 +95,7 @@ const CheckButton = styled.button`
   // justify-content: center;
   &:hover {
     // outline: 2px solid purple;
-    background-color: pink;
+    background-color: #e5e5e5;
     // border: 1px solid red;
   }
 `;
@@ -93,32 +108,19 @@ const SignupInput = styled.input`
   // display: flex;
   border-radius: 2px;
   border: 1px solid #e1e1e1;
-  // background-color: pink; // 영역확인용
+  // background-color: skyblue; // 영역확인용
   text-indent: 1em;
   font-size: 15px;
   font-weight: 400;
   color: gray;
-  margin: 0 0 -5px 0;
-  // padding: 0 0 -100px 0;
+  // margin: 0px 0px 5px 0;
+  margin: 0px 0px 0px 0;
+  padding: 0 0 0 0;
   // justify-content: center; // 좌우 정렬
   &:focus {
-    outline: 2px solid purple;
+    outline: 2px solid #daadff;
     // border: 1px solid red;
   }
-`;
-
-const ValidationP = styled.p`
-  width: 95%;
-  max-width: 500px;
-  height: 20px;
-  // background-color: pink; // 영역확인용
-  text-indent: 1em;
-  text-align: left;
-  font-size: 15px;
-  font-weight: 400;
-  color: gray;
-  display: block;
-  justify-content: center; // 좌우 정렬
 `;
 
 const SignupButton = styled.button`
@@ -127,23 +129,23 @@ const SignupButton = styled.button`
   height: 40px;
   border-radius: 2px;
   border: 1px solid #e1e1e1;
-  // background-color: pink; // 영역확인용
-  text-indent: 1em;
+  background-color: #835dfe;
+  // text-indent: 1em;
   font-size: 15px;
   font-weight: 400;
-  color: gray;
-  margin: 15px 0px;
+  color: white;
+  margin: 30px 0px 0 0;
   padding: 0px 0px;
   &:hover {
     // outline: 2px solid purple;
-    background-color: pink;
+    background-color: #7044ff;
     // border: 1px solid red;
   }
 `;
 
 const DivisionLine = styled.div`
   border-top: 1px solid lightgray;
-  margin: 30px auto;
+  margin: 40px auto;
   width: 100%;
 `;
 
@@ -345,58 +347,62 @@ function Register() {
       <SignupBoxDiv>
         <SignupBox>
           <Title>회원가입</Title>
-
-          <InputName>이메일 주소 *</InputName>
-          <CheckInput
+          <ValidationP className={isEmailValid ? "success" : "error"}>
+            {emailMsg}
+          </ValidationP>
+          <SignupInput
             name="email"
             type="text"
-            placeholder="example@example.com"
+            placeholder="이메일"
             onChange={onChangeEmail}
           />
+          <SpacerSmallDiv />
           <CheckButton
             className={checkMail ? "checked" : "not-checked"}
             onClick={onCheckEmail}
           >
-            중복 확인*
+            중복 확인
           </CheckButton>
-          <ValidationP className={isEmailValid ? "success" : "error"}>
-            {emailMsg}
+          <SpacerDiv />
+          <ValidationP className={isNicknameValid ? "success" : "error"}>
+            {nicknameMsg}
           </ValidationP>
-
-          <InputName>비밀번호 *</InputName>
           <SignupInput
-            name="password"
-            type="password"
-            placeholder="password"
-            onChange={onChangePwd}
-          />
-          <h3 className={isPwdValid ? "success" : "error"}>{pwdMsg}</h3>
-          <SignupInput
-            name="confirmPassword"
-            type="password"
-            placeholder="confirm password"
-            onChange={onChangeConfirmPwd}
-          />
-          <h3 className={isConfirmPwd ? "success" : "error"}>
-            {confirmPwdMsg}
-          </h3>
-
-          <InputName>닉네임 *</InputName>
-          <CheckInput
             name="nickname"
             type="text"
-            placeholder="nickname"
+            placeholder="닉네임"
             onChange={onChangeNickname}
           />
+          <SpacerSmallDiv />
           <CheckButton
             onClick={onCheckNickname}
             className={checkNickname ? "checked" : "not-checked"}
           >
-            중복 확인*
+            중복 확인
           </CheckButton>
-          <ValidationP className={isNicknameValid ? "success" : "error"}>
-            {nicknameMsg}
+          <SpacerDiv />
+
+          <ValidationP className={isPwdValid ? "success" : "error"}>
+            {pwdMsg}
           </ValidationP>
+          <SignupInput
+            name="password"
+            type="password"
+            placeholder="비밀번호"
+            onChange={onChangePwd}
+          />
+          <SpacerSmallDiv />
+          <SignupInput
+            name="confirmPassword"
+            type="password"
+            placeholder="비밀번호 확인"
+            onChange={onChangeConfirmPwd}
+          />
+          <ValidationP className={isConfirmPwd ? "success" : "error"}>
+            {confirmPwdMsg}
+          </ValidationP>
+          <SpacerDiv />
+
           <SignupButton onClick={onSubmit} type="submit" disabled={!isAllValid}>
             가입하기
           </SignupButton>
