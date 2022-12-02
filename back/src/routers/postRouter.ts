@@ -1,32 +1,42 @@
 import * as express from "express";
+import postController from "../controllers/postController";
 import authMiddleware from "../middlewares/authMiddleware";
 import * as validation from "../middlewares/postValidationMiddleware";
-// import upload from "../middlewares/uploadMiddleware";   // 사진 업로드 기능은 resize 적용 후 사용
-import postService from "../services/postService";
-// import asyncHandler from "../utils/asyncHandler";
-// import type { MulterFile } from "../customType/multer.d";
-const postRouter = express.Router();
 
-// GET: 전체 게시글 리스트
-const postList = async (
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
-) => {
-  try {
-    const allPosts = await postService.getAllPosts();
-    // console.log(allPosts);
-    return res.status(200).json(allPosts);
-  } catch (err) {
-    const result_err = {
-      result: false,
-      cause: "api",
-      message: "postList api에서 오류가 발생했습니다.",
-    };
-    console.log(result_err);
-    return res.status(200).json(result_err);
-  }
-};
+const postRouter = express.Router();
+// api index
+postRouter.get("/posts", postController.postList); // 전체 게시글 검섹
+postRouter.get(
+  "/posts/tag/:tag",
+  validation.validatePostByTag,
+  postController.postListByTag
+); // tag로 게시글 검섹
+postRouter.get(
+  "/post/:post_id",
+  validation.validatePostByPostId,
+  postController.postByPostId
+); // post_id로 게시글 검섹
+postRouter.post(
+  "/post",
+  authMiddleware,
+  validation.validatePostCreate,
+  postController.postCreate
+); // 게시글 생성
+postRouter.put(
+  "/post/:post_id",
+  authMiddleware,
+  validation.validatePostUpdate,
+  postController.postUpdate
+); //  게시글 수정
+postRouter.delete(
+  "/post/:post_id",
+  authMiddleware,
+  validation.validatePostDelete,
+  postController.postDelete
+); // 게시글 삭제
+
+export = postRouter;
+
 /**
  * @swagger
  * /posts:
@@ -108,27 +118,6 @@ const postList = async (
  *                       provider: dogfoot
  */
 
-// GET: 테그로 검색한 게시글 리스트
-const postListByTag = async (
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
-) => {
-  const tag = req.params.tag;
-  try {
-    const Posts = await postService.getPostsByTag({ tag });
-    // console.log(Posts);
-    return res.status(200).json(Posts);
-  } catch (err) {
-    const result_err = {
-      result: false,
-      cause: "api",
-      message: "postListByTag api에서 오류가 발생했습니다.",
-    };
-    console.log(result_err);
-    return res.status(200).json(result_err);
-  }
-};
 /**
  * @swagger
  * /posts/tag/{tag}:
@@ -209,27 +198,7 @@ const postListByTag = async (
  *                       admin: 1
  *                       provider: dogfoot
  */
-// GET: post_id로 검색한 게시글 리스트
-const postByPostId = async (
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
-) => {
-  const post_id = req.params.post_id;
-  try {
-    const Post = await postService.getPostByPostId({ post_id });
-    // console.log(Post);
-    return res.status(200).json(Post);
-  } catch (err) {
-    const result_err = {
-      result: false,
-      cause: "api",
-      message: "postByPostId api에서 오류가 발생했습니다.",
-    };
-    console.log(result_err);
-    return res.status(200).json(result_err);
-  }
-};
+
 /**
  * @swagger
  * /post/{post_id}:
@@ -293,38 +262,6 @@ const postByPostId = async (
  *                       provider: dogfoot
  */
 
-// POST: 게시글 생성
-const postCreate = async (
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
-) => {
-  // const email = req.email;
-  const user_id = req.body.user_id;
-  const title = req.body.title;
-  const sub_title = req.body.sub_title;
-  const content = req.body.content;
-  const tag = req.body.tag;
-  try {
-    const createdPost = await postService.addPost({
-      user_id,
-      title,
-      sub_title,
-      content,
-      tag,
-    });
-    // console.log(createdPost);
-    return res.status(200).json(createdPost);
-  } catch (err) {
-    const result_err = {
-      result: false,
-      cause: "api",
-      message: "postCreate api에서 오류가 발생했습니다.",
-    };
-    console.log(result_err);
-    return res.status(200).json(result_err);
-  }
-};
 /**
  * @swagger
  * /post:
@@ -368,40 +305,6 @@ const postCreate = async (
  *                   example: 게시글 생성이 성공적으로 이뤄졌습니다.
  */
 
-// PUT: 게시글 수정
-const postUpdate = async (
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
-) => {
-  // const email = req.email;
-  const user_id = req.body.user_id;
-  const post_id = req.params.post_id;
-  const title = req.body.title;
-  const sub_title = req.body.sub_title;
-  const content = req.body.content;
-  const tag = req.body.tag;
-  try {
-    const updatedPost = await postService.updatePost({
-      user_id,
-      post_id,
-      title,
-      sub_title,
-      content,
-      tag,
-    });
-    // console.log(updatedPost);
-    return res.status(200).json(updatedPost);
-  } catch (err) {
-    const result_err = {
-      result: false,
-      cause: "api",
-      message: "postUpdate api에서 오류가 발생했습니다.",
-    };
-    console.log(result_err);
-    return res.status(200).json(result_err);
-  }
-};
 /**
  * @swagger
  * /post/{post_id}:
@@ -451,32 +354,6 @@ const postUpdate = async (
  *                   example: 게시글 수정이 성공적으로 이뤄졌습니다.
  */
 
-// DELETE: 게시글 삭제
-const postDelete = async (
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
-) => {
-  // const email = req.email;
-  const user_id = req.body.user_id;
-  const post_id = req.params.post_id;
-  try {
-    const deletedPost = await postService.deletePost({
-      user_id,
-      post_id,
-    });
-    // console.log(deletedPost);
-    return res.status(200).json(deletedPost);
-  } catch (err) {
-    const result_err = {
-      result: false,
-      cause: "api",
-      message: "deletedPost api에서 오류가 발생했습니다.",
-    };
-    console.log(result_err);
-    return res.status(200).json(result_err);
-  }
-};
 /**
  * @swagger
  * /post/{post_id}:
@@ -510,28 +387,3 @@ const postDelete = async (
  *                   type: string
  *                   example: 게시글 삭제가 성공적으로 이뤄졌습니다.
  */
-
-// api index
-postRouter.get("/posts", postList); // 전체 게시글 검섹
-postRouter.get("/posts/tag/:tag", validation.validatePostByTag, postListByTag); // tag로 게시글 검섹
-postRouter.get("/post/:post_id", validation.validatePostByPostId, postByPostId); // post_id로 게시글 검섹
-postRouter.post(
-  "/post",
-  authMiddleware,
-  validation.validatePostCreate,
-  postCreate
-); // 게시글 생성
-postRouter.put(
-  "/post/:post_id",
-  authMiddleware,
-  validation.validatePostUpdate,
-  postUpdate
-); //  게시글 수정
-postRouter.delete(
-  "/post/:post_id",
-  authMiddleware,
-  validation.validatePostDelete,
-  postDelete
-); // 게시글 삭제
-
-export = postRouter;
