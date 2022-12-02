@@ -1,31 +1,37 @@
 import * as express from "express";
+import commentController from "../controllers/commentController";
 import authMiddleware from "../middlewares/authMiddleware";
 import * as validation from "../middlewares/commentValidationMiddleware";
-import commentService from "../services/commentService";
 
 const commentRouter = express.Router();
 
-// GET: 특정 게시글의 댓글 조회
-const commentList = async (
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
-) => {
-  try {
-    const post_id = req.params.post_id;
-    const postComments = await commentService.getPostComments({ post_id });
-    console.log(postComments);
-    return res.status(200).json(postComments);
-  } catch (err) {
-    const result_err = {
-      result: false,
-      cause: "api",
-      message: "commentList api에서 오류가 발생했습니다.",
-    };
-    console.log(result_err);
-    return res.status(200).json(result_err);
-  }
-};
+// api index
+commentRouter.get(
+  "/post/:post_id/comments",
+  validation.validateCommentByPostId,
+  commentController.commentList
+); // 특정 게시글의 댓글 검섹
+commentRouter.post(
+  "/post/:post_id/comment",
+  authMiddleware,
+  validation.validateCommentCreate,
+  commentController.commentCreate
+); // 댓글 생성
+commentRouter.put(
+  "/post/:post_id/comment/:comment_id",
+  authMiddleware,
+  validation.validateCommentUpdate,
+  commentController.commentUpdate
+); //  댓글 수정
+commentRouter.delete(
+  "/post/:post_id/comment/:comment_id",
+  authMiddleware,
+  validation.validateCommentDelete,
+  commentController.commentDelete
+); // 댓글 삭제
+
+export = commentRouter;
+
 /**
  * @swagger
  * /post/{post_id}/comments:
@@ -85,34 +91,6 @@ const commentList = async (
  *                       updated_at: 2022-11-03T04:52:32.000Z
  */
 
-// POST: 댓글 생성
-const commentCreate = async (
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
-) => {
-  // const email = req.email;
-  const user_id = req.body.user_id;
-  const post_id = req.params.post_id;
-  const content = req.body.content;
-  try {
-    const createdComment = await commentService.addComment({
-      user_id,
-      post_id,
-      content,
-    });
-    console.log(createdComment);
-    return res.status(200).json(createdComment);
-  } catch (err) {
-    const result_err = {
-      result: false,
-      cause: "api",
-      message: "commentCreate api에서 오류가 발생했습니다.",
-    };
-    console.log(result_err);
-    return res.status(200).json(result_err);
-  }
-};
 /**
  * @swagger
  * /post/{post_id}/comment:
@@ -156,34 +134,6 @@ const commentCreate = async (
  *                   example: 댓글 생성이 성공적으로 이뤄졌습니다.
  */
 
-// PUT: 댓글 수정
-const commentUpdate = async (
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
-) => {
-  const user_id = req.body.user_id;
-  const post_id = req.params.post_id;
-  const comment_id = req.params.comment_id;
-  const content = req.body.content;
-  try {
-    const updatedComment = await commentService.updateComment({
-      user_id,
-      comment_id,
-      content,
-    });
-    console.log(updatedComment);
-    return res.status(200).json(updatedComment);
-  } catch (err) {
-    const result_err = {
-      result: false,
-      cause: "api",
-      message: "commentUpdate api에서 오류가 발생했습니다.",
-    };
-    console.log(result_err);
-    return res.status(200).json(result_err);
-  }
-};
 /**
  * @swagger
  * /post/{post_id}/comment/{comment_id}:
@@ -227,31 +177,6 @@ const commentUpdate = async (
  *                   example: 댓글 수정이 성공적으로 이뤄졌습니다.
  */
 
-// DELETE: 댓글 삭제
-const commentDelete = async (
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
-) => {
-  const user_id = req.body.user_id;
-  const comment_id = req.params.comment_id;
-  try {
-    const deletedComment = await commentService.deleteComment({
-      user_id,
-      comment_id,
-    });
-    console.log(deletedComment);
-    return res.status(200).json(deletedComment);
-  } catch (err) {
-    const result_err = {
-      result: false,
-      cause: "api",
-      message: "commentDelete api에서 오류가 발생했습니다.",
-    };
-    console.log(result_err);
-    return res.status(200).json(result_err);
-  }
-};
 /**
  * @swagger
  * /post/{post_id}/comment/{comment_id}:
@@ -285,30 +210,3 @@ const commentDelete = async (
  *                   type: string
  *                   example: 댓글 삭제가 성공적으로 이뤄졌습니다.
  */
-
-// api index
-commentRouter.get(
-  "/post/:post_id/comments",
-  validation.validateCommentByPostId,
-  commentList
-); // 특정 게시글의 댓글 검섹
-commentRouter.post(
-  "/post/:post_id/comment",
-  authMiddleware,
-  validation.validateCommentCreate,
-  commentCreate
-); // 댓글 생성
-commentRouter.put(
-  "/post/:post_id/comment/:comment_id",
-  authMiddleware,
-  validation.validateCommentUpdate,
-  commentUpdate
-); //  댓글 수정
-commentRouter.delete(
-  "/post/:post_id/comment/:comment_id",
-  authMiddleware,
-  validation.validateCommentDelete,
-  commentDelete
-); // 댓글 삭제
-
-export = commentRouter;
