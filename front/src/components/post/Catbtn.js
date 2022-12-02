@@ -14,7 +14,8 @@ export default function Catbtn({ name, catActive, handleSetCat }) {
     // background: white;
     background: ${catActive ? "lightgray" : "white"};
     border-radius: 12px;
-    margin: 10px 20px;
+    margin: 10px 10px;
+    padding: 10px 15px;
     display: inline-flex;
     cursor: pointer;
     box-shadow: ${catActive ? "0 0 2px 0px lightgray" : null};

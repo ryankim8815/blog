@@ -2,9 +2,7 @@ import React, { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Api from "../components/utils/Api";
 import styled from "styled-components";
-import googleIcon from "../assets/img/googleIcon.png";
-import kakaoIcon from "../assets/img/kakaoIcon.png";
-import naverIcon from "../assets/img/naverIcon.png";
+import SocialLoginBox from "../components/user/SocialLogin";
 
 const SignupBoxDiv = styled.div`
   width: 100%;
@@ -42,18 +40,6 @@ const InputName = styled.p`
   font-size: 16px;
   font-weight: 400;
   color: black;
-`;
-
-const InputCheckBoxDiv = styled.div`
-  width: 95%;
-  background-color: green; // 영역확인용
-  margin: 0px 0px;
-  display: inline-block;
-  // display: inline-block;
-  // text-align: center; // display를 inline으로 했기 때문에 정렬 가능
-  align-items: center; // 상하 정렬
-  // justify-content: center; // 좌우 정렬
-  padding: 0;
 `;
 
 const CheckInput = styled.input`
@@ -135,17 +121,6 @@ const ValidationP = styled.p`
   justify-content: center; // 좌우 정렬
 `;
 
-const ButtonBox = styled.div`
-  width: 950%;
-  // max-width: 1024px;
-  max-width: 500px;
-  // align-items: center; // 상하 정렬
-  // text-align: center;
-  justify-content: space-around; // 좌우 정렬
-  display: inline-block;
-  // background-color: tomato; // 영역확인용
-`;
-
 const SignupButton = styled.button`
   width: 95%;
   max-width: 500px;
@@ -170,43 +145,6 @@ const DivisionLine = styled.div`
   border-top: 1px solid lightgray;
   margin: 30px auto;
   width: 100%;
-`;
-
-const SocialLoginBox = styled.div`
-  width: 100%;
-  // max-width: 1024px;
-  max-width: 500px;
-  // align-items: center; // 상하 정렬
-  // text-align: center;
-  justify-content: center; // 좌우 정렬
-  // display: inline-block;
-  display: flex;
-  // background-color: tomato; // 영역확인용
-`;
-
-const SocialLogo = styled.a`
-  font-size: 15px;
-  font-weight: 400;
-  color: gray;
-  // align-items: center; // 상하 정렬
-  // text-align: center;
-  justify-content: center; // 좌우 정렬
-  display: flex;
-  // display: inline block;
-  // background-image: url(${googleIcon});
-  background-color: transparent;
-  background-repeat: no-repeat;
-  background-position: 0px 0px;
-  background-size: contain;
-  vertical-align: middle;
-  object-fit: cover;
-  border: none;
-  cursor: pointer;
-  height: 70px;
-  width: 70px;
-  vertical-align: middle;
-  margin: 0 15px;
-  // background-color: tomato; // 영역확인용
 `;
 
 // google
@@ -404,14 +342,11 @@ function Register() {
 
   return (
     <>
-      {/* <div>Register</div> */}
       <SignupBoxDiv>
         <SignupBox>
           <Title>회원가입</Title>
 
           <InputName>이메일 주소 *</InputName>
-          {/* */}
-          {/* <InputCheckBoxDiv> */}
           <CheckInput
             name="email"
             type="text"
@@ -424,8 +359,6 @@ function Register() {
           >
             중복 확인*
           </CheckButton>
-          {/* </InputCheckBoxDiv> */}
-          {/* */}
           <ValidationP className={isEmailValid ? "success" : "error"}>
             {emailMsg}
           </ValidationP>
@@ -438,8 +371,6 @@ function Register() {
             onChange={onChangePwd}
           />
           <h3 className={isPwdValid ? "success" : "error"}>{pwdMsg}</h3>
-
-          {/* <InputName>비밀번호 확인 *</InputName> */}
           <SignupInput
             name="confirmPassword"
             type="password"
@@ -466,40 +397,11 @@ function Register() {
           <ValidationP className={isNicknameValid ? "success" : "error"}>
             {nicknameMsg}
           </ValidationP>
-
-          {/* <CheckModal
-            isAccepted={isAccepted}
-            setIsAccpted={setIsAccpted}
-            onCheckAccept={handleCheckAccept}
-          /> */}
-
-          {/* <div> */}
           <SignupButton onClick={onSubmit} type="submit" disabled={!isAllValid}>
             가입하기
           </SignupButton>
-          {/* </div> */}
           <DivisionLine />
-          <p>간편로그인</p>
-          <SocialLoginBox>
-            <SocialLogo
-              href={GOOGLE_AUTH_URL}
-              style={{
-                backgroundImage: `url(${googleIcon})`,
-              }}
-            />
-            <SocialLogo
-              href={NAVER_AUTH_URL}
-              style={{
-                backgroundImage: `url(${naverIcon})`,
-              }}
-            />
-            <SocialLogo
-              href={KAKAO_AUTH_URL}
-              style={{
-                backgroundImage: `url(${kakaoIcon})`,
-              }}
-            />
-          </SocialLoginBox>
+          <SocialLoginBox />
         </SignupBox>
       </SignupBoxDiv>
     </>
