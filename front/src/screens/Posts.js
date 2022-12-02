@@ -41,6 +41,10 @@ const Tag = styled.p`
   font-weight: 900;
   color: black;
 `;
+const StyledA = styled.a`
+  text-decoration-line: none;
+  // color: black;
+`;
 
 const Title = styled.p`
   // background-color: pink; // 영역확인용
@@ -120,16 +124,18 @@ function Posts() {
     <div>
       <PostBoxDiv>
         <PostBox>
-          <div>Post</div>
-          <div className="button-box">
-            <button className="post-previous">이전글</button>
+          {/* <div>Post</div> */}
+          {/* <div className="button-box">
+            <button className="post-previous" >이전글</button>
             <button className="post-list">게시글 리스트</button>
             <button className="post-next">다음글</button>
-          </div>
+          </div> */}
           {posts.map((post) => (
             <div key={post.post_id} className="box-post-list">
               <Tag>
-                <Catbtn name={post.tag} justifyContent="left" />
+                <StyledA href={"/"}>
+                  <Catbtn name={post.tag} />
+                </StyledA>
               </Tag>
               <Title>{post.title}</Title>
               <SubTitle>{post.sub_title}</SubTitle>

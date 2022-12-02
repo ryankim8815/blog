@@ -134,6 +134,7 @@ function NavBar() {
             <NavItemText>DogFoot</NavItemText>
           </NavItem>
           <NavItem to="/about">
+            {/* <NavItem to="/post/{post.post_id}"> */}
             <NavItemText>
               <FA.FaInfoCircle size="1.8rem" />
             </NavItemText>
