@@ -200,7 +200,7 @@ const NAVER_redirectURI = process.env.REACT_APP_NAVER_REDIRECT_URL;
 const NAVER_encoded = encodeURIComponent(NAVER_redirectURI);
 const NAVER_state = process.env.REACT_APP_NAVER_STATE;
 const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_client_id}&redirect_uri=${NAVER_encoded}&state=${NAVER_state}`;
-console.log("네이버 링크크크크: ", NAVER_AUTH_URL);
+// console.log("네이버 링크크크크: ", NAVER_AUTH_URL);
 
 // kakao
 const KAKAO_client_id = process.env.REACT_APP_KAKAO_REST_API_KEY;
