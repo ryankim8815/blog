@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Catbtn from "./Catbtn";
 
+const CategoryUnitDiv = styled.div`
+  margin: 10px 10px;
+`;
 // tag 리스트를 for문으로 돌려서 만들어 지도록 개선해야함
 function Category() {
   //   const [tag, setTag] = useState([]);
@@ -26,16 +29,20 @@ function Category() {
   //////////
   return (
     <div className="box-category">
-      <Catbtn
-        name="All"
-        catActive={activeCat === "All" ? true : false}
-        handleSetCat={setActiveCat}
-      />
-      <Catbtn
-        name="SERVER"
-        catActive={activeCat === "SERVER" ? true : false}
-        handleSetCat={setActiveCat}
-      />
+      <CategoryUnitDiv>
+        <Catbtn
+          name="All"
+          catActive={activeCat === "All" ? true : false}
+          handleSetCat={setActiveCat}
+        />
+      </CategoryUnitDiv>
+      <CategoryUnitDiv>
+        <Catbtn
+          name="SERVER"
+          catActive={activeCat === "SERVER" ? true : false}
+          handleSetCat={setActiveCat}
+        />
+      </CategoryUnitDiv>
       <Catbtn
         name="BACKEND"
         catActive={activeCat === "BACKEND" ? true : false}

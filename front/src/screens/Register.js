@@ -6,33 +6,24 @@ import SocialLoginBox from "../components/user/SocialLogin";
 
 const SignupBoxDiv = styled.div`
   width: 100%;
-  // background-color: green; // 영역확인용
-  // margin: 50px 0px;
   margin: auto 0px;
-  // display: flex;
   display: inline-block;
   text-align: center; // display를 inline으로 했기 때문에 정렬 가능
-  // align-items: center; // 상하 정렬
   justify-content: center; // 좌우 정렬
   padding: 120px 0;
   @media screen and (max-width: 500px) {
     padding: 30px 0;
-    // background-color: green; // 영역확인용
   }
 `;
 const SignupBox = styled.div`
   width: 80%;
-  // max-width: 1024px;
   max-width: 500px;
-  // align-items: center; // 상하 정렬
   text-align: center;
   justify-content: center; // 좌우 정렬
   display: inline-block;
-  // background-color: tomato; // 영역확인용
 `;
 
 const Title = styled.p`
-  // background-color: pink; // 영역확인용
   font-size: 40px;
   font-weight: 400;
   color: black;
@@ -41,32 +32,21 @@ const Title = styled.p`
 // 상하간격 스페이서
 const SpacerSmallDiv = styled.div`
   width: 100%;
-  // max-width: 1024px;
-  // max-width: 500px;
-  // hight: 20px
   padding: 2px 0;
   margin: 0 auto;
-  // display: inline-block;
   display: flex;
-  // background-color: tomato; // 영역확인용
 `;
 const SpacerDiv = styled.div`
   width: 100%;
-  // max-width: 1024px;
-  // max-width: 500px;
-  // hight: 20px
   padding: 5px 0;
   margin: 0 auto;
-  // display: inline-block;
   display: flex;
-  // background-color: tomato; // 영역확인용
 `;
 
 const ValidationP = styled.p`
   width: 400px;
   width: 95%;
   max-width: 500px;
-  // height: 20px;
   padding: 0px 0 0 0px;
   margin: 0px 0px 0 0;
   text-indent: 0.5em;
@@ -74,33 +54,21 @@ const ValidationP = styled.p`
   font-weight: 400;
   color: #ff7f7f;
   display: inline-block;
-  // display: flex;
-  // justify-content: center; // 좌우 정렬
-  // align-items: center; // 상하 정렬
   text-align: left;
-  // float: right;
-  // background-color: pink; // 영역확인용
 `;
 
 const CheckButton = styled.button`
-  // width: 150px;
   width: 95%;
   min-width: 100px;
   max-width: 500px;
   height: 40px;
-  // display: flex;
   border-radius: 2px;
   border: 1px solid #e1e1e1;
-  // background-color: pink; // 영역확인용
-  // text-indent: 1em;
   font-size: 15px;
   font-weight: 400;
   color: gray;
-  // justify-content: center;
   &:hover {
-    // outline: 2px solid purple;
     background-color: #e5e5e5;
-    // border: 1px solid red;
   }
 `;
 
@@ -109,21 +77,16 @@ const SignupInput = styled.input`
   min-width: 200px;
   max-width: 500px;
   height: 40px;
-  // display: flex;
   border-radius: 2px;
   border: 1px solid #e1e1e1;
-  // background-color: skyblue; // 영역확인용
   text-indent: 1em;
   font-size: 15px;
   font-weight: 400;
   color: gray;
-  // margin: 0px 0px 5px 0;
   margin: 0px 0px 0px 0;
   padding: 0 0 0 0;
-  // justify-content: center; // 좌우 정렬
   &:focus {
     outline: 2px solid #daadff;
-    // border: 1px solid red;
   }
 `;
 
@@ -134,16 +97,13 @@ const SignupButton = styled.button`
   border-radius: 2px;
   border: 1px solid #e1e1e1;
   background-color: #835dfe;
-  // text-indent: 1em;
   font-size: 15px;
   font-weight: 400;
   color: white;
   margin: 30px 0px 0 0;
   padding: 0px 0px;
   &:hover {
-    // outline: 2px solid purple;
     background-color: #7044ff;
-    // border: 1px solid red;
   }
 `;
 

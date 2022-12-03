@@ -8,7 +8,6 @@ const SocialLoginBoxDiv = styled.div`
   width: 100%;
   max-width: 500px;
   justify-content: center; // 좌우 정렬
-  // display: inline-block;
   display: flex;
 `;
 

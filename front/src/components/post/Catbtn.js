@@ -11,14 +11,14 @@ export default function Catbtn({ name, catActive, handleSetCat }) {
     justify-content: flex-end;
     // border: 1px solid lightgray;
     border: ${catActive ? "1px solid gray" : "1px solid lightgray"};
-    // background: white;
     background: ${catActive ? "lightgray" : "white"};
     border-radius: 12px;
-    margin: 10px 10px;
-    padding: 10px 15px;
     display: inline-flex;
     cursor: pointer;
     box-shadow: ${catActive ? "0 0 2px 0px lightgray" : null};
+    // background: pink; // 확인용
+    // margin: 10px 10px;
+    padding: 10px 15px;
     &:hover {
       background: lightgray;
       color: black;

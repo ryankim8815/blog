@@ -8,37 +8,41 @@ import styled from "styled-components";
 // category button list
 const CategoryDiv = styled.div`
   width: 100%;
-  // background-color: green; // 영역확인용
-  margin: 50px 0px;
+  padding-top: 40px;
   display: flex;
   text-align: center; // display를 inline으로 했기 때문에 정렬 가능
   align-items: center; // 상하 정렬
   justify-content: center; // 좌우 정렬
+  @media screen and (max-width: 500px) {
+    padding-top: 20px;
+  }
 `;
 const CategoryBox = styled.div`
   width: 950%;
   max-width: 1024px;
   // background-color: tomato; // 영역확인용
 `;
+const CategoryUnitDiv = styled.div`
+  margin: 10px 10px;
+  display: inline-block;
+`;
 
 // posts list
 const PostBoxDiv = styled.div`
   width: 100%;
-  // background-color: green; // 영역확인용
-  margin: 50px 0px;
+  padding-top: 50px;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column; /*수직 정렬*/
   align-items: center; // 상하 정렬
   justify-content: center; // 좌우 정렬
+  @media screen and (max-width: 500px) {
+    padding-top: 30px;
+  }
 `;
 const PostBox = styled.div`
   width: 90%;
-  // min-width: 360px;
   max-width: 1024px;
-  // background-color: tomato; // 영역확인용
-  // font-family: Elice Digital Baeum;
-  // margin: 50px 0px;
   text-align: left; // display를 inline으로 했기 때문에 정렬 가능
   display: flex-column;
 `;
@@ -50,18 +54,19 @@ const DivisionLine = styled.div`
   border-top: 1px solid lightgray;
   margin: 40px auto;
   width: 100%;
+  @media screen and (max-width: 500px) {
+    margin: 25px auto;
+  }
 `;
 // 상하간격 스페이서
 const SpacerDiv = styled.div`
   width: 100%;
-  // max-width: 1024px;
-  // max-width: 500px;
-  // hight: 20px
   padding: 10px 0;
   margin: 0 auto;
-  // display: inline-block;
   display: flex;
-  // background-color: tomato; // 영역확인용
+  @media screen and (max-width: 500px) {
+    padding: 5px 0;
+  }
 `;
 
 // tag 리스트를 for문으로 돌려서 만들어 지도록 개선해야함
@@ -98,11 +103,13 @@ function PostList() {
     <div>
       <CategoryDiv>
         <CategoryBox>
-          <Catbtn
-            name="All"
-            catActive={activeCat === "All" ? true : false}
-            handleSetCat={setActiveCat}
-          />
+          <CategoryUnitDiv>
+            <Catbtn
+              name="All"
+              catActive={activeCat === "All" ? true : false}
+              handleSetCat={setActiveCat}
+            />
+          </CategoryUnitDiv>
           {/* <Catbtn
             name="tag"
             catActive={activeCat === "tag" ? true : false}
@@ -113,41 +120,55 @@ function PostList() {
             catActive={activeCat === "SERVER" ? true : false}
             handleSetCat={setActiveCat}
           /> */}
-          <Catbtn
-            name="BACKEND"
-            catActive={activeCat === "BACKEND" ? true : false}
-            handleSetCat={setActiveCat}
-          />
-          <Catbtn
-            name="FRONTEND"
-            catActive={activeCat === "FRONTEND" ? true : false}
-            handleSetCat={setActiveCat}
-          />
-          <Catbtn
-            name="DEVOPS"
-            catActive={activeCat === "DEVOPS" ? true : false}
-            handleSetCat={setActiveCat}
-          />
-          <Catbtn
-            name="QA"
-            catActive={activeCat === "QA" ? true : false}
-            handleSetCat={setActiveCat}
-          />
-          <Catbtn
-            name="SECURITY"
-            catActive={activeCat === "SECURITY" ? true : false}
-            handleSetCat={setActiveCat}
-          />
-          <Catbtn
-            name="DATA"
-            catActive={activeCat === "DATA" ? true : false}
-            handleSetCat={setActiveCat}
-          />
-          <Catbtn
-            name="etc"
-            catActive={activeCat === "etc" ? true : false}
-            handleSetCat={setActiveCat}
-          />
+          <CategoryUnitDiv>
+            <Catbtn
+              name="BACKEND"
+              catActive={activeCat === "BACKEND" ? true : false}
+              handleSetCat={setActiveCat}
+            />
+          </CategoryUnitDiv>
+          <CategoryUnitDiv>
+            <Catbtn
+              name="FRONTEND"
+              catActive={activeCat === "FRONTEND" ? true : false}
+              handleSetCat={setActiveCat}
+            />
+          </CategoryUnitDiv>
+          <CategoryUnitDiv>
+            <Catbtn
+              name="DEVOPS"
+              catActive={activeCat === "DEVOPS" ? true : false}
+              handleSetCat={setActiveCat}
+            />
+          </CategoryUnitDiv>
+          <CategoryUnitDiv>
+            <Catbtn
+              name="QA"
+              catActive={activeCat === "QA" ? true : false}
+              handleSetCat={setActiveCat}
+            />
+          </CategoryUnitDiv>
+          <CategoryUnitDiv>
+            <Catbtn
+              name="SECURITY"
+              catActive={activeCat === "SECURITY" ? true : false}
+              handleSetCat={setActiveCat}
+            />
+          </CategoryUnitDiv>
+          <CategoryUnitDiv>
+            <Catbtn
+              name="DATA"
+              catActive={activeCat === "DATA" ? true : false}
+              handleSetCat={setActiveCat}
+            />
+          </CategoryUnitDiv>
+          <CategoryUnitDiv>
+            <Catbtn
+              name="etc"
+              catActive={activeCat === "etc" ? true : false}
+              handleSetCat={setActiveCat}
+            />
+          </CategoryUnitDiv>
         </CategoryBox>
       </CategoryDiv>
       <PostBoxDiv>

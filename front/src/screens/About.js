@@ -11,68 +11,49 @@ const converter = new showdown.Converter();
 
 const PostBoxDiv = styled.div`
   width: 100%;
-  // background-color: green; // 영역확인용
-  margin: 50px 0px;
+  margin: 0px 0px;
   display: flex;
-  // display: inline-block;
   text-align: center; // display를 inline으로 했기 때문에 정렬 가능
-  // align-items: center; // 상하 정렬
   justify-content: center; // 좌우 정렬
-  padding: 20px 0 120px 0;
+  padding: 50px 0 100px 0;
+  @media screen and (max-width: 500px) {
+    padding: 20px 0;
+  }
 `;
 const PostBox = styled.div`
   width: 95%;
   max-width: 1024px;
-  // max-width: 500px;
-  // align-items: center; // 상하 정렬
   text-align: center;
-  // justify-content: center; // 좌우 정렬
   display: inline-block;
-  // background-color: tomato; // 영역확인용
 `;
 
-const Tag = styled.p`
-  // background-color: pink; // 영역확인용
+const Tag = styled.div`
   text-align: left; // 좌우 정렬
-  margin: 0px 0px;
-  // padding: 0px 20px;
-  // text-indent: 1em;
-  font-size: 40px;
-  font-weight: 900;
+  margin: 0px 20px;
   color: black;
 `;
 const StyledA = styled.a`
   text-decoration-line: none;
-  // color: black;
 `;
 
 const Title = styled.p`
-  // background-color: pink; // 영역확인용
   text-align: left; // 좌우 정렬
-  margin: 0px 0px;
-  padding: 0px 20px;
-  // text-indent: 1em;
+  margin: 0px 20px;
   font-size: 40px;
-  font-weight: 900;
+  font-weight: 400;
   color: black;
 `;
 
 const SubTitle = styled.p`
-  // background-color: pink; // 영역확인용
   text-align: left; // 좌우 정렬
-  margin: 0px 0px;
-  padding: 0px 20px;
-  // text-indent: 1em;
+  margin: 0px 20px;
   font-size: 20px;
-  font-weight: 400;
+  font-weight: 200;
   color: gray;
 `;
 const Info = styled.p`
-  // background-color: pink; // 영역확인용
   text-align: left; // 좌우 정렬
-  margin: 5px 0 0 0;
-  padding: 0px 20px;
-  // text-indent: 1em;
+  margin: 5px 0 0 20px;
   font-size: 16px;
   font-weight: 400;
   color: gray;
@@ -85,10 +66,8 @@ const DivisionLine = styled.div`
 `;
 
 const Content = styled.p`
-  // background-color: pink; // 영역확인용
   text-align: left; // 좌우 정렬
   padding: 0px 30px;
-  // text-indent: 1em;
   font-size: 16px;
   font-weight: 400;
   color: black;
