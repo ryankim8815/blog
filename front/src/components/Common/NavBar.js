@@ -4,6 +4,8 @@ import styled from "styled-components";
 import * as FA from "react-icons/fa";
 // import { FaHome } from "react-icons/fa";
 import * as FI from "react-icons/fi";
+import Logout from "../logout/Logout";
+import { useNavigate } from "react-router-dom";
 
 const NavDiv = styled.div`
   width: 100%;
@@ -47,6 +49,23 @@ const NavBox = styled.div`
   // padding-top: 50px;
 `;
 const NavItem = styled(Link)`
+  // width: 20%;
+  min-width: 50px;
+  // height: 230px;
+  // text-align: left;
+  // background-color: pink; // 영역확인용
+  // padding-bottom: 30px;
+  color: gray;
+  display: flex;
+  // flex-wrap: wrap;
+  flex-direction: column; /*수직 정렬*/
+  justify-content: center; // 좌우 정렬
+  text-decoration-line: none;
+  &:hover {
+    color: #342a97;
+  }
+`;
+const NavItemA = styled.a`
   // width: 20%;
   min-width: 50px;
   // height: 230px;
@@ -116,6 +135,18 @@ function NavBar() {
     }
   };
 
+  /////// logout TEST
+  let navigate = useNavigate();
+
+  //     navigate('/');
+  const onLogOutClick = () => {
+    // signOut(auth);
+    sessionStorage.removeItem("userToken");
+    navigate("/");
+  };
+  ////////logout TEST end
+  //
+
   // SIGNUP버튼이 사이즈가 줄어들면 없어지도록 한다.
   useEffect(() => {
     showButton();
@@ -158,12 +189,16 @@ function NavBar() {
             </NavItemText>
             <NavItemText>Login</NavItemText>
           </NavItem>
-          <NavItem to="/logout">
+          {/* <NavItem to="/logout"> */}
+          {/* <NavItemA onClick={onLogOutClick}> */}
+          <Logout>
             <NavItemText>
               <FA.FaSignOutAlt size="1.8rem" />
             </NavItemText>
             <NavItemText>Logout</NavItemText>
-          </NavItem>
+            {/* </NavItem> */}
+            {/* </NavItemA> */}
+          </Logout>
           {/* <NavItem>
             <div className="menu-icon" onClick={handleClick}>
               <i className={click ? "fas fa-times" : "fas fa-bars"} />

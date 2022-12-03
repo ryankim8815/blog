@@ -3,9 +3,36 @@ import { useNavigate } from "react-router-dom";
 import * as Api from "../utils/Api";
 import styled from "styled-components";
 import showdown from "showdown";
-showdown.setOption("ghMentions", true);
-showdown.setOption("emoji", true);
-showdown.setOption("smoothLivePreview", true);
+
+// showdown.setFlavor("original");
+const converter = new showdown.Converter({
+  simplifiedAutoLink: true,
+  excludeTrailingPunctuationFromURLs: true,
+  literalMidWordUnderscores: true,
+  literalMidWordAsterisks: true,
+  strikethrough: true,
+  tables: true,
+  // tablesHeaderId: true,
+  ghCodeBlocks: true, // default: true
+  tasklists: true,
+  smoothLivePreview: true,
+  // smartIndentationFix: true,   // ???
+  // disableForced4SpacesIndentedSublists: true, // 2 spaces
+  // simpleLineBreaks: true,    // 1 enter enough but syntax issue
+  requireSpaceBeforeHeadingText: true,
+  ghMentions: true, // github mention @id
+  ghMentionsLink: `https://github.com/{u}/profile`, // github @ mention url custom
+  encodeEmails: false, // default : true error- too many log (not working) // false - working fine
+  openLinksInNewWindow: true,
+  // backslashEscapesHTMLTags: true,    // not useful
+  emoji: true,
+  // underline: true,
+  // ellipsis: true,
+  // completeHTMLDocument: true,
+  // metadata: true,
+  // splitAdjacentBlockquotes: true,
+  parseImgDimensions: true,
+});
 
 const EditorBoxDiv = styled.div`
   width: 100%;
@@ -24,21 +51,7 @@ const EditorBoxDiv = styled.div`
     // background-color: green; // 영역확인용
   }
 `;
-// const WiseSaying = styled.p`
-//   // background-color: pink; // 영역확인용
-//   width: 50%;
-//   font-size: 16px;
-//   font-weight: 400;
-//   text-align: center;
-//   color: black;
-// `;
-// const Author = styled.p`
-//   // background-color: pink; // 영역확인용
-//   font-size: 14px;
-//   font-weight: 400;
-//   text-align: center;
-//   color: black;
-// `;
+
 const EditorBox = styled.div`
   width: 95%;
   max-width: 1024px;
@@ -128,17 +141,6 @@ const SubTitleInput = styled.input`
     // border: 1px solid red;
   }
 `;
-const ContentBox = styled.div`
-  width: 95%;
-  max-width: 1024px;
-  // max-width: 500px;
-  // align-items: center; // 상하 정렬
-  text-align: center;
-  // justify-content: center; // 좌우 정렬
-  display: block;
-  margin 0 auto;
-  background-color: skyblue; // 영역확인용
-`;
 
 const PreviewDiv = styled.div`
   // background-color: pink; // 영역확인용
@@ -185,38 +187,7 @@ const ContentTextarea = styled.textarea`
     // border: 1px solid red;
   }
 `;
-const ValidationP = styled.p`
-  width: 95%;
-  max-width: 500px;
-  height: 20px;
-  // background-color: pink; // 영역확인용
-  text-indent: 1em;
-  text-align: left;
-  font-size: 15px;
-  font-weight: 400;
-  // color: gray;
-  color: #ff7f7f;
-  display: block;
-  justify-content: center; // 좌우 정렬
-`;
 
-const LoginButton = styled.button`
-  width: 95%;
-  max-width: 500px;
-  height: 40px;
-  border-radius: 2px;
-  border: 1px solid #e1e1e1;
-  background-color: #835dfe;
-  text-indent: 1em;
-  font-size: 15px;
-  font-weight: 400;
-  color: white;
-  &:hover {
-    // outline: 2px solid purple;
-    background-color: #7044ff;
-    // border: 1px solid red;
-  }
-`;
 // 상하간격 스페이서
 const SpacerSmallDiv = styled.div`
   width: 100%;
@@ -264,7 +235,10 @@ function Editor() {
     let content = e.target.value;
     setContent(content);
   };
-  const converter = new showdown.Converter();
+  // const converter = new showdown.Converter(); // 상단에서 재작성 테스트
+  //
+  //
+
   // const html = converter.makeHtml(contents);
   // console.log("converter: ", converter);
   // console.log("html: ", html);
@@ -337,11 +311,6 @@ function Editor() {
       </div>
       <EditorBoxDiv>
         <EditorBox className="title-box">
-          {/* <WiseSaying>
-            100년을 살면서 단지 300 MB 밖에 기억하지 못하는 건 너무 가혹하다. CD
-            한 장보다 못하지 않나? 인간의 조건은 정말 점점 더 초라해지고 있다.
-          </WiseSaying>
-          <Author>- Marvin Minsky, AI로 유명한 컴퓨터 과학자 -</Author> */}
           <TitleInput
             className="editor-title"
             type="text"
@@ -356,7 +325,6 @@ function Editor() {
           />
           <PreviewDiv
             className="preview-box"
-            // placeholder="Markdown 문법으로 작성하세요."
             dangerouslySetInnerHTML={{ __html: preview }}
           />
           <ContentTextarea
@@ -367,11 +335,6 @@ function Editor() {
             // onChange={(e) => this.handleEditorInput(e)}
           />
         </EditorBox>
-        {/* <input className="editor-tag" type="text" placeholder="#태그입력" /> */}
-        {/* <ContentBox> */}
-        {/* <div className="editor"> */}
-        {/* </div> */}
-        {/* </ContentBox> */}
       </EditorBoxDiv>
     </>
   );

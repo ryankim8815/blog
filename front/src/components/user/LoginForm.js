@@ -131,7 +131,6 @@ function LoginForm() {
       });
       console.log("결과: ", res.data);
       if (res.data.result == false) {
-        console.log("실패패패패패패");
         // navigate("/login");
         alert("로그인에 실패하였습니다.\n");
       } else {
@@ -150,7 +149,6 @@ function LoginForm() {
         //   navigate("/", { replace: true });
         navigate("/");
         window.location.reload();
-        console.log("네비게이트 잘 됐나?");
       }
     } catch (err) {
       alert("로그인에 실패하였습니다.\n", err);

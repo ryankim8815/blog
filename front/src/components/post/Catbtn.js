@@ -9,6 +9,7 @@ export default function Catbtn({ name, catActive, handleSetCat }) {
     font-family: $font-elice-content;
     align-items: center;
     justify-content: flex-end;
+    padding: 10px 15px;
     // border: 1px solid lightgray;
     border: ${catActive ? "1px solid gray" : "1px solid lightgray"};
     background: ${catActive ? "lightgray" : "white"};
@@ -18,7 +19,6 @@ export default function Catbtn({ name, catActive, handleSetCat }) {
     box-shadow: ${catActive ? "0 0 2px 0px lightgray" : null};
     // background: pink; // 확인용
     // margin: 10px 10px;
-    padding: 10px 15px;
     &:hover {
       background: lightgray;
       color: black;
