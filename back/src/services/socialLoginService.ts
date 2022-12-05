@@ -32,7 +32,7 @@ class socialLoginService {
       // 기존 가입자 로그인(토큰 발급)
       const thisUser = checkEmailObject[0];
       const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
-      const token = jwt.sign({ email: email }, secretKey);
+      const token = jwt.sign({ user_id: thisUser.user_id }, secretKey);
       delete thisUser.password;
       delete thisUser.user_id;
       const result_success = Object.assign(
@@ -82,7 +82,7 @@ class socialLoginService {
       // 토큰 발급
       const thisUser = checkNewUserObject[0];
       const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
-      const token = jwt.sign({ email: email }, secretKey);
+      const token = jwt.sign({ user_id: thisUser.user_id }, secretKey);
       delete thisUser.password;
       delete thisUser.user_id;
       const result_success = Object.assign(
@@ -132,7 +132,7 @@ class socialLoginService {
       // 기존 가입자 로그인(토큰 발급)
       const thisUser = checkEmailObject[0];
       const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
-      const token = jwt.sign({ email: email }, secretKey);
+      const token = jwt.sign({ user_id: thisUser.user_id }, secretKey);
       delete thisUser.password;
       delete thisUser.user_id;
       const result_success = Object.assign(
@@ -182,7 +182,7 @@ class socialLoginService {
       // 토큰 발급
       const thisUser = checkNewUserObject[0];
       const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
-      const token = jwt.sign({ email: email }, secretKey);
+      const token = jwt.sign({ user_id: thisUser.user_id }, secretKey);
       delete thisUser.password;
       delete thisUser.user_id;
       const result_success = Object.assign(
@@ -232,7 +232,7 @@ class socialLoginService {
       // 기존 가입자 로그인(토큰 발급)
       const thisUser = checkEmailObject[0];
       const secretKey = process.env.JWT_SECRET_KEY;
-      const token = jwt.sign({ email: email }, secretKey);
+      const token = jwt.sign({ user_id: thisUser.user_id }, secretKey);
       delete thisUser.password;
       delete thisUser.user_id;
       const result_success = Object.assign(
@@ -282,7 +282,7 @@ class socialLoginService {
       // 토큰 발급
       const thisUser = checkNewUserObject[0];
       const secretKey = process.env.JWT_SECRET_KEY;
-      const token = jwt.sign({ email: email }, secretKey);
+      const token = jwt.sign({ user_id: thisUser.user_id }, secretKey);
       delete thisUser.password;
       delete thisUser.user_id;
       const result_success = Object.assign(
