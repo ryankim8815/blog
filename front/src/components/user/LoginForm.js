@@ -49,7 +49,7 @@ const LoginInput = styled.input`
 const ValidationP = styled.p`
   width: 95%;
   max-width: 500px;
-  height: 20px;
+  height: 22px;
   text-indent: 1em;
   text-align: left;
   font-size: 15px;
@@ -73,6 +73,10 @@ const LoginButton = styled.button`
   &:hover {
     background-color: #7044ff;
   }
+  &:disabled {
+    color: gray;
+    background-color: #e1e1e1;
+  }
 `;
 // 상하간격 스페이서
 const SpacerSmallDiv = styled.div`
@@ -87,6 +91,13 @@ const SpacerDiv = styled.div`
   margin: 0 auto;
   display: flex;
 `;
+const SpacerBigDiv = styled.div`
+  width: 100%;
+  padding: 10px 0;
+  margin: 0 auto;
+  display: flex;
+`;
+
 const DivisionLine = styled.div`
   border-top: 1px solid lightgray;
   margin: 40px auto;
@@ -98,7 +109,6 @@ function LoginForm() {
   const dispatch = useContext(DispatchContext);
 
   const [email, setEmail] = useState("");
-  //useState로 password 상태를 생성함.
   const [password, setPassword] = useState("");
 
   const validateEmail = (email) => {
@@ -115,10 +125,7 @@ function LoginForm() {
   };
 
   const isEmailValid = validateEmail(email);
-
-  //   const isPasswordValid = password.length >= 4;
   const isPasswordValid = validatePassword(password);
-
   const isFormValid = isEmailValid && isPasswordValid;
 
   const handleSubmit = async (e) => {
@@ -129,7 +136,6 @@ function LoginForm() {
         email,
         password,
       });
-      console.log("결과: ", res.data);
       if (res.data.result == false) {
         // navigate("/login");
         alert("로그인에 실패하였습니다.\n");
@@ -142,11 +148,6 @@ function LoginForm() {
           type: "LOGIN_SUCCESS",
           payload: user,
         });
-        console.log("디스패치 잘 됐나?");
-        console.log("디스페치 타입은?: ", typeof dispatch());
-
-        // 기본 페이지로 이동함.
-        //   navigate("/", { replace: true });
         navigate("/");
         window.location.reload();
       }
@@ -160,9 +161,7 @@ function LoginForm() {
       <LoginBoxDiv>
         <LoginBox>
           <Title>로그인</Title>
-          <SpacerSmallDiv />
-          <SpacerDiv />
-          <SpacerDiv />
+          <SpacerBigDiv />
           <form onSubmit={handleSubmit}>
             <LoginInput
               type="email"
@@ -171,10 +170,11 @@ function LoginForm() {
               placeholder="이메일"
               onChange={(e) => setEmail(e.target.value)}
             />
-            {!isEmailValid && (
+            {isEmailValid || !email ? (
+              <ValidationP>{null}</ValidationP>
+            ) : (
               <ValidationP>이메일 형식이 올바르지 않습니다.</ValidationP>
             )}
-            {isEmailValid && <ValidationP>이메일 형식 부합</ValidationP>}
             <LoginInput
               type="password"
               autoComplete="on"
@@ -182,10 +182,11 @@ function LoginForm() {
               placeholder="비밀번호"
               onChange={(e) => setPassword(e.target.value)}
             />
-            {!isPasswordValid && (
+            {isPasswordValid || !password ? (
+              <ValidationP>{null}</ValidationP>
+            ) : (
               <ValidationP>비밀번호는 8글자 이상입니다.</ValidationP>
             )}
-            {isPasswordValid && <ValidationP>비밀번호 글자수 부합</ValidationP>}
             <LoginButton type="submit" disabled={!isFormValid}>
               로그인
             </LoginButton>

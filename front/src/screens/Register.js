@@ -53,14 +53,13 @@ const ValidationP = styled.p`
   width: 400px;
   width: 95%;
   max-width: 500px;
+  height: 22px;
   padding: 0px 0 0 0px;
   margin: 0px;
   text-indent: 1em;
   font-size: 14px;
   font-weight: 400;
   color: #ff7f7f;
-  // display: inline-block;
-  // display: block;
   text-align: left;
 `;
 
@@ -129,7 +128,6 @@ const DivisionLine = styled.div`
 `;
 
 function Register() {
-  //로그인 성공하면 내비게이트로 메인페이지 보내기
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -137,6 +135,7 @@ function Register() {
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isDisabled, setIsDisabled] = useState(true);
   const [isAccepted, setIsAccpted] = useState(false); // 정책 동의 만들면
 
   //각 항목 조건이 맞지 않을 때 띄우는 메시지
@@ -186,7 +185,7 @@ function Register() {
   const isNicknameValid = validateNickname(nickname);
   const isPwdValid = validatePassword(password);
   const isConfirmPwdValid = validateConfirmPassword(confirmPassword);
-  // const isConfirmPwd = password === confirmPassword;
+  const isConfirmPasswordValid = password === confirmPassword;
 
   const isAllValid =
     isEmailValid &&
@@ -198,16 +197,16 @@ function Register() {
     checkCode &&
     checkNickname;
 
-  //  버튼 활성화
-  function btnActive(idName) {
-    const target = document.getElementById(idName);
-    target.disabled = false;
-  }
+  // //  버튼 활성화
+  // function btnActive(idName) {
+  //   const target = document.getElementById(idName);
+  //   target.disabled = false;
+  // }
 
-  function btnDisabled(idName) {
-    const target = document.getElementById(idName);
-    target.disabled = true;
-  }
+  // function btnDisabled(idName) {
+  //   const target = document.getElementById(idName);
+  //   target.disabled = true;
+  // }
 
   // 화면에서 가리기
   function elementShow(idName) {
@@ -222,19 +221,21 @@ function Register() {
 
   // [1-1] 이메일 입력
   const onChangeEmail = useCallback(async (e) => {
-    const currentEmail = e.target.value;
+    const currentEmail = await e.target.value;
     setEmail(currentEmail);
-    if (!validateEmail(currentEmail)) {
-      btnDisabled("sendCodeButton");
+    if (!currentEmail) {
+      setIsDisabled(true);
+      setEmailMsg(null);
+    } else if (!validateEmail(currentEmail)) {
+      setIsDisabled(true);
       setEmailMsg("이메일 형식이 올바르지 않습니다.");
     } else {
-      btnActive("sendCodeButton");
-      setEmailMsg("올바른 이메일 형식입니다.");
+      setIsDisabled(false);
+      setEmailMsg(null);
     }
   });
 
   // [1-2] 이메일 인증코드 발송
-
   const onCheckEmail = async (e) => {
     e.preventDefault();
     try {
@@ -244,9 +245,10 @@ function Register() {
         setEmailMsg("이미 등록된 메일입니다. 다시 입력해주세요.");
         setCheckMail(false);
       } else {
-        setEmailMsg("사용 가능한 메일입니다.");
+        setEmailMsg(null);
         setCheckMail(true);
         elementHide("emailInputGroupDiv");
+        setIsDisabled(true);
         elementShow("codeInputGroupDiv");
       }
     } catch (err) {
@@ -256,34 +258,32 @@ function Register() {
 
   // [2-1] 인증코드 입력
   const onChangeCode = useCallback(async (e) => {
-    const currentCode = e.target.value;
+    const currentCode = await e.target.value;
     setCode(currentCode);
 
     if (!validateCode(currentCode)) {
-      btnDisabled("checkCodeButton");
+      setIsDisabled(true);
       setCodeMsg("인증코드 형식이 올바르지 않습니다.");
     } else {
-      btnActive("checkCodeButton");
-      setCodeMsg("올바른 인증코드 형식입니다.");
+      setIsDisabled(false);
+      setCodeMsg(null);
     }
   });
 
   // [2-2] 인증코드 확인
   const onCheckCode = async (e) => {
     e.preventDefault();
-
     try {
       // if
       const res = await Api.get(`signup/email/${email}/code/${code}`);
-
       const { result } = res.data;
-
       if (!result) {
         setCodeMsg("인증코드가 일치하지 않습니다. 다시 입력해주세요.");
         setCheckCode(false);
       } else {
         setCheckCode(true);
         elementHide("codeInputGroupDiv");
+        setIsDisabled(true);
         elementShow("nicknameInputGroupDiv");
       }
     } catch (err) {
@@ -292,35 +292,31 @@ function Register() {
   };
 
   // [3-1] 닉네임 입력
-  const onChangeNickname = useCallback((e) => {
-    const currNickname = e.target.value;
+  const onChangeNickname = useCallback(async (e) => {
+    const currNickname = await e.target.value;
     setNickname(currNickname);
-
     if (!validateNickname(currNickname)) {
-      btnDisabled("checkNicknameButton");
+      setIsDisabled(true);
       setNicknameMsg("1글자 이상 9글자 미만으로 입력해주세요.");
     } else {
-      btnActive("checkNicknameButton");
-      setNicknameMsg("올바른 닉네임 형식입니다.");
+      setIsDisabled(false);
+      setNicknameMsg(null);
     }
   }, []);
 
   // [3-2] 닉네임 중복확인
   const onCheckNickname = async (e) => {
     e.preventDefault();
-
     try {
       const res = await Api.get(`signup/nickname/${nickname}`);
-
       const { result } = res.data;
-
       if (!result) {
         setNicknameMsg("이미 등록된 닉네임입니다. 다시 입력해주세요.");
         setCheckNickname(false);
       } else {
-        // setNicknameMsg("사용 가능한 닉네임입니다.😊");
         setCheckNickname(true);
         elementHide("nicknameInputGroupDiv");
+        setIsDisabled(true);
         elementShow("passwordInputGroupDiv");
       }
     } catch (err) {
@@ -329,38 +325,39 @@ function Register() {
   };
 
   // [4-1] 비밀번호 입력
-  //비호번호
-  const onChangePwd = useCallback((e) => {
-    const currPwd = e.target.value;
+  // 비밀번호
+  const onChangePwd = useCallback(async (e) => {
+    const currPwd = await e.target.value;
     setPassword(currPwd);
-
     if (!validatePassword(currPwd)) {
       setPwdMsg("영문, 숫자, 특수기호 조합으로 10자리 이상 입력해주세요.");
+    } else if (validatePassword(currPwd) && currPwd !== confirmPassword) {
+      setPwdMsg("동일한 비밀번호를 한번 더 입력해주세요.");
     } else {
-      setPwdMsg("안전한 비밀번호입니다.");
+      setPwdMsg(null);
     }
-  }, []);
+  });
 
-  //비밀번호 확인
-  const onChangeConfirmPwd = useCallback(
-    (e) => {
-      const currConfirmPwd = e.target.value;
-      setConfirmPassword(currConfirmPwd);
-
-      // if (currConfirmPwd !== password) {
-      if (!validateConfirmPassword(currConfirmPwd)) {
-        setConfirmPwdMsg("비밀번호가 일치하지 않습니다.");
-      } else {
-        setConfirmPwdMsg("비밀번호가 일치합니다.");
-      }
-    },
-    [password]
-  );
+  // 비밀번호 확인
+  const onChangeConfirmPwd = useCallback(async (e) => {
+    const currConfirmPwd = await e.target.value;
+    setConfirmPassword(currConfirmPwd);
+    if (password !== currConfirmPwd) {
+      setPwdMsg("비밀번호가 일치하지 않습니다.");
+    } else if (
+      password == currConfirmPwd &&
+      !validatePassword(currConfirmPwd)
+    ) {
+      setPwdMsg("영문, 숫자, 특수기호 조합으로 10자리 이상 입력해주세요.");
+    } else {
+      setIsDisabled(false);
+      setPwdMsg(null);
+    }
+  });
 
   // [4-2] 회원가입
   const onSubmit = async (e) => {
     e.preventDefault();
-
     try {
       if (isPwdValid && isConfirmPwdValid) {
       }
@@ -369,12 +366,9 @@ function Register() {
         password,
         nickname,
       });
-      // console.log(apiResult.data);
-
       const { result } = apiResult.data;
-
       if (result) {
-        navigate("/signin");
+        navigate("/");
       }
     } catch (err) {
       console.log(err);
@@ -406,24 +400,16 @@ function Register() {
               placeholder="이메일"
               onChange={onChangeEmail}
             />
-            <ValidationP
-              id="emailValidationP"
-              className={isEmailValid ? "success" : "error"}
-            >
-              {emailMsg}
-            </ValidationP>
-            {/* <SpacerSmallDiv /> */}
-            <SpacerBigDiv />
+            <ValidationP id="emailValidationP">{emailMsg}</ValidationP>
             <SpacerBigDiv />
             <CheckButton
               id="sendCodeButton"
-              className={checkMail ? "checked" : "not-checked"}
               onClick={onCheckEmail}
+              disabled={isDisabled}
             >
               인증코드 받기
             </CheckButton>
           </div>
-          {/* <SpacerDiv /> */}
           <div id="codeInputGroupDiv" display="none">
             <SignupInput
               name="code"
@@ -431,21 +417,16 @@ function Register() {
               placeholder="인증코드"
               onChange={onChangeCode}
             />
-            <ValidationP className={isCodeValid ? "success" : "error"}>
-              {codeMsg}
-            </ValidationP>
-            {/* <SpacerSmallDiv /> */}
-            <SpacerBigDiv />
+            <ValidationP>{codeMsg}</ValidationP>
             <SpacerBigDiv />
             <CheckButton
               id="checkCodeButton"
-              className={checkCode ? "checked" : "not-checked"}
               onClick={onCheckCode}
+              disabled={isDisabled}
             >
               인증코드 확인
             </CheckButton>
           </div>
-          {/* <SpacerDiv /> */}
           <div id="nicknameInputGroupDiv" display="none">
             <SignupInput
               name="nickname"
@@ -453,22 +434,17 @@ function Register() {
               placeholder="닉네임"
               onChange={onChangeNickname}
             />
-            <ValidationP className={isNicknameValid ? "success" : "error"}>
-              {nicknameMsg}
-            </ValidationP>
-            {/* <SpacerSmallDiv /> */}
-            <SpacerBigDiv />
+            <ValidationP>{nicknameMsg}</ValidationP>
             <SpacerBigDiv />
             <CheckButton
               id="checkNicknameButton"
               onClick={onCheckNickname}
-              className={checkNickname ? "checked" : "not-checked"}
+              disabled={isDisabled}
             >
               중복 확인
             </CheckButton>
           </div>
 
-          {/* <SpacerDiv /> */}
           <div id="passwordInputGroupDiv" display="none">
             <SignupInput
               name="password"
@@ -476,9 +452,6 @@ function Register() {
               placeholder="비밀번호"
               onChange={onChangePwd}
             />
-            <ValidationP className={isPwdValid ? "success" : "error"}>
-              {pwdMsg}
-            </ValidationP>
             <SpacerSmallDiv />
             <SignupInput
               name="confirmPassword"
@@ -486,15 +459,11 @@ function Register() {
               placeholder="비밀번호 확인"
               onChange={onChangeConfirmPwd}
             />
-            <ValidationP className={isConfirmPwdValid ? "success" : "error"}>
-              {confirmPwdMsg}
-            </ValidationP>
-            {/* <SpacerDiv /> */}
-            <SpacerBigDiv />
+            <ValidationP>{pwdMsg}</ValidationP>
             <SpacerBigDiv />
             <CheckButton
               onClick={onSubmit}
-              type="submit"
+              // type="submit"
               disabled={!isAllValid}
             >
               가입하기
