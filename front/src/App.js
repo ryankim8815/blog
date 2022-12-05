@@ -15,6 +15,9 @@ import Register from "./screens/Register";
 import Admin from "./screens/Admin";
 import Posts from "./screens/Posts";
 import Editor from "./components/editor/Editor";
+import KakaoLogin from "./components/user/KakaoLogin";
+import NaverLogin from "./components/user/NaverLogin";
+import GoogleLogin from "./components/user/GoogleLogin";
 // import EditorA from "./components/editor/EditorA";
 // components
 import NavBar from "./components/common/NavBar";
@@ -81,6 +84,10 @@ function App() {
             <Route path="/admin" element={<Admin />} />
             <Route path="/editor" element={<Editor />} />
             <Route path="/login" element={<LoginForm />} />
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/login/oauth2/code/kakao" element={<KakaoLogin />} />
+            <Route path="/login/oauth2/code/naver" element={<NaverLogin />} />
+            <Route path="/login/oauth2/code/google" element={<GoogleLogin />} />
           </Routes>
           <NavBar />
           <Footer />
