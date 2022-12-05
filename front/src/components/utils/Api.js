@@ -1,6 +1,6 @@
 import axios from "axios";
 
-axios.defaults.timeout = 3000;
+axios.defaults.timeout = 10000;
 axios.defaults.headers["Content-Type"] = "application/json";
 // const backendPortNumber = import.meta.env.SERVER_PORT;
 // const backendPortNumber = process.env.SERVER_PORT;
