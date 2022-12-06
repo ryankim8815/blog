@@ -81,7 +81,6 @@ function Posts() {
     try {
       const result = await Api.get(`posts/tag/${tag}`);
       setPosts(result.data.list);
-      console.log("api결과", result);
     } catch (e) {
       console.log(e);
     }

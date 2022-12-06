@@ -73,8 +73,8 @@ var socialLoginService = /** @class */ (function () {
                         else if (checkEmailObject.length == 1 &&
                             checkEmailObject[0].provider == "kakao") {
                             thisUser = checkEmailObject[0];
-                            secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
-                            token = jsonwebtoken_1.default.sign({ email: email }, secretKey);
+                            secretKey = process.env.JWT_SECRET_KEY;
+                            token = jsonwebtoken_1.default.sign({ user_id: thisUser.user_id }, secretKey);
                             delete thisUser.password;
                             delete thisUser.user_id;
                             result_success = Object.assign({
@@ -116,8 +116,8 @@ var socialLoginService = /** @class */ (function () {
                         checkNewUserObject = JSON.parse(checkNewUserString);
                         if (newUserObject.affectedRows == 1 && checkNewUserObject.length == 1) {
                             thisUser = checkNewUserObject[0];
-                            secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
-                            token = jsonwebtoken_1.default.sign({ email: email }, secretKey);
+                            secretKey = process.env.JWT_SECRET_KEY;
+                            token = jsonwebtoken_1.default.sign({ user_id: thisUser.user_id }, secretKey);
                             delete thisUser.password;
                             delete thisUser.user_id;
                             result_success = Object.assign({
@@ -167,8 +167,8 @@ var socialLoginService = /** @class */ (function () {
                         else if (checkEmailObject.length == 1 &&
                             checkEmailObject[0].provider == "naver") {
                             thisUser = checkEmailObject[0];
-                            secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
-                            token = jsonwebtoken_1.default.sign({ email: email }, secretKey);
+                            secretKey = process.env.JWT_SECRET_KEY;
+                            token = jsonwebtoken_1.default.sign({ user_id: thisUser.user_id }, secretKey);
                             delete thisUser.password;
                             delete thisUser.user_id;
                             result_success = Object.assign({
@@ -210,8 +210,8 @@ var socialLoginService = /** @class */ (function () {
                         checkNewUserObject = JSON.parse(checkNewUserString);
                         if (newUserObject.affectedRows == 1 && checkNewUserObject.length == 1) {
                             thisUser = checkNewUserObject[0];
-                            secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
-                            token = jsonwebtoken_1.default.sign({ email: email }, secretKey);
+                            secretKey = process.env.JWT_SECRET_KEY;
+                            token = jsonwebtoken_1.default.sign({ user_id: thisUser.user_id }, secretKey);
                             delete thisUser.password;
                             delete thisUser.user_id;
                             result_success = Object.assign({
@@ -262,7 +262,7 @@ var socialLoginService = /** @class */ (function () {
                             checkEmailObject[0].provider == "google") {
                             thisUser = checkEmailObject[0];
                             secretKey = process.env.JWT_SECRET_KEY;
-                            token = jsonwebtoken_1.default.sign({ email: email }, secretKey);
+                            token = jsonwebtoken_1.default.sign({ user_id: thisUser.user_id }, secretKey);
                             delete thisUser.password;
                             delete thisUser.user_id;
                             result_success = Object.assign({
@@ -305,7 +305,7 @@ var socialLoginService = /** @class */ (function () {
                         if (newUserObject.affectedRows == 1 && checkNewUserObject.length == 1) {
                             thisUser = checkNewUserObject[0];
                             secretKey = process.env.JWT_SECRET_KEY;
-                            token = jsonwebtoken_1.default.sign({ email: email }, secretKey);
+                            token = jsonwebtoken_1.default.sign({ user_id: thisUser.user_id }, secretKey);
                             delete thisUser.password;
                             delete thisUser.user_id;
                             result_success = Object.assign({

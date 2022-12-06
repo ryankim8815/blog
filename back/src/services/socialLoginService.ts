@@ -31,7 +31,7 @@ class socialLoginService {
     ) {
       // 기존 가입자 로그인(토큰 발급)
       const thisUser = checkEmailObject[0];
-      const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
+      const secretKey = process.env.JWT_SECRET_KEY;
       const token = jwt.sign({ user_id: thisUser.user_id }, secretKey);
       delete thisUser.password;
       delete thisUser.user_id;
@@ -81,7 +81,7 @@ class socialLoginService {
     if (newUserObject.affectedRows == 1 && checkNewUserObject.length == 1) {
       // 토큰 발급
       const thisUser = checkNewUserObject[0];
-      const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
+      const secretKey = process.env.JWT_SECRET_KEY;
       const token = jwt.sign({ user_id: thisUser.user_id }, secretKey);
       delete thisUser.password;
       delete thisUser.user_id;
@@ -131,7 +131,7 @@ class socialLoginService {
     ) {
       // 기존 가입자 로그인(토큰 발급)
       const thisUser = checkEmailObject[0];
-      const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
+      const secretKey = process.env.JWT_SECRET_KEY;
       const token = jwt.sign({ user_id: thisUser.user_id }, secretKey);
       delete thisUser.password;
       delete thisUser.user_id;
@@ -181,7 +181,7 @@ class socialLoginService {
     if (newUserObject.affectedRows == 1 && checkNewUserObject.length == 1) {
       // 토큰 발급
       const thisUser = checkNewUserObject[0];
-      const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
+      const secretKey = process.env.JWT_SECRET_KEY;
       const token = jwt.sign({ user_id: thisUser.user_id }, secretKey);
       delete thisUser.password;
       delete thisUser.user_id;
