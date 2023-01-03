@@ -100,6 +100,9 @@ const NavItemA = styled.a`
   &:hover {
     color: #342a97;
   }
+  @media ${(props) => props.theme.mobile} {
+    display: none;
+  }
 `;
 const MainText = styled.span`
   font-size: 24px;

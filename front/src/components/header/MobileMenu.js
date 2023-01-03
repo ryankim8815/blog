@@ -27,7 +27,7 @@ const LogoutDiv = styled.div`
     top: 40px;
     padding: 8px 0;
     margin-right: 8px;
-    width: 140px;
+    width: 160px;
     list-style: none;
     border: 1px solid gray;
     border-radius: 2px;
@@ -37,6 +37,7 @@ const LogoutDiv = styled.div`
     li {
       padding: 8px 12px;
       button {
+        color: #333333;
         font-weight: 300;
         font-size: 16px;
         background-color: transparent;
@@ -55,7 +56,7 @@ const LogoutDiv = styled.div`
 const MenuButton = styled.button`
   background-color: transparent;
   border: none;
-  font-size: 16px;
+  color: #333333;
   font-weight: 400;
   display: flex;
   margin-right: 40px;
@@ -66,6 +67,11 @@ const MenuButton = styled.button`
   &:hover {
     color: #342a97;
   }
+`;
+const DivisionLine = styled.div`
+  border-top: 1px solid #e2e2e2;
+  margin: 10px auto;
+  width: 90%;
 `;
 
 function MobileMenu() {
@@ -146,7 +152,7 @@ function MobileMenu() {
           ref={menuRef}
           onClick={() => setIsMenuVisible(!isMenuVisible)}
         >
-          <FA.FaBars size="2rem" />
+          <FA.FaBars size="26px" />
         </MenuButton>
         {isMenuVisible && (
           <ul>
@@ -163,7 +169,7 @@ function MobileMenu() {
               </button>
             </li>
             <li>
-              <button style={{ color: "gray" }}>----------</button>
+              <DivisionLine />
             </li>
             {isLogin ? (
               <li>
