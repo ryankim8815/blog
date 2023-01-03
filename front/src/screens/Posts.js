@@ -16,6 +16,8 @@ const PostBoxDiv = styled.div`
   text-align: center; // display를 inline으로 했기 때문에 정렬 가능
   justify-content: center; // 좌우 정렬
   padding: 50px 0 100px 0;
+  // background-color: #201b4b; // 영역확인용
+
   @media screen and (max-width: 500px) {
     padding: 20px 0;
   }
@@ -25,6 +27,7 @@ const PostBox = styled.div`
   max-width: 1024px;
   text-align: center;
   display: inline-block;
+  // background-color: #201b4b; // 영역확인용
 `;
 
 const Tag = styled.div`

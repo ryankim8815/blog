@@ -1,6 +1,37 @@
 // import { DefaultTheme } from "styled-components";
 import { DefaultTheme } from "styled-components";
 
+const size = {
+  mobile: "770px",
+  tabletS: "1023px",
+  tabletM: "1220px",
+  tabletL: "1280px",
+  laptop: "1460px",
+  desktop: "1700px",
+};
+
+const theme = {
+  // mainColor
+  mainColor: "#835DFE",
+  mainLightColor: "#F1EDFC", // 페이지bg
+  mainMoreLightColor: "#FAF9FF", // 컨포넌트 밝은 보라 bg
+  mainDarkColor: "#403E56", // footer, 어두운버튼
+
+  // grey
+  greyTextColor: "#999", // 회색폰트
+  greyBorderColor: "#e1e1e1", // 회색보더
+  greyBtnBgColor: "#F6F6F7", // 회색버튼배경
+
+  // the rest
+  warningColor: "#E57683", // input경고
+
+  // size
+  mobile: `(max-width: ${size.mobile})`,
+  tablet: `(max-width: ${size.tabletL})`,
+  laptop: `(max-width: ${size.laptop})`,
+  desktop: `(max-width: ${size.desktop})`,
+};
+
 const colors = {
   // mainColor
   main: "#835DFE",

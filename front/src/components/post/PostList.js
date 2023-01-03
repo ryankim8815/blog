@@ -13,6 +13,8 @@ const CategoryDiv = styled.div`
   text-align: center; // display를 inline으로 했기 때문에 정렬 가능
   align-items: center; // 상하 정렬
   justify-content: center; // 좌우 정렬
+  // background-color: #201b4b; // 영역확인용
+
   @media screen and (max-width: 500px) {
     padding-top: 20px;
   }
@@ -30,12 +32,19 @@ const CategoryUnitDiv = styled.div`
 // posts list
 const PostBoxDiv = styled.div`
   width: 100%;
+  // min-height: 510px;
+  // min-height: ${window.outerHeight - (60 + 300 + 100 + 120 + 35)}px;
   padding-top: 50px;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column; /*수직 정렬*/
+  // margin: auto;
   align-items: center; // 상하 정렬
-  justify-content: center; // 좌우 정렬
+  // align-items: top; // 상하 정렬
+  // justify-content: center; // 좌우 정렬
+  // justify-content: top; // 좌우 정렬
+  // background-color: #201b4b; // 영역확인용
+
   @media screen and (max-width: 500px) {
     padding-top: 30px;
   }
@@ -45,6 +54,7 @@ const PostBox = styled.div`
   max-width: 1024px;
   text-align: left; // display를 inline으로 했기 때문에 정렬 가능
   display: flex-column;
+  // background-color: pink; // 영역확인용
 `;
 const StyledA = styled.a`
   text-decoration-line: none;

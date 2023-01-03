@@ -1,10 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client"; // react@18.2.0
-// import ReactDOM from "react-dom";
-// import "./index.css";
+import { ThemeProvider } from "styled-components"; // react@18.2.0
+import theme from "./styles/Theme"; // react@18.2.0
 import App from "./App";
-// import "./index.css";
-// import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/main.css";
 
 // optional
@@ -14,7 +12,9 @@ import "./assets/main.css";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <React.StrictMode> // 두번 렌더하는 주범
-  <App />
+  <ThemeProvider theme={theme}>
+    <App />
+  </ThemeProvider>
   // </React.StrictMode>
 );
 
