@@ -13,6 +13,7 @@ const LogoutDiv = styled.div`
   color: #333333;
   position: relative;
   //   background-color: green; // 영역확인용
+
   button {
     margin: auto;
     display: flex;
@@ -40,6 +41,7 @@ const LogoutDiv = styled.div`
         font-size: 16px;
         background-color: transparent;
         border: none;
+        cursor: pointer;
         // background-color: pink; // 영역확인용
         &:hover {
           font-weight: 500;
@@ -58,6 +60,7 @@ const MenuButton = styled.button`
   display: flex;
   margin-right: 40px;
   justify-content: center; // 좌우 정렬
+  cursor: pointer;
   //   background-color: pink; // 영역확인용
 
   &:hover {
@@ -160,7 +163,7 @@ function MobileMenu() {
               </button>
             </li>
             <li>
-              <button style={{ color: "gray" }}>------------</button>
+              <button style={{ color: "gray" }}>----------</button>
             </li>
             {isLogin ? (
               <li>

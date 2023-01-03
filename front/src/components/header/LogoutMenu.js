@@ -56,6 +56,7 @@ const LogoutDiv = styled.div`
         // color: yello;
         background-color: transparent;
         border: none;
+        cursor: pointer;
         // background-color: pink; // 영역확인용
         &:hover {
           font-weight: 500;
@@ -85,6 +86,7 @@ const NicknameButton = styled.button`
   // flex-wrap: wrap;
   // flex-direction: column; /*수직 정렬*/
   justify-content: center; // 좌우 정렬
+  cursor: pointer;
   &:hover {
     color: #342a97;
   }

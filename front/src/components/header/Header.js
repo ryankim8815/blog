@@ -124,6 +124,7 @@ const SubText = styled.span`
   display: flex;
   margin-left: 20px;
   justify-content: center; // 좌우 정렬
+  cursor: pointer;
   // background-color: pink; // 영역확인용
 
   &:hover {
