@@ -1,10 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { UserStateContext, DispatchContext } from "../../App";
 import styled from "styled-components";
-import * as FA from "react-icons/fa";
-import Logout from "../logout/Logout";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 
 const LogoutDiv = styled.div`
   width: 100%;
@@ -63,24 +60,6 @@ const LogoutDiv = styled.div`
   }
 `;
 
-const NavItemText = styled.span`
-  // width: 20%;
-  // min-width: 256px;
-  // height: 230px;
-  // text-size: 2.5rem;
-  // text-align: left;
-  // background-color: pink; // 영역확인용
-  // padding-bottom: 30px;
-  font-size: 12px;
-  display: flex;
-  // flex-wrap: wrap;
-  // flex-direction: column; /*수직 정렬*/
-  justify-content: center; // 좌우 정렬
-
-  .icon {
-    size: 2.5rem;
-  }
-`;
 const NicknameButton = styled.button`
   // width: 20%;
   // min-width: 256px;
@@ -104,54 +83,24 @@ const NicknameButton = styled.button`
     color: #342a97;
   }
 `;
-const MainSubText = styled.span`
-  // width: 20%;
-  // min-width: 256px;
-  // height: 230px;
-  // text-size: 2.5rem;
-  // text-align: left;
-  // background-color: pink; // 영역확인용
-  // padding-bottom: 30px;
-  font-size: 16px;
-  font-weight: 400;
-  color: gray;
-  display: flex;
-  margin-right: 40px;
-  // margin-right: 20px;
-  // flex-wrap: wrap;
-  // flex-direction: column; /*수직 정렬*/
-  justify-content: center; // 좌우 정렬
-  &:hover {
-    color: #342a97;
-  }
-`;
-const SubText = styled.span`
-  // width: 20%;
-  // min-width: 256px;
-  // height: 230px;
-  // text-size: 2.5rem;
-  //   text-align: left;
-  // background-color: pink; // 영역확인용
-  // padding-bottom: 30px;
-  font-size: 16px;
-  font-weight: 500;
-  color: gray;
-  display: flex;
-  // margin-left: 20px;
-  margin-right: 20px;
-  // flex-wrap: wrap;
-  // flex-direction: column; /*수직 정렬*/
-  justify-content: center; // 좌우 정렬
-  &:hover {
-    color: #342a97;
-  }
-`;
 
 function LogoutMenu() {
   const userState = useContext(UserStateContext);
   const dispatch = useContext(DispatchContext);
+  const menuRef = useRef(null);
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   let navigate = useNavigate();
+
+  // 메뉴 열린 상태를 자동으로 닫아주는 상태 관리
+  const handleCloseModal = (e) => {
+    if (menuRef.current) {
+      const target = menuRef.current.contains(e.target);
+
+      if (!target) {
+        setIsMenuVisible(false);
+      }
+    }
+  };
 
   const onEditorClick = () => {
     // 메뉴 닫기
@@ -169,18 +118,23 @@ function LogoutMenu() {
     // 기본 페이지로 돌아감.
     navigate("/");
   };
+
+  useEffect(() => {
+    window.addEventListener("click", handleCloseModal);
+
+    return () => {
+      window.removeEventListener("click", handleCloseModal);
+    };
+  }, []);
+
   return (
     <>
-      {/* <LogoutDiv>
-        <SubText>{userState.user.nickname} 님</SubText>
-        <Logout />
-      </LogoutDiv> */}
-
       <LogoutDiv>
-        {/* <button ref={menuRef} onClick={() => setIsMenuVisible(!isMenuVisible)}> */}
-        <NicknameButton onClick={() => setIsMenuVisible(!isMenuVisible)}>
+        <NicknameButton
+          ref={menuRef}
+          onClick={() => setIsMenuVisible(!isMenuVisible)}
+        >
           <span>{userState.user?.nickname}</span>님
-          {/* {isMenuVisible ? <AiFillCaretUp /> : <AiFillCaretDown />} */}
         </NicknameButton>
         {isMenuVisible && (
           <ul>
@@ -198,18 +152,8 @@ function LogoutMenu() {
             <li>
               <button onClick={onLogOutClick}>로그아웃</button>
             </li>
-            {/* <li>
-              <button>회원 탈퇴</button>
-            </li> */}
           </ul>
         )}
-
-        {/* {isResignMembership && (
-          <ResignMembership
-            isResignMembership={isResignMembership}
-            setIsResignMembership={setIsResignMembership}
-          />
-        )} */}
       </LogoutDiv>
     </>
   );
