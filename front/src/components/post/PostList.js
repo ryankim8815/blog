@@ -25,7 +25,7 @@ const CategoryBox = styled.div`
   // background-color: tomato; // 영역확인용
 `;
 const CategoryUnitDiv = styled.div`
-  margin: 10px 10px;
+  margin: 5px 10px;
   display: inline-block;
 `;
 

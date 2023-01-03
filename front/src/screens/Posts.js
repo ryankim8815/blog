@@ -9,6 +9,37 @@ showdown.setOption("emoji", true);
 showdown.setOption("smoothLivePreview", true);
 const converter = new showdown.Converter();
 
+const PageNameDiv = styled.div`
+  background: linear-gradient(135deg, #342a97, #9d95da);
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center; // 상하 정렬
+  // justify-content: center; // 좌우 정렬
+`;
+const PageNameLeftDiv = styled.div`
+  width: 50%;
+  height: 100%;
+  margin-left: 20px;
+  // margin-right: 20px;
+  display: flex;
+  // flex-direction: column;
+  align-items: center;
+  justify-content: left;
+  // background-color: blue; // 영역확인용
+`;
+const PageNameTitle = styled.span`
+  // font-family: Elice Digital Baeum;
+  font-weight: 100;
+  color: #ffffff;
+  font-size: 24px;
+  // font-weight: 900;
+  // color: #333333;
+  display: flex;
+  justify-content: center; // 좌우 정렬
+  // background-color: pink; // 영역확인용
+`;
+
 const PostBoxDiv = styled.div`
   width: 100%;
   margin: 0px 0px;
@@ -104,6 +135,11 @@ function Posts() {
 
   return (
     <div>
+      <PageNameDiv>
+        <PageNameLeftDiv>
+          <PageNameTitle>READING</PageNameTitle>
+        </PageNameLeftDiv>
+      </PageNameDiv>
       <PostBoxDiv>
         <PostBox>
           {/* <div>Post</div> */}

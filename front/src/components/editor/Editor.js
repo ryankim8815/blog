@@ -34,6 +34,71 @@ const converter = new showdown.Converter({
   parseImgDimensions: true,
 });
 
+const PageNameDiv = styled.div`
+  background: linear-gradient(135deg, #342a97, #9d95da);
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center; // 상하 정렬
+  // justify-content: center; // 좌우 정렬
+`;
+const PageNameLeftDiv = styled.div`
+  width: 50%;
+  height: 100%;
+  padding-left: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  // background-color: blue; // 영역확인용
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+    padding-left: 20px;
+  }
+`;
+const PageNameRightDiv = styled.div`
+  width: 50%;
+  height: 100%;
+  padding-right: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  // background-color: purple; // 영역확인용
+  button {
+    color: #fff;
+    font-size: 12px;
+    font-weight: 400;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 6px 20px;
+    border: 1px solid #fff;
+    background: transparent;
+    border-radius: 14px;
+    display: inline-flex;
+    cursor: pointer;
+    margin: 10px 10px;
+    &:hover {
+      box-shadow: 0 0 5px 0px lightgray;
+    }
+  }
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+    padding-right: 20px;
+  }
+`;
+
+const PageNameTitle = styled.span`
+  // font-family: Elice Digital Baeum;
+  font-weight: 100;
+  color: #ffffff;
+  font-size: 24px;
+  // font-weight: 900;
+  // color: #333333;
+  display: flex;
+  justify-content: center; // 좌우 정렬
+  // background-color: pink; // 영역확인용
+`;
+
 const EditorBoxDiv = styled.div`
   width: 100%;
   // background-color: green; // 영역확인용
@@ -147,7 +212,8 @@ const PreviewDiv = styled.div`
   width: 95%;
   // max-width: 500px;
   // max-width: 100%;
-  height: 500px;
+  // height: 500px;
+  height: 200px;
   // min-height: 100px;
   // max-height: 500px;
   margin 0 auto;
@@ -161,7 +227,7 @@ const PreviewDiv = styled.div`
   font-weight: 400;
   color: black;
   @media screen and (max-width: 500px) {
-    height: 300px;
+    height: 200px;
     // background-color: green; // 영역확인용
   }
 `;
@@ -223,66 +289,15 @@ function Editor() {
   const [content, setContent] = useState("");
   const [preview, setPreview] = useState("");
   const navigate = useNavigate();
-  // const onChangeTitle = (e) => {
-  //   let title = e.target.value;
-  //   setTitle(title);
-  // };
-  // const onChangeSubTitle = (e) => {
-  //   let subTitle = e.target.value;
-  //   setSubTitle(subTitle);
-  // };
+
   const onChangeContent = (e) => {
     let content = e.target.value;
     setContent(content);
   };
-  // const converter = new showdown.Converter(); // 상단에서 재작성 테스트
-  //
-  //
-
-  // const html = converter.makeHtml(contents);
-  // console.log("converter: ", converter);
-  // console.log("html: ", html);
-  // //   const [tag, setTag] = useState([]);
-  // /////
-  // const [preview, setPreview] = useState("");
-
-  // setContents = document.getElementById("inputbox");
-
-  // const converter = new showdown.Converter();
-  // const html = converter.makeHtml(contents);
-
-  // // //// 세션 중간 저장 시작
-  // // // 리액트 lifecycle method.
-  // // // 컴포넌트가 mount되기 전 호출됩니다.
-  // // const componentWillMount = () => {
-  // //   // 브라우저 로컬스토리지의 content를 조회하여
-  // //   if (window.localStorage.content) {
-  // //     this.setState({
-  // //       editor: window.localStorage.content, // 해당 데이터를 컴포넌트의 editor에 저장합니다.
-  // //     });
-  // //   }
-  // // };
-
-  // // // Editor 컴포넌트에 제공되는 method.
-  // // const handleEditorInput = (e) => {
-  // //   this.setState({ editor: e.target.value }); // synthetic event에 담긴 사용자 입력값에 접근하여 해당 데이터를 App 컴포넌트의 state에 저장합니다.
-  // //   window.localStorage.setItem("content", e.target.value); // 또한 해당 데이터를 브라우저 localStorage에도 저장합니다. 브라우저 탭을 닫았다가 다시 켜도 내용이 사라지지 않기 위함입니다.
-  // // };
-  // // //// 세션 중간 저장 끝
-
-  // useEffect(() => {
-  //   setPreview(converter.makeHtml(contents));
-  // }, [onChangeSubTitle]);
-  // useEffect(() => {
-  //   setPreview(subTitle);
-  // }, [onChangeSubTitle]);
   const onClickSave = async () => {
-    // e.preventDefault();
-
     try {
       // "user/register" 엔드포인트로 post요청함.
       const tag = "backend";
-      // const tag = "resume";
       const sub_title = subTitle;
       await Api.post("post", {
         title,
@@ -291,7 +306,7 @@ function Editor() {
         tag,
       });
 
-      // // 로그인 페이지로 이동함.
+      // 로그인 페이지로 이동함.
       navigate("/");
     } catch (err) {
       console.log("게시글 저장에 실패하였습니다.", err);
@@ -303,12 +318,17 @@ function Editor() {
 
   return (
     <>
-      <div className="save-box">
-        <button className="save-save" onClick={onClickSave}>
-          SAVE
-        </button>
-        <button className="save-publish">PUBLISH</button>
-      </div>
+      <PageNameDiv>
+        <PageNameLeftDiv>
+          <PageNameTitle>WRITING</PageNameTitle>
+        </PageNameLeftDiv>
+        <PageNameRightDiv>
+          <button className="save-save" onClick={onClickSave}>
+            SAVE
+          </button>
+          <button className="save-publish">PUBLISH</button>
+        </PageNameRightDiv>
+      </PageNameDiv>
       <EditorBoxDiv>
         <EditorBox className="title-box">
           <TitleInput

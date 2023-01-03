@@ -3,7 +3,7 @@ import styled from "styled-components";
 export default function Catbtn({ name, catActive, handleSetCat }) {
   const CategoryButton = styled.button`
     // width: 200px;
-    height: 24px;
+    height: 26px;
     color: black;
     font-size: 12px;
     font-family: $font-elice-content;
@@ -13,7 +13,7 @@ export default function Catbtn({ name, catActive, handleSetCat }) {
     // border: 1px solid lightgray;
     border: ${catActive ? "1px solid gray" : "1px solid lightgray"};
     background: ${catActive ? "lightgray" : "white"};
-    border-radius: 12px;
+    border-radius: 13px;
     display: inline-flex;
     cursor: pointer;
     box-shadow: ${catActive ? "0 0 2px 0px lightgray" : null};

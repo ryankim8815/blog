@@ -9,6 +9,69 @@ showdown.setOption("emoji", true);
 showdown.setOption("smoothLivePreview", true);
 const converter = new showdown.Converter();
 
+const PageNameDiv = styled.div`
+  background: linear-gradient(135deg, #342a97, #9d95da);
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center; // 상하 정렬
+  // justify-content: center; // 좌우 정렬
+`;
+const PageNameLeftDiv = styled.div`
+  width: 50%;
+  height: 100%;
+  padding-left: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  // background-color: blue; // 영역확인용
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+    padding-left: 20px;
+  }
+`;
+const PageNameRightDiv = styled.div`
+  // width: 1024px;
+  width: 50%;
+  height: 100%;
+  // margin-left: 20px;
+  margin-right: 20px;
+  display: flex;
+  // flex-direction: column;
+  align-items: center;
+  justify-content: right;
+  // background-color: purple; // 영역확인용
+  button {
+    color: #fff;
+    font-size: 12px;
+    font-weight: 400;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 6px 20px;
+    border: 1px solid #fff;
+    background: transparent;
+    border-radius: 14px;
+    display: inline-flex;
+    cursor: pointer;
+    margin: 10px 10px;
+    &:hover {
+      box-shadow: 0 0 5px 0px lightgray;
+    }
+  }
+`;
+const PageNameTitle = styled.span`
+  // font-family: Elice Digital Baeum;
+  font-weight: 100;
+  color: #ffffff;
+  font-size: 24px;
+  // font-weight: 900;
+  // color: #333333;
+  display: flex;
+  justify-content: center; // 좌우 정렬
+  // background-color: pink; // 영역확인용
+`;
+
 const PostBoxDiv = styled.div`
   width: 100%;
   margin: 0px 0px;
@@ -92,14 +155,17 @@ function Posts() {
 
   return (
     <div>
+      <PageNameDiv>
+        <PageNameLeftDiv>
+          <PageNameTitle>RESUME</PageNameTitle>
+        </PageNameLeftDiv>
+      </PageNameDiv>
       <PostBoxDiv>
         <PostBox>
           {posts.map((post) => (
             <div key={post.post_id} className="box-post-list">
               <Tag>
-                <StyledA href={"/"}>
-                  <Catbtn name={post.tag} />
-                </StyledA>
+                <StyledA href={"/"}>{/* <Catbtn name={post.tag} /> */}</StyledA>
               </Tag>
               <Title>{post.title}</Title>
               <SubTitle>{post.sub_title}</SubTitle>

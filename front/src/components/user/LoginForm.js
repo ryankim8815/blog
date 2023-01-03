@@ -5,6 +5,36 @@ import * as Api from "../utils/Api";
 import styled from "styled-components";
 import SocialLoginBox from "./SocialLogin";
 
+const PageNameDiv = styled.div`
+  background: linear-gradient(135deg, #342a97, #9d95da);
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center; // 상하 정렬
+  // justify-content: center; // 좌우 정렬
+`;
+const PageNameLeftDiv = styled.div`
+  width: 50%;
+  height: 100%;
+  padding-left: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  // background-color: blue; // 영역확인용
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+    padding-left: 20px;
+`;
+const PageNameTitle = styled.span`
+  font-weight: 100;
+  color: #ffffff;
+  font-size: 24px;
+  display: flex;
+  justify-content: center; // 좌우 정렬
+  // background-color: pink; // 영역확인용
+`;
+
 const LoginBoxDiv = styled.div`
   width: 100%;
   margin: auto 0px;
@@ -158,6 +188,11 @@ function LoginForm() {
 
   return (
     <div>
+      <PageNameDiv>
+        <PageNameLeftDiv>
+          <PageNameTitle>LOGIN</PageNameTitle>
+        </PageNameLeftDiv>
+      </PageNameDiv>
       <LoginBoxDiv>
         <LoginBox>
           <Title>로그인</Title>

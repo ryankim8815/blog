@@ -4,6 +4,36 @@ import * as Api from "../components/utils/Api";
 import styled from "styled-components";
 import SocialLoginBox from "../components/user/SocialLogin";
 
+const PageNameDiv = styled.div`
+  background: linear-gradient(135deg, #342a97, #9d95da);
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center; // 상하 정렬
+`;
+const PageNameLeftDiv = styled.div`
+  width: 50%;
+  height: 100%;
+  padding-left: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  // background-color: blue; // 영역확인용
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+    padding-left: 20px;
+  }
+`;
+const PageNameTitle = styled.span`
+  font-weight: 100;
+  color: #ffffff;
+  font-size: 24px;
+  display: flex;
+  justify-content: center; // 좌우 정렬
+  // background-color: pink; // 영역확인용
+`;
+
 const SignupBoxDiv = styled.div`
   width: 100%;
   margin: auto 0px;
@@ -389,6 +419,11 @@ function Register() {
 
   return (
     <>
+      <PageNameDiv>
+        <PageNameLeftDiv>
+          <PageNameTitle>REGISTER</PageNameTitle>
+        </PageNameLeftDiv>
+      </PageNameDiv>
       <SignupBoxDiv>
         <SignupBox>
           <Title>회원가입</Title>
