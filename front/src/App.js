@@ -20,7 +20,7 @@ import NaverLogin from "./components/user/NaverLogin";
 import GoogleLogin from "./components/user/GoogleLogin";
 // import EditorA from "./components/editor/EditorA";
 // components
-import NavBar from "./components/common/NavBar";
+import Header from "./components/header/Header";
 // import Footer from "./components/common/Footer";
 // import NavBarElements from "./components/Common/NavBarElements";
 // import "./assets/main.css";
@@ -69,7 +69,7 @@ function App() {
     <DispatchContext.Provider value={dispatch}>
       <UserStateContext.Provider value={userState}>
         <Router>
-          {/* <NavBar /> */}
+          <Header />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
@@ -85,7 +85,7 @@ function App() {
             <Route path="/login/oauth2/code/naver" element={<NaverLogin />} />
             <Route path="/login/oauth2/code/google" element={<GoogleLogin />} />
           </Routes>
-          <NavBar />
+          {/* <NavBar /> */}
           <Footer />
         </Router>
       </UserStateContext.Provider>

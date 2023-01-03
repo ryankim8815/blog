@@ -23,7 +23,7 @@ const InnerDiv = styled.div`
   justify-content: center;
 `;
 
-const Title = styled.text`
+const Title = styled.span`
   font-family: Elice Digital Baeum;
   font-weight: 600;
   color: #ffffff;
@@ -35,7 +35,7 @@ const Title = styled.text`
     padding-bottom: 10px;
   }
 `;
-const SubTitle = styled.text`
+const SubTitle = styled.span`
   width: 70%;
   padding: 0px 0px 10px 0;
   font-weight: 400;

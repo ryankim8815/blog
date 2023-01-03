@@ -45,7 +45,7 @@ const Footerleft = styled.div`
   flex-direction: column; /*수직 정렬*/
   // justify-content: center; // 좌우 정렬
 `;
-const FooterTitle = styled.text`
+const FooterTitle = styled.span`
   width: 100%;
   height: 50px;
   font-family: Elice Digital Baeum;
@@ -58,7 +58,7 @@ const FooterTitle = styled.text`
   // align-items: center; // 상하 정렬
   // justify-content: center; // 좌우 정렬
 `;
-const FooterText = styled.text`
+const FooterText = styled.span`
   width: 100%;
   height: 35px;
   font-family: Elice Digital coding;
@@ -84,7 +84,7 @@ const FooterRight = styled.div`
   flex-direction: column; /*수직 정렬*/
   align-items: center; // 상하 정렬
 `;
-const FooterText2nd = styled.text`
+const FooterText2nd = styled.span`
   width: 100%;
   font-size: 16px;
   // color: #575757;

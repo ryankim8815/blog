@@ -1,11 +1,9 @@
-// import React from "react";
-import React, { useState, useEffect, useContext } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import * as FA from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import { UserStateContext, DispatchContext } from "../../App";
 
-const NavItemA = styled.a`
+const NavItem = styled(Link)`
   // width: 20%;
   min-width: 50px;
   // height: 230px;
@@ -22,6 +20,7 @@ const NavItemA = styled.a`
     color: #342a97;
   }
 `;
+
 const NavItemText = styled.span`
   // width: 20%;
   // min-width: 256px;
@@ -62,29 +61,17 @@ const MainSubText = styled.span`
   }
 `;
 
-export default function Logout() {
-  const userState = useContext(UserStateContext);
-  const dispatch = useContext(DispatchContext);
-  let navigate = useNavigate();
-
-  //     navigate('/');
-  const onLogOutClick = () => {
-    // signOut(auth);   // api로 세션 만료하도록 처리
-    // 모달창으로 더블책
-    // sessionStorage 에 저장했던 JWT 토큰을 삭제함.
-    sessionStorage.removeItem("userToken");
-    // dispatch 함수를 이용해 로그아웃함.
-    dispatch({ type: "LOGOUT" });
-    // 기본 페이지로 돌아감.
-    navigate("/");
-  };
-
+function SignupMenu() {
   return (
-    <NavItemA onClick={onLogOutClick}>
-      {/* <NavItemText>
-        <FA.FaSignOutAlt size="1.8rem" />
-      </NavItemText> */}
-      <MainSubText>로그아웃</MainSubText>
-    </NavItemA>
+    <>
+      <NavItem to="/register">
+        {/* <NavItemText>
+          <FA.FaUserPlus size="1.8rem" />
+        </NavItemText> */}
+        <MainSubText>회원가입</MainSubText>
+      </NavItem>
+    </>
   );
 }
+
+export default SignupMenu;
