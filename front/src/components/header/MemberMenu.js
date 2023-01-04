@@ -5,23 +5,13 @@ import { useNavigate } from "react-router-dom";
 
 const LogoutDiv = styled.div`
   width: 100%;
-  //   max-width: 1280px;
   height: 100%;
-  //   background-color: tomato; // 영역확인용
   display: flex;
-  // flex-wrap: wrap;
-  // text-align: center; // display를 inline으로 했기 때문에 정렬 가능
   align-items: center; // 상하 정렬
-  // align-content: flex-start; // 상하 정렬
-  // justify-content: center; // 좌우 정렬
-  // justify-content: left; // 좌우 정렬
-  //   justify-content: space-between;
   justify-content: right;
-  // justify-content: space-around; // 좌우 정렬
-  // word-break: keep-all;
-  // padding-top: 50px;
   color: #333333;
   position: relative;
+  // background-color: tomato; // 영역확인용
   span {
     font-size: 16px;
     font-weight: 400;
@@ -38,22 +28,23 @@ const LogoutDiv = styled.div`
     right: 0;
     top: 47px;
     padding: 8px 0;
-    margin-right: 40px;
+    margin-right: 10px;
     width: 140px;
     list-style: none;
     border: 1px solid gray;
     border-radius: 2px;
     background: #fff;
-    // background-color: gray;
-    // border: none;
     // background-color: blue; // 영역확인용
+
+    @media ${(props) => props.theme.mobile} {
+      margin-right: 40px;
+    }
 
     li {
       padding: 8px 12px;
       button {
         font-weight: 300;
         font-size: 16px;
-        // color: yello;
         background-color: transparent;
         border: none;
         cursor: pointer;
@@ -68,31 +59,21 @@ const LogoutDiv = styled.div`
 `;
 
 const NicknameButton = styled.button`
-  // width: 20%;
-  // min-width: 256px;
-  // height: 230px;
-  // text-size: 2.5rem;
-  // text-align: left;
-  //   background-color: pink; // 영역확인용
   background-color: transparent;
   border: none;
-  // padding-bottom: 30px;
   font-size: 16px;
   font-weight: 400;
-  //   color: gray;
   display: flex;
-  //   margin-right: 40px;
-  // margin-right: 20px;
-  // flex-wrap: wrap;
-  // flex-direction: column; /*수직 정렬*/
   justify-content: center; // 좌우 정렬
   cursor: pointer;
+  //   background-color: pink; // 영역확인용
+
   &:hover {
     color: #342a97;
   }
 `;
 
-function LogoutMenu() {
+function MemberMenu() {
   const userState = useContext(UserStateContext);
   const dispatch = useContext(DispatchContext);
   const menuRef = useRef(null);
@@ -116,6 +97,14 @@ function LogoutMenu() {
     // 글쓰기 페이지로 돌아감.
     navigate("/editor");
   };
+  const onUpdateClick = () => {
+    // 메뉴 닫기
+    setIsMenuVisible(!isMenuVisible);
+    // 기본 페이지로 돌아감.
+    // navigate("/users/:user_id/UpdateUserInfo");
+    navigate(`/users/${userState.user.user_id}/UpdateUserInfo`);
+  };
+
   const onLogOutClick = () => {
     // sessionStorage 에 저장했던 JWT 토큰을 삭제함.
     sessionStorage.removeItem("userToken");
@@ -155,7 +144,7 @@ function LogoutMenu() {
             </li>
 
             <li>
-              <button>회원정보 변경</button>
+              <button onClick={onUpdateClick}>회원정보 변경</button>
             </li>
             <li>
               <button onClick={onLogOutClick}>로그아웃</button>
@@ -167,4 +156,4 @@ function LogoutMenu() {
   );
 }
 
-export default LogoutMenu;
+export default MemberMenu;

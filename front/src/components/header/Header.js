@@ -5,7 +5,7 @@ import styled from "styled-components";
 import * as FA from "react-icons/fa";
 import SignupMenu from "./SignupMenu";
 import LoginMenu from "./LoginMenu";
-import LogoutMenu from "./LogoutMenu";
+import MemberMenu from "./MemberMenu";
 import MobileMenu from "./MobileMenu";
 
 const HeaderDiv = styled.div`
@@ -188,7 +188,7 @@ function Header() {
             </NavItemA>
           </HeaderBoxLeft>
           <HeaderBoxRight>
-            {isLogin ? <LogoutMenu /> : <LoginMenu />}
+            {isLogin ? <MemberMenu /> : <LoginMenu />}
             {isLogin ? <></> : <SignupMenu />}
           </HeaderBoxRight>
           <HeaderBoxMedia>

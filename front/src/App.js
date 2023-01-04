@@ -26,6 +26,7 @@ import Header from "./components/header/Header";
 // import "./assets/main.css";
 import LoginForm from "./components/user/LoginForm";
 import Footer from "./components/common/Footer";
+import UpdateUserInfo from "./screens/UpdateUserInfo";
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
@@ -84,6 +85,10 @@ function App() {
             <Route path="/login/oauth2/code/kakao" element={<KakaoLogin />} />
             <Route path="/login/oauth2/code/naver" element={<NaverLogin />} />
             <Route path="/login/oauth2/code/google" element={<GoogleLogin />} />
+            <Route
+              path="/users/:user_id/UpdateUserInfo"
+              element={<UpdateUserInfo />}
+            />
           </Routes>
           {/* <NavBar /> */}
           <Footer />
