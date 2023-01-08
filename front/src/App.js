@@ -27,6 +27,7 @@ import Header from "./components/header/Header";
 import LoginForm from "./components/user/LoginForm";
 import Footer from "./components/common/Footer";
 import UpdateUserInfo from "./screens/UpdateUserInfo";
+import MyPage from "./components/myPage/MyPage";
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
@@ -86,9 +87,11 @@ function App() {
             <Route path="/login/oauth2/code/naver" element={<NaverLogin />} />
             <Route path="/login/oauth2/code/google" element={<GoogleLogin />} />
             <Route
-              path="/users/:user_id/UpdateUserInfo"
+              path="/users/:user_id/updateuserinfo"
+              d
               element={<UpdateUserInfo />}
             />
+            <Route path="/users/:user_id/mypage" element={<MyPage />} />
           </Routes>
           {/* <NavBar /> */}
           <Footer />

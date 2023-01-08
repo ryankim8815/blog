@@ -120,6 +120,21 @@ function MobileMenu() {
     // 페이지 이동
     navigate("/register");
   };
+
+  const onMyPageClick = () => {
+    // 메뉴 닫기
+    setIsMenuVisible(!isMenuVisible);
+    // 페이지 이동
+    navigate(`/users/${userState.user.user_id}/mypage`);
+  };
+
+  const onUpdateClick = () => {
+    // 메뉴 닫기
+    setIsMenuVisible(!isMenuVisible);
+    // 페이지 이동
+    navigate(`/users/${userState.user.user_id}/updateuserinfo`);
+  };
+
   const onLoginClick = () => {
     // 메뉴 닫기
     setIsMenuVisible(!isMenuVisible);
@@ -180,7 +195,7 @@ function MobileMenu() {
             )}
             {isLogin ? (
               <li>
-                <button>마이페이지</button>{" "}
+                <button onClick={onMyPageClick}>마이페이지</button>
               </li>
             ) : (
               <></>
@@ -188,7 +203,7 @@ function MobileMenu() {
 
             <li>
               {isLogin ? (
-                <button>회원정보 변경</button>
+                <button onClick={onUpdateClick}>회원정보 변경</button>
               ) : (
                 <button onClick={onLoginClick}>로그인</button>
               )}

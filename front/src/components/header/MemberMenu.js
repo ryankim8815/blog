@@ -97,12 +97,17 @@ function MemberMenu() {
     // 글쓰기 페이지로 돌아감.
     navigate("/editor");
   };
+  const onMyPageClick = () => {
+    // 메뉴 닫기
+    setIsMenuVisible(!isMenuVisible);
+    // 페이지 이동
+    navigate(`/users/${userState.user.user_id}/mypage`);
+  };
   const onUpdateClick = () => {
     // 메뉴 닫기
     setIsMenuVisible(!isMenuVisible);
-    // 기본 페이지로 돌아감.
-    // navigate("/users/:user_id/UpdateUserInfo");
-    navigate(`/users/${userState.user.user_id}/UpdateUserInfo`);
+    // 페이지 이동
+    navigate(`/users/${userState.user.user_id}/updateuserinfo`);
   };
 
   const onLogOutClick = () => {
@@ -140,7 +145,7 @@ function MemberMenu() {
             </li>
 
             <li>
-              <button>마이페이지</button>
+              <button onClick={onMyPageClick}>마이페이지</button>
             </li>
 
             <li>
