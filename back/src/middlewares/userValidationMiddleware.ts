@@ -3,6 +3,7 @@ import {
   userCreateSchema,
   userLoginSchema,
   userUpdateSchema,
+  userUpdateNicknameSchema,
   userDeleteSchema,
   userUploadImageSchema,
   signupEmailSchema,
@@ -79,6 +80,26 @@ const validateUserUpdate = async function (
   try {
     const body = req.body;
     await userUpdateSchema.validateAsync(body);
+    next();
+  } catch (err) {
+    const result_err = {
+      result: false,
+      cause: "type",
+      message: "api 요청시 잘못된 type이 첨부되었습니다.",
+    };
+    console.log(result_err);
+    return res.status(499).json(result_err);
+  }
+};
+
+const validateUserUpdateNickname = async function (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) {
+  try {
+    const body = req.body;
+    await userUpdateNicknameSchema.validateAsync(body);
     next();
   } catch (err) {
     const result_err = {
@@ -195,6 +216,7 @@ export {
   validateUserCreate,
   validateUserLogin,
   validateUserUpdate,
+  validateUserUpdateNickname,
   validateUserDelete,
   validateUserUploadImage,
   validateSignupEmail,

@@ -1,4 +1,10 @@
-import React, { useCallback, useState, useEffect, useContext } from "react";
+import React, {
+  useCallback,
+  useState,
+  useEffect,
+  useContext,
+  useRef,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import * as Api from "../components/utils/Api";
 import styled from "styled-components";
@@ -163,6 +169,8 @@ function UpdateUserInfo() {
   const userState = useContext(UserStateContext);
   const dispatch = useContext(DispatchContext);
 
+  const currentNickname = userState.user.nickname;
+
   const [email, setEmail] = useState("");
   const [userId, setUserId] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
@@ -173,13 +181,22 @@ function UpdateUserInfo() {
 
   //각 항목 조건이 맞지 않을 때 띄우는 메시지
   const [currentPwdMsg, setCurrentPwdMsg] = useState("");
-  const [nicknameMsg, setNicknameMsg] = useState("");
   const [pwdMsg, setPwdMsg] = useState("");
   const [confirmPwdMsg, setConfirmPwdMsg] = useState("");
+  const [nicknameMsg, setNicknameMsg] = useState("");
 
-  // 이메일, 닉네임 중복 확인
+  // 현재 비밀번호 확인, 닉네임 중복 확인
   const [checkPassword, setCheckPassword] = useState(false);
-  const [checkNickname, setCheckNickname] = useState(false);
+  //   const [checkNickname, setCheckNickname] = useState(false);
+  const checkNickname = useRef(false);
+
+  const isAllChecked = checkPassword && checkNickname;
+
+  // 변동사항 여부 확인
+  const [changePassword, setChangePassword] = useState(false);
+  const [changeNickname, setChangeNickname] = useState(false);
+
+  const isAllNotChanged = !changePassword && !changeNickname;
 
   // 닉네임 유효성 검사
   const validateNickname = (nickname) => {
@@ -203,13 +220,6 @@ function UpdateUserInfo() {
   const isNicknameValid = validateNickname(nickname);
   const isPwdValid = validatePassword(password);
   const isConfirmPwdValid = validateConfirmPassword(confirmPassword);
-
-  const isAllValid =
-    isConfirmPwdValid &&
-    isNicknameValid &&
-    isPwdValid &&
-    checkPassword &&
-    checkNickname;
 
   // 화면에서 가리기
   function elementShow(idName) {
@@ -259,69 +269,24 @@ function UpdateUserInfo() {
         setCheckPassword(true);
         elementHide("checkPasswordInputGroupDiv");
         setIsDisabled(true);
-        elementShow("changeNicknameInputGroupDiv");
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  // [2-1] 닉네임 입력
-  const onChangeNickname = useCallback(async (e) => {
-    e.preventDefault();
-    const currNickname = await e.target.value;
-    setNickname(currNickname);
-    if (!validateNickname(currNickname)) {
-      setIsDisabled(true);
-      setNicknameMsg("1글자 이상 9글자 미만으로 입력해주세요.");
-    } else {
-      setIsDisabled(false);
-      setNicknameMsg(null);
-    }
-  }, []);
-
-  // [2-2] 닉네임 중복확인
-  const onCheckNickname = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await Api.get(`signup/nickname/${nickname}`);
-      const { result } = res.data;
-      if (!result) {
-        setNicknameMsg("이미 등록된 닉네임입니다. 다시 입력해주세요.");
-        setCheckNickname(false);
-      } else {
-        setCheckNickname(true);
-        elementHide("changeNicknameInputGroupDiv");
-        setIsDisabled(true);
         elementShow("changePasswordInputGroupDiv");
       }
     } catch (err) {
       console.log(err);
     }
   };
-  // [2-3] 닉네임 유지
-  const onPassNickname = async (e) => {
-    e.preventDefault();
-    try {
-      setNickname(userState.user.nickname);
-      setCheckNickname(true);
-      elementHide("changeNicknameInputGroupDiv");
-      setIsDisabled(true);
-      elementShow("changePasswordInputGroupDiv");
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
-  // [3-1] 비밀번호 입력
+  // [2-1] 비밀번호 입력
   // 비밀번호
   const onChangePwd = useCallback(async (e) => {
     const currPwd = await e.target.value;
     setPassword(currPwd);
     if (!validatePassword(currPwd)) {
       setPwdMsg("영문, 숫자, 특수기호 조합으로 10자리 이상 입력해주세요.");
+      setIsDisabled(true);
     } else if (validatePassword(currPwd) && currPwd !== confirmPassword) {
       setPwdMsg("동일한 비밀번호를 한번 더 입력해주세요.");
+      setIsDisabled(true);
     } else {
       setPwdMsg(null);
     }
@@ -333,62 +298,190 @@ function UpdateUserInfo() {
     setConfirmPassword(currConfirmPwd);
     if (password !== currConfirmPwd) {
       setPwdMsg("비밀번호가 일치하지 않습니다.");
+      setIsDisabled(true);
     } else if (
       password == currConfirmPwd &&
       !validatePassword(currConfirmPwd)
     ) {
       setPwdMsg("영문, 숫자, 특수기호 조합으로 10자리 이상 입력해주세요.");
+      setIsDisabled(true);
     } else {
       setIsDisabled(false);
       setPwdMsg(null);
     }
   });
 
-  // [3-2] 비밀번호 변경
+  // [2-2] 비밀번호 변경
   const onSubmitPassword = async (e) => {
     e.preventDefault();
     try {
       if (isPwdValid && isConfirmPwdValid) {
-      }
-      const apiResult = await Api.put("user", {
-        currentPassword,
-        password,
-        nickname,
-      });
-      const { result } = apiResult.data;
-      if (result) {
-        navigate("/");
+        setChangePassword(true);
+        elementHide("changePasswordInputGroupDiv");
+        setIsDisabled(true);
+        elementShow("changeNicknameInputGroupDiv");
       }
     } catch (err) {
       console.log(err);
     }
   };
 
-  // [3-3] 비밀번호 유지
+  // [2-3] 비밀번호 유지
   const onPassPassword = async (e) => {
     e.preventDefault();
     try {
-      if (isPwdValid && isConfirmPwdValid) {
+      if (checkPassword) {
+        setPassword(currentPassword);
+        elementHide("changePasswordInputGroupDiv");
+        setIsDisabled(true);
+        elementShow("changeNicknameInputGroupDiv");
       }
-      const apiResult = await Api.put("user", {
-        currentPassword: currentPassword,
-        password: currentPassword,
-        nickname: nickname,
-      });
-      const { result } = apiResult.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // [3-1] 닉네임 입력
+  const onChangeNickname = useCallback(async (e) => {
+    e.preventDefault();
+    const currNickname = await e.target.value;
+    setNickname(currNickname);
+    if (!validateNickname(currNickname)) {
+      setIsDisabled(true);
+      setNicknameMsg(
+        "한글+숫자는 2~8글자, 영어+숫자는 2~12글자로 입력해주세요."
+      );
+    } else if (currNickname == currentNickname) {
+      setIsDisabled(true);
+      setNicknameMsg("현재 닉네임과 동일합니다.");
+    } else {
+      setIsDisabled(false);
+      setNicknameMsg(null);
+    }
+  }, []);
+
+  // [3-2] 닉네임 중복확인
+  const onCheckNickname = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await Api.get(`signup/nickname/${nickname}`);
+      const { result } = res.data;
       if (result) {
-        navigate("/");
-        window.location.reload();
+        // setCheckNickname(true);
+        checkNickname.current = true;
+        setChangeNickname(true);
+        if (isAllChecked) {
+          const apiResult = await Api.put("user", {
+            currentPassword: currentPassword,
+            password: password,
+            nickname: nickname,
+          });
+          const { result } = apiResult.data;
+          if (result) {
+            navigate("/", {
+              state: {
+                nicknameRef: nickname,
+              },
+            });
+          } else {
+            throw "유저 정보 업데이트 api에서 오류가 발생했습니다.";
+          }
+        }
+      } else {
+        setNicknameMsg("이미 등록된 닉네임입니다. 다시 입력해주세요.");
+        // setCheckNickname(false);
+        checkNickname.current = false;
       }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  // [3-3] 닉네임 유지 - useState update에 딜레이 발생
+  const onPassNickname = async (e) => {
+    e.preventDefault();
+    try {
+      setNickname(currentNickname);
+      //   setCheckNickname(true);
+      checkNickname.current = true;
+      if (checkPassword && !changePassword) {
+        navigate("/");
+      } else if (checkPassword) {
+        const apiResult = await Api.put("user", {
+          currentPassword: currentPassword,
+          password: password,
+          nickname: nickname,
+        });
+        const { result } = apiResult.data;
+        if (result) {
+          navigate("/", {
+            state: {
+              nickname: nickname,
+            },
+          });
+        } else {
+          throw "유저 정보 업데이트 api에서 오류가 발생했습니다.";
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // [only-2] 닉네임 중복확인
+  const onCheckNicknameOnly = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await Api.get(`signup/nickname/${nickname}`);
+      const { result } = res.data;
+      if (result) {
+        checkNickname.current = true;
+        setChangeNickname(true);
+        const apiResult = await Api.patch("user", {
+          nickname: nickname,
+          provider: userState.user.provider,
+        });
+        const { result } = apiResult.data;
+        if (result) {
+          navigate("/", {
+            state: {
+              nicknameRef: nickname,
+            },
+          });
+        } else {
+          throw "유저 정보 업데이트 api에서 오류가 발생했습니다.";
+        }
+      } else {
+        setNicknameMsg("이미 등록된 닉네임입니다. 다시 입력해주세요.");
+        checkNickname.current = false;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  // [only-3] 닉네임 유지 - useState update에 딜레이 발생
+  const onPassNicknameOnly = async (e) => {
+    e.preventDefault();
+    try {
+      setNickname(currentNickname);
+      checkNickname.current = true;
+      navigate("/");
     } catch (err) {
       console.log(err);
     }
   };
 
   useEffect(() => {
-    elementShow("checkPasswordInputGroupDiv");
-    elementHide("changeNicknameInputGroupDiv");
-    elementHide("changePasswordInputGroupDiv");
+    if (userState.user.provider == "dogfoot") {
+      elementShow("checkPasswordInputGroupDiv");
+      elementHide("changePasswordInputGroupDiv");
+      elementHide("changeNicknameInputGroupDiv");
+      elementHide("changeOnlyNicknameInputGroupDiv");
+    } else {
+      elementHide("checkPasswordInputGroupDiv");
+      elementHide("changePasswordInputGroupDiv");
+      elementHide("changeNicknameInputGroupDiv");
+      elementShow("changeOnlyNicknameInputGroupDiv");
+    }
   }, []);
 
   return (
@@ -418,6 +511,31 @@ function UpdateUserInfo() {
               비밀번호 확인
             </CheckButton>
           </div>
+
+          <div id="changePasswordInputGroupDiv" display="none">
+            <SignupInput
+              name="password"
+              type="password"
+              placeholder="비밀번호"
+              onChange={onChangePwd}
+            />
+            <SpacerSmallDiv />
+            <SignupInput
+              name="confirmPassword"
+              type="password"
+              placeholder="비밀번호 확인"
+              onChange={onChangeConfirmPwd}
+            />
+            <ValidationP>{pwdMsg}</ValidationP>
+            <SpacerBigDiv />
+            <CheckButton onClick={onSubmitPassword} disabled={isDisabled}>
+              새로운 비밀번호로 변경하기
+            </CheckButton>
+
+            <CheckButton onClick={onPassPassword} disabled={null}>
+              기존 비밀번호 유지하기
+            </CheckButton>
+          </div>
           <div id="changeNicknameInputGroupDiv" display="none">
             <SignupInput
               name="nickname"
@@ -442,33 +560,30 @@ function UpdateUserInfo() {
               현재 닉네임 유지하기
             </CheckButton>
           </div>
-
-          <div id="changePasswordInputGroupDiv" display="none">
+          <div id="changeOnlyNicknameInputGroupDiv" display="none">
             <SignupInput
-              name="password"
-              type="password"
-              placeholder="비밀번호"
-              onChange={onChangePwd}
+              name="nickname"
+              type="text"
+              placeholder="닉네임"
+              onChange={onChangeNickname}
             />
-            <SpacerSmallDiv />
-            <SignupInput
-              name="confirmPassword"
-              type="password"
-              placeholder="비밀번호 확인"
-              onChange={onChangeConfirmPwd}
-            />
-            <ValidationP>{pwdMsg}</ValidationP>
+            <ValidationP>{nicknameMsg}</ValidationP>
             <SpacerBigDiv />
-            <CheckButton onClick={onSubmitPassword} disabled={!isAllValid}>
-              새로운 비밀번호로 변경하기
+            <CheckButton
+              id="checkNicknameButton"
+              onClick={onCheckNicknameOnly}
+              disabled={isDisabled}
+            >
+              새로운 닉네임으로 변경하기
             </CheckButton>
-
-            <CheckButton onClick={onPassPassword} disabled={null}>
-              기존 비밀번호 유지하기
+            <CheckButton
+              id="passNicknameButton"
+              onClick={onPassNicknameOnly}
+              disabled={null}
+            >
+              현재 닉네임 유지하기
             </CheckButton>
           </div>
-          {/* <DivisionLine />
-          <SocialLoginBox /> */}
         </SignupBox>
       </SignupBoxDiv>
     </>

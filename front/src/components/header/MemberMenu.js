@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { UserStateContext, DispatchContext } from "../../App";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const LogoutDiv = styled.div`
   width: 100%;
@@ -76,7 +76,19 @@ const NicknameButton = styled.button`
 function MemberMenu() {
   const userState = useContext(UserStateContext);
   const dispatch = useContext(DispatchContext);
+  const location = useLocation();
   const menuRef = useRef(null);
+  // const nickname = userState.user.nickname;
+  const newNickname = location.state?.nicknameRef;
+  const nickname = () => {
+    if (newNickname == undefined) {
+      return userState.user.nickname;
+    } else {
+      userState.user.nickname = newNickname;
+      return newNickname;
+    }
+  };
+
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   let navigate = useNavigate();
 
@@ -136,7 +148,7 @@ function MemberMenu() {
           ref={menuRef}
           onClick={() => setIsMenuVisible(!isMenuVisible)}
         >
-          <span>{userState.user?.nickname}</span>님
+          <span>{nickname()}</span>님
         </NicknameButton>
         {isMenuVisible && (
           <ul>

@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.validateSignupNickname = exports.validateVerifyEmail = exports.validateSignupEmail = exports.validateUserUploadImage = exports.validateUserDelete = exports.validateUserUpdate = exports.validateUserLogin = exports.validateUserCreate = exports.validateUserCurrent = void 0;
+exports.validateSignupNickname = exports.validateVerifyEmail = exports.validateSignupEmail = exports.validateUserUploadImage = exports.validateUserDelete = exports.validateUserUpdateNickname = exports.validateUserUpdate = exports.validateUserLogin = exports.validateUserCreate = exports.validateUserCurrent = void 0;
 var userSchemas_joi_1 = require("../utils/userSchemas.joi");
 var validateUserCurrent = function (req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
@@ -150,7 +150,7 @@ var validateUserUpdate = function (req, res, next) {
     });
 };
 exports.validateUserUpdate = validateUserUpdate;
-var validateUserDelete = function (req, res, next) {
+var validateUserUpdateNickname = function (req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
         var body, err_5, result_err;
         return __generator(this, function (_a) {
@@ -158,7 +158,7 @@ var validateUserDelete = function (req, res, next) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
                     body = req.body;
-                    return [4 /*yield*/, userSchemas_joi_1.userDeleteSchema.validateAsync(body)];
+                    return [4 /*yield*/, userSchemas_joi_1.userUpdateNicknameSchema.validateAsync(body)];
                 case 1:
                     _a.sent();
                     next();
@@ -177,10 +177,38 @@ var validateUserDelete = function (req, res, next) {
         });
     });
 };
+exports.validateUserUpdateNickname = validateUserUpdateNickname;
+var validateUserDelete = function (req, res, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        var body, err_6, result_err;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    body = req.body;
+                    return [4 /*yield*/, userSchemas_joi_1.userDeleteSchema.validateAsync(body)];
+                case 1:
+                    _a.sent();
+                    next();
+                    return [3 /*break*/, 3];
+                case 2:
+                    err_6 = _a.sent();
+                    result_err = {
+                        result: false,
+                        cause: "type",
+                        message: "api 요청시 잘못된 type이 첨부되었습니다.",
+                    };
+                    console.log(result_err);
+                    return [2 /*return*/, res.status(499).json(result_err)];
+                case 3: return [2 /*return*/];
+            }
+        });
+    });
+};
 exports.validateUserDelete = validateUserDelete;
 var validateUserUploadImage = function (req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var body, file, err_6, result_err;
+        var body, file, err_7, result_err;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -196,13 +224,13 @@ var validateUserUploadImage = function (req, res, next) {
                     next();
                     return [3 /*break*/, 4];
                 case 3:
-                    err_6 = _a.sent();
+                    err_7 = _a.sent();
                     result_err = {
                         result: false,
                         cause: "type",
                         message: "api 요청시 잘못된 type이 첨부되었습니다.",
                     };
-                    console.log(result_err, err_6);
+                    console.log(result_err, err_7);
                     return [2 /*return*/, res.status(499).json(result_err)];
                 case 4: return [2 /*return*/];
             }
@@ -212,40 +240,13 @@ var validateUserUploadImage = function (req, res, next) {
 exports.validateUserUploadImage = validateUserUploadImage;
 var validateSignupEmail = function (req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var body, err_7, result_err;
+        var body, err_8, result_err;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
                     body = req.body;
                     return [4 /*yield*/, userSchemas_joi_1.signupEmailSchema.validateAsync(body)];
-                case 1:
-                    _a.sent();
-                    next();
-                    return [3 /*break*/, 3];
-                case 2:
-                    err_7 = _a.sent();
-                    result_err = {
-                        result: false,
-                        cause: "type",
-                        message: "api 요청시 잘못된 type이 첨부되었습니다.",
-                    };
-                    return [2 /*return*/, res.status(499).json(result_err)];
-                case 3: return [2 /*return*/];
-            }
-        });
-    });
-};
-exports.validateSignupEmail = validateSignupEmail;
-var validateVerifyEmail = function (req, res, next) {
-    return __awaiter(this, void 0, void 0, function () {
-        var body, err_8, result_err;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    _a.trys.push([0, 2, , 3]);
-                    body = req.params;
-                    return [4 /*yield*/, userSchemas_joi_1.verifyEmailSchema.validateAsync(body)];
                 case 1:
                     _a.sent();
                     next();
@@ -263,10 +264,37 @@ var validateVerifyEmail = function (req, res, next) {
         });
     });
 };
+exports.validateSignupEmail = validateSignupEmail;
+var validateVerifyEmail = function (req, res, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        var body, err_9, result_err;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    body = req.params;
+                    return [4 /*yield*/, userSchemas_joi_1.verifyEmailSchema.validateAsync(body)];
+                case 1:
+                    _a.sent();
+                    next();
+                    return [3 /*break*/, 3];
+                case 2:
+                    err_9 = _a.sent();
+                    result_err = {
+                        result: false,
+                        cause: "type",
+                        message: "api 요청시 잘못된 type이 첨부되었습니다.",
+                    };
+                    return [2 /*return*/, res.status(499).json(result_err)];
+                case 3: return [2 /*return*/];
+            }
+        });
+    });
+};
 exports.validateVerifyEmail = validateVerifyEmail;
 var validateSignupNickname = function (req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var body, err_9, result_err;
+        var body, err_10, result_err;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -278,7 +306,7 @@ var validateSignupNickname = function (req, res, next) {
                     next();
                     return [3 /*break*/, 3];
                 case 2:
-                    err_9 = _a.sent();
+                    err_10 = _a.sent();
                     result_err = {
                         result: false,
                         cause: "type",

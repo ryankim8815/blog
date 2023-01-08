@@ -158,7 +158,7 @@ var userController = /** @class */ (function () {
             });
         });
     };
-    // POST: 회원정보 수정
+    // PUT: 회원정보 수정
     userController.userUpdate = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var user_id, currentPassword, password, nickname, updateUser, err_5, result_err;
@@ -194,10 +194,45 @@ var userController = /** @class */ (function () {
             });
         });
     };
+    // PATCH: 회원정보 수정 - Nickname Only for 간편로그인
+    userController.userUpdateNickname = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var user_id, provider, nickname, updateUser, err_6, result_err;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        user_id = req.body.user_id;
+                        provider = req.body.provider;
+                        nickname = req.body.nickname;
+                        return [4 /*yield*/, userService_1.default.updateUserNickname({
+                                user_id: user_id,
+                                // currentPassword,
+                                provider: provider,
+                                nickname: nickname,
+                            })];
+                    case 1:
+                        updateUser = _a.sent();
+                        console.log(updateUser);
+                        return [2 /*return*/, res.status(200).json(updateUser)];
+                    case 2:
+                        err_6 = _a.sent();
+                        result_err = {
+                            result: false,
+                            cause: "api",
+                            message: "userUpdate api에서 오류가 발생했습니다.",
+                        };
+                        console.log(result_err);
+                        return [2 /*return*/, res.status(200).json(result_err)];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
     // DELETE: 회원정보 삭제
     userController.userDelete = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var user_id, password, deleteUser, err_6, result_err;
+            var user_id, password, deleteUser, err_7, result_err;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -213,7 +248,7 @@ var userController = /** @class */ (function () {
                         console.log(deleteUser);
                         return [2 /*return*/, res.status(200).json(deleteUser)];
                     case 2:
-                        err_6 = _a.sent();
+                        err_7 = _a.sent();
                         result_err = {
                             result: false,
                             cause: "api",
@@ -229,7 +264,7 @@ var userController = /** @class */ (function () {
     //// POST: 프로필 사진 업로드
     userController.userUploadImage = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var user_id, new_filename, uploadUserImage, err_7, result_err;
+            var user_id, new_filename, uploadUserImage, err_8, result_err;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -245,7 +280,7 @@ var userController = /** @class */ (function () {
                         console.log(uploadUserImage);
                         return [2 /*return*/, res.status(200).json(uploadUserImage)];
                     case 2:
-                        err_7 = _a.sent();
+                        err_8 = _a.sent();
                         result_err = {
                             result: false,
                             cause: "api",
@@ -261,7 +296,7 @@ var userController = /** @class */ (function () {
     /// POST: email 인증을 위한 코드 발송
     userController.signupEmail = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var email, code, sendCodeToEmail, err_8, result_err;
+            var email, code, sendCodeToEmail, err_9, result_err;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -278,7 +313,7 @@ var userController = /** @class */ (function () {
                         console.log(sendCodeToEmail);
                         return [2 /*return*/, res.status(200).json(sendCodeToEmail)];
                     case 2:
-                        err_8 = _a.sent();
+                        err_9 = _a.sent();
                         result_err = {
                             result: false,
                             cause: "api",
@@ -294,7 +329,7 @@ var userController = /** @class */ (function () {
     /// GET: email 인증 코드 확인
     userController.signupVerifyEmail = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var email, code, verifyEmailCode, err_9, result_err;
+            var email, code, verifyEmailCode, err_10, result_err;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -309,7 +344,7 @@ var userController = /** @class */ (function () {
                         verifyEmailCode = _a.sent();
                         return [2 /*return*/, res.status(200).json(verifyEmailCode)];
                     case 2:
-                        err_9 = _a.sent();
+                        err_10 = _a.sent();
                         result_err = {
                             result: false,
                             cause: "api",
@@ -324,7 +359,7 @@ var userController = /** @class */ (function () {
     /// GET: 회원가입 단계에서 nickname 중복확인
     userController.signupNickname = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var nickname, checkNickname, err_10, result_err;
+            var nickname, checkNickname, err_11, result_err;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -338,7 +373,7 @@ var userController = /** @class */ (function () {
                         console.log(checkNickname);
                         return [2 /*return*/, res.status(200).json(checkNickname)];
                     case 2:
-                        err_10 = _a.sent();
+                        err_11 = _a.sent();
                         result_err = {
                             result: false,
                             cause: "api",

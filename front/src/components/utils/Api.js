@@ -44,10 +44,14 @@ const put = async (endpoint, data) => {
   const bodyData = JSON.stringify(data);
   return customAxios.put(BASE_URL + endpoint, bodyData);
 };
+const patch = async (endpoint, data) => {
+  const bodyData = JSON.stringify(data);
+  return customAxios.patch(BASE_URL + endpoint, bodyData);
+};
 
 const del = async (endpoint, data) => {
   const bodyData = JSON.stringify(data);
   return customAxios.delete(BASE_URL + endpoint, bodyData);
 };
 
-export { post, get, put, del as delete };
+export { post, get, put, patch, del as delete };

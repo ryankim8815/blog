@@ -275,6 +275,31 @@ class userService {
       return result_success;
     }
   }
+  //// 회원 정보 수정 - Nickname Only for 간편로그인
+  static async updateUserNickname({ user_id, provider, nickname }) {
+    // 사용자 수정
+    const updatedUser = await User.updateNickname({
+      user_id,
+      provider,
+      nickname,
+    });
+    const updatedUserString = JSON.stringify(updatedUser);
+    const updatedUserObject = JSON.parse(updatedUserString);
+    // const checkUpdatedUser = await User.findByEmail({ email });
+    // const checkUpdatedUserString = JSON.stringify(checkUpdatedUser);
+    // const checkUpdatedUserObject = JSON.parse(checkUpdatedUserString);
+    if (
+      updatedUserObject.affectedRows == 1 // &&
+      // checkUpdatedUserObject.length == 1
+    ) {
+      const result_success = {
+        result: true,
+        cause: "success",
+        message: `${nickname}님의 회원정보 수정이 성공적으로 이뤄졌습니다.`,
+      };
+      return result_success;
+    }
+  }
   //// 프로필 사진 업로드
   static async uploadUserImage({ user_id, new_filename }) {
     // email 확인

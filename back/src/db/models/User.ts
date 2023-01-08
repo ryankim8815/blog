@@ -59,6 +59,14 @@ class User {
     });
     return rows;
   }
+
+  static async updateNickname({ user_id, provider, nickname }) {
+    const [rows, fields] = await promisePool.query({
+      sql: "UPDATE users SET `nickname` = ? WHERE `user_id` = ? AND `provider` = ?",
+      values: [nickname, user_id, provider],
+    });
+    return rows;
+  }
   static async updateFilename({ user_id, new_filename }) {
     const [rows, fields] = await promisePool.query({
       sql: "UPDATE users SET `profile_image` = ? WHERE `user_id` = ?",

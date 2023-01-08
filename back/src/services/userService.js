@@ -340,6 +340,40 @@ var userService = /** @class */ (function () {
             });
         });
     };
+    //// 회원 정보 수정 - Nickname Only for 간편로그인
+    userService.updateUserNickname = function (_a) {
+        var user_id = _a.user_id, provider = _a.provider, nickname = _a.nickname;
+        return __awaiter(this, void 0, void 0, function () {
+            var updatedUser, updatedUserString, updatedUserObject, result_success;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, User_1.default.updateNickname({
+                            user_id: user_id,
+                            provider: provider,
+                            nickname: nickname,
+                        })];
+                    case 1:
+                        updatedUser = _b.sent();
+                        updatedUserString = JSON.stringify(updatedUser);
+                        updatedUserObject = JSON.parse(updatedUserString);
+                        // const checkUpdatedUser = await User.findByEmail({ email });
+                        // const checkUpdatedUserString = JSON.stringify(checkUpdatedUser);
+                        // const checkUpdatedUserObject = JSON.parse(checkUpdatedUserString);
+                        if (updatedUserObject.affectedRows == 1 // &&
+                        // checkUpdatedUserObject.length == 1
+                        ) {
+                            result_success = {
+                                result: true,
+                                cause: "success",
+                                message: "".concat(nickname, "\uB2D8\uC758 \uD68C\uC6D0\uC815\uBCF4 \uC218\uC815\uC774 \uC131\uACF5\uC801\uC73C\uB85C \uC774\uB904\uC84C\uC2B5\uB2C8\uB2E4."),
+                            };
+                            return [2 /*return*/, result_success];
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
     //// 프로필 사진 업로드
     userService.uploadUserImage = function (_a) {
         var user_id = _a.user_id, new_filename = _a.new_filename;

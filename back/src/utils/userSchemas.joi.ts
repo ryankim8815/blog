@@ -62,6 +62,22 @@ export const userUpdateSchema = Joi.object().keys({
     .required(),
 });
 
+export const userUpdateNicknameSchema = Joi.object().keys({
+  user_id: Joi.string().required(),
+  // currentPassword: Joi.string().required(),
+  // password: Joi.string()
+  //   .pattern(
+  //     new RegExp(
+  //       "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$"
+  //     )
+  //   )
+  //   .required(), // 최소 8 자, 최소 하나의 문자, 하나의 숫자 및 하나의 특수 문자
+  nickname: Joi.string()
+    .pattern(new RegExp("^([가-힣0-9]{2,8}|[A-Za-z0-9]{2,12})$"))
+    .required(),
+  provider: Joi.string().required(),
+});
+
 export const userDeleteSchema = Joi.object().keys({
   user_id: Joi.string().required(),
   password: Joi.string()

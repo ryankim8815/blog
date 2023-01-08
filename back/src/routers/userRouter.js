@@ -38,6 +38,7 @@ userRouter.get("/user", authMiddleware_1.default, validation.validateUserCurrent
 userRouter.post("/signup", validation.validateUserCreate, userController_1.default.userRegister); // 자체 회원가입
 userRouter.post("/signin", validation.validateUserLogin, userController_1.default.userLogin); // 로그인
 userRouter.put("/user", authMiddleware_1.default, validation.validateUserUpdate, userController_1.default.userUpdate); // 유저 정보 업데이트(pw & nickname)
+userRouter.patch("/user", authMiddleware_1.default, validation.validateUserUpdateNickname, userController_1.default.userUpdateNickname); // 유저 정보 업데이트(nickname) for 간편로그인
 userRouter.delete("/user", authMiddleware_1.default, validation.validateUserDelete, userController_1.default.userDelete); // 유저 삭제
 userRouter.post("/user", uploadMiddleware_1.default, authMiddleware_1.default, validation.validateUserUploadImage, userController_1.default.userUploadImage); // 프로필 사진 업로드(기존 사진 자동 삭제)
 userRouter.post("/signup/email", validation.validateSignupEmail, nodemailerMiddleware_1.default, userController_1.default.signupEmail); // email로 코드 발송
@@ -251,6 +252,45 @@ module.exports = userRouter;
  *               currentPassword:
  *                 type: string
  *                 example: current_password
+ *               nickname:
+ *                 type: string
+ *                 example: new_nickname
+ *     responses:
+ *       200:
+ *         description: successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 result:
+ *                   type: boolean
+ *                   example: true
+ *                 cause:
+ *                   type: string
+ *                   example: success
+ *                 message:
+ *                   type: string
+ *                   example: ${nickname}님의 회원정보 수정이 성공적으로 이뤄졌습니다.
+ */
+/**
+ * @swagger
+ * /user:
+ *   patch:
+ *     summary: 회원정보 수정 - nickname only for 간편 로그인
+ *     description: 회원정보 수정 시에도 nickname은 중복 검사가 필요합니다.
+ *     tags: ["userRouter"]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               provider:
+ *                 type: string
+ *                 example: google
  *               nickname:
  *                 type: string
  *                 example: new_nickname

@@ -97,7 +97,7 @@ class userController {
     }
   }
 
-  // POST: 회원정보 수정
+  // PUT: 회원정보 수정
   static async userUpdate(
     req: express.Request,
     res: express.Response,
@@ -114,6 +114,38 @@ class userController {
         user_id,
         currentPassword,
         password,
+        nickname,
+      });
+      console.log(updateUser);
+      return res.status(200).json(updateUser);
+    } catch (err) {
+      const result_err = {
+        result: false,
+        cause: "api",
+        message: "userUpdate api에서 오류가 발생했습니다.",
+      };
+      console.log(result_err);
+      return res.status(200).json(result_err);
+    }
+  }
+
+  // PATCH: 회원정보 수정 - Nickname Only for 간편로그인
+  static async userUpdateNickname(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
+    try {
+      // const email = req.email;
+      const user_id = req.body.user_id;
+      // console.log("user_id: ", user_id);
+      // const currentPassword = req.body.currentPassword;
+      const provider = req.body.provider;
+      const nickname = req.body.nickname;
+      const updateUser = await userService.updateUserNickname({
+        user_id,
+        // currentPassword,
+        provider,
         nickname,
       });
       console.log(updateUser);

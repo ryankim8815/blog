@@ -157,6 +157,23 @@ var User = /** @class */ (function () {
             });
         });
     };
+    User.updateNickname = function (_a) {
+        var user_id = _a.user_id, provider = _a.provider, nickname = _a.nickname;
+        return __awaiter(this, void 0, void 0, function () {
+            var _b, rows, fields;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0: return [4 /*yield*/, database_1.default.query({
+                            sql: "UPDATE users SET `nickname` = ? WHERE `user_id` = ? AND `provider` = ?",
+                            values: [nickname, user_id, provider],
+                        })];
+                    case 1:
+                        _b = _c.sent(), rows = _b[0], fields = _b[1];
+                        return [2 /*return*/, rows];
+                }
+            });
+        });
+    };
     User.updateFilename = function (_a) {
         var user_id = _a.user_id, new_filename = _a.new_filename;
         return __awaiter(this, void 0, void 0, function () {
