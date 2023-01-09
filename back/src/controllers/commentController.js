@@ -70,10 +70,40 @@ var commentController = /** @class */ (function () {
             });
         });
     };
+    // GET: 특정 사용자의 댓글 조회
+    commentController.commentsByUserId = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var user_id, comments, err_2, result_err;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        user_id = req.params.user_id;
+                        return [4 /*yield*/, commentService_1.default.getCommentsByUserId({
+                                user_id: user_id,
+                            })];
+                    case 1:
+                        comments = _a.sent();
+                        console.log(comments);
+                        return [2 /*return*/, res.status(200).json(comments)];
+                    case 2:
+                        err_2 = _a.sent();
+                        result_err = {
+                            result: false,
+                            cause: "api",
+                            message: "commensByUserId api에서 오류가 발생했습니다.",
+                        };
+                        console.log(result_err);
+                        return [2 /*return*/, res.status(200).json(result_err)];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
     // POST: 댓글 생성
     commentController.commentCreate = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var user_id, post_id, content, createdComment, err_2, result_err;
+            var user_id, post_id, content, createdComment, err_3, result_err;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -93,7 +123,7 @@ var commentController = /** @class */ (function () {
                         console.log(createdComment);
                         return [2 /*return*/, res.status(200).json(createdComment)];
                     case 3:
-                        err_2 = _a.sent();
+                        err_3 = _a.sent();
                         result_err = {
                             result: false,
                             cause: "api",
@@ -109,7 +139,7 @@ var commentController = /** @class */ (function () {
     // PUT: 댓글 수정
     commentController.commentUpdate = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var user_id, post_id, comment_id, content, updatedComment, err_3, result_err;
+            var user_id, post_id, comment_id, content, updatedComment, err_4, result_err;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -130,7 +160,7 @@ var commentController = /** @class */ (function () {
                         console.log(updatedComment);
                         return [2 /*return*/, res.status(200).json(updatedComment)];
                     case 3:
-                        err_3 = _a.sent();
+                        err_4 = _a.sent();
                         result_err = {
                             result: false,
                             cause: "api",
@@ -146,7 +176,7 @@ var commentController = /** @class */ (function () {
     // DELETE: 댓글 삭제
     commentController.commentDelete = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var user_id, comment_id, deletedComment, err_4, result_err;
+            var user_id, comment_id, deletedComment, err_5, result_err;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -164,7 +194,7 @@ var commentController = /** @class */ (function () {
                         console.log(deletedComment);
                         return [2 /*return*/, res.status(200).json(deletedComment)];
                     case 3:
-                        err_4 = _a.sent();
+                        err_5 = _a.sent();
                         result_err = {
                             result: false,
                             cause: "api",

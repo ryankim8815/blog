@@ -7,24 +7,29 @@ const commentRouter = express.Router();
 
 // api index
 commentRouter.get(
-  "/post/:post_id/comments",
+  "/comments/post/:post_id",
   validation.validateCommentByPostId,
   commentController.commentList
 ); // 특정 게시글의 댓글 검섹
+commentRouter.get(
+  "/comments/:user_id",
+  validation.validateCommentByUserId,
+  commentController.commentsByUserId
+); // 특정 사용자의 댓글 검섹 -----------------------------
 commentRouter.post(
-  "/post/:post_id/comment",
+  "/comments/post/:post_id",
   authMiddleware,
   validation.validateCommentCreate,
   commentController.commentCreate
 ); // 댓글 생성
 commentRouter.put(
-  "/post/:post_id/comment/:comment_id",
+  "/comments/:comment_id/post/:post_id",
   authMiddleware,
   validation.validateCommentUpdate,
   commentController.commentUpdate
 ); //  댓글 수정
 commentRouter.delete(
-  "/post/:post_id/comment/:comment_id",
+  "/comments/:comment_id/post/:post_id",
   authMiddleware,
   validation.validateCommentDelete,
   commentController.commentDelete

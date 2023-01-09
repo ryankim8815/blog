@@ -25,6 +25,23 @@ class commentService {
     );
     return result_success;
   }
+
+  //// 특정 사용자의 댓글 조회
+  static async getCommentsByUserId({ user_id }) {
+    const postComments = await Comment.findByUserId({ user_id });
+    const postCommentsString = JSON.stringify(postComments);
+    const postCommentsObject = JSON.parse(postCommentsString);
+    const result_success = Object.assign(
+      {
+        result: true,
+        cause: "success",
+        message: `해당 사용자에 대한 모든 댓글 조회가 성공적으로 이뤄졌습니다.`,
+      },
+      { list: postCommentsObject }
+    );
+    return result_success;
+  }
+
   //// 댓글 생성
   static async addComment({ user_id, post_id, content }) {
     const created_at = moment().format("YYYY-MM-DD HH:mm:ss");

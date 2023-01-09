@@ -8,6 +8,11 @@ export const postParamsSchema = Joi.object().keys({
   post_id: Joi.string().required(),
 });
 
+export const postByUserIdParamsSchema = Joi.object().keys({
+  user_id: Joi.string().required(),
+  status: Joi.string().required(),
+});
+
 export const postCreateSchema = Joi.object().keys({
   user_id: Joi.string().required(),
   title: Joi.string().required(),

@@ -103,7 +103,7 @@ var postService = /** @class */ (function () {
             });
         });
     };
-    //// pot_id로 게시글 조회
+    //// post_id로 게시글 조회
     postService.getPostByPostId = function (_a) {
         var post_id = _a.post_id;
         return __awaiter(this, void 0, void 0, function () {
@@ -127,7 +127,7 @@ var postService = /** @class */ (function () {
                             result_errUpdate = {
                                 result: false,
                                 cause: "db",
-                                message: "[\uD654\uC778\uC694\uB9D0]: \uC694\uCCAD\uD558\uC2E0 post_id\uB85C \uC800\uC7A5\uB41C \uAC8C\uC2DC\uBB3C\uC774 \uB450 \uAC1C \uC774\uC0C1\uC785\uB2C8\uB2E4.",
+                                message: "[\uD655\uC778\uC694\uB9DD]: \uC694\uCCAD\uD558\uC2E0 post_id\uB85C \uC800\uC7A5\uB41C \uAC8C\uC2DC\uBB3C\uC774 \uB450 \uAC1C \uC774\uC0C1\uC785\uB2C8\uB2E4.",
                             };
                             return [2 /*return*/, result_errUpdate];
                         }
@@ -142,6 +142,26 @@ var postService = /** @class */ (function () {
                             return [2 /*return*/, result_success];
                         }
                         return [2 /*return*/];
+                }
+            });
+        });
+    };
+    //// user_id와 status로 게시글 조회
+    postService.getPostByUserIdStatus = function (_a) {
+        var user_id = _a.user_id, status = _a.status;
+        return __awaiter(this, void 0, void 0, function () {
+            var posts, result_success;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, Post_1.default.findByUserIdStatus({ user_id: user_id, status: status })];
+                    case 1:
+                        posts = _b.sent();
+                        result_success = Object.assign({
+                            result: true,
+                            cause: "success",
+                            message: "\uBAA8\uB4E0 \uAC8C\uC2DC\uAE00 \uC870\uD68C\uAC00 \uC131\uACF5\uC801\uC73C\uB85C \uC774\uB904\uC84C\uC2B5\uB2C8\uB2E4.",
+                        }, { list: posts });
+                        return [2 /*return*/, result_success];
                 }
             });
         });

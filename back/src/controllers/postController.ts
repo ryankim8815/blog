@@ -67,6 +67,31 @@ class postController {
     }
   }
 
+  // GET: user_id와 status로 검색한 게시글 리스트
+  static async postByUserIdStatus(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
+    const user_id = req.params.user_id;
+    const status = req.params.status;
+    try {
+      const Post = await postService.getPostByUserIdStatus({
+        user_id,
+        status,
+      });
+      return res.status(200).json(Post);
+    } catch (err) {
+      const result_err = {
+        result: false,
+        cause: "api",
+        message: "PostByUserIdStatus api에서 오류가 발생했습니다.",
+      };
+      console.log(result_err);
+      return res.status(200).json(result_err);
+    }
+  }
+
   // POST: 게시글 생성
   static async postCreate(
     req: express.Request,

@@ -16,6 +16,11 @@ postRouter.get(
   validation.validatePostByPostId,
   postController.postByPostId
 ); // post_id로 게시글 검섹
+postRouter.get(
+  "/posts/:status/:user_id",
+  validation.validatePostByUserIdStatus,
+  postController.postByUserIdStatus
+); // user_id로 게시글 검섹 --------------------------------
 postRouter.post(
   "/post",
   authMiddleware,

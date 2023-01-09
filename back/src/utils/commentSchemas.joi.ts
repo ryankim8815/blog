@@ -4,6 +4,10 @@ export const paramsPostIdSchema = Joi.object().keys({
   post_id: Joi.string().required(),
 });
 
+export const paramsUserIdSchema = Joi.object().keys({
+  user_id: Joi.string().required(),
+});
+
 export const paramsCommentIdSchema = Joi.object().keys({
   comment_id: Joi.string().required(),
 });

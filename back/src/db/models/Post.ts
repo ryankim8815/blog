@@ -40,6 +40,14 @@ class Post {
     });
     return rows;
   }
+  // user_id와 status로 검색
+  static async findByUserIdStatus({ user_id, status }) {
+    const [rows, fields] = await promisePool.query({
+      sql: "SELECT * FROM posts WHERE `user_id` = ? AND `status` = ?",
+      values: [user_id, status],
+    });
+    return rows;
+  }
   // title로 검색
   static async findByTitle({ title }) {
     const [rows, fields] = await promisePool.query({

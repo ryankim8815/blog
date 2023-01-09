@@ -23,6 +23,29 @@ class commentController {
       return res.status(200).json(result_err);
     }
   }
+  // GET: 특정 사용자의 댓글 조회
+  static async commentsByUserId(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
+    try {
+      const user_id = req.params.user_id;
+      const comments = await commentService.getCommentsByUserId({
+        user_id,
+      });
+      console.log(comments);
+      return res.status(200).json(comments);
+    } catch (err) {
+      const result_err = {
+        result: false,
+        cause: "api",
+        message: "commensByUserId api에서 오류가 발생했습니다.",
+      };
+      console.log(result_err);
+      return res.status(200).json(result_err);
+    }
+  }
 
   // POST: 댓글 생성
   static async commentCreate(

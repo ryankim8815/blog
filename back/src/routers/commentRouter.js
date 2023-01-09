@@ -31,10 +31,11 @@ var authMiddleware_1 = __importDefault(require("../middlewares/authMiddleware"))
 var validation = __importStar(require("../middlewares/commentValidationMiddleware"));
 var commentRouter = express.Router();
 // api index
-commentRouter.get("/post/:post_id/comments", validation.validateCommentByPostId, commentController_1.default.commentList); // 특정 게시글의 댓글 검섹
-commentRouter.post("/post/:post_id/comment", authMiddleware_1.default, validation.validateCommentCreate, commentController_1.default.commentCreate); // 댓글 생성
-commentRouter.put("/post/:post_id/comment/:comment_id", authMiddleware_1.default, validation.validateCommentUpdate, commentController_1.default.commentUpdate); //  댓글 수정
-commentRouter.delete("/post/:post_id/comment/:comment_id", authMiddleware_1.default, validation.validateCommentDelete, commentController_1.default.commentDelete); // 댓글 삭제
+commentRouter.get("/comments/post/:post_id", validation.validateCommentByPostId, commentController_1.default.commentList); // 특정 게시글의 댓글 검섹
+commentRouter.get("/comments/:user_id", validation.validateCommentByUserId, commentController_1.default.commentsByUserId); // 특정 사용자의 댓글 검섹 -----------------------------
+commentRouter.post("/comments/post/:post_id", authMiddleware_1.default, validation.validateCommentCreate, commentController_1.default.commentCreate); // 댓글 생성
+commentRouter.put("/comments/:comment_id/post/:post_id", authMiddleware_1.default, validation.validateCommentUpdate, commentController_1.default.commentUpdate); //  댓글 수정
+commentRouter.delete("/comments/:comment_id/post/:post_id", authMiddleware_1.default, validation.validateCommentDelete, commentController_1.default.commentDelete); // 댓글 삭제
 module.exports = commentRouter;
 /**
  * @swagger

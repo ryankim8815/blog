@@ -45,7 +45,7 @@ class postService {
     );
     return result_success;
   }
-  //// pot_id로 게시글 조회
+  //// post_id로 게시글 조회
   static async getPostByPostId({ post_id }) {
     const post = await Post.findByPostId({ post_id });
     const postString = JSON.stringify(post);
@@ -61,7 +61,7 @@ class postService {
       const result_errUpdate = {
         result: false,
         cause: "db",
-        message: `[화인요말]: 요청하신 post_id로 저장된 게시물이 두 개 이상입니다.`,
+        message: `[확인요망]: 요청하신 post_id로 저장된 게시물이 두 개 이상입니다.`,
       };
       return result_errUpdate;
     } else {
@@ -78,6 +78,20 @@ class postService {
       return result_success;
     }
   }
+  //// user_id와 status로 게시글 조회
+  static async getPostByUserIdStatus({ user_id, status }) {
+    const posts = await Post.findByUserIdStatus({ user_id, status });
+    const result_success = Object.assign(
+      {
+        result: true,
+        cause: "success",
+        message: `모든 게시글 조회가 성공적으로 이뤄졌습니다.`,
+      },
+      { list: posts }
+    );
+    return result_success;
+  }
+
   //// 게시글 생성
   static async addPost({ user_id, title, sub_title, content, tag }) {
     const currentTime = moment().format("YYYY-MM-DD HH:mm:ss");

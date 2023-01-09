@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.validatePostDelete = exports.validatePostUpdate = exports.validatePostCreate = exports.validatePostByPostId = exports.validatePostByTag = void 0;
+exports.validatePostDelete = exports.validatePostUpdate = exports.validatePostCreate = exports.validatePostByUserIdStatus = exports.validatePostByPostId = exports.validatePostByTag = void 0;
 var postSchemas_joi_1 = require("../utils/postSchemas.joi");
 var validatePostByTag = function (req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
@@ -94,9 +94,37 @@ var validatePostByPostId = function (req, res, next) {
     });
 };
 exports.validatePostByPostId = validatePostByPostId;
+var validatePostByUserIdStatus = function (req, res, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        var params, err_3, result_err;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    params = req.params;
+                    return [4 /*yield*/, postSchemas_joi_1.postByUserIdParamsSchema.validateAsync(params)];
+                case 1:
+                    _a.sent();
+                    next();
+                    return [3 /*break*/, 3];
+                case 2:
+                    err_3 = _a.sent();
+                    result_err = {
+                        result: false,
+                        cause: "type",
+                        message: "api 요청시 잘못된 type이 첨부되었습니다.",
+                    };
+                    console.log(result_err);
+                    return [2 /*return*/, res.status(499).json(result_err)];
+                case 3: return [2 /*return*/];
+            }
+        });
+    });
+};
+exports.validatePostByUserIdStatus = validatePostByUserIdStatus;
 var validatePostCreate = function (req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var body, err_3, result_err;
+        var body, err_4, result_err;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -108,11 +136,11 @@ var validatePostCreate = function (req, res, next) {
                     next();
                     return [3 /*break*/, 3];
                 case 2:
-                    err_3 = _a.sent();
+                    err_4 = _a.sent();
                     result_err = {
                         result: false,
                         cause: "type",
-                        message: "api 요청시 잘못된 type이 첨부되었습니다." + err_3,
+                        message: "api 요청시 잘못된 type이 첨부되었습니다." + err_4,
                     };
                     console.log(result_err);
                     return [2 /*return*/, res.status(499).json(result_err)];
@@ -124,7 +152,7 @@ var validatePostCreate = function (req, res, next) {
 exports.validatePostCreate = validatePostCreate;
 var validatePostUpdate = function (req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var body, params, err_4, result_err;
+        var body, params, err_5, result_err;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -142,11 +170,11 @@ var validatePostUpdate = function (req, res, next) {
                     next();
                     return [3 /*break*/, 4];
                 case 3:
-                    err_4 = _a.sent();
+                    err_5 = _a.sent();
                     result_err = {
                         result: false,
                         cause: "type",
-                        message: "api 요청시 잘못된 type이 첨부되었습니다." + err_4,
+                        message: "api 요청시 잘못된 type이 첨부되었습니다." + err_5,
                     };
                     console.log(result_err);
                     return [2 /*return*/, res.status(499).json(result_err)];
@@ -158,7 +186,7 @@ var validatePostUpdate = function (req, res, next) {
 exports.validatePostUpdate = validatePostUpdate;
 var validatePostDelete = function (req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var body, params, err_5, result_err;
+        var body, params, err_6, result_err;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -174,13 +202,13 @@ var validatePostDelete = function (req, res, next) {
                     next();
                     return [3 /*break*/, 4];
                 case 3:
-                    err_5 = _a.sent();
+                    err_6 = _a.sent();
                     result_err = {
                         result: false,
                         cause: "type",
                         message: "api 요청시 잘못된 type이 첨부되었습니다.",
                     };
-                    console.log(result_err, err_5);
+                    console.log(result_err, err_6);
                     return [2 /*return*/, res.status(499).json(result_err)];
                 case 4: return [2 /*return*/];
             }

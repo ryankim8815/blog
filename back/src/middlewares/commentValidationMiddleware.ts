@@ -1,5 +1,6 @@
 import {
   paramsPostIdSchema,
+  paramsUserIdSchema,
   paramsCommentUpdateSchema,
   paramsCommentDeleteSchema,
   bodyUserIdContentSchema,
@@ -15,6 +16,25 @@ const validateCommentByPostId = async function (
   try {
     const params = req.params;
     await paramsPostIdSchema.validateAsync(params);
+    next();
+  } catch (err) {
+    const result_err = {
+      result: false,
+      cause: "type",
+      message: "api 요청시 잘못된 type이 첨부되었습니다.",
+    };
+    console.log(result_err);
+    return res.status(499).json(result_err);
+  }
+};
+const validateCommentByUserId = async function (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) {
+  try {
+    const params = req.params;
+    await paramsUserIdSchema.validateAsync(params);
     next();
   } catch (err) {
     const result_err = {
@@ -95,6 +115,7 @@ const validateCommentDelete = async function (
 
 export {
   validateCommentByPostId,
+  validateCommentByUserId,
   validateCommentCreate,
   validateCommentUpdate,
   validateCommentDelete,

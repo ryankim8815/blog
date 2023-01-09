@@ -129,10 +129,43 @@ var postController = /** @class */ (function () {
             });
         });
     };
+    // GET: user_id와 status로 검색한 게시글 리스트
+    postController.postByUserIdStatus = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var user_id, status, Post, err_4, result_err;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        user_id = req.params.user_id;
+                        status = req.params.status;
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, postService_1.default.getPostByUserIdStatus({
+                                user_id: user_id,
+                                status: status,
+                            })];
+                    case 2:
+                        Post = _a.sent();
+                        return [2 /*return*/, res.status(200).json(Post)];
+                    case 3:
+                        err_4 = _a.sent();
+                        result_err = {
+                            result: false,
+                            cause: "api",
+                            message: "PostByUserIdStatus api에서 오류가 발생했습니다.",
+                        };
+                        console.log(result_err);
+                        return [2 /*return*/, res.status(200).json(result_err)];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
     // POST: 게시글 생성
     postController.postCreate = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var user_id, title, sub_title, content, tag, createdPost, err_4, result_err;
+            var user_id, title, sub_title, content, tag, createdPost, err_5, result_err;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -156,7 +189,7 @@ var postController = /** @class */ (function () {
                         // console.log(createdPost);
                         return [2 /*return*/, res.status(200).json(createdPost)];
                     case 3:
-                        err_4 = _a.sent();
+                        err_5 = _a.sent();
                         result_err = {
                             result: false,
                             cause: "api",
@@ -172,7 +205,7 @@ var postController = /** @class */ (function () {
     // PUT: 게시글 수정
     postController.postUpdate = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var user_id, post_id, title, sub_title, content, tag, updatedPost, err_5, result_err;
+            var user_id, post_id, title, sub_title, content, tag, updatedPost, err_6, result_err;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -198,7 +231,7 @@ var postController = /** @class */ (function () {
                         // console.log(updatedPost);
                         return [2 /*return*/, res.status(200).json(updatedPost)];
                     case 3:
-                        err_5 = _a.sent();
+                        err_6 = _a.sent();
                         result_err = {
                             result: false,
                             cause: "api",
@@ -214,7 +247,7 @@ var postController = /** @class */ (function () {
     // DELETE: 게시글 삭제
     postController.postDelete = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var user_id, post_id, deletedPost, err_6, result_err;
+            var user_id, post_id, deletedPost, err_7, result_err;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -232,7 +265,7 @@ var postController = /** @class */ (function () {
                         // console.log(deletedPost);
                         return [2 /*return*/, res.status(200).json(deletedPost)];
                     case 3:
-                        err_6 = _a.sent();
+                        err_7 = _a.sent();
                         result_err = {
                             result: false,
                             cause: "api",

@@ -75,6 +75,28 @@ var commentService = /** @class */ (function () {
             });
         });
     };
+    //// 특정 사용자의 댓글 조회
+    commentService.getCommentsByUserId = function (_a) {
+        var user_id = _a.user_id;
+        return __awaiter(this, void 0, void 0, function () {
+            var postComments, postCommentsString, postCommentsObject, result_success;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, Comment_1.default.findByUserId({ user_id: user_id })];
+                    case 1:
+                        postComments = _b.sent();
+                        postCommentsString = JSON.stringify(postComments);
+                        postCommentsObject = JSON.parse(postCommentsString);
+                        result_success = Object.assign({
+                            result: true,
+                            cause: "success",
+                            message: "\uD574\uB2F9 \uC0AC\uC6A9\uC790\uC5D0 \uB300\uD55C \uBAA8\uB4E0 \uB313\uAE00 \uC870\uD68C\uAC00 \uC131\uACF5\uC801\uC73C\uB85C \uC774\uB904\uC84C\uC2B5\uB2C8\uB2E4.",
+                        }, { list: postCommentsObject });
+                        return [2 /*return*/, result_success];
+                }
+            });
+        });
+    };
     //// 댓글 생성
     commentService.addComment = function (_a) {
         var user_id = _a.user_id, post_id = _a.post_id, content = _a.content;

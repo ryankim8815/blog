@@ -1,6 +1,7 @@
 import {
   postListByTagSchema,
   postParamsSchema,
+  postByUserIdParamsSchema,
   postCreateSchema,
   postUpdateSchema,
   postDeleteSchema,
@@ -35,6 +36,25 @@ const validatePostByPostId = async function (
   try {
     const params = req.params;
     await postParamsSchema.validateAsync(params);
+    next();
+  } catch (err) {
+    const result_err = {
+      result: false,
+      cause: "type",
+      message: "api 요청시 잘못된 type이 첨부되었습니다.",
+    };
+    console.log(result_err);
+    return res.status(499).json(result_err);
+  }
+};
+const validatePostByUserIdStatus = async function (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) {
+  try {
+    const params = req.params;
+    await postByUserIdParamsSchema.validateAsync(params);
     next();
   } catch (err) {
     const result_err = {
@@ -116,6 +136,7 @@ const validatePostDelete = async function (
 export {
   validatePostByTag,
   validatePostByPostId,
+  validatePostByUserIdStatus,
   validatePostCreate,
   validatePostUpdate,
   validatePostDelete,

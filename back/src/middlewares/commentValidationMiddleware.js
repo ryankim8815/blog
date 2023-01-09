@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.validateCommentDelete = exports.validateCommentUpdate = exports.validateCommentCreate = exports.validateCommentByPostId = void 0;
+exports.validateCommentDelete = exports.validateCommentUpdate = exports.validateCommentCreate = exports.validateCommentByUserId = exports.validateCommentByPostId = void 0;
 var commentSchemas_joi_1 = require("../utils/commentSchemas.joi");
 var validateCommentByPostId = function (req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
@@ -66,24 +66,20 @@ var validateCommentByPostId = function (req, res, next) {
     });
 };
 exports.validateCommentByPostId = validateCommentByPostId;
-var validateCommentCreate = function (req, res, next) {
+var validateCommentByUserId = function (req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var params, body, err_2, result_err;
+        var params, err_2, result_err;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 3, , 4]);
+                    _a.trys.push([0, 2, , 3]);
                     params = req.params;
-                    body = req.body;
-                    return [4 /*yield*/, commentSchemas_joi_1.paramsPostIdSchema.validateAsync(params)];
+                    return [4 /*yield*/, commentSchemas_joi_1.paramsUserIdSchema.validateAsync(params)];
                 case 1:
                     _a.sent();
-                    return [4 /*yield*/, commentSchemas_joi_1.bodyUserIdContentSchema.validateAsync(body)];
-                case 2:
-                    _a.sent();
                     next();
-                    return [3 /*break*/, 4];
-                case 3:
+                    return [3 /*break*/, 3];
+                case 2:
                     err_2 = _a.sent();
                     result_err = {
                         result: false,
@@ -92,13 +88,13 @@ var validateCommentCreate = function (req, res, next) {
                     };
                     console.log(result_err);
                     return [2 /*return*/, res.status(499).json(result_err)];
-                case 4: return [2 /*return*/];
+                case 3: return [2 /*return*/];
             }
         });
     });
 };
-exports.validateCommentCreate = validateCommentCreate;
-var validateCommentUpdate = function (req, res, next) {
+exports.validateCommentByUserId = validateCommentByUserId;
+var validateCommentCreate = function (req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
         var params, body, err_3, result_err;
         return __generator(this, function (_a) {
@@ -107,7 +103,7 @@ var validateCommentUpdate = function (req, res, next) {
                     _a.trys.push([0, 3, , 4]);
                     params = req.params;
                     body = req.body;
-                    return [4 /*yield*/, commentSchemas_joi_1.paramsCommentUpdateSchema.validateAsync(params)];
+                    return [4 /*yield*/, commentSchemas_joi_1.paramsPostIdSchema.validateAsync(params)];
                 case 1:
                     _a.sent();
                     return [4 /*yield*/, commentSchemas_joi_1.bodyUserIdContentSchema.validateAsync(body)];
@@ -129,10 +125,42 @@ var validateCommentUpdate = function (req, res, next) {
         });
     });
 };
+exports.validateCommentCreate = validateCommentCreate;
+var validateCommentUpdate = function (req, res, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        var params, body, err_4, result_err;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 3, , 4]);
+                    params = req.params;
+                    body = req.body;
+                    return [4 /*yield*/, commentSchemas_joi_1.paramsCommentUpdateSchema.validateAsync(params)];
+                case 1:
+                    _a.sent();
+                    return [4 /*yield*/, commentSchemas_joi_1.bodyUserIdContentSchema.validateAsync(body)];
+                case 2:
+                    _a.sent();
+                    next();
+                    return [3 /*break*/, 4];
+                case 3:
+                    err_4 = _a.sent();
+                    result_err = {
+                        result: false,
+                        cause: "type",
+                        message: "api 요청시 잘못된 type이 첨부되었습니다.",
+                    };
+                    console.log(result_err);
+                    return [2 /*return*/, res.status(499).json(result_err)];
+                case 4: return [2 /*return*/];
+            }
+        });
+    });
+};
 exports.validateCommentUpdate = validateCommentUpdate;
 var validateCommentDelete = function (req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var params, body, err_4, result_err;
+        var params, body, err_5, result_err;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -148,13 +176,13 @@ var validateCommentDelete = function (req, res, next) {
                     next();
                     return [3 /*break*/, 4];
                 case 3:
-                    err_4 = _a.sent();
+                    err_5 = _a.sent();
                     result_err = {
                         result: false,
                         cause: "type",
                         message: "api 요청시 잘못된 type이 첨부되었습니다.",
                     };
-                    console.log(result_err, err_4);
+                    console.log(result_err, err_5);
                     return [2 /*return*/, res.status(499).json(result_err)];
                 case 4: return [2 /*return*/];
             }

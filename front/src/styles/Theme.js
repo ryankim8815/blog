@@ -17,6 +17,9 @@ const theme = {
   mainMoreLightColor: "#FAF9FF", // 컨포넌트 밝은 보라 bg
   mainDarkColor: "#403E56", // footer, 어두운버튼
 
+  // black
+  blackTextColor: "#333;", // 검정폰트
+
   // grey
   greyTextColor: "#999", // 회색폰트
   greyBorderColor: "#e1e1e1", // 회색보더
@@ -26,6 +29,11 @@ const theme = {
   warningColor: "#E57683", // input경고
 
   // size
+  mobileSize: `${size.mobile}`,
+  tabletSize: `${size.tabletL}`,
+  laptopSize: `${size.laptop}`,
+  desktopSize: `${size.desktop}`,
+  // media size
   mobile: `(max-width: ${size.mobile})`,
   tablet: `(max-width: ${size.tabletL})`,
   laptop: `(max-width: ${size.laptop})`,
@@ -82,4 +90,5 @@ const common = {
 //   common,
 // };
 
+// export default theme;
 export default theme;
