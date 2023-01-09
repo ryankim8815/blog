@@ -40,7 +40,13 @@ const PageNameDiv = styled.div`
   height: 60px;
   display: flex;
   align-items: center; // 상하 정렬
-  // justify-content: center; // 좌우 정렬
+  justify-content: center; // 좌우 정렬
+`;
+const InnerDiv = styled.div`
+  width: 100%;
+  max-width: 1280px;
+  display: flex;
+  align-items: center; // 상하 정렬
 `;
 const PageNameLeftDiv = styled.div`
   width: 50%;
@@ -297,6 +303,7 @@ function Editor() {
   const onClickSave = async () => {
     try {
       // "user/register" 엔드포인트로 post요청함.
+      const status = "saved";
       const tag = "backend";
       const sub_title = subTitle;
       await Api.post("post", {
@@ -304,6 +311,7 @@ function Editor() {
         sub_title,
         content,
         tag,
+        status,
       });
 
       // 로그인 페이지로 이동함.
@@ -312,6 +320,27 @@ function Editor() {
       console.log("게시글 저장에 실패하였습니다.", err);
     }
   };
+  const onClickPublish = async () => {
+    try {
+      // "user/register" 엔드포인트로 post요청함.
+      const status = "published";
+      const tag = "backend";
+      const sub_title = subTitle;
+      await Api.post("post", {
+        title,
+        sub_title,
+        content,
+        tag,
+        status,
+      });
+
+      // 로그인 페이지로 이동함.
+      navigate("/");
+    } catch (err) {
+      console.log("게시글 저장에 실패하였습니다.", err);
+    }
+  };
+
   useEffect(() => {
     setPreview(converter.makeHtml(content));
   }, [onChangeContent]);
@@ -319,15 +348,19 @@ function Editor() {
   return (
     <>
       <PageNameDiv>
-        <PageNameLeftDiv>
-          <PageNameTitle>WRITING</PageNameTitle>
-        </PageNameLeftDiv>
-        <PageNameRightDiv>
-          <button className="save-save" onClick={onClickSave}>
-            SAVE
-          </button>
-          <button className="save-publish">PUBLISH</button>
-        </PageNameRightDiv>
+        <InnerDiv>
+          <PageNameLeftDiv>
+            <PageNameTitle>WRITING</PageNameTitle>
+          </PageNameLeftDiv>
+          <PageNameRightDiv>
+            <button className="save-save" onClick={onClickSave}>
+              SAVE
+            </button>
+            <button className="save-publish" onClick={onClickPublish}>
+              PUBLISH
+            </button>
+          </PageNameRightDiv>
+        </InnerDiv>
       </PageNameDiv>
       <EditorBoxDiv>
         <EditorBox className="title-box">

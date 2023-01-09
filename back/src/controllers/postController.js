@@ -165,7 +165,7 @@ var postController = /** @class */ (function () {
     // POST: 게시글 생성
     postController.postCreate = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var user_id, title, sub_title, content, tag, createdPost, err_5, result_err;
+            var user_id, title, sub_title, content, tag, status, createdPost, err_5, result_err;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -174,6 +174,7 @@ var postController = /** @class */ (function () {
                         sub_title = req.body.sub_title;
                         content = req.body.content;
                         tag = req.body.tag;
+                        status = req.body.status;
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
@@ -183,6 +184,7 @@ var postController = /** @class */ (function () {
                                 sub_title: sub_title,
                                 content: content,
                                 tag: tag,
+                                status: status,
                             })];
                     case 2:
                         createdPost = _a.sent();
@@ -205,7 +207,7 @@ var postController = /** @class */ (function () {
     // PUT: 게시글 수정
     postController.postUpdate = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var user_id, post_id, title, sub_title, content, tag, updatedPost, err_6, result_err;
+            var user_id, post_id, title, sub_title, content, tag, status, updatedPost, err_6, result_err;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -215,6 +217,7 @@ var postController = /** @class */ (function () {
                         sub_title = req.body.sub_title;
                         content = req.body.content;
                         tag = req.body.tag;
+                        status = req.body.status;
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
@@ -225,6 +228,7 @@ var postController = /** @class */ (function () {
                                 sub_title: sub_title,
                                 content: content,
                                 tag: tag,
+                                status: status,
                             })];
                     case 2:
                         updatedPost = _a.sent();

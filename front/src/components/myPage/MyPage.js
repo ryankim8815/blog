@@ -16,7 +16,13 @@ const PageNameDiv = styled.div`
   height: 60px;
   display: flex;
   align-items: center; // 상하 정렬
-  // justify-content: center; // 좌우 정렬
+  justify-content: center; // 좌우 정렬
+`;
+const InnerDiv = styled.div`
+  width: 100%;
+  max-width: 1280px;
+  display: flex;
+  align-items: center; // 상하 정렬
 `;
 const PageNameLeftDiv = styled.div`
   width: 50%;
@@ -345,9 +351,11 @@ function MyPage() {
   return (
     <div>
       <PageNameDiv>
-        <PageNameLeftDiv>
-          <PageNameTitle>MY PAGE</PageNameTitle>
-        </PageNameLeftDiv>
+        <InnerDiv>
+          <PageNameLeftDiv>
+            <PageNameTitle>MY PAGE</PageNameTitle>
+          </PageNameLeftDiv>
+        </InnerDiv>
       </PageNameDiv>
       <MenuDiv>
         {/* <div>

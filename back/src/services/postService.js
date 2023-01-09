@@ -168,7 +168,7 @@ var postService = /** @class */ (function () {
     };
     //// 게시글 생성
     postService.addPost = function (_a) {
-        var user_id = _a.user_id, title = _a.title, sub_title = _a.sub_title, content = _a.content, tag = _a.tag;
+        var user_id = _a.user_id, title = _a.title, sub_title = _a.sub_title, content = _a.content, tag = _a.tag, status = _a.status;
         return __awaiter(this, void 0, void 0, function () {
             var currentTime, created_at, updated_at, user, userString, userObject, result_errUserId, post_id, newPost, newpostString, newpostObject, affectedRows, checkNewPost, checkNewPostString, checkNewPostObject, result_success;
             return __generator(this, function (_b) {
@@ -198,6 +198,7 @@ var postService = /** @class */ (function () {
                                 sub_title: sub_title,
                                 content: content,
                                 tag: tag,
+                                status: status,
                                 created_at: created_at,
                                 updated_at: updated_at,
                             })];
@@ -226,7 +227,7 @@ var postService = /** @class */ (function () {
     };
     //// 게시글 수정
     postService.updatePost = function (_a) {
-        var user_id = _a.user_id, post_id = _a.post_id, title = _a.title, sub_title = _a.sub_title, content = _a.content, tag = _a.tag;
+        var user_id = _a.user_id, post_id = _a.post_id, title = _a.title, sub_title = _a.sub_title, content = _a.content, tag = _a.tag, status = _a.status;
         return __awaiter(this, void 0, void 0, function () {
             var updated_at, user, userString, userObject, result_errUserId, checkPost, checkPostString, checkPostObject, result_errPost, updatedPost, updatedPostString, updatedPostObject, affectedRows, result_errUpdate, result_success;
             return __generator(this, function (_b) {
@@ -264,6 +265,7 @@ var postService = /** @class */ (function () {
                             sub_title: sub_title,
                             content: content,
                             tag: tag,
+                            status: status,
                             updated_at: updated_at,
                         })];
                     case 4:

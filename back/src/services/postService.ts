@@ -93,7 +93,7 @@ class postService {
   }
 
   //// 게시글 생성
-  static async addPost({ user_id, title, sub_title, content, tag }) {
+  static async addPost({ user_id, title, sub_title, content, tag, status }) {
     const currentTime = moment().format("YYYY-MM-DD HH:mm:ss");
     const created_at = currentTime;
     // const updated_at = created_at;
@@ -119,6 +119,7 @@ class postService {
       sub_title,
       content,
       tag,
+      status,
       created_at,
       updated_at,
     });
@@ -145,6 +146,7 @@ class postService {
     sub_title,
     content,
     tag,
+    status,
   }) {
     const updated_at = moment().format("YYYY-MM-DD HH:mm:ss");
     // 필요할까?
@@ -179,6 +181,7 @@ class postService {
         sub_title,
         content,
         tag,
+        status,
         updated_at,
       });
       const updatedPostString = JSON.stringify(updatedPost);

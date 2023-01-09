@@ -26,13 +26,13 @@ postRouter.post(
   authMiddleware,
   validation.validatePostCreate,
   postController.postCreate
-); // 게시글 생성
+); // 게시글 생성 --------------------------status
 postRouter.put(
   "/post/:post_id",
   authMiddleware,
   validation.validatePostUpdate,
   postController.postUpdate
-); //  게시글 수정
+); //  게시글 수정 -------------------------status
 postRouter.delete(
   "/post/:post_id",
   authMiddleware,

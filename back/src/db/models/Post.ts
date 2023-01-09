@@ -96,11 +96,12 @@ class Post {
     sub_title,
     content,
     tag,
+    status,
     created_at,
     updated_at,
   }) {
     const [rows, fields] = await promisePool.query({
-      sql: "INSERT INTO posts (post_id, user_id, title, sub_title, content, tag, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+      sql: "INSERT INTO posts (post_id, user_id, title, sub_title, content, tag, status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
       values: [
         post_id,
         user_id,
@@ -108,6 +109,7 @@ class Post {
         sub_title,
         content,
         tag,
+        status,
         created_at,
         updated_at,
       ],
@@ -115,10 +117,18 @@ class Post {
     return rows;
   }
   // 게시글 수정  - 용량 우려로 이미지 업로드 기능 제외
-  static async update({ post_id, title, sub_title, content, tag, updated_at }) {
+  static async update({
+    post_id,
+    title,
+    sub_title,
+    content,
+    tag,
+    status,
+    updated_at,
+  }) {
     const [rows, fields] = await promisePool.query({
-      sql: "UPDATE posts SET `title` = ?, `sub_title` = ?, `content` = ?, `tag` = ?, `updated_at` = ? WHERE `post_id` = ?",
-      values: [title, sub_title, content, tag, updated_at, post_id],
+      sql: "UPDATE posts SET `title` = ?, `sub_title` = ?, `content` = ?, `tag` = ?, `status` = ?, `updated_at` = ? WHERE `post_id` = ?",
+      values: [title, sub_title, content, tag, status, updated_at, post_id],
     });
     return rows;
   }

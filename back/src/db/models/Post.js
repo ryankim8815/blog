@@ -240,13 +240,13 @@ var Post = /** @class */ (function () {
     };
     // 게시글 등록 - 용량 우려로 이미지 업로드 기능 제외
     Post.create = function (_a) {
-        var post_id = _a.post_id, user_id = _a.user_id, title = _a.title, sub_title = _a.sub_title, content = _a.content, tag = _a.tag, created_at = _a.created_at, updated_at = _a.updated_at;
+        var post_id = _a.post_id, user_id = _a.user_id, title = _a.title, sub_title = _a.sub_title, content = _a.content, tag = _a.tag, status = _a.status, created_at = _a.created_at, updated_at = _a.updated_at;
         return __awaiter(this, void 0, void 0, function () {
             var _b, rows, fields;
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0: return [4 /*yield*/, database_1.default.query({
-                            sql: "INSERT INTO posts (post_id, user_id, title, sub_title, content, tag, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                            sql: "INSERT INTO posts (post_id, user_id, title, sub_title, content, tag, status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
                             values: [
                                 post_id,
                                 user_id,
@@ -254,6 +254,7 @@ var Post = /** @class */ (function () {
                                 sub_title,
                                 content,
                                 tag,
+                                status,
                                 created_at,
                                 updated_at,
                             ],
@@ -267,14 +268,14 @@ var Post = /** @class */ (function () {
     };
     // 게시글 수정  - 용량 우려로 이미지 업로드 기능 제외
     Post.update = function (_a) {
-        var post_id = _a.post_id, title = _a.title, sub_title = _a.sub_title, content = _a.content, tag = _a.tag, updated_at = _a.updated_at;
+        var post_id = _a.post_id, title = _a.title, sub_title = _a.sub_title, content = _a.content, tag = _a.tag, status = _a.status, updated_at = _a.updated_at;
         return __awaiter(this, void 0, void 0, function () {
             var _b, rows, fields;
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0: return [4 /*yield*/, database_1.default.query({
-                            sql: "UPDATE posts SET `title` = ?, `sub_title` = ?, `content` = ?, `tag` = ?, `updated_at` = ? WHERE `post_id` = ?",
-                            values: [title, sub_title, content, tag, updated_at, post_id],
+                            sql: "UPDATE posts SET `title` = ?, `sub_title` = ?, `content` = ?, `tag` = ?, `status` = ?, `updated_at` = ? WHERE `post_id` = ?",
+                            values: [title, sub_title, content, tag, status, updated_at, post_id],
                         })];
                     case 1:
                         _b = _c.sent(), rows = _b[0], fields = _b[1];

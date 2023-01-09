@@ -21,6 +21,7 @@ exports.postCreateSchema = joi_1.default.object().keys({
     sub_title: joi_1.default.string().required(),
     content: joi_1.default.string().required(),
     tag: joi_1.default.string().required(),
+    status: joi_1.default.string().required(),
 });
 exports.postUpdateSchema = joi_1.default.object().keys({
     user_id: joi_1.default.string().required(),
@@ -28,6 +29,7 @@ exports.postUpdateSchema = joi_1.default.object().keys({
     sub_title: joi_1.default.string().required(),
     content: joi_1.default.string().required(),
     tag: joi_1.default.string().required(),
+    status: joi_1.default.string().required(),
 });
 exports.postDeleteSchema = joi_1.default.object().keys({
     user_id: joi_1.default.string().required(),

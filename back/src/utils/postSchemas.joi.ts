@@ -19,6 +19,7 @@ export const postCreateSchema = Joi.object().keys({
   sub_title: Joi.string().required(),
   content: Joi.string().required(),
   tag: Joi.string().required(),
+  status: Joi.string().required(),
 });
 
 export const postUpdateSchema = Joi.object().keys({
@@ -27,6 +28,7 @@ export const postUpdateSchema = Joi.object().keys({
   sub_title: Joi.string().required(),
   content: Joi.string().required(),
   tag: Joi.string().required(),
+  status: Joi.string().required(),
 });
 
 export const postDeleteSchema = Joi.object().keys({

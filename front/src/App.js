@@ -81,6 +81,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/editor" element={<Editor />} />
+            <Route path="/editor/:post_id" element={<Editor />} />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/login/oauth2/code/kakao" element={<KakaoLogin />} />

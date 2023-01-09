@@ -104,6 +104,7 @@ class postController {
     const sub_title = req.body.sub_title;
     const content = req.body.content;
     const tag = req.body.tag;
+    const status = req.body.status;
     try {
       const createdPost = await postService.addPost({
         user_id,
@@ -111,6 +112,7 @@ class postController {
         sub_title,
         content,
         tag,
+        status,
       });
       // console.log(createdPost);
       return res.status(200).json(createdPost);
@@ -138,6 +140,7 @@ class postController {
     const sub_title = req.body.sub_title;
     const content = req.body.content;
     const tag = req.body.tag;
+    const status = req.body.status;
     try {
       const updatedPost = await postService.updatePost({
         user_id,
@@ -146,6 +149,7 @@ class postController {
         sub_title,
         content,
         tag,
+        status,
       });
       // console.log(updatedPost);
       return res.status(200).json(updatedPost);
