@@ -3,6 +3,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import * as Api from "../utils/Api";
 import styled from "styled-components";
 import showdown from "showdown";
+// import swal from "sweetalert";
+import tags from "./Tags";
+
+// const tags = ["backend", "frontend", "qa"];
+// const tags = { 0: "backend", 1: "frontend", 2: "qa" };
 
 // showdown.setFlavor("original");
 const converter = new showdown.Converter({
@@ -136,7 +141,7 @@ const EditorBox = styled.div`
 `;
 
 const TagSelect = styled.select`
-  width: 120px;
+  width: 130px;
   height: 30px;
   text-indent: 1em;
   font-size: 14px;
@@ -144,6 +149,7 @@ const TagSelect = styled.select`
   color: gray;
   border: none;
   margin-left: 20px;
+  cursor: pointer;
   // background-color: pink; // 영역확인용
   &:focus {
     outline: none;
@@ -306,6 +312,7 @@ function Editor() {
   const [preview, setPreview] = useState("");
   const [isSaved, setIsSaved] = useState(false);
   const [status, setStatus] = useState("saved");
+  const [tag, setTag] = useState("");
   const params = useParams();
 
   const navigate = useNavigate();
@@ -320,45 +327,52 @@ function Editor() {
     target.style.display = "none";
   }
 
+  const onChangeHandleTag = (e) => {
+    setTag(e.target.value);
+  };
+
   const onChangeContent = (e) => {
     let content = e.target.value;
     setContent(content);
   };
   const onClickSave = async () => {
     try {
-      // "user/register" 엔드포인트로 post요청함.
-      // const status = "saved";
-      const tag = "backend";
-      const sub_title = subTitle;
-      const newPost = await Api.post("post", {
-        title,
-        sub_title,
-        content,
-        tag,
-        status,
-      });
-      // 로그인 페이지로 이동함.
-      navigate(`/editor/${newPost.data.post_id}`);
+      if (!tag | !title | !subTitle | !content | !status) {
+        alert("입력되지 않은 항목이 있습니다.");
+      } else {
+        const sub_title = subTitle;
+        const newPost = await Api.post("post", {
+          title,
+          sub_title,
+          content,
+          tag,
+          status,
+        });
+        alert("게시물이 저장되었습니다.");
+        // 로그인 페이지로 이동함.
+        navigate(`/editor/${newPost.data.post_id}`);
+      }
     } catch (err) {
       console.log("게시글 저장에 실패하였습니다.", err);
     }
   };
   const onClickUpdate = async () => {
     try {
-      // "user/register" 엔드포인트로 post요청함.
-      // const status = "saved";
-      const tag = "backend";
-      const sub_title = subTitle;
-      await Api.put(`post/${params.post_id}`, {
-        title,
-        sub_title,
-        content,
-        tag,
-        status,
-      });
-
-      // 로그인 페이지로 이동함.
-      navigate(`/editor/${params.post_id}`);
+      if (!tag | !title | !subTitle | !content | !status) {
+        alert("입력되지 않은 항목이 있습니다.");
+      } else {
+        const sub_title = subTitle;
+        await Api.put(`post/${params.post_id}`, {
+          title,
+          sub_title,
+          content,
+          tag,
+          status,
+        });
+        alert("게시물이 저장되었습니다.");
+        // 로그인 페이지로 이동함.
+        navigate(`/editor/${params.post_id}`);
+      }
     } catch (err) {
       console.log("게시글 저장에 실패하였습니다.", err);
     }
@@ -366,10 +380,8 @@ function Editor() {
 
   const onClickToggle = async () => {
     if (status != "published") {
-      // console.log("published");
       setStatus("published");
     } else {
-      // console.log("saved");
       setStatus("saved");
     }
   };
@@ -377,6 +389,12 @@ function Editor() {
   useEffect(() => {
     setPreview(converter.makeHtml(content));
   }, [onChangeContent]);
+
+  // useEffect(() => {
+  //   console.log(tag);
+  //   alert(tag);
+  //   // swal("Oops", "Something went wrong!", "error");
+  // }, [tag]);
 
   useEffect(() => {
     // 포스트 저장 여부 확인
@@ -442,9 +460,17 @@ function Editor() {
       </PageNameDiv>
       <EditorBoxDiv>
         <EditorBox className="title-box">
-          <TagSelect>
-            <option value="">BACKEND</option>
-            <option value="">FRONTEND</option>
+          <TagSelect id="tag" onChange={onChangeHandleTag} defaultValue={""}>
+            <option value="" disabled>
+              Choose a tag..
+            </option>
+            {tags.map((tag) => (
+              <option key={tag} value={tag}>
+                {tag.toUpperCase()}
+              </option>
+            ))}
+            {/* <option value="backend">BACKEND</option> */}
+            {/* <option value="frontend">FRONTEND</option> */}
           </TagSelect>
           <TitleInput
             className="editor-title"

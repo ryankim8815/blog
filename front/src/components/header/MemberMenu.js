@@ -34,6 +34,7 @@ const LogoutDiv = styled.div`
     border: 1px solid gray;
     border-radius: 2px;
     background: #fff;
+    relative; z-index: 1;
     // background-color: blue; // 영역확인용
 
     @media ${(props) => props.theme.mobile} {
