@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Catbtn from "./Catbtn";
+import tags from "../editor/Tags";
 
 const CategoryUnitDiv = styled.div`
   margin: 10px 10px;
@@ -36,14 +37,22 @@ function Category() {
           handleSetCat={setActiveCat}
         />
       </CategoryUnitDiv>
-      <CategoryUnitDiv>
+      {/* <CategoryUnitDiv>
         <Catbtn
           name="SERVER"
           catActive={activeCat === "SERVER" ? true : false}
           handleSetCat={setActiveCat}
         />
-      </CategoryUnitDiv>
-      <Catbtn
+      </CategoryUnitDiv> */}
+      {tags.map((tag) => (
+        <Catbtn
+          key={tag}
+          name={tag.toUpperCase()}
+          catActive={activeCat === tag.toUpperCase() ? true : false}
+          handleSetCat={setActiveCat}
+        />
+      ))}
+      {/* <Catbtn
         name="BACKEND"
         catActive={activeCat === "BACKEND" ? true : false}
         handleSetCat={setActiveCat}
@@ -77,7 +86,7 @@ function Category() {
         name="etc"
         catActive={activeCat === "etc" ? true : false}
         handleSetCat={setActiveCat}
-      />
+      /> */}
     </div>
   );
 }

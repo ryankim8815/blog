@@ -4,6 +4,7 @@ import Catbtn from "./Catbtn";
 // import { useNavigate, useParams } from "react-router-dom";
 import * as Api from "../utils/Api";
 import styled from "styled-components";
+import tags from "../editor/Tags";
 
 // category button list
 const CategoryDiv = styled.div`
@@ -120,65 +121,15 @@ function PostList() {
               handleSetCat={setActiveCat}
             />
           </CategoryUnitDiv>
-          {/* <Catbtn
-            name="tag"
-            catActive={activeCat === "tag" ? true : false}
-            handleSetCat={setActiveCat}
-          /> */}
-          {/* <Catbtn
-            name="SERVER"
-            catActive={activeCat === "SERVER" ? true : false}
-            handleSetCat={setActiveCat}
-          /> */}
-          <CategoryUnitDiv>
-            <Catbtn
-              name="BACKEND"
-              catActive={activeCat === "BACKEND" ? true : false}
-              handleSetCat={setActiveCat}
-            />
-          </CategoryUnitDiv>
-          <CategoryUnitDiv>
-            <Catbtn
-              name="FRONTEND"
-              catActive={activeCat === "FRONTEND" ? true : false}
-              handleSetCat={setActiveCat}
-            />
-          </CategoryUnitDiv>
-          <CategoryUnitDiv>
-            <Catbtn
-              name="DEVOPS"
-              catActive={activeCat === "DEVOPS" ? true : false}
-              handleSetCat={setActiveCat}
-            />
-          </CategoryUnitDiv>
-          <CategoryUnitDiv>
-            <Catbtn
-              name="QA"
-              catActive={activeCat === "QA" ? true : false}
-              handleSetCat={setActiveCat}
-            />
-          </CategoryUnitDiv>
-          <CategoryUnitDiv>
-            <Catbtn
-              name="SECURITY"
-              catActive={activeCat === "SECURITY" ? true : false}
-              handleSetCat={setActiveCat}
-            />
-          </CategoryUnitDiv>
-          <CategoryUnitDiv>
-            <Catbtn
-              name="DATA"
-              catActive={activeCat === "DATA" ? true : false}
-              handleSetCat={setActiveCat}
-            />
-          </CategoryUnitDiv>
-          <CategoryUnitDiv>
-            <Catbtn
-              name="etc"
-              catActive={activeCat === "etc" ? true : false}
-              handleSetCat={setActiveCat}
-            />
-          </CategoryUnitDiv>
+          {tags.map((tag) => (
+            <CategoryUnitDiv key={tag}>
+              <Catbtn
+                name={tag.toUpperCase()}
+                catActive={activeCat === tag.toUpperCase() ? true : false}
+                handleSetCat={setActiveCat}
+              />
+            </CategoryUnitDiv>
+          ))}
         </CategoryBox>
       </CategoryDiv>
       <PostBoxDiv>

@@ -15,7 +15,13 @@ const PageNameDiv = styled.div`
   height: 60px;
   display: flex;
   align-items: center; // 상하 정렬
-  // justify-content: center; // 좌우 정렬
+  justify-content: center; // 좌우 정렬
+`;
+const InnerDiv = styled.div`
+  width: 100%;
+  max-width: 1280px;
+  display: flex;
+  align-items: center; // 상하 정렬
 `;
 const PageNameLeftDiv = styled.div`
   width: 50%;
@@ -100,6 +106,7 @@ const DivisionLine = styled.div`
 `;
 
 const Content = styled.p`
+  min-height: 400px;
   text-align: left; // 좌우 정렬
   padding: 0px 30px;
   font-size: 16px;
@@ -136,9 +143,11 @@ function Posts() {
   return (
     <div>
       <PageNameDiv>
-        <PageNameLeftDiv>
-          <PageNameTitle>READING</PageNameTitle>
-        </PageNameLeftDiv>
+        <InnerDiv>
+          <PageNameLeftDiv>
+            <PageNameTitle>READING</PageNameTitle>
+          </PageNameLeftDiv>
+        </InnerDiv>
       </PageNameDiv>
       <PostBoxDiv>
         <PostBox>
@@ -168,6 +177,8 @@ function Posts() {
                 }}
               />
               <div className="division-line"></div>
+              {/* <DivisionLine style={{ marginTop: "500px" }} /> */}
+              <DivisionLine />
             </div>
           ))}
         </PostBox>
