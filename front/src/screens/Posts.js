@@ -26,21 +26,20 @@ const InnerDiv = styled.div`
 const PageNameLeftDiv = styled.div`
   width: 50%;
   height: 100%;
-  margin-left: 20px;
-  // margin-right: 20px;
+  padding-left: 40px;
   display: flex;
-  // flex-direction: column;
   align-items: center;
   justify-content: left;
   // background-color: blue; // 영역확인용
+
+  @media ${(props) => props.theme.mobile} {
+    width: 100%;
+    padding-left: 20px;
 `;
 const PageNameTitle = styled.span`
-  // font-family: Elice Digital Baeum;
   font-weight: 100;
   color: #ffffff;
   font-size: 24px;
-  // font-weight: 900;
-  // color: #333333;
   display: flex;
   justify-content: center; // 좌우 정렬
   // background-color: pink; // 영역확인용
@@ -70,7 +69,6 @@ const PostBox = styled.div`
 const Tag = styled.div`
   text-align: left; // 좌우 정렬
   margin: 0px 20px;
-  color: black;
 `;
 const StyledA = styled.a`
   text-decoration-line: none;
@@ -131,7 +129,6 @@ function Posts() {
   };
 
   useEffect(() => {
-    // apiGetPostByPostId("e95afc1b-7b28-496b-9aa3-f5d79e8460ab");
     if (params.post_id) {
       apiGetPostByPostId(params.post_id);
     } else {
@@ -151,12 +148,6 @@ function Posts() {
       </PageNameDiv>
       <PostBoxDiv>
         <PostBox>
-          {/* <div>Post</div> */}
-          {/* <div className="button-box">
-            <button className="post-previous" >이전글</button>
-            <button className="post-list">게시글 리스트</button>
-            <button className="post-next">다음글</button>
-          </div> */}
           {posts.map((post) => (
             <div key={post.post_id} className="box-post-list">
               <Tag>
@@ -177,7 +168,6 @@ function Posts() {
                 }}
               />
               <div className="division-line"></div>
-              {/* <DivisionLine style={{ marginTop: "500px" }} /> */}
               <DivisionLine />
             </div>
           ))}

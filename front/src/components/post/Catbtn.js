@@ -1,47 +1,43 @@
 import styled from "styled-components";
 
-export default function Catbtn({ name, catActive, handleSetCat }) {
-  const CategoryButton = styled.button`
-    // width: 200px;
-    height: 26px;
-    color: black;
-    font-size: 12px;
-    font-family: $font-elice-content;
-    align-items: center;
-    justify-content: flex-end;
-    padding: 10px 15px;
-    // border: 1px solid lightgray;
-    border: ${catActive ? "1px solid gray" : "1px solid lightgray"};
-    background: ${catActive ? "lightgray" : "white"};
-    border-radius: 13px;
-    display: inline-flex;
-    cursor: pointer;
-    box-shadow: ${catActive ? "0 0 2px 0px lightgray" : null};
-    // background: pink; // 확인용
-    // margin: 10px 10px;
-    &:hover {
-      background: lightgray;
-      color: black;
-      border: 1px solid gray;
-      box-shadow: 0 0 2px 0px lightgray;
-    }
-  `;
-  // const ActiveButton = styled.button`
-  //   background: lightgray;
-  //   // color: black;
-  //   border: 1px solid gray;
-  //   box-shadow: 0 0 2px 0px lightgray;
-  // `;
+const CategoryButton = styled.button`
+  height: 26px;
+  color: black;
+  font-size: 12px;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 10px 15px;
+  border-radius: 13px;
+  display: inline-flex;
+  cursor: pointer;
+  // background: pink; // 확인용
+  border: 1px solid lightgray;
+  background: none;
+  boxshadow: null;
 
+  &:hover {
+    background: #e5e5e5;
+    color: black;
+    border: 1px solid gray;
+    box-shadow: 0 0 2px 0px lightgray;
+  }
+`;
+function Catbtn({ name, catActive, handleSetCat }) {
   return (
-    <CategoryButton onClick={() => handleSetCat(name)}>{name}</CategoryButton>
+    <CategoryButton
+      onClick={() => handleSetCat(name)}
+      style={
+        catActive
+          ? {
+              border: "1px solid gray",
+              background: "#e5e5e5",
+              boxShadow: "0 0 2px 0px lightgray",
+            }
+          : {}
+      }
+    >
+      {name}
+    </CategoryButton>
   );
-  // return (
-  //   <button
-  //     className={`btn-post-category  ${catActive ? "active_btn" : null}`}
-  //     onClick={() => handleSetCat(name)}
-  //   >
-  //     {name}
-  //   </button>
-  // );
 }
+export default Catbtn;

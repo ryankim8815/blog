@@ -133,22 +133,26 @@ function PostList() {
         </CategoryBox>
       </CategoryDiv>
       <PostBoxDiv>
-        {posts.map((post) => (
-          <PostBox key={post.post_id}>
-            <h6>
-              {post.created_at.split("T", 1)}
-              &nbsp;&nbsp;&nbsp;@{post.nickname}
-            </h6>
-            <h2>
-              <StyledA href={"/post/" + post.post_id}>{post.title}</StyledA>
-              {/* <a href="/posts/">{post.title}</a> */}
-            </h2>
-            <h6>{post.sub_title}</h6>
-            {/* <div className="division-line"></div> */}
-            <DivisionLine />
-            <SpacerDiv />
-          </PostBox>
-        ))}
+        {posts.length == 0 ? (
+          <p>게시물이 없습니다.</p>
+        ) : (
+          posts.map((post) => (
+            <PostBox key={post.post_id}>
+              <h6>
+                {post.created_at.split("T", 1)}
+                &nbsp;&nbsp;&nbsp;@{post.nickname}
+              </h6>
+              <h2>
+                <StyledA href={"/post/" + post.post_id}>{post.title}</StyledA>
+                {/* <a href="/posts/">{post.title}</a> */}
+              </h2>
+              <h6>{post.sub_title}</h6>
+              {/* <div className="division-line"></div> */}
+              <DivisionLine />
+              <SpacerDiv />
+            </PostBox>
+          ))
+        )}
       </PostBoxDiv>
     </div>
   );
