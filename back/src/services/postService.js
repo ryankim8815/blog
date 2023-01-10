@@ -217,6 +217,7 @@ var postService = /** @class */ (function () {
                                 result: true,
                                 cause: "success",
                                 message: "\uAC8C\uC2DC\uAE00 \uC0DD\uC131\uC774 \uC131\uACF5\uC801\uC73C\uB85C \uC774\uB904\uC84C\uC2B5\uB2C8\uB2E4.",
+                                post_id: post_id,
                             };
                             return [2 /*return*/, result_success];
                         }

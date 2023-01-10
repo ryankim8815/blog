@@ -114,7 +114,6 @@ class postController {
         tag,
         status,
       });
-      // console.log(createdPost);
       return res.status(200).json(createdPost);
     } catch (err) {
       const result_err = {

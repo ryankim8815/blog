@@ -188,7 +188,6 @@ var postController = /** @class */ (function () {
                             })];
                     case 2:
                         createdPost = _a.sent();
-                        // console.log(createdPost);
                         return [2 /*return*/, res.status(200).json(createdPost)];
                     case 3:
                         err_5 = _a.sent();

@@ -134,6 +134,7 @@ class postService {
         result: true,
         cause: "success",
         message: `게시글 생성이 성공적으로 이뤄졌습니다.`,
+        post_id: post_id,
       };
       return result_success;
     }

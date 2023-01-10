@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import * as Api from "../utils/Api";
 import styled from "styled-components";
 import showdown from "showdown";
@@ -135,27 +135,18 @@ const EditorBox = styled.div`
   // background-color: tomato; // 영역확인용
 `;
 
-const EditorInput = styled.input`
-  width: 95%;
-  // width: 800px;
-  // max-width: 500px;
-  // max-width: 100%;
-  height: 40px;
-  border-radius: 2px;
-  border: 1px solid #e1e1e1;
-  // background-color: pink; // 영역확인용
+const TagSelect = styled.select`
+  width: 120px;
+  height: 30px;
   text-indent: 1em;
-  font-size: 15px;
-  font-weight: 400;
+  font-size: 14px;
+  font-weight: 200;
   color: gray;
-  // margin: 0px 0px 0px 0;
-  padding: 0 0 0 0;
-  display: block;
-  margin 0 auto;
-  // justify-content: center; // 좌우 정렬
+  border: none;
+  margin-left: 20px;
+  // background-color: pink; // 영역확인용
   &:focus {
-    outline: 2px solid #daadff;
-    // border: 1px solid red;
+    outline: none;
   }
 `;
 const TitleInput = styled.input`
@@ -288,13 +279,46 @@ const DivisionLine = styled.div`
   margin: 40px auto;
   width: 100%;
 `;
+const TogleSwitchButton = styled.button`
+  // width: 65px;
+  width: 85px;
+  position: relative;
+  .thumb {
+    // right: 38px;
+    position: absolute;
+    width: 23px;
+    height: 23px;
+    border-radius: 50%;
+    background-color: #fff;
+    transform
+  }
+  span {
+    // right: 33px;
+    right: 29px;
+    position: absolute; 
+  }
+`;
 
 function Editor() {
   const [title, setTitle] = useState("");
   const [subTitle, setSubTitle] = useState("");
   const [content, setContent] = useState("");
   const [preview, setPreview] = useState("");
+  const [isSaved, setIsSaved] = useState(false);
+  const [status, setStatus] = useState("saved");
+  const params = useParams();
+
   const navigate = useNavigate();
+
+  // 화면에서 가리기
+  function elementShow(idName) {
+    const target = document.getElementById(idName);
+    target.style.display = "block";
+  }
+  function elementHide(idName) {
+    const target = document.getElementById(idName);
+    target.style.display = "none";
+  }
 
   const onChangeContent = (e) => {
     let content = e.target.value;
@@ -303,30 +327,29 @@ function Editor() {
   const onClickSave = async () => {
     try {
       // "user/register" 엔드포인트로 post요청함.
-      const status = "saved";
+      // const status = "saved";
       const tag = "backend";
       const sub_title = subTitle;
-      await Api.post("post", {
+      const newPost = await Api.post("post", {
         title,
         sub_title,
         content,
         tag,
         status,
       });
-
       // 로그인 페이지로 이동함.
-      navigate("/");
+      navigate(`/editor/${newPost.data.post_id}`);
     } catch (err) {
       console.log("게시글 저장에 실패하였습니다.", err);
     }
   };
-  const onClickPublish = async () => {
+  const onClickUpdate = async () => {
     try {
       // "user/register" 엔드포인트로 post요청함.
-      const status = "published";
+      // const status = "saved";
       const tag = "backend";
       const sub_title = subTitle;
-      await Api.post("post", {
+      await Api.put(`post/${params.post_id}`, {
         title,
         sub_title,
         content,
@@ -335,15 +358,38 @@ function Editor() {
       });
 
       // 로그인 페이지로 이동함.
-      navigate("/");
+      navigate(`/editor/${params.post_id}`);
     } catch (err) {
       console.log("게시글 저장에 실패하였습니다.", err);
+    }
+  };
+
+  const onClickToggle = async () => {
+    if (status != "published") {
+      // console.log("published");
+      setStatus("published");
+    } else {
+      // console.log("saved");
+      setStatus("saved");
     }
   };
 
   useEffect(() => {
     setPreview(converter.makeHtml(content));
   }, [onChangeContent]);
+
+  useEffect(() => {
+    // 포스트 저장 여부 확인
+    if (!params.post_id) {
+      setIsSaved(false);
+      elementShow("new-post-only");
+      elementHide("saved-post-only");
+    } else {
+      setIsSaved(true);
+      elementShow("saved-post-only");
+      elementHide("new-post-only");
+    }
+  }, []);
 
   return (
     <>
@@ -353,17 +399,53 @@ function Editor() {
             <PageNameTitle>WRITING</PageNameTitle>
           </PageNameLeftDiv>
           <PageNameRightDiv>
-            <button className="save-save" onClick={onClickSave}>
+            <TogleSwitchButton
+              className="toggle"
+              onClick={onClickToggle}
+              style={
+                status == "published"
+                  ? { background: "transparent", transition: "0.2s" }
+                  : { background: "#8582a5", transition: "0.2s" }
+              }
+            >
+              <div
+                className="thumb"
+                style={
+                  status == "published"
+                    ? { right: "2px", transition: "0.2s" }
+                    : { right: "58px", transition: "0.2s" }
+                }
+              />
+              {status == "published" ? (
+                <span>PUBLIC</span>
+              ) : (
+                <span style={{ right: "10px" }}>PRIVATE</span>
+              )}
+              &nbsp;
+            </TogleSwitchButton>
+            <button
+              id="new-post-only"
+              className="save-save"
+              onClick={onClickSave}
+            >
               SAVE
             </button>
-            <button className="save-publish" onClick={onClickPublish}>
-              PUBLISH
+            <button
+              id="saved-post-only"
+              className="save-update"
+              onClick={onClickUpdate}
+            >
+              UPDATE
             </button>
           </PageNameRightDiv>
         </InnerDiv>
       </PageNameDiv>
       <EditorBoxDiv>
         <EditorBox className="title-box">
+          <TagSelect>
+            <option value="">BACKEND</option>
+            <option value="">FRONTEND</option>
+          </TagSelect>
           <TitleInput
             className="editor-title"
             type="text"
