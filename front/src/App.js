@@ -44,13 +44,18 @@ function App() {
 
   const fetchCurrentUser = async () => {
     try {
-      const res = await Api.get("user");
-      const currentUser = res.data;
-      dispatch({
-        // type: "LOGIN",
-        type: "LOGIN_SUCCESS",
-        payload: currentUser,
-      });
+      if (sessionStorage.getItem("userToken") == null) {
+        console.log("로그인된 사용자가 아닙니다.");
+        dispatch({ type: "LOGOUT" });
+      } else {
+        const res = await Api.get("user");
+        const currentUser = res.data;
+        dispatch({
+          // type: "LOGIN",
+          type: "LOGIN_SUCCESS",
+          payload: currentUser,
+        });
+      }
     } catch (err) {
       console.log("로그인된 사용자가 아닙니다.");
     }
