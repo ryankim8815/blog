@@ -45,7 +45,7 @@ function App() {
   const fetchCurrentUser = async () => {
     try {
       if (sessionStorage.getItem("userToken") == null) {
-        console.log("로그인된 사용자가 아닙니다.");
+        // console.log("로그인된 사용자가 아닙니다.");
         dispatch({ type: "LOGOUT" });
       } else {
         const res = await Api.get("user");
