@@ -23,22 +23,51 @@ class postController {
     }
   }
 
+  // // GET: 테그로 검색한 게시글 리스트
+  // static async postListByTag(
+  //   req: express.Request,
+  //   res: express.Response,
+  //   next: express.NextFunction
+  // ) {
+  //   const tag = req.params.tag;
+  //   try {
+  //     const Posts = await postService.getPostsByTag({ tag });
+  //     // console.log(Posts);
+  //     return res.status(200).json(Posts);
+  //   } catch (err) {
+  //     const result_err = {
+  //       result: false,
+  //       cause: "api",
+  //       message: "postListByTag api에서 오류가 발생했습니다.",
+  //     };
+  //     console.log(result_err);
+  //     return res.status(200).json(result_err);
+  //   }
+  // }
   // GET: 테그로 검색한 게시글 리스트
-  static async postListByTag(
+  static async postsByStatusTag(
     req: express.Request,
     res: express.Response,
     next: express.NextFunction
   ) {
+    const status = req.params.status;
     const tag = req.params.tag;
+    const start = req.params.start;
+    const end = req.params.end;
     try {
-      const Posts = await postService.getPostsByTag({ tag });
+      const Posts = await postService.getPostsByStatusTag({
+        status,
+        tag,
+        start,
+        end,
+      });
       // console.log(Posts);
       return res.status(200).json(Posts);
     } catch (err) {
       const result_err = {
         result: false,
         cause: "api",
-        message: "postListByTag api에서 오류가 발생했습니다.",
+        message: "postsByStatusTag api에서 오류가 발생했습니다.",
       };
       console.log(result_err);
       return res.status(200).json(result_err);

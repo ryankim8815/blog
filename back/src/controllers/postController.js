@@ -69,18 +69,47 @@ var postController = /** @class */ (function () {
             });
         });
     };
+    // // GET: 테그로 검색한 게시글 리스트
+    // static async postListByTag(
+    //   req: express.Request,
+    //   res: express.Response,
+    //   next: express.NextFunction
+    // ) {
+    //   const tag = req.params.tag;
+    //   try {
+    //     const Posts = await postService.getPostsByTag({ tag });
+    //     // console.log(Posts);
+    //     return res.status(200).json(Posts);
+    //   } catch (err) {
+    //     const result_err = {
+    //       result: false,
+    //       cause: "api",
+    //       message: "postListByTag api에서 오류가 발생했습니다.",
+    //     };
+    //     console.log(result_err);
+    //     return res.status(200).json(result_err);
+    //   }
+    // }
     // GET: 테그로 검색한 게시글 리스트
-    postController.postListByTag = function (req, res, next) {
+    postController.postsByStatusTag = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var tag, Posts, err_2, result_err;
+            var status, tag, start, end, Posts, err_2, result_err;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        status = req.params.status;
                         tag = req.params.tag;
+                        start = req.params.start;
+                        end = req.params.end;
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, postService_1.default.getPostsByTag({ tag: tag })];
+                        return [4 /*yield*/, postService_1.default.getPostsByStatusTag({
+                                status: status,
+                                tag: tag,
+                                start: start,
+                                end: end,
+                            })];
                     case 2:
                         Posts = _a.sent();
                         // console.log(Posts);
@@ -90,7 +119,7 @@ var postController = /** @class */ (function () {
                         result_err = {
                             result: false,
                             cause: "api",
-                            message: "postListByTag api에서 오류가 발생했습니다.",
+                            message: "postsByStatusTag api에서 오류가 발생했습니다.",
                         };
                         console.log(result_err);
                         return [2 /*return*/, res.status(200).json(result_err)];

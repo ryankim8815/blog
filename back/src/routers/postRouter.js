@@ -32,7 +32,14 @@ var validation = __importStar(require("../middlewares/postValidationMiddleware")
 var postRouter = express.Router();
 // api index
 postRouter.get("/posts", postController_1.default.postList); // 전체 게시글 검섹
-postRouter.get("/posts/tag/:tag", validation.validatePostByTag, postController_1.default.postListByTag); // tag로 게시글 검섹
+// postRouter.get(
+//   "/posts/tag/:tag",
+//   validation.validatePostByTag,
+//   postController.postListByTag
+// ); // tag로 게시글 검섹
+postRouter.get("/posts/status/:status/tag/:tag/:start/:end", 
+// validation.validatePostByTag,
+postController_1.default.postsByStatusTag); // status와 tag로 게시글 검섹 ----------------------------
 postRouter.get("/post/:post_id", validation.validatePostByPostId, postController_1.default.postByPostId); // post_id로 게시글 검섹
 postRouter.get("/posts/:status/:user_id", validation.validatePostByUserIdStatus, postController_1.default.postByUserIdStatus); // user_id로 게시글 검섹 --------------------------------
 postRouter.post("/post", authMiddleware_1.default, validation.validatePostCreate, postController_1.default.postCreate); // 게시글 생성 --------------------------status

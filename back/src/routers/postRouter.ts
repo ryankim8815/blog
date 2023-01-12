@@ -6,11 +6,16 @@ import * as validation from "../middlewares/postValidationMiddleware";
 const postRouter = express.Router();
 // api index
 postRouter.get("/posts", postController.postList); // 전체 게시글 검섹
+// postRouter.get(
+//   "/posts/tag/:tag",
+//   validation.validatePostByTag,
+//   postController.postListByTag
+// ); // tag로 게시글 검섹
 postRouter.get(
-  "/posts/tag/:tag",
-  validation.validatePostByTag,
-  postController.postListByTag
-); // tag로 게시글 검섹
+  "/posts/status/:status/tag/:tag/:start/:end",
+  // validation.validatePostByTag,
+  postController.postsByStatusTag
+); // status와 tag로 게시글 검섹 ----------------------------
 postRouter.get(
   "/post/:post_id",
   validation.validatePostByPostId,

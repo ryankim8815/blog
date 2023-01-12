@@ -1,6 +1,8 @@
 // import React from "react";
 import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import Catbtn from "./Catbtn";
+import Pagination from "./Pagination";
 // import { useNavigate, useParams } from "react-router-dom";
 import * as Api from "../utils/Api";
 import styled from "styled-components";
@@ -21,7 +23,7 @@ const CategoryDiv = styled.div`
   }
 `;
 const CategoryBox = styled.div`
-  width: 950%;
+  width: 95%;
   max-width: 1024px;
   // background-color: tomato; // 영역확인용
 `;
@@ -36,6 +38,7 @@ const PostBoxDiv = styled.div`
   // min-height: 510px;
   // min-height: ${window.outerHeight - (60 + 300 + 100 + 120 + 35)}px;
   padding-top: 50px;
+  padding-bottom: 50px;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column; /*수직 정렬*/
@@ -48,6 +51,7 @@ const PostBoxDiv = styled.div`
 
   @media screen and (max-width: 500px) {
     padding-top: 30px;
+    padding-bottom: 30px;
   }
 `;
 const PostBox = styled.div`
@@ -83,32 +87,40 @@ const SpacerDiv = styled.div`
 // tag 리스트를 for문으로 돌려서 만들어 지도록 개선해야함
 function PostList() {
   const [posts, setPosts] = useState([]);
-  //   const [tag, setTag] = useState([]);
-  /////
   const [activeCat, setActiveCat] = useState("All");
-  //   const [data, setData] = useState([]);
-  //   let tag = ""; // 임시, 추후 tag 상태를 가져와야함
+  const [pageMax, setPageMax] = useState(1);
+  const [postsPerPage, setPostsPerPage] = useState(10);
+  // const [pages, setPages] = useState([1, 2]);
+  const [pageNum, setPageNum] = useState(1);
+  const location = useLocation();
+  // const defaultStartNumber = 0;
+  // const defaultEndNumber = postsPerPage;
 
-  const apiGetAllPosts = async () => {
+  const apiGetPostsByTag = async (tag, start) => {
     try {
-      const result = await Api.get("posts");
+      const status = "published";
+      const startNumber = start ? start : 0;
+      const endNumber = postsPerPage;
+      const result = await Api.get(
+        `posts/status/${status}/tag/${tag.toLowerCase()}/${startNumber}/${endNumber}`
+      );
       setPosts(result.data.list);
+      const calculatePageMax = Math.ceil(result.data.count / postsPerPage);
+      setPageMax(calculatePageMax ? calculatePageMax : 1);
     } catch (e) {
       console.log(e);
     }
   };
 
-  const apiGetPostsByTag = async (tag) => {
-    try {
-      const result = await Api.get(`posts/tag/${tag}`);
-      setPosts(result.data.list);
-    } catch (e) {
-      console.log(e);
-    }
-  };
   useEffect(() => {
-    activeCat === "All" ? apiGetAllPosts() : apiGetPostsByTag(activeCat);
+    // activeCat === "All" ? apiGetAllPosts() : apiGetPostsByTag(activeCat);
+    apiGetPostsByTag(activeCat);
+    setPageNum(1);
   }, [activeCat]);
+  useEffect(() => {
+    const start = postsPerPage * (pageNum - 1);
+    apiGetPostsByTag(activeCat, start);
+  }, [pageNum]);
 
   return (
     <div>
@@ -144,16 +156,19 @@ function PostList() {
               </h6>
               <h2>
                 <StyledA href={"/post/" + post.post_id}>{post.title}</StyledA>
-                {/* <a href="/posts/">{post.title}</a> */}
               </h2>
               <h6>{post.sub_title}</h6>
-              {/* <div className="division-line"></div> */}
               <DivisionLine />
               <SpacerDiv />
             </PostBox>
           ))
         )}
       </PostBoxDiv>
+      <Pagination
+        totalPage={pageMax}
+        currentPage={pageNum}
+        handleSetPage={setPageNum}
+      />
     </div>
   );
 }

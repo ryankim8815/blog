@@ -25,6 +25,11 @@ const theme = {
   greyBorderColor: "#e1e1e1", // 회색보더
   greyBtnBgColor: "#F6F6F7", // 회색버튼배경
 
+  // purple
+  purpleTextColor: "#825dfe", // 보라폰트
+  // purpleBorderColor: "#e1e1e1", // 보라보더
+  // purpleBtnBgColor: "#F6F6F7", // 보라버튼배라
+
   // the rest
   warningColor: "#E57683", // input경고
 

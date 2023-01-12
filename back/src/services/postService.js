@@ -74,30 +74,60 @@ var postService = /** @class */ (function () {
             });
         });
     };
+    // //// tag로 게시글 조회
+    // static async getPostsByTag({ tag }) {
+    //   const posts = await Post.findByTag({ tag });
+    //   const postsString = JSON.stringify(posts);
+    //   const postsObject = JSON.parse(postsString);
+    //   for (let i = 0; i < postsObject.length; i++) {
+    //     delete postsObject[i].user_id;
+    //     delete postsObject[i].password;
+    //   }
+    //   const countPosts = await Post.countByTag({ tag });
+    //   const result_success = Object.assign(
+    //     {
+    //       result: true,
+    //       cause: "success",
+    //       message: `tag로 게시글 조회가 성공적으로 이뤄졌습니다.`,
+    //     },
+    //     { count: countPosts[0].cnt, list: postsObject }
+    //   );
+    //   return result_success;
+    // }
     //// tag로 게시글 조회
-    postService.getPostsByTag = function (_a) {
-        var tag = _a.tag;
+    postService.getPostsByStatusTag = function (_a) {
+        var status = _a.status, tag = _a.tag, start = _a.start, end = _a.end;
         return __awaiter(this, void 0, void 0, function () {
-            var posts, postsString, postsObject, i, countPosts, result_success;
+            var posts, countPosts, result_success;
             return __generator(this, function (_b) {
                 switch (_b.label) {
-                    case 0: return [4 /*yield*/, Post_1.default.findByTag({ tag: tag })];
+                    case 0:
+                        start = Number(start);
+                        end = Number(end);
+                        posts = null;
+                        countPosts = null;
+                        if (!(tag != "all")) return [3 /*break*/, 3];
+                        return [4 /*yield*/, Post_1.default.findByStatusTag({ status: status, tag: tag, start: start, end: end })];
                     case 1:
                         posts = _b.sent();
-                        postsString = JSON.stringify(posts);
-                        postsObject = JSON.parse(postsString);
-                        for (i = 0; i < postsObject.length; i++) {
-                            delete postsObject[i].user_id;
-                            delete postsObject[i].password;
-                        }
-                        return [4 /*yield*/, Post_1.default.countByTag({ tag: tag })];
+                        return [4 /*yield*/, Post_1.default.countByStatusTag({ status: status, tag: tag })];
                     case 2:
                         countPosts = _b.sent();
+                        return [3 /*break*/, 6];
+                    case 3: return [4 /*yield*/, Post_1.default.findByStatus({ status: status, start: start, end: end })];
+                    case 4:
+                        posts = _b.sent();
+                        return [4 /*yield*/, Post_1.default.countByStatus({ status: status })];
+                    case 5:
+                        countPosts = _b.sent();
+                        _b.label = 6;
+                    case 6:
                         result_success = Object.assign({
                             result: true,
                             cause: "success",
-                            message: "tag\uB85C \uAC8C\uC2DC\uAE00 \uC870\uD68C\uAC00 \uC131\uACF5\uC801\uC73C\uB85C \uC774\uB904\uC84C\uC2B5\uB2C8\uB2E4.",
-                        }, { count: countPosts[0].cnt, list: postsObject });
+                            message: "\uAC8C\uC2DC\uAE00 \uC870\uD68C\uAC00 \uC131\uACF5\uC801\uC73C\uB85C \uC774\uB904\uC84C\uC2B5\uB2C8\uB2E4.",
+                        }, { count: countPosts[0].cnt, list: posts });
+                        console.log(result_success);
                         return [2 /*return*/, result_success];
                 }
             });

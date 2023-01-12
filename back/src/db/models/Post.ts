@@ -16,6 +16,7 @@ class Post {
     });
     return rows;
   }
+
   // post_id로 검색
   static async findByPostId({ post_id }) {
     const [rows, fields] = await promisePool.query({
@@ -72,6 +73,44 @@ class Post {
     });
     return rows;
   }
+  ///// POST LIST
+  // status와 페이지로 검색한 결과 리스트
+  static async findByStatus({ status, start, end }) {
+    const [rows, fields] = await promisePool.query({
+      sql: "SELECT * FROM posts INNER JOIN (SELECT user_id, email, nickname, profile_image, admin FROM users) AS users ON posts.user_id = users.user_id WHERE `status` = ? ORDER BY posts.created_at DESC LIMIT ?, ?",
+      values: [status, start, end],
+    });
+    return rows;
+  }
+  // status로 검색한 결과 개수 파악
+  static async countByStatus({ status }) {
+    const [rows, fields] = await promisePool.query({
+      sql: "SELECT count(post_id) AS cnt FROM posts WHERE `status` = ?",
+      values: [status],
+    });
+    return rows;
+  }
+  /////
+  // status와 tag 그리고 페이지로 검색한 결과 리스트
+  static async findByStatusTag({ status, tag, start, end }) {
+    const [rows, fields] = await promisePool.query({
+      sql: "SELECT * FROM posts INNER JOIN (SELECT user_id, email, nickname, profile_image, admin FROM users) AS users ON posts.user_id = users.user_id WHERE `status` = ? AND `tag` = ? ORDER BY posts.created_at DESC LIMIT ?, ?",
+      values: [status, tag, start, end],
+    });
+    return rows;
+  }
+
+  // status와 tag로 검색한 결과 개수 파악
+  static async countByStatusTag({ status, tag }) {
+    const [rows, fields] = await promisePool.query({
+      sql: "SELECT count(post_id) AS cnt FROM posts WHERE `status` = ? AND `tag` = ?",
+      values: [status, tag],
+    });
+    return rows;
+  }
+
+  /////
+
   // 게시일로 검색
   static async findByCreatedAtDate({ created_at_date }) {
     const [rows, fields] = await promisePool.query({
