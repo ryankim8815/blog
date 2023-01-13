@@ -3,19 +3,17 @@ import axios from "axios";
 
 axios.defaults.timeout = 10000;
 axios.defaults.headers["Content-Type"] = "application/json";
-// const backendPortNumber = import.meta.env.SERVER_PORT;
-// const backendPortNumber = process.env.SERVER_PORT;
-const backendPortNumber = process.env.REACT_APP_SERVER_PORT;
-const BASE_URL = `http://${window.location.hostname}:${backendPortNumber}/`;
-// console.log("BASE_URL: ", BASE_URL);
+
+const BASE_URL =
+  process.env.REACT_APP_ENV == "local"
+    ? `http://${window.location.hostname}:${process.env.REACT_APP_HTTP_SERVER_PORT}/`
+    : `https://${window.location.hostname}:${process.env.REACT_APP_HTTPS_SERVER_PORTS}/`;
 
 axios.interceptors.response.use(
   (res) => {
     return res;
   },
   (err) => {
-    // console.log(err);
-    // console.log("(!) axios error", err);
     throw new Error("(!) axios error");
   }
 );
@@ -30,13 +28,10 @@ const customAxios = axios.create({
 const post = async (endpoint, data) => {
   const bodyData = JSON.stringify(data);
   // bodydata는 백엔에서 처리되기 전 데이터
-  // console.log(bodyData);
-
   return customAxios.post(BASE_URL + endpoint, bodyData);
 };
 
 const get = async (endpoint, params = "") => {
-  //   console.log("endpoint: ", endpoint);
   return await customAxios.get(BASE_URL + endpoint + "/" + params);
 };
 
