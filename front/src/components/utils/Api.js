@@ -4,10 +4,12 @@ import axios from "axios";
 axios.defaults.timeout = 10000;
 axios.defaults.headers["Content-Type"] = "application/json";
 
-const BASE_URL =
-  process.env.REACT_APP_ENV == "local"
-    ? `http://${window.location.hostname}:${process.env.REACT_APP_HTTP_SERVER_PORT}/`
-    : `https://${window.location.hostname}:${process.env.REACT_APP_HTTPS_SERVER_PORTS}/`;
+let BASE_URL = null;
+if (process.env.REACT_APP_ENV == "local") {
+  BASE_URL = `http://${window.location.hostname}:${process.env.REACT_APP_HTTP_SERVER_PORT}/`;
+} else {
+  BASE_URL = `https://${window.location.hostname}:${process.env.REACT_APP_HTTPS_SERVER_PORTS}/`;
+}
 
 axios.interceptors.response.use(
   (res) => {
