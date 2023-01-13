@@ -242,84 +242,17 @@ const StyledSpan = styled.span`
   margin: auto 30px;
   //   display: table-cell;
 `;
-const ButtonA = styled.a`
-  width: 100px;
-  border: 1px solid #c5cdd7;
-  background-color: #fff;
-  text-align: center; // 좌우 정렬
-  margin: auto 0px;
-  //   box-sizing: border-box;
-  //   vertical-align: top;
-  //   display: table-cell;
-  //   text-decoration-line: none;
-  //   margin: auto 30px;
-  //   font-size: 16px;
-  //   font-weight: 400;
-  //   color: black;
-  display: block;
-`;
-const EditButton = styled.button`
-  height: 24px;
-  border: 1px solid ${(props) => props.theme.greyBorderColor};
-  background-color: #fff;
-  color: ${(props) => props.theme.blackTextColor};
-  font-size: 14px;
-  // background: pink; // 확인용
-  &:hover {
-    border: 1px solid gray;
-    // box-shadow: 0 0 2px 0px lightgray;
-    background-color: ${(props) => props.theme.greyBtnBgColor};
-  }
-`;
-const Tag = styled.div`
-  text-align: left; // 좌우 정렬
-  margin: 0px 20px;
-  color: black;
-`;
-const StyledA = styled.a`
-  text-decoration-line: none;
-`;
 
-const SubTitle = styled.p`
-  text-align: left; // 좌우 정렬
-  margin: 0px 20px;
-  font-size: 20px;
-  font-weight: 200;
-  color: gray;
-`;
-const Info = styled.p`
-  text-align: left; // 좌우 정렬
-  margin: 5px 0 0 20px;
-  font-size: 16px;
-  font-weight: 400;
-  color: gray;
-`;
-
-const DivisionLine = styled.div`
-  border-top: 1px solid lightgray;
-  margin: 10px 0 50px 0;
-  width: 100%;
-`;
-
-const Content = styled.p`
-  text-align: left; // 좌우 정렬
-  padding: 0px 30px;
-  font-size: 16px;
-  font-weight: 400;
-  color: black;
-`;
-
-// const tag = "resume";
 function MyPage() {
   const userState = useContext(UserStateContext);
   const dispatch = useContext(DispatchContext);
   const [posts, setPosts] = useState([]);
   const [status, setStatus] = useState("published");
-  //   const [option, setOption] = useState("published");
   const [activeMenu, setActiveMenu] = useState("published");
   const [pageMax, setPageMax] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(10);
   const [pageNum, setPageNum] = useState(1);
+  const [isUpdated, setIsUpdated] = useState(false);
 
   let navigate = useNavigate();
 
@@ -350,10 +283,16 @@ function MyPage() {
     setActiveMenu("saved");
   };
 
-  //   const onCheckComments = async (e) => {
-  //     e.preventDefault();
-  //     setOption("comments");
-  //   };
+  const onClickDelete = async (e) => {
+    try {
+      if (window.confirm("정말 삭제하시겠습니까?") == true) {
+        await Api.delete(`posts/${e.target.value}`);
+        setIsUpdated(!isUpdated);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     apiGetPosts(0);
@@ -362,7 +301,7 @@ function MyPage() {
   useEffect(() => {
     const start = postsPerPage * (pageNum - 1);
     apiGetPosts(start);
-  }, [pageNum]);
+  }, [pageNum, isUpdated]);
 
   return (
     <div>
@@ -374,9 +313,6 @@ function MyPage() {
         </InnerDiv>
       </PageNameDiv>
       <MenuDiv>
-        {/* <div>
-          <span>최근 열람</span>
-        </div> */}
         <div
           style={
             activeMenu == "published"
@@ -398,9 +334,6 @@ function MyPage() {
         >
           <span onClick={onCheckSavedPosts}>작성중</span>
         </div>
-        {/* <div>
-          <span onClick={onCheckComments}>댓글</span>
-        </div> */}
       </MenuDiv>
       <PostBoxDiv>
         <PostBox>
@@ -408,37 +341,26 @@ function MyPage() {
             <p>게시물이 없습니다.</p>
           ) : (
             posts.map((post) => (
-              <PostBoxInnerDiv
-                //   onClick={() => location.href("/")}
-                key={post.post_id}
-                className="box-post-list"
-              >
+              <PostBoxInnerDiv key={post.post_id} className="box-post-list">
                 <PostBoxInnerLeft>
                   <TitleA href={`/post/${post.post_id}`}>
-                    {/* {post.title} */}
                     <TitleSpan>{post.title}</TitleSpan>
                   </TitleA>
                   <StyledSpan>
-                    {post.tag}&nbsp; · &nbsp;{post.nickname}&nbsp; · &nbsp;
-                    {post.created_at.split("T", 1)}
+                    {post.created_at.split("T", 1)}&nbsp; · &nbsp;
+                    {post.tag}
                   </StyledSpan>
                 </PostBoxInnerLeft>
                 <PostBoxInnerRight>
-                  {/* <ButtonA>수정</ButtonA> */}
-                  {/* <EditButton>수정</EditButton> */}
                   <button
                     onClick={() => {
-                      navigate("/");
+                      navigate(`/editor/${post.post_id}`);
                     }}
                   >
                     수정
                   </button>
-                  <button
-                    onClick={() => {
-                      navigate("/");
-                    }}
-                  >
-                    발행
+                  <button value={post.post_id} onClick={onClickDelete}>
+                    삭제
                   </button>
                 </PostBoxInnerRight>
               </PostBoxInnerDiv>

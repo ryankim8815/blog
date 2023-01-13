@@ -42,7 +42,7 @@ postRouter.get("/post/:post_id", validation.validatePostByPostId, postController
 postRouter.get("/posts/:status/:user_id/:start/:end", validation.validatePostByUserIdStatus, postController_1.default.postByUserIdStatus); // user_id로 게시글 검섹 --------------------------------
 postRouter.post("/post", authMiddleware_1.default, validation.validatePostCreate, postController_1.default.postCreate); // 게시글 생성 --------------------------status
 postRouter.put("/post/:post_id", authMiddleware_1.default, validation.validatePostUpdate, postController_1.default.postUpdate); //  게시글 수정 -------------------------status
-postRouter.delete("/post/:post_id", authMiddleware_1.default, validation.validatePostDelete, postController_1.default.postDelete); // 게시글 삭제
+postRouter.delete("/posts/:post_id", authMiddleware_1.default, validation.validatePostDelete, postController_1.default.postDelete); // 게시글 삭제
 module.exports = postRouter;
 /**
  * @swagger

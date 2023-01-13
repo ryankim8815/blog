@@ -39,7 +39,7 @@ postRouter.put(
   postController.postUpdate
 ); //  게시글 수정 -------------------------status
 postRouter.delete(
-  "/post/:post_id",
+  "/posts/:post_id",
   authMiddleware,
   validation.validatePostDelete,
   postController.postDelete

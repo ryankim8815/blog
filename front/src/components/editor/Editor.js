@@ -122,7 +122,7 @@ const EditorBoxDiv = styled.div`
   // align-items: center; // 상하 정렬
   justify-content: center; // 좌우 정렬
   padding: 50px 0;
-  @media screen and (max-width: 500px) {
+  @media ${(props) => props.theme.mobile} {
     padding: 20px 0;
     // background-color: green; // 영역확인용
   }
@@ -143,16 +143,19 @@ const EditorBox = styled.div`
 const TagSelect = styled.select`
   width: 130px;
   height: 30px;
-  text-indent: 1em;
   font-size: 14px;
   font-weight: 200;
   color: gray;
   border: none;
-  margin-left: 20px;
+  margin-left: 40px;
   cursor: pointer;
   // background-color: pink; // 영역확인용
   &:focus {
     outline: none;
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    margin-left: 30px;
   }
 `;
 const TitleInput = styled.input`
@@ -179,7 +182,7 @@ const TitleInput = styled.input`
     outline: none;
     // border: 1px solid red;
   }
-  @media screen and (max-width: 500px) {
+  @media ${(props) => props.theme.mobile} {
     font-size: 40px;
     // background-color: green; // 영역확인용
   }
@@ -229,7 +232,7 @@ const PreviewDiv = styled.div`
   font-size: 16px;
   font-weight: 400;
   color: black;
-  @media screen and (max-width: 500px) {
+  @media ${(props) => props.theme.mobile} {
     height: 200px;
     // background-color: green; // 영역확인용
   }
@@ -386,28 +389,40 @@ function Editor() {
     }
   };
 
+  const getPost = async (postId) => {
+    try {
+      const { data } = await Api.get(`post/${postId}`);
+      setTitle(data.title);
+      setSubTitle(data.sub_title);
+      setContent(data.content);
+      setTag(data.tag);
+      setStatus(data.status);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     setPreview(converter.makeHtml(content));
   }, [onChangeContent]);
 
-  // useEffect(() => {
-  //   console.log(tag);
-  //   alert(tag);
-  //   // swal("Oops", "Something went wrong!", "error");
-  // }, [tag]);
-
   useEffect(() => {
     // 포스트 저장 여부 확인
     if (!params.post_id) {
+      setTitle("");
+      setSubTitle("");
+      setContent("");
+      setTag("");
       setIsSaved(false);
       elementShow("new-post-only");
       elementHide("saved-post-only");
     } else {
+      getPost(params.post_id);
       setIsSaved(true);
       elementShow("saved-post-only");
       elementHide("new-post-only");
     }
-  }, []);
+  }, [params.post_id]);
 
   return (
     <>
@@ -460,13 +475,14 @@ function Editor() {
       </PageNameDiv>
       <EditorBoxDiv>
         <EditorBox className="title-box">
-          <TagSelect id="tag" onChange={onChangeHandleTag} defaultValue={""}>
+          {/* <TagSelect id="tag" onChange={onChangeHandleTag} defaultValue={tag}> */}
+          <TagSelect id="tag" onChange={onChangeHandleTag} value={tag}>
             <option value="" disabled>
               Choose a tag..
             </option>
-            {tags.map((tag) => (
-              <option key={tag} value={tag}>
-                {tag.toUpperCase()}
+            {tags.map((option) => (
+              <option key={option} value={option}>
+                {option.toUpperCase()}
               </option>
             ))}
             {/* <option value="backend">BACKEND</option> */}
@@ -476,12 +492,14 @@ function Editor() {
             className="editor-title"
             type="text"
             placeholder="제목을 입력하세요"
+            value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
           <SubTitleInput
             className="editor-desc"
             type="text"
             placeholder="소제목을 입력하세요"
+            value={subTitle}
             onChange={(e) => setSubTitle(e.target.value)}
           />
           <PreviewDiv
@@ -492,6 +510,7 @@ function Editor() {
             className="input-box"
             autoFocus={false}
             placeholder="본문을 Markdown 문법으로 작성하세요."
+            value={content}
             onChange={onChangeContent}
             // onChange={(e) => this.handleEditorInput(e)}
           />
