@@ -296,6 +296,7 @@ function MyPage() {
 
   useEffect(() => {
     apiGetPosts(0);
+    setPageNum(1);
   }, [status]);
 
   useEffect(() => {
