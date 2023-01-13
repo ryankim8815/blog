@@ -341,20 +341,23 @@ function Editor() {
   const onClickSave = async () => {
     try {
       if (!tag | !title | !subTitle | !content | !status) {
-        alert("입력되지 않은 항목이 있습니다.");
-      } else {
-        const sub_title = subTitle;
-        const newPost = await Api.post("post", {
-          title,
-          sub_title,
-          content,
-          tag,
-          status,
-        });
-        alert("게시물이 저장되었습니다.");
-        // 로그인 페이지로 이동함.
-        navigate(`/editor/${newPost.data.post_id}`);
+        return alert("입력되지 않은 항목이 있습니다.");
       }
+      const sub_title = subTitle;
+      const newPost = await Api.post("post", {
+        title,
+        sub_title,
+        content,
+        tag,
+        status,
+      });
+      console.log("newPost:   ", newPost);
+      if (newPost.data.result == false) {
+        return alert(newPost.data.message);
+      }
+      alert("게시물이 저장되었습니다.");
+      // 로그인 페이지로 이동함.
+      navigate(`/editor/${newPost.data.post_id}`);
     } catch (err) {
       console.log("게시글 저장에 실패하였습니다.", err);
     }

@@ -212,7 +212,7 @@ var postService = /** @class */ (function () {
     postService.addPost = function (_a) {
         var user_id = _a.user_id, title = _a.title, sub_title = _a.sub_title, content = _a.content, tag = _a.tag, status = _a.status;
         return __awaiter(this, void 0, void 0, function () {
-            var currentTime, created_at, updated_at, user, userString, userObject, result_errUserId, post_id, newPost, newpostString, newpostObject, affectedRows, checkNewPost, checkNewPostString, checkNewPostObject, result_success;
+            var currentTime, created_at, updated_at, user, userString, userObject, result_errUserId, result_errUserId, post_id, newPost, newpostString, newpostObject, affectedRows, checkNewPost, checkNewPostString, checkNewPostObject, result_success;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -224,7 +224,7 @@ var postService = /** @class */ (function () {
                         user = _b.sent();
                         userString = JSON.stringify(user);
                         userObject = JSON.parse(userString);
-                        if (userObject.length === 0) {
+                        if (userObject.length == 0) {
                             result_errUserId = {
                                 result: false,
                                 cause: "token",
@@ -232,6 +232,15 @@ var postService = /** @class */ (function () {
                             };
                             return [2 /*return*/, result_errUserId];
                         }
+                        if (userObject[0].admin != "admin") {
+                            result_errUserId = {
+                                result: false,
+                                cause: "Level",
+                                message: "현재는 글 작성 권한이 관리자에게만 있습니다. 양해 부탁드립니다.",
+                            };
+                            return [2 /*return*/, result_errUserId];
+                        }
+                        console.log("USER: ", user);
                         post_id = (0, uuid_1.v4)();
                         return [4 /*yield*/, Post_1.default.create({
                                 post_id: post_id,

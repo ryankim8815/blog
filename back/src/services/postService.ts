@@ -135,7 +135,7 @@ class postService {
     const user = await User.findByUserId({ user_id });
     const userString = JSON.stringify(user);
     const userObject = JSON.parse(userString);
-    if (userObject.length === 0) {
+    if (userObject.length == 0) {
       const result_errUserId = {
         result: false,
         cause: "token",
@@ -144,6 +144,16 @@ class postService {
       };
       return result_errUserId;
     }
+    if (userObject[0].admin != "admin") {
+      const result_errUserId = {
+        result: false,
+        cause: "Level",
+        message:
+          "현재는 글 작성 권한이 관리자에게만 있습니다. 양해 부탁드립니다.",
+      };
+      return result_errUserId;
+    }
+    console.log("USER: ", user);
     const post_id = uuidv4();
     const newPost = await Post.create({
       post_id,
