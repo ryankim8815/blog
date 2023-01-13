@@ -107,6 +107,7 @@ function PostList() {
       setPosts(result.data.list);
       const calculatePageMax = Math.ceil(result.data.count / postsPerPage);
       setPageMax(calculatePageMax ? calculatePageMax : 1);
+      window.scrollTo(0, 0);
     } catch (e) {
       console.log(e);
     }
@@ -167,6 +168,7 @@ function PostList() {
       <Pagination
         totalPage={pageMax}
         currentPage={pageNum}
+        maximumPage={pageMax}
         handleSetPage={setPageNum}
       />
     </div>

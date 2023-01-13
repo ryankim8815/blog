@@ -148,7 +148,13 @@ function Posts() {
 
   const apiGetPostsByTag = async (tag) => {
     try {
-      const result = await Api.get(`posts/tag/${tag}`);
+      const status = "published";
+      const startNumber = 0;
+      const endNumber = 10;
+      const result = await Api.get(
+        `posts/status/${status}/tag/${tag.toLowerCase()}/${startNumber}/${endNumber}`
+      );
+      // const result = await Api.get(`posts/tag/${tag}`);
       setPosts(result.data.list);
     } catch (e) {
       console.log(e);
