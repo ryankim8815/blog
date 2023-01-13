@@ -130,24 +130,14 @@ var Post = /** @class */ (function () {
             });
         });
     };
-    // user_id와 status로 검색
-    Post.findByUserIdStatus = function (_a) {
-        var user_id = _a.user_id, status = _a.status;
-        return __awaiter(this, void 0, void 0, function () {
-            var _b, rows, fields;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
-                    case 0: return [4 /*yield*/, database_1.default.query({
-                            sql: "SELECT * FROM posts WHERE `user_id` = ? AND `status` = ?",
-                            values: [user_id, status],
-                        })];
-                    case 1:
-                        _b = _c.sent(), rows = _b[0], fields = _b[1];
-                        return [2 /*return*/, rows];
-                }
-            });
-        });
-    };
+    // // user_id와 status로 검색
+    // static async findByUserIdStatus({ user_id, status }) {
+    //   const [rows, fields] = await promisePool.query({
+    //     sql: "SELECT * FROM posts WHERE `user_id` = ? AND `status` = ?",
+    //     values: [user_id, status],
+    //   });
+    //   return rows;
+    // }
     // title로 검색
     Post.findByTitle = function (_a) {
         var title = _a.title;
@@ -239,7 +229,7 @@ var Post = /** @class */ (function () {
             });
         });
     };
-    /////
+    ///// PAGINATION START /////
     // status와 tag 그리고 페이지로 검색한 결과 리스트
     Post.findByStatusTag = function (_a) {
         var status = _a.status, tag = _a.tag, start = _a.start, end = _a.end;
@@ -276,7 +266,43 @@ var Post = /** @class */ (function () {
             });
         });
     };
-    /////
+    ///////////////////
+    // user_id와 status로 검색
+    Post.findByUserIdStatus = function (_a) {
+        var user_id = _a.user_id, status = _a.status, start = _a.start, end = _a.end;
+        return __awaiter(this, void 0, void 0, function () {
+            var _b, rows, fields;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0: return [4 /*yield*/, database_1.default.query({
+                            sql: "SELECT * FROM posts WHERE `user_id` = ? AND `status` = ? ORDER BY posts.created_at DESC LIMIT ?, ?",
+                            values: [user_id, status, start, end],
+                        })];
+                    case 1:
+                        _b = _c.sent(), rows = _b[0], fields = _b[1];
+                        return [2 /*return*/, rows];
+                }
+            });
+        });
+    };
+    Post.countByUserIdStatus = function (_a) {
+        var user_id = _a.user_id, status = _a.status;
+        return __awaiter(this, void 0, void 0, function () {
+            var _b, rows, fields;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0: return [4 /*yield*/, database_1.default.query({
+                            sql: "SELECT count(post_id) AS cnt FROM posts WHERE `user_id` = ? AND `status` = ?",
+                            values: [user_id, status],
+                        })];
+                    case 1:
+                        _b = _c.sent(), rows = _b[0], fields = _b[1];
+                        return [2 /*return*/, rows];
+                }
+            });
+        });
+    };
+    ///// PAGINATION END /////
     // 게시일로 검색
     Post.findByCreatedAtDate = function (_a) {
         var created_at_date = _a.created_at_date;

@@ -161,18 +161,22 @@ var postController = /** @class */ (function () {
     // GET: user_id와 status로 검색한 게시글 리스트
     postController.postByUserIdStatus = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var user_id, status, Post, err_4, result_err;
+            var user_id, status, start, end, Post, err_4, result_err;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         user_id = req.params.user_id;
                         status = req.params.status;
+                        start = req.params.start;
+                        end = req.params.end;
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
                         return [4 /*yield*/, postService_1.default.getPostByUserIdStatus({
                                 user_id: user_id,
                                 status: status,
+                                start: start,
+                                end: end,
                             })];
                     case 2:
                         Post = _a.sent();

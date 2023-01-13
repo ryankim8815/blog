@@ -41,14 +41,14 @@ class Post {
     });
     return rows;
   }
-  // user_id와 status로 검색
-  static async findByUserIdStatus({ user_id, status }) {
-    const [rows, fields] = await promisePool.query({
-      sql: "SELECT * FROM posts WHERE `user_id` = ? AND `status` = ?",
-      values: [user_id, status],
-    });
-    return rows;
-  }
+  // // user_id와 status로 검색
+  // static async findByUserIdStatus({ user_id, status }) {
+  //   const [rows, fields] = await promisePool.query({
+  //     sql: "SELECT * FROM posts WHERE `user_id` = ? AND `status` = ?",
+  //     values: [user_id, status],
+  //   });
+  //   return rows;
+  // }
   // title로 검색
   static async findByTitle({ title }) {
     const [rows, fields] = await promisePool.query({
@@ -90,7 +90,7 @@ class Post {
     });
     return rows;
   }
-  /////
+  ///// PAGINATION START /////
   // status와 tag 그리고 페이지로 검색한 결과 리스트
   static async findByStatusTag({ status, tag, start, end }) {
     const [rows, fields] = await promisePool.query({
@@ -108,8 +108,23 @@ class Post {
     });
     return rows;
   }
-
-  /////
+  ///////////////////
+  // user_id와 status로 검색
+  static async findByUserIdStatus({ user_id, status, start, end }) {
+    const [rows, fields] = await promisePool.query({
+      sql: "SELECT * FROM posts WHERE `user_id` = ? AND `status` = ? ORDER BY posts.created_at DESC LIMIT ?, ?",
+      values: [user_id, status, start, end],
+    });
+    return rows;
+  }
+  static async countByUserIdStatus({ user_id, status }) {
+    const [rows, fields] = await promisePool.query({
+      sql: "SELECT count(post_id) AS cnt FROM posts WHERE `user_id` = ? AND `status` = ?",
+      values: [user_id, status],
+    });
+    return rows;
+  }
+  ///// PAGINATION END /////
 
   // 게시일로 검색
   static async findByCreatedAtDate({ created_at_date }) {

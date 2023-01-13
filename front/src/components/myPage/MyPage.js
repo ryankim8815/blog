@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import { UserStateContext, DispatchContext } from "../../App";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import * as Api from "../utils/Api";
+import Pagination from "../post/Pagination";
 // import Catbtn from "../components/post/Catbtn"; //테스트용
 import styled from "styled-components";
 import showdown from "showdown";
@@ -88,8 +89,8 @@ const MenuDiv = styled.div`
   //   text-align: center; // display를 inline으로 했기 때문에 정렬 가능
   //   justify-content: center; // 좌우 정렬
   justify-content: space-between;
-  padding: 50px 0 50px 0;
-  //   background-color: pink; // 영역확인용
+  padding: 50px 0 10px 0;
+  // background-color: pink; // 영역확인용
 
   @media screen and (max-width: 500px) {
     padding: 20px 0;
@@ -166,7 +167,7 @@ const PostBox = styled.div`
 
 const PostBoxInnerDiv = styled.div`
   margin: -1px auto;
-  padding: 20px 0px 17px 0px;
+  padding: 12px 0px 10px 0px;
   background-color: #ffffff;
   border: 1px solid ${(props) => props.theme.greyBorderColor};
   display: flex;
@@ -316,13 +317,23 @@ function MyPage() {
   const [status, setStatus] = useState("published");
   //   const [option, setOption] = useState("published");
   const [activeMenu, setActiveMenu] = useState("published");
+  const [pageMax, setPageMax] = useState(1);
+  const [postsPerPage, setPostsPerPage] = useState(10);
+  const [pageNum, setPageNum] = useState(1);
 
   let navigate = useNavigate();
 
-  const apiGetPosts = async () => {
+  const apiGetPosts = async (start) => {
     try {
-      const result = await Api.get(`posts/${status}/${userState.user.user_id}`);
+      const startNumber = start ? start : 0;
+      const endNumber = postsPerPage;
+      const result = await Api.get(
+        `posts/${status}/${userState.user.user_id}/${startNumber}/${endNumber}`
+      );
       setPosts(result.data.list);
+      const calculatePageMax = Math.ceil(result.data.count / postsPerPage);
+      setPageMax(calculatePageMax ? calculatePageMax : 1);
+      window.scrollTo(0, 0);
     } catch (e) {
       console.log(e);
     }
@@ -345,8 +356,13 @@ function MyPage() {
   //   };
 
   useEffect(() => {
-    apiGetPosts();
+    apiGetPosts(0);
   }, [status]);
+
+  useEffect(() => {
+    const start = postsPerPage * (pageNum - 1);
+    apiGetPosts(start);
+  }, [pageNum]);
 
   return (
     <div>
@@ -388,44 +404,54 @@ function MyPage() {
       </MenuDiv>
       <PostBoxDiv>
         <PostBox>
-          {posts.map((post) => (
-            <PostBoxInnerDiv
-              //   onClick={() => location.href("/")}
-              key={post.post_id}
-              className="box-post-list"
-            >
-              <PostBoxInnerLeft>
-                <TitleA href={`/post/${post.post_id}`}>
-                  {/* {post.title} */}
-                  <TitleSpan>{post.title}</TitleSpan>
-                </TitleA>
-                <StyledSpan>
-                  {post.tag}&nbsp; · &nbsp;{post.nickname}&nbsp; · &nbsp;
-                  {post.created_at.split("T", 1)}
-                </StyledSpan>
-              </PostBoxInnerLeft>
-              <PostBoxInnerRight>
-                {/* <ButtonA>수정</ButtonA> */}
-                {/* <EditButton>수정</EditButton> */}
-                <button
-                  onClick={() => {
-                    navigate("/");
-                  }}
-                >
-                  수정
-                </button>
-                <button
-                  onClick={() => {
-                    navigate("/");
-                  }}
-                >
-                  발행
-                </button>
-              </PostBoxInnerRight>
-            </PostBoxInnerDiv>
-          ))}
+          {posts.length == 0 ? (
+            <p>게시물이 없습니다.</p>
+          ) : (
+            posts.map((post) => (
+              <PostBoxInnerDiv
+                //   onClick={() => location.href("/")}
+                key={post.post_id}
+                className="box-post-list"
+              >
+                <PostBoxInnerLeft>
+                  <TitleA href={`/post/${post.post_id}`}>
+                    {/* {post.title} */}
+                    <TitleSpan>{post.title}</TitleSpan>
+                  </TitleA>
+                  <StyledSpan>
+                    {post.tag}&nbsp; · &nbsp;{post.nickname}&nbsp; · &nbsp;
+                    {post.created_at.split("T", 1)}
+                  </StyledSpan>
+                </PostBoxInnerLeft>
+                <PostBoxInnerRight>
+                  {/* <ButtonA>수정</ButtonA> */}
+                  {/* <EditButton>수정</EditButton> */}
+                  <button
+                    onClick={() => {
+                      navigate("/");
+                    }}
+                  >
+                    수정
+                  </button>
+                  <button
+                    onClick={() => {
+                      navigate("/");
+                    }}
+                  >
+                    발행
+                  </button>
+                </PostBoxInnerRight>
+              </PostBoxInnerDiv>
+            ))
+          )}
         </PostBox>
       </PostBoxDiv>
+      <Pagination
+        totalPage={pageMax}
+        currentPage={pageNum}
+        maximumPage={pageMax}
+        handleSetPage={setPageNum}
+      />
     </div>
   );
 }

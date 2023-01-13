@@ -103,16 +103,25 @@ class postService {
     }
   }
   //// user_id와 status로 게시글 조회
-  static async getPostByUserIdStatus({ user_id, status }) {
-    const posts = await Post.findByUserIdStatus({ user_id, status });
+  static async getPostByUserIdStatus({ user_id, status, start, end }) {
+    start = Number(start);
+    end = Number(end);
+    const posts = await Post.findByUserIdStatus({
+      user_id,
+      status,
+      start,
+      end,
+    });
+    const count = await Post.countByUserIdStatus({ user_id, status });
     const result_success = Object.assign(
       {
         result: true,
         cause: "success",
         message: `모든 게시글 조회가 성공적으로 이뤄졌습니다.`,
       },
-      { list: posts }
+      { count: count[0].cnt, list: posts }
     );
+    // console.log(result_success);
     return result_success;
   }
 

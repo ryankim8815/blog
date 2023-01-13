@@ -178,19 +178,31 @@ var postService = /** @class */ (function () {
     };
     //// user_id와 status로 게시글 조회
     postService.getPostByUserIdStatus = function (_a) {
-        var user_id = _a.user_id, status = _a.status;
+        var user_id = _a.user_id, status = _a.status, start = _a.start, end = _a.end;
         return __awaiter(this, void 0, void 0, function () {
-            var posts, result_success;
+            var posts, count, result_success;
             return __generator(this, function (_b) {
                 switch (_b.label) {
-                    case 0: return [4 /*yield*/, Post_1.default.findByUserIdStatus({ user_id: user_id, status: status })];
+                    case 0:
+                        start = Number(start);
+                        end = Number(end);
+                        return [4 /*yield*/, Post_1.default.findByUserIdStatus({
+                                user_id: user_id,
+                                status: status,
+                                start: start,
+                                end: end,
+                            })];
                     case 1:
                         posts = _b.sent();
+                        return [4 /*yield*/, Post_1.default.countByUserIdStatus({ user_id: user_id, status: status })];
+                    case 2:
+                        count = _b.sent();
                         result_success = Object.assign({
                             result: true,
                             cause: "success",
                             message: "\uBAA8\uB4E0 \uAC8C\uC2DC\uAE00 \uC870\uD68C\uAC00 \uC131\uACF5\uC801\uC73C\uB85C \uC774\uB904\uC84C\uC2B5\uB2C8\uB2E4.",
-                        }, { list: posts });
+                        }, { count: count[0].cnt, list: posts });
+                        // console.log(result_success);
                         return [2 /*return*/, result_success];
                 }
             });

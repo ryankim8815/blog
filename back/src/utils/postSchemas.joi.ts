@@ -2,6 +2,9 @@ import Joi from "joi";
 
 export const postListByTagSchema = Joi.object().keys({
   tag: Joi.string().required(),
+  status: Joi.string().required(),
+  start: Joi.number().required(),
+  end: Joi.number().required(),
 });
 
 export const postParamsSchema = Joi.object().keys({
@@ -11,6 +14,8 @@ export const postParamsSchema = Joi.object().keys({
 export const postByUserIdParamsSchema = Joi.object().keys({
   user_id: Joi.string().required(),
   status: Joi.string().required(),
+  start: Joi.number().required(),
+  end: Joi.number().required(),
 });
 
 export const postCreateSchema = Joi.object().keys({

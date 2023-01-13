@@ -90,11 +90,8 @@ function PostList() {
   const [activeCat, setActiveCat] = useState("All");
   const [pageMax, setPageMax] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(10);
-  // const [pages, setPages] = useState([1, 2]);
   const [pageNum, setPageNum] = useState(1);
   const location = useLocation();
-  // const defaultStartNumber = 0;
-  // const defaultEndNumber = postsPerPage;
 
   const apiGetPostsByTag = async (tag, start) => {
     try {
@@ -114,10 +111,10 @@ function PostList() {
   };
 
   useEffect(() => {
-    // activeCat === "All" ? apiGetAllPosts() : apiGetPostsByTag(activeCat);
     apiGetPostsByTag(activeCat);
     setPageNum(1);
   }, [activeCat]);
+
   useEffect(() => {
     const start = postsPerPage * (pageNum - 1);
     apiGetPostsByTag(activeCat, start);

@@ -13,7 +13,7 @@ postRouter.get("/posts", postController.postList); // 전체 게시글 검섹
 // ); // tag로 게시글 검섹
 postRouter.get(
   "/posts/status/:status/tag/:tag/:start/:end",
-  // validation.validatePostByTag,
+  validation.validatePostByTag,
   postController.postsByStatusTag
 ); // status와 tag로 게시글 검섹 ----------------------------
 postRouter.get(
@@ -22,7 +22,7 @@ postRouter.get(
   postController.postByPostId
 ); // post_id로 게시글 검섹
 postRouter.get(
-  "/posts/:status/:user_id",
+  "/posts/:status/:user_id/:start/:end",
   validation.validatePostByUserIdStatus,
   postController.postByUserIdStatus
 ); // user_id로 게시글 검섹 --------------------------------

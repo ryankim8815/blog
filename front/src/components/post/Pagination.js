@@ -40,13 +40,7 @@ const PageButton = styled.button`
     color: ${(props) => props.theme.purpleTextColor};
   }
 `;
-function Pagination({
-  pageNum,
-  totalPage,
-  currentPage,
-  maximumPage,
-  handleSetPage,
-}) {
+function Pagination({ totalPage, currentPage, maximumPage, handleSetPage }) {
   let pages = [];
   for (let i = 0; i < totalPage; i++) {
     pages.push(i + 1);

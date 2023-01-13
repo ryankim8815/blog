@@ -7,6 +7,9 @@ exports.postDeleteSchema = exports.postUpdateSchema = exports.postCreateSchema =
 var joi_1 = __importDefault(require("joi"));
 exports.postListByTagSchema = joi_1.default.object().keys({
     tag: joi_1.default.string().required(),
+    status: joi_1.default.string().required(),
+    start: joi_1.default.number().required(),
+    end: joi_1.default.number().required(),
 });
 exports.postParamsSchema = joi_1.default.object().keys({
     post_id: joi_1.default.string().required(),
@@ -14,6 +17,8 @@ exports.postParamsSchema = joi_1.default.object().keys({
 exports.postByUserIdParamsSchema = joi_1.default.object().keys({
     user_id: joi_1.default.string().required(),
     status: joi_1.default.string().required(),
+    start: joi_1.default.number().required(),
+    end: joi_1.default.number().required(),
 });
 exports.postCreateSchema = joi_1.default.object().keys({
     user_id: joi_1.default.string().required(),

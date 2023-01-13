@@ -104,10 +104,14 @@ class postController {
   ) {
     const user_id = req.params.user_id;
     const status = req.params.status;
+    const start = req.params.start;
+    const end = req.params.end;
     try {
       const Post = await postService.getPostByUserIdStatus({
         user_id,
         status,
+        start,
+        end,
       });
       return res.status(200).json(Post);
     } catch (err) {
