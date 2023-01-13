@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
-import { UserStateContext, DispatchContext } from "../../App";
+import { UserStateContext, DispatchContext } from "../../../src/App";
 import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
 

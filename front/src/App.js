@@ -1,9 +1,6 @@
-// login status
 import React, { useEffect, useReducer, useState, createContext } from "react";
-// import React, { createContext } from "react";
 import * as Api from "./components/utils/Api";
 import { loginReducer } from "./components/utils/Reducer";
-// for screens
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // screens
@@ -18,12 +15,8 @@ import Editor from "./components/editor/Editor";
 import KakaoLogin from "./components/user/KakaoLogin";
 import NaverLogin from "./components/user/NaverLogin";
 import GoogleLogin from "./components/user/GoogleLogin";
-// import EditorA from "./components/editor/EditorA";
 // components
 import Header from "./components/header/Header";
-// import Footer from "./components/common/Footer";
-// import NavBarElements from "./components/Common/NavBarElements";
-// import "./assets/main.css";
 import LoginForm from "./components/user/LoginForm";
 import Footer from "./components/common/Footer";
 import UpdateUserInfo from "./screens/UpdateUserInfo";
@@ -37,7 +30,6 @@ function App() {
   //useReducer를 사용하면 state값과 dispatch 함수를 받아온다. 여기서 state는 현재 가리키고 있는 상태 / dispatch는 액션을 '발생시키는' 함수.
   //dispatch(action: 어떤 값도 가능)과 같은 형태로 함수 안에 파라미터로 액션 값을 넣어주면 리듀서 함수가 호출.
   const [userState, dispatch] = useReducer(loginReducer, {
-    // <- 여기서 문제 발생
     user: null,
   });
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
@@ -45,13 +37,11 @@ function App() {
   const fetchCurrentUser = async () => {
     try {
       if (sessionStorage.getItem("userToken") == null) {
-        // console.log("로그인된 사용자가 아닙니다.");
         dispatch({ type: "LOGOUT" });
       } else {
         const res = await Api.get("user");
         const currentUser = res.data;
         dispatch({
-          // type: "LOGIN",
           type: "LOGIN_SUCCESS",
           payload: currentUser,
         });
@@ -59,11 +49,9 @@ function App() {
     } catch (err) {
       console.log("로그인된 사용자가 아닙니다.");
     }
-    // fetch 과정이 끝났으므로
     setIsFetchCompleted(true);
   };
 
-  // 이 다음에!!! useEffect 사용!!!
   useEffect(() => {
     fetchCurrentUser();
   }, []);
@@ -99,7 +87,6 @@ function App() {
             />
             <Route path="/users/:user_id/mypage" element={<MyPage />} />
           </Routes>
-          {/* <NavBar /> */}
           <Footer />
         </Router>
       </UserStateContext.Provider>

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
-import { UserStateContext, DispatchContext } from "../../App";
+import { UserStateContext, DispatchContext } from "../../../src/App";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import * as Api from "../utils/Api";
 import Pagination from "../post/Pagination";
