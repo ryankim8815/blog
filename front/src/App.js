@@ -38,18 +38,18 @@ function App() {
     try {
       if (sessionStorage.getItem("userToken") == null) {
         dispatch({ type: "LOGOUT" });
-      } else {
-        const res = await Api.get("user");
-        const currentUser = res.data;
-        dispatch({
-          type: "LOGIN_SUCCESS",
-          payload: currentUser,
-        });
+        return setIsFetchCompleted(true);
       }
+      const res = await Api.get("user");
+      const currentUser = res.data;
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: currentUser,
+      });
+      setIsFetchCompleted(true);
     } catch (err) {
       console.log("로그인된 사용자가 아닙니다.");
     }
-    setIsFetchCompleted(true);
   };
 
   useEffect(() => {

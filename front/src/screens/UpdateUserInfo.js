@@ -190,7 +190,9 @@ function UpdateUserInfo() {
   const [currentPwdMsg, setCurrentPwdMsg] = useState("");
   const [pwdMsg, setPwdMsg] = useState("");
   const [confirmPwdMsg, setConfirmPwdMsg] = useState("");
-  const [nicknameMsg, setNicknameMsg] = useState("");
+  const [nicknameMsg, setNicknameMsg] = useState(
+    "한글+숫자는 2~8글자, 영어+숫자는 2~12글자로 입력해주세요."
+  );
 
   // 현재 비밀번호 확인, 닉네임 중복 확인
   const [checkPassword, setCheckPassword] = useState(false);
@@ -469,6 +471,11 @@ function UpdateUserInfo() {
   const onPassNicknameOnly = async (e) => {
     e.preventDefault();
     try {
+      if (currentNickname.length > 12) {
+        return alert(
+          "현재 닉네임이 글자수를 초과하여 유지할 수 없습니다. \n닉네임을 재설정해주세요."
+        );
+      }
       setNickname(currentNickname);
       checkNickname.current = true;
       navigate("/");

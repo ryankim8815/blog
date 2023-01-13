@@ -24,6 +24,9 @@ const NaverLogin = () => {
         type: "LOGIN_SUCCESS",
         payload: user,
       });
+      if (user.nickname.length > 12) {
+        return navigate(`/users/${user.user_id}/updateuserinfo`);
+      }
       navigate("/");
       window.location.reload();
     }
