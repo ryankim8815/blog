@@ -5,10 +5,13 @@ axios.defaults.timeout = 10000;
 axios.defaults.headers["Content-Type"] = "application/json";
 
 let BASE_URL = null;
-if (process.env.REACT_APP_ENV == "local") {
-  BASE_URL = `http://${window.location.hostname}:${process.env.REACT_APP_HTTP_SERVER_PORT}/`;
+const env = process.env.REACT_APP_ENV;
+const http = process.env.REACT_APP_HTTP_SERVER_PORT;
+const https = process.env.REACT_APP_HTTPS_SERVER_PORT;
+if (env == "local") {
+  BASE_URL = `http://${window.location.hostname}:${http}/`;
 } else {
-  BASE_URL = `https://${window.location.hostname}:${process.env.REACT_APP_HTTPS_SERVER_PORTS}/`;
+  BASE_URL = `https://${window.location.hostname}:${https}/`;
 }
 
 axios.interceptors.response.use(
