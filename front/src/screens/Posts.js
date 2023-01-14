@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import * as Api from "../components/utils/Api";
 import Catbtn from "../components/post/Catbtn"; //테스트용
 import styled from "styled-components";
@@ -74,7 +75,7 @@ const StyledA = styled.a`
   text-decoration-line: none;
 `;
 
-const Title = styled.p`
+const Title = styled.h1`
   text-align: left; // 좌우 정렬
   margin: 0px 20px;
   font-size: 40px;
@@ -82,7 +83,7 @@ const Title = styled.p`
   color: black;
 `;
 
-const SubTitle = styled.p`
+const SubTitle = styled.h2`
   text-align: left; // 좌우 정렬
   margin: 0px 20px;
   font-size: 20px;
@@ -103,7 +104,7 @@ const DivisionLine = styled.div`
   width: 100%;
 `;
 
-const Content = styled.p`
+const Content = styled.h3`
   min-height: 400px;
   text-align: left; // 좌우 정렬
   padding: 0px 30px;
@@ -169,6 +170,21 @@ function Posts() {
               />
               <div className="division-line"></div>
               <DivisionLine />
+              <Helmet
+                meta={[
+                  { property: "og:title", content: post.title },
+                  {
+                    property: "og:description",
+                    content: post.content.slice(0, 80),
+                  },
+                  {
+                    property: "keywords",
+                    content: `개발자A, 개발자, 코딩, 부트캠프, 국비교육, 자바스크립트, node.js, 백앤드, 프론트앤드, ${post.tag}`,
+                  },
+                  { property: "og:image", content: post.image },
+                  { name: "twitter:card", content: "summary" },
+                ]}
+              />
             </div>
           ))}
         </PostBox>
